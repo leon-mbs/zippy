@@ -2,8 +2,7 @@
 
 namespace ZCL\JqGrid;
 
-use \Zippy\WebApplication ;
-
+use \Zippy\WebApplication;
 use \Zippy\Html\HtmlComponent;
 use \Zippy\Interfaces\Requestable;
 use \Zippy\Interfaces\EventReceiver;
@@ -38,8 +37,8 @@ class JQGrid extends HtmlComponent implements Requestable
         public final function RequestHandle()
         {
 
-                $params = WebApplication::$app->getRequest()->request_params[$this->id];  
-                $gridp = array('page'=>$_REQUEST['page'],'rows'=>$_REQUEST['rows'],'sidx'=>$_REQUEST['sidx'],'sord'=>$_REQUEST['sord']) ;
+                $params = WebApplication::$app->getRequest()->request_params[$this->id];
+                $gridp = array('page' => $_REQUEST['page'], 'rows' => $_REQUEST['rows'], 'sidx' => $_REQUEST['sidx'], 'sord' => $_REQUEST['sord']);
                 if ($params[0] == 'loaddata' && $this->loadevent != null) {
                         $data = $this->loadevent->onEvent($this, $gridp);
                         WebApplication::$app->getResponse()->addAjaxResponse(json_encode($data));

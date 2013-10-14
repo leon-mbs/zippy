@@ -43,18 +43,17 @@ class TreeNode
         {
                 return $this->dataitem;
         }
-       
+
         /**
-        *  Устанавливает  елемент данных ассоциированный  с  узлом
-        * 
-        * @param mixed $dataitem
-        */
-       
+         *  Устанавливает  елемент данных ассоциированный  с  узлом
+         * 
+         * @param mixed $dataitem
+         */
         public function setDataItem($dataitem)
         {
                 $this->dataitem = $dataitem;
         }
-        
+
         /**
          * @see Container
          */

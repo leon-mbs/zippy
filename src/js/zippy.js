@@ -1,13 +1,13 @@
    
 function getUpdate(q)
-{                  
+{               
         $.ajax({
                 url: q,
                 dataType : "text",
                 success: function (data, textStatus) {
-                      
                        eval(data);
                 }
+                
         }); 
     
 };
@@ -165,11 +165,15 @@ function treeCheck(checker)
    
 }
 
-
 function beforeZippy(id){
     
+    var i = id.lastIndexOf('_');
+    if(i > 0){
+       id = id.substring(0,i);      
+    }
+    
     var f = 'check_' +id;
-// проверяем наличие функции с таким именем
+
     if (typeof window[f] == 'function'){
 
 

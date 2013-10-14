@@ -22,8 +22,8 @@ class DataView extends AbstractList
 
         private $rowevent = null;
         private $selectedRow = 0;
-         private $selectedclass ="";
-         
+        private $selectedclass = "";
+
         /**
          * Конструктор
          * @param  mixed  ID  компонента
@@ -52,7 +52,7 @@ class DataView extends AbstractList
                         $this->add($datarow);
                         $this->rowevent->onEvent($datarow); //вызов  обработчика добавляющего  данные  или   елементы  в  строку
                         $datarow->updateChildId();
-                        if ($item->getID() == $this->selectedRow && $this->selectedclass !="") {
+                        if ($item->getID() == $this->selectedRow && $this->selectedclass != "") {
                                 $datarow->setAttribute('class', $this->selectedclass);
                         }
                 }
@@ -134,22 +134,23 @@ class DataView extends AbstractList
         }
 
         /**
-        * Возвращает  номер  выделеной  строки
-        * 
-        */
+         * Возвращает  номер  выделеной  строки
+         * 
+         */
         public function getSelectedRow()
         {
                 return $this->selectedRow;
         }
-                
+
         /**
-        * Устанавливает CSS  класс  для   выбранной   строки
-        * 
-        * @param mixed $selectedclass
-        */
+         * Устанавливает CSS  класс  для   выбранной   строки
+         * 
+         * @param mixed $selectedclass
+         */
         public function setSelectedClass($selectedclass)
         {
                 $this->selectedclass = $selectedclass;
         }
+
 }
 

@@ -49,18 +49,18 @@ class HttpResponse
                         return;
                 }
 
+                if (strpos($this->content, "</head>") > 0) {
+                       $this->content = str_replace("</head>", $this->getJS() . "</head>", $this->content);
+                } else {
+                       $this->content=  $this->content . $this->getJS();
+                }
+                
                 if (WebApplication::$app->getRequest()->isAjaxRequest() == false && $this->gzip === true && strpos($_SERVER["HTTP_ACCEPT_ENCODING"], "gzip") !== false) {
                         Header("Content-Encoding: gzip");
                         echo gzencode($this->content . $this->getJS());
                         return;
                 }
-
-                if(strpos($this->content,"</head>")>0) {
-                    echo str_replace("</head>",$this->getJS() . "</head>",$this->content); 
-                }else{
-                    echo $this->content . $this->getJS();
-                }
-                
+                echo $this->content;
         }
 
         /**
@@ -90,9 +90,9 @@ class HttpResponse
          */
         public function toBaseUrl()
         {
-             if(strlen($this->redirect) ==0){ //если  не  было редиректа
-                $this->redirect = $this->getBaseUrl();
-             }
+                if (strlen($this->redirect) == 0) { //если  не  было редиректа
+                        $this->redirect = $this->getBaseUrl();
+                }
         }
 
         /**
@@ -172,7 +172,11 @@ class HttpResponse
          *
          */
         public final function Redirect($name, $arg1 = null, $arg2 = null, $arg3 = null, $arg4 = null, $arg5 = null)
-        {
+        {     
+                if($name  instanceof \Zippy\Html\WebPage){
+                    $name = get_class($name);
+                }
+        
                 WebApplication::$app->LoadPage($name, $arg1, $arg2, $arg3, $arg4, $arg5);
                 //   $url = "/index.php?q=" . $this->getPageManager()->session->putPage($this->currentpage) . "::1";
                 //   $this->saveSession(serialize($this->session));
@@ -191,9 +195,9 @@ class HttpResponse
          */
         public final function getHostUrl()
         {
-                $http = $_SERVER["HTTP_HOST"] == 'on'? 'https' : 'http';
-                
-                return $http ."://" . $_SERVER["HTTP_HOST"];
+                $http = $_SERVER["HTTP_HOST"] == 'on' ? 'https' : 'http';
+
+                return $http . "://" . $_SERVER["HTTP_HOST"];
         }
 
         public final function setPageIndex($index)

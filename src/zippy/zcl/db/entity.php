@@ -121,21 +121,19 @@ abstract class Entity implements \Zippy\Interfaces\DataItem
                 $list = array();
                 $table = isset($meta['view']) ? $meta['view'] : $meta['table'];
                 $sql = "select coalesce(count({$meta['keyfield']}),0) as  cnt from " . $table;
-                 
-                  
-                 if ($criteria instanceof Criteria) {
-                   if (strlen($criteria->where) > 0) {
-                            $sql .= " where " . $criteria->where;
-                    }              
-                
+
+
+                if ($criteria instanceof Criteria) {
+                        if (strlen($criteria->where) > 0) {
+                                $sql .= " where " . $criteria->where;
+                        }
+                } else {
+                        $where = $criteria;
+                        if (strlen($where) > 0) {
+                                $sql .= " where " . $where;
+                        }
                 }
-                else {
-                    $where = $criteria;
-                    if (strlen($where) > 0) {
-                            $sql .= " where " . $where;
-                    }
-                 }   
-                
+
                 return $conn->getOne($sql);
         }
 
@@ -197,42 +195,41 @@ abstract class Entity implements \Zippy\Interfaces\DataItem
                 return $list;
         }
 
-         /**
+        /**
          * Возвращает  массив ключ/имя  из  БД  по  критерию
          * Может  использоватся  для заполнения выпадающих списков 
          * 
          * @param string $fieldname   Имя  поля представляющее имя сущности.
          * @param mixed $criteria   Критерий  отбора.  Может  быть  экземпляром  класса  Criteria или  SQL  запросом
          */
-        public static function findArray($fieldname,$criteria = null)
+        public static function findArray($fieldname, $criteria = null)
         {
-             $entitylist = self::find($criteria) ;
-             
-             $list = array();
-             foreach($entitylist as $key=>$value)  {
-                  $list[$key] =  $value->{$fieldname};
-             }
-             
-             return $list;
-        }       
-        
+                $entitylist = self::find($criteria);
+
+                $list = array();
+                foreach ($entitylist as $key => $value) {
+                        $list[$key] = $value->{$fieldname};
+                }
+
+                return $list;
+        }
+
         public static function findOne($criteria)
         {
-             $list = self::find($criteria) ;
-             
-             if(count($list) ==0){
-                  return  null;
-             }
-             if(count($list) == 1){
-                   
-                  return array_pop($list) ;
-             }
-             if(count($list) > 1){
-                  throw new  \Zippy\Exception("Метод findOne вернул  больше  одной  записи. Условие: [{$criteria->where}]");
-             }
-             
-        }         
-        
+                $list = self::find($criteria);
+
+                if (count($list) == 0) {
+                        return null;
+                }
+                if (count($list) == 1) {
+
+                        return array_pop($list);
+                }
+                if (count($list) > 1) {
+                        throw new \Zippy\Exception("Метод findOne вернул  больше  одной  записи. Условие: [{$criteria->where}]");
+                }
+        }
+
         /**
          * Сохраняет  сущность  в  БД
          * Если  сущность новая создает запись 
@@ -259,28 +256,45 @@ abstract class Entity implements \Zippy\Interfaces\DataItem
         /**
          * Удаление  сущности
          * возвращает  false  если   удаление неудачно  или  не  разрешено
-         * @param mixed $id
+         * @param mixed $id Может быть  числом (ключевое поле),  экземпляром  Entity или  срокой с  условием  для  where
          */
         public static function delete($id)
         {
+                $class = get_called_class();
+                $meta = $class::getMetadata();        
+
                 if (is_numeric($id)) {
-                        $class = get_called_class();
-                        $meta = $class::getMetadata();
+
                         $obj = $class::load($id);
+                        
                 } else {
                         $obj = $id;
+                        $id = $obj->{$meta['keyfield']};
                 }
                 $alowdelete = true;
                 if ($obj instanceof Entity) {
                         $alowdelete = $obj->beforeDelete();
-                } else {
-                        return false;
+                        if ($alowdelete === false) {
+                                throw new \Zippy\Exception("Объект '{$meta['table']}' ({$id}) не может быть удален");
+                                return false;
+                        }                        
+
+                        $sql ="delete from {$meta['table']}  where {$meta['keyfield']} = " . $id; 
+                        
+                } else {   //если  строка
+                        $arr = $class::find(new Criteria($id));
+                        foreach($arr as $obj){
+                            $alowdelete = $obj->beforeDelete();
+                            if ($alowdelete === false) {
+                                    throw new \Zippy\Exception("Объект '{$meta['table']}' ({$id}) не может быть удален");
+                                    return false;
+                            }                                                   
+                        }                
+                        $sql ="delete from {$meta['table']}  where " . $id; 
                 }
-                if ($alowdelete === false) {
-                        return false;
-                }
+
                 $conn = DB::getConnect();
-                $conn->Execute("delete from {$meta['table']}  where {$meta['keyfield']} = " . $id);
+                $conn->Execute($sql);
                 return true;
         }
 
@@ -296,31 +310,30 @@ abstract class Entity implements \Zippy\Interfaces\DataItem
          */
         protected static function getMetadata()
         {
-               $class   = new  \ReflectionClass(get_called_class());
-               $doc =  $class->getDocComment();
-               preg_match_all( '/@([a-z0-9_-]+)=([^\n]+)/is', $doc, $arr );
-               if(is_array($arr)){
-                   $reg_arr = array_combine($arr[1], $arr[2]);               
-                   
-                   $table = trim($reg_arr['table']);
-                   $view = trim(@$reg_arr['view']);
-                   $keyfield = trim($reg_arr['keyfield']);
-                   
-                   
-                   if(strlen($table) >0  && strlen($keyfield) >0 ) {
-                       $retarr = array();    
-                       $retarr['table'] = $table;
-                       $retarr['keyfield'] = $keyfield;
-                       if(strlen($view) >0) $retarr['view'] = $view;
-                       
-                       return $retarr;
-                   }
-                   
-                   
-               }
-               
-   
-  
+                $class = new \ReflectionClass(get_called_class());
+                $doc = $class->getDocComment();
+                preg_match_all('/@([a-z0-9_-]+)=([^\n]+)/is', $doc, $arr);
+                if (is_array($arr)) {
+                        $reg_arr = array_combine($arr[1], $arr[2]);
+
+                        $table = trim($reg_arr['table']);
+                        $view = trim(@$reg_arr['view']);
+                        $keyfield = trim($reg_arr['keyfield']);
+
+
+                        if (strlen($table) > 0 && strlen($keyfield) > 0) {
+                                $retarr = array();
+                                $retarr['table'] = $table;
+                                $retarr['keyfield'] = $keyfield;
+                                if (strlen($view) > 0)
+                                        $retarr['view'] = $view;
+
+                                return $retarr;
+                        }
+                }
+
+
+
                 throw new \Zippy\Exception('getMetadata должен  быть  перегружен');
         }
 
@@ -373,10 +386,11 @@ abstract class Entity implements \Zippy\Interfaces\DataItem
                 $conn = DB::getConnect();
                 return $conn->qstr($str);
         }
+
         public static function escape($str)
         {
                 $conn = DB::getConnect();
-                return mysqli_real_escape_string($conn->_connectionID,$str);
+                return mysqli_real_escape_string($conn->_connectionID, $str);
         }
 
 }

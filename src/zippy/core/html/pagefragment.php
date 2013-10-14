@@ -84,7 +84,7 @@ abstract class PageFragment extends HtmlContainer implements EventReceiver
                         $owner = $owner->getOwner();
                 } while ($owner != null);
 
-            return null;
+                return null;
         }
 
         /**

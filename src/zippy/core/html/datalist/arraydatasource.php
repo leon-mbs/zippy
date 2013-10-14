@@ -92,6 +92,11 @@ class ArrayDataSource implements DataSource
                 }
                 return null;
         }
-
+        
+        //устанавливает  массив с  данными
+        public function setArray($source)
+        {
+           $this->data = $source;
+        }
 }
 

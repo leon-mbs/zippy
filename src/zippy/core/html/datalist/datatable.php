@@ -20,7 +20,7 @@ class DataTable extends AbstractList implements Requestable, AjaxRender
         private $cellevent = null;
         private $cellclickevent = null;
         private $selectedrow = 0;
-        private $selectedclass ="";
+        private $selectedclass = "";
 
         public function __construct($id, $DataSource, $options = array())
         {
@@ -157,13 +157,12 @@ class DataTable extends AbstractList implements Requestable, AjaxRender
                 foreach ($this->datalist as $item) {     //цикл  по  строкам
                         $rownumber++;
                         $oddeven = ($rownumber % 2) == 1 ? 'odd' : 'even';
-                        if ($this->selectedrow == $rownumber && $this->selectedclass != "")                        {
+                        if ($this->selectedrow == $rownumber && $this->selectedclass != "") {
                                 $row = "<tr class=\"{$this->selectedclass}\" >";
+                        } else {
+                                $row = "<tr  >";
                         }
-                        else{
-                              $row = "<tr  >";                                
-                        }
-                        
+
 
                         foreach ($this->columns as $fieldname => $column) {       //цикл  по  полям
                                 if ($column['enabled'] != true) {
@@ -273,8 +272,8 @@ class DataTable extends AbstractList implements Requestable, AjaxRender
 
                 return $js;
         }
-  
-         /**
+
+        /**
          *  Устанавливает  выделеную строку. 
          * Строка выделяется  добавлением CSS класса  заданного
          * методом setSelectedClass
@@ -285,19 +284,21 @@ class DataTable extends AbstractList implements Requestable, AjaxRender
         {
                 $this->selectedrow = $number;
         }
+
         /**
-        * Возвращает  номер  выделеной  строки
-        * 
-        */
+         * Возвращает  номер  выделеной  строки
+         * 
+         */
         public function getSelectedRow()
         {
                 return $this->selectedRow;
-        }        
+        }
+
         /**
-        * Устанавливает CSS  класс  для   выбранной   строки
-        * 
-        * @param mixed $selectedclass
-        */
+         * Устанавливает CSS  класс  для   выбранной   строки
+         * 
+         * @param mixed $selectedclass
+         */
         public function setSelectedClass($selectedclass)
         {
                 $this->selectedclass = $selectedclass;

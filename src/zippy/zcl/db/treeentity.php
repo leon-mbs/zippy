@@ -20,33 +20,32 @@ abstract class TreeEntity extends Entity
          */
         protected static function getMetadata()
         {
-        
-               $class   = new  \ReflectionClass(get_called_class());
-               $doc =  $class->getDocComment();
-               preg_match_all( '/@([a-z0-9_-]+)=([^\n]+)/is', $doc, $arr );
-               if(is_array($arr)){
-                   $reg_arr = array_combine($arr[1], $arr[2]);               
-                   
-                   $table = trim($reg_arr['table']);
-                   $view = trim($reg_arr['view']);
-                   $keyfield = trim($reg_arr['keyfield']);
-                   $parentfield = trim($reg_arr['parentfield']);
-                   $pathfield = trim($reg_arr['pathfield']);
-                   
-                   
-                   if(strlen($table) >0  && strlen($keyfield) >0 && strlen($parentfield) >0 && strlen($pathfield) >0 ) {
-                       $retarr = array();    
-                       $retarr['table'] = $table;
-                       $retarr['keyfield'] = $keyfield;
-                       $retarr['parentfield'] = $parentfield;
-                       $retarr['pathfield'] = $pathfield;
-                       if(strlen($view) >0 ) $retarr['view'] = $view;
-                       
-                       return $retarr;
-                   }
-                   
-                   
-               }        
+
+                $class = new \ReflectionClass(get_called_class());
+                $doc = $class->getDocComment();
+                preg_match_all('/@([a-z0-9_-]+)=([^\n]+)/is', $doc, $arr);
+                if (is_array($arr)) {
+                        $reg_arr = array_combine($arr[1], $arr[2]);
+
+                        $table = trim($reg_arr['table']);
+                        $view = trim($reg_arr['view']);
+                        $keyfield = trim($reg_arr['keyfield']);
+                        $parentfield = trim($reg_arr['parentfield']);
+                        $pathfield = trim($reg_arr['pathfield']);
+
+
+                        if (strlen($table) > 0 && strlen($keyfield) > 0 && strlen($parentfield) > 0 && strlen($pathfield) > 0) {
+                                $retarr = array();
+                                $retarr['table'] = $table;
+                                $retarr['keyfield'] = $keyfield;
+                                $retarr['parentfield'] = $parentfield;
+                                $retarr['pathfield'] = $pathfield;
+                                if (strlen($view) > 0)
+                                        $retarr['view'] = $view;
+
+                                return $retarr;
+                        }
+                }
                 throw new \Zippy\Exception('getMetadata должен  быть  перегружен');
         }
 
@@ -77,7 +76,7 @@ abstract class TreeEntity extends Entity
                 $nodelist = array();
                 foreach ($itemlist as $item) {
                         $node = new \ZCL\Tree\TreeNode($item->{$fname}, $item);
-                        $parentnode =@$nodelist[$item->{$meta['parentfield']}];
+                        $parentnode = @$nodelist[$item->{$meta['parentfield']}];
 
                         $tree->addNode($node, $parentnode);
 
@@ -123,10 +122,10 @@ abstract class TreeEntity extends Entity
         }
 
         /**
-        * Перемешение  узла  дерева  в  другой   ужел
-        * 
-        * @param mixed $pid   Id узла перемешения
-        */
+         * Перемешение  узла  дерева  в  другой   ужел
+         * 
+         * @param mixed $pid   Id узла перемешения
+         */
         public function moveTo($pid)
         {
                 $class = get_called_class();
@@ -152,20 +151,21 @@ abstract class TreeEntity extends Entity
           }
          */
 
-         
-        public function getParent(){
-            
+        public function getParent()
+        {
+
                 $class = get_called_class();
                 $meta = $class::getMetadata();
-                
-                return ;$class::load($this->{$meta['parentfield']});
-        } 
-         
+
+                return;
+                $class::load($this->{$meta['parentfield']});
+        }
+
         /**
-        * Получение  дочерних  узлов
-        *  
-        * @param mixed $all   Если  false  получаем только  непостредственнвх потомков
-        */
+         * Получение  дочерних  узлов
+         *  
+         * @param mixed $all   Если  false  получаем только  непостредственнвх потомков
+         */
         public function getChildren($all = false)
         {
                 $conn = DB::getConnect();
@@ -180,11 +180,11 @@ abstract class TreeEntity extends Entity
         }
 
         /**
-        * Удаление  узла
-        * 
-        * @param mixed $rec  Ксли  true  дочерние  узлы  удаляются  рекурсивно,
-        *  иначе  удаляются  одним  запросом  к  БД
-        */
+         * Удаление  узла
+         * 
+         * @param mixed $rec  Ксли  true  дочерние  узлы  удаляются  рекурсивно,
+         *  иначе  удаляются  одним  запросом  к  БД
+         */
         public function deleteChildren($rec = true)
         {
                 $conn = DB::getConnect();

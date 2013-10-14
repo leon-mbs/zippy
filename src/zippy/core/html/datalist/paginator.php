@@ -14,8 +14,8 @@ class Paginator extends HtmlComponent implements Requestable
 {
 
         private $datalist;
-        private $size =20;
-        
+        private $size = 20;
+
         /**
          * Конструктор
          * @param string ID
@@ -54,7 +54,7 @@ class Paginator extends HtmlComponent implements Requestable
                 }
 
                 if ($currentpage > 1) {
-                      //  $content .= "<li class=\"disabled\"><a  href=\"javascript:void(0);\" >...</a></li>";
+                        //  $content .= "<li class=\"disabled\"><a  href=\"javascript:void(0);\" >...</a></li>";
                 }
 
                 for ($i = 1; $i <= $pages; $i++) {
@@ -66,14 +66,14 @@ class Paginator extends HtmlComponent implements Requestable
                 }
 
                 if ($currentpage < $pages) {
-                     //  $content .= "<li><a  href=\"javascript:void(0);\"  onclick=\"" . $this->getUrl($currentpage + 1) . "\">&nbsp;</a></li>";
+                        //  $content .= "<li><a  href=\"javascript:void(0);\"  onclick=\"" . $this->getUrl($currentpage + 1) . "\">&nbsp;</a></li>";
                 }
 
                 if ($currentpage < $pages) {
                         $content .= "<li class=\" last\"><a  href=\"javascript:void(0);\"  onclick=\"" . $this->getUrl($pages) . "\">&nbsp;</a></li>";
                 }
 
-                return $content ."</ul>";
+                return $content . "</ul>";
         }
 
         /**
@@ -102,20 +102,18 @@ class Paginator extends HtmlComponent implements Requestable
         {
                 $this->datalist->setCurrentPage(1);
         }
-        
+
         /**
-        * Устанавливает  размер  пагинатора
-        * 
-        * @param mixed $size
-        */
-        
+         * Устанавливает  размер  пагинатора
+         * 
+         * @param mixed $size
+         */
         public final function setSize($size)
         {
-             if($size > 5){
-                 $this->size = $size;
-             }   
+                if ($size > 5) {
+                        $this->size = $size;
+                }
         }
-        
 
 }
 

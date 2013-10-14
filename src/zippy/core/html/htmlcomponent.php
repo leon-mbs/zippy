@@ -146,7 +146,7 @@ abstract class HtmlComponent
         {
                 $this->visible = $visible;
         }
-        
+
         /**
          * Прверяет  видимость  компонента
          * @return  boolean
@@ -216,7 +216,7 @@ abstract class HtmlComponent
          */
         protected function getTag($tagname = "")
         {
-                 $HtmlTag = pq(strtolower($tagname) . '[zippy="' . $this->id . '"]');
+                $HtmlTag = pq(strtolower($tagname) . '[zippy="' . $this->id . '"]');
                 if (strlen($tagname) > 0 && $HtmlTag->size() == 0) {
                         $HtmlTag = pq(strtoupper($tagname) . '[zippy="' . $this->id . '"]');
                 }
@@ -247,7 +247,7 @@ abstract class HtmlComponent
          */
         protected function beforeRender()
         {
-               
+                
         }
 
         /**
@@ -267,13 +267,13 @@ abstract class HtmlComponent
         }
 
         /**
-        * возвращает  связаный  тег  
-        * 
-        */
+         * возвращает  связаный  тег  
+         * 
+         */
         protected function getLabelTag()
         {
-                 return pq('[data-label="' . $this->id . '"]');
-
+                return pq('[data-label="' . $this->id . '"]');
         }
+
 }
 

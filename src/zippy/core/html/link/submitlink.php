@@ -51,7 +51,7 @@ class SubmitLink extends AbstractLink implements ClickListener, Requestable
 
                 $url = $this->owner->getURLNode() . '::' . $this->id;
                 $url = substr($url, 2 + strpos($url, 'q='));
-                $this->setAttribute("onclick", "javascript:{if(beforeZippy('{$this->id}') ==false) return false; $('#" . $formid . "_q').attr('value','" . $url . "'); $('#".$formid."').submit();event.returnValue=false; return false;}");
+                $this->setAttribute("onclick", "javascript:{if(beforeZippy('{$this->id}') ==false) return false; $('#" . $formid . "_q').attr('value','" . $url . "'); $('#" . $formid . "').submit();event.returnValue=false; return false;}");
                 //    $this->setAttribute("onclick","javascript:{ var q = $('#".$formid."_q').attr('value');$('#".$formid."_q').attr('value',q+'::".$this->id."');$('#".$formid."').submit();return  false;}");
         }
 

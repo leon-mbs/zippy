@@ -233,20 +233,21 @@ class Tree extends HtmlComponent implements Requestable, ClickListener, SubmitDa
                         $node->icon = $icon;
                 }
         }
-        
+
         /**
-        * Возвращает  узел  по  данным  иссоциированым   с  ним
-        * 
-        * @param mixed $item
-        */
-        public  function getNodeByDataitem($item){
-             foreach($this->nodes as $node){
-                  if($node->getDataItem() == $item) {
-                      return  $node;
-                  }
-             }
-             return null; 
+         * Возвращает  узел  по  данным  иссоциированым   с  ним
+         * 
+         * @param mixed $item
+         */
+        public function getNodeByDataitem($item)
+        {
+                foreach ($this->nodes as $node) {
+                        if ($node->getDataItem() == $item) {
+                                return $node;
+                        }
+                }
+                return null;
         }
-        
+
 }
 

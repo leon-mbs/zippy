@@ -88,8 +88,8 @@ class DropDownChoice extends HtmlFormDataElement implements ChangeListener, Ajax
                 //$html = $tag->html();
 
                 if (count($list) == 0) {
-                        WebApplication::$app->getResponse()->addJavaScript("$('#" . $this->id . "').find('option[val=\"" . $this->getValue() . "\"]').attr('selected', 'selected') ;",true);
-                    //    WebApplication::$app->getResponse()->addJavaScript("$(\"#" . $this->id . " [value='2']\").attr('selected','selected')", true);
+                        WebApplication::$app->getResponse()->addJavaScript("$('#" . $this->id . " :nth-child(".$this->getValue().")').attr('selected', 'selected') ;", true);
+                        //    WebApplication::$app->getResponse()->addJavaScript("$(\"#" . $this->id . " [value='2']\").attr('selected','selected')", true);
                 }
         }
 
@@ -98,7 +98,7 @@ class DropDownChoice extends HtmlFormDataElement implements ChangeListener, Ajax
          */
         public function getRequestData()
         {
-                $this->setValue($_REQUEST[$this->id]);  
+                $this->setValue($_REQUEST[$this->id]);
         }
 
         /**

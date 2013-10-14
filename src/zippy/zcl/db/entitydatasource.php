@@ -55,5 +55,8 @@ class EntityDataSource implements \Zippy\Interfaces\DataSource
                 return $class::load($id);
         }
 
+        public function setWhere($where){
+           $this->where = $where;
+        }
 }
 

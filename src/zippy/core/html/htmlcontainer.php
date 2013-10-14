@@ -122,11 +122,10 @@ abstract class HtmlContainer extends HtmlComponent implements Requestable
                                 $component->Render();
                         } else {
                                 $component->getTag()->remove();
-                                $label =$component->getLabelTag();
-                                if($label->size() ==1)    {  //прячем  связаный  тег label
-                                    $label->remove();
+                                $label = $component->getLabelTag();
+                                if ($label->size() == 1) {  //прячем  связаный  тег label
+                                        $label->remove();
                                 }
-                                      
                         }
                 }
                 //   $this->afterRender();

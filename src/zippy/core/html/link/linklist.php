@@ -57,7 +57,7 @@ class LinkList extends HtmlComponent implements ClickListener, Requestable
                                 }
                         }
                         if ($item['disabled'] == true) {
-                                $out = $out . "<span>". $item['caption']. "</span>";
+                                $out = $out . "<span>" . $item['caption'] . "</span>";
                         } else {
 
 

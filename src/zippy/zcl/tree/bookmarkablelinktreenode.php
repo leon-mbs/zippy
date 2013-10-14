@@ -31,8 +31,8 @@ class BookmarkableLinkTreeNode extends TreeNode
         {
                 if ($this->isselected) {
                         $class = "class=\"IsSelected\"";
-                }        
-        
+                }
+
                 return "<a href=\"{$this->link}\" {$class} >{$this->text}</a>";
         }
 

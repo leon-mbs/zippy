@@ -238,30 +238,30 @@ abstract class WebApplication
 
                         $bdoc = \phpQuery::newDocumentHTML($basetemplate);
                         //восстанавливаем  по умолчанию
-                 
-                        
+
+
                         $bdoc["childpage"]->replaceWith($doc['body']->html());
- 
+
                         $links = $doc['head  > link'];
                         foreach ($links as $l) {
                                 pq('head')->append($l);
                         }
- 
+
                         $script = $doc['head  > script'];
-                         foreach ($script as $sc) {
+                        foreach ($script as $sc) {
                                 pq('head')->append($sc);
                         }
-                         $script = $doc['head  > title'];
-                         foreach ($script as $sc) {
+                        $script = $doc['head  > title'];
+                        foreach ($script as $sc) {
                                 $bdoc['title']->remove();
                                 pq('head')->append($sc);
                         }
-                         $script = $doc['head  > meta'];
-                         foreach ($script as $sc) {
+                        $script = $doc['head  > meta'];
+                        foreach ($script as $sc) {
                                 pq('head')->append($sc);
                         }
- 
-  
+
+
                         /*
                           if (strlen($title) > 0) {
                           $bdoc['description']->remove();
@@ -286,8 +286,8 @@ abstract class WebApplication
                         pq('description')->text($renderpage->_description);
                 }
 
-                       
-                        
+
+
                 $response = '<!DOCTYPE HTML>' . pq('html')->htmlOuter(); //HTML  в  выходной  поток
 
                 $this->response->setContent($response);

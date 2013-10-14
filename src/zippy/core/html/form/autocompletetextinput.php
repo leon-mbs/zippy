@@ -70,7 +70,7 @@ class AutocompleteTextInput extends TextInput implements Requestable
                 if ($this->event != null) {
                         return $this->event->onEvent($this);
                 }
-            return null;
+                return null;
         }
 
         /**
