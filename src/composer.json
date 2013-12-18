@@ -1,9 +1,11 @@
 {
     "require": {
-"duvanmonsa/php-query": "dev-master",
+"coderockr/php-query": "dev-master",
 "adodb/adodb-php": "dev-master"
     },
 
      "config": {
-        "vendor-dir": "lib"
-    }}
+
+    }
+
+    }
