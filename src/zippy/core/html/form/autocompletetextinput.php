@@ -13,86 +13,98 @@ use \Zippy\Interfaces\EventReceiver;
 class AutocompleteTextInput extends TextInput implements Requestable
 {
 
-        public $minChars = 2;
-        public $timeout = 100;
+    public $minChars = 2;
+    public $timeout = 100;
+    private $key = 0;
 
-        /**
-         * Конструктор
-         * @param  Zippy ID 
-         * @param  Минимальное  количество  символов
-         * @param  Таймаут в  мс.
-         */
-        public function __construct($id, $minChars = 2, $timeout = 100)
-        {
-                parent::__construct($id);
-                $this->minChars = $minChars;
-                $this->timeout = $timeout;
+    /**
+     * Конструктор
+     * @param  Zippy ID 
+     * @param  Минимальное  количество  символов
+     * @param  Таймаут в  мс.
+     */
+    public function __construct($id, $minChars = 2, $timeout = 100)
+    {
+        parent::__construct($id);
+        $this->minChars = $minChars;
+        $this->timeout = $timeout;
+    }
+
+    public function RenderImpl()
+    {
+        TextInput::RenderImpl();
+
+        $url = $this->owner->getURLNode() . "::" . $this->id . "&ajax=true";
+
+        $js = "
+                    $('#{$this->id}').z_autocomplete('{$url}',{minChars:{$this->minChars},timeout:{$this->timeout}});
+                      ";
+        $this->setAttribute("data-key", $this->key);
+        $this->setAttribute("autocomplete", 'off');
+
+        WebApplication::$app->getResponse()->addJavaScript($js, true);
+    }
+
+    /**
+     * @see Requestable
+     */
+    public function RequestHandle()
+    {
+
+        $this->setValue($_REQUEST['text']);
+        $arr = $this->OnAutocomplete();
+        if (is_array($arr)) {
+            foreach ($arr as $key => $value) {
+                $posts[] = array($key => $value);
+            }
         }
+        WebApplication::$app->getResponse()->addAjaxResponse(json_encode($posts));
+    }
 
-        public function RenderImpl()
-        {
-                TextInput::RenderImpl();
-
-                $url = $this->owner->getURLNode() . "::" . $this->id . "&ajax=true";
-
-                $js = "
-
-                    $('#{$this->id}').autocomplete('{$url}',{minChars:{$this->minChars},timeout:{$this->timeout}});
-
-                        ";
-
-
-                WebApplication::$app->getResponse()->addJavaScript($js, true);
+    /**
+     * Событие при автозавершении.
+     * Вызывает  обработчик который  должен  вернуть  массив строк для  выпадающего списка.
+     */
+    public function OnAutocomplete()
+    {
+        if ($this->event != null) {
+            return $this->event->onEvent($this);
         }
+        return null;
+    }
 
-        /**
-         * @see Requestable
-         */
-        public function RequestHandle()
-        {
+    /**
+     * Устанавливает  событие
+     * @param Event
+     */
+    public function setAutocompleteHandler(EventReceiver $receiver, $handler)
+    {
 
-                $this->setValue($_REQUEST['text']);
-                $arr = $this->OnAutocomplete();
-                if (is_array($arr)) {
-                        foreach ($arr as $key => $value) {
-                                $posts[] = array($key => $value);
-                        }
-                }
-                WebApplication::$app->getResponse()->addAjaxResponse(json_encode($posts));
+        $this->event = new Event($receiver, $handler);
+    }
+
+    /**
+     * @see SubmitDataRequest
+     */
+    public function getRequestData()
+    {
+        $this->setValue($_REQUEST[$this->id . "_text"]);
+        $this->key = $_REQUEST[$this->id];
+        foreach ($this->validators as $validator) {
+            $validator->validate($this, $this->getValue());
         }
+    }
 
-        /**
-         * Событие при автозавершении.
-         * Вызывает  обработчик который  должен  вернуть  массив строк для  выпадающего списка.
-         */
-        public function OnAutocomplete()
-        {
-                if ($this->event != null) {
-                        return $this->event->onEvent($this);
-                }
-                return null;
-        }
+    //возвращает  ключ  для   выбранного значения
+    public function getKey()
+    {
+        return $this->key;
+    }
 
-        /**
-         * Устанавливает  событие
-         * @param Event
-         */
-        public function setAutocompleteHandler(EventReceiver $receiver, $handler)
-        {
-
-                $this->event = new Event($receiver, $handler);
-        }
-
-        /**
-         * @see SubmitDataRequest
-         */
-        public function getRequestData()
-        {
-                $this->setValue($_REQUEST[$this->id . "_text"]);
-                foreach ($this->validators as $validator) {
-                        $validator->validate($this, $this->getValue());
-                }
-        }
+    //
+    public function setKey($key)
+    {
+        $this->key = $key;
+    }
 
 }
-

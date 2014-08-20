@@ -15,51 +15,51 @@ use \Zippy\Interfaces\EventReceiver;
 class SubmitButton extends HtmlComponent implements ClickListener, Requestable
 {
 
-        private $event;
+    private $event;
 
-        /**
-         * @see HtmlComponent
-         */
-        public function RenderImpl()
-        {
+    /**
+     * @see HtmlComponent
+     */
+    public function RenderImpl()
+    {
 
-                if (WebApplication::$context["currentform"] == null) {
-                        throw new \Zippy\Exception("Element '" . $this->id . "' outside   FORM tag");
-                }
-
-                $formid = WebApplication::$context["currentform"];
-                //  $this->attributes["onclick"]="javascript:{ $('#".$formattr["id"]."_hf').val('submit1') ; $('#".$formattr["id"]."').submit();}";
-                $url = $this->owner->getURLNode() . '::' . $this->id;
-                $url = substr($url, 2 + strpos($url, 'q='));
-                $this->setAttribute("onclick", "javascript:{ if(beforeZippy('{$this->id}') ==false) return false; $('#" . $formid . "_q').attr('value','" . $url . "'); $('#" . $formid . "_s').trigger('click');}");
-                $this->setAttribute("type", 'button');
+        if (WebApplication::$context["currentform"] == null) {
+            throw new \Zippy\Exception("Element '" . $this->id . "' outside   FORM tag");
         }
 
-        /**
-         * @see Requestable
-         */
-        public function RequestHandle()
-        {
-                $this->OnClick();
-        }
+        $formid = WebApplication::$context["currentform"];
+        //  $this->attributes["onclick"]="javascript:{ $('#".$formattr["id"]."_hf').val('submit1') ; $('#".$formattr["id"]."').submit();}";
+        $url = $this->owner->getURLNode() . '::' . $this->id;
+        $url = substr($url, 2 + strpos($url, 'q='));
+        $this->setAttribute("onclick", "javascript:{ if(beforeZippy('{$this->id}') ==false) return false; $('#" . $formid . "_q').attr('value','" . $url . "'); $('#" . $formid . "_s').trigger('click');}");
+        $this->setAttribute("type", 'button');
+    }
 
-        /**
-         * @see ClickListener
-         */
-        public function setClickHandler(EventReceiver $receiver, $handler)
-        {
-                $this->event = new Event($receiver, $handler);
-        }
+    /**
+     * @see Requestable
+     */
+    public function RequestHandle()
+    {
+        $this->OnClick();
+    }
 
-        /**
-         * @see ClickListener
-         */
-        public function OnClick()
-        {
-                if ($this->event != null) {
-                        $this->event->onEvent($this);
-                }
+    /**
+     * @see ClickListener
+     */
+    public function setClickHandler(EventReceiver $receiver, $handler)
+    {
+        $this->event = new Event($receiver, $handler);
+    }
+
+    /**
+     * @see ClickListener
+     */
+    public function OnClick()
+    {
+        if ($this->event != null) {
+            $this->event->onEvent($this);
         }
+    }
 
 }
 

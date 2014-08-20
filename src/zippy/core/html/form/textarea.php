@@ -10,24 +10,23 @@ use \Zippy\WebApplication;
 class TextArea extends TextInput
 {
 
-        /**
-         * @see  HtmlFormSubmitElement
-         */
-        public function setResponseData()
-        {
-                $this->getTag()->text($this->getValue());
-        }
+    /**
+     * @see  HtmlFormSubmitElement
+     */
+    public function setResponseData()
+    {
+        $this->getTag()->text($this->getValue());
+    }
 
-        /**
-         * @see AjaxRender
-         */
-        public function AjaxAnswer()
-        {
-                $text = $this->getValue();
-                $responseJS = "$('#{$this->id}').text('{$text}')";
+    /**
+     * @see AjaxRender
+     */
+    public function AjaxAnswer()
+    {
+        $text = $this->getValue();
+        $responseJS = "$('#{$this->id}').text('{$text}')";
 
-                WebApplication::$app->getRespose()->addAjaxResponse($responseJS);
-        }
+        WebApplication::$app->getRespose()->addAjaxResponse($responseJS);
+    }
 
 }
-

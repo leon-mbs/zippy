@@ -12,32 +12,32 @@ use \Zippy\Interfaces\Binding;
 abstract class HtmlFormDataElement extends HtmlComponent implements SubmitDataRequest
 {
 
-        protected $value = null;
+    protected $value = null;
 
-        /**
-         * Устанавливает  значение данных  объекта
-         * @param mixed  Объект данных или  PropertyBinding
-         */
-        public function setValue($value)
-        {
-                if ($this->value instanceof Binding && !($value instanceof Binding)) {
-                        $this->value->setValue($value);
-                } else {
-                        $this->value = $value;
-                }
+    /**
+     * Устанавливает  значение данных  объекта
+     * @param mixed  Объект данных или  PropertyBinding
+     */
+    public function setValue($value)
+    {
+        if ($this->value instanceof Binding && !($value instanceof Binding)) {
+            $this->value->setValue($value);
+        } else {
+            $this->value = $value;
         }
+    }
 
-        /**
-         * Возвращает  значение данных  объекта
-         */
-        public function getValue()
-        {
-                if ($this->value instanceof Binding) {
-                        return $this->value->getValue();
-                } else {
-                        return $this->value;
-                }
+    /**
+     * Возвращает  значение данных  объекта
+     */
+    public function getValue()
+    {
+        if ($this->value instanceof Binding) {
+            return $this->value->getValue();
+        } else {
+            return $this->value;
         }
+    }
 
 }
 

@@ -25,7 +25,9 @@
 *    parameters = Custom parameters to be passed
 *    after, before = a function that will be caled before/after the ajax request
 */
-jQuery.fn.autocomplete = function(url, settings ) 
+// переименовано  во  избежание  конфликта   с  стандартным  плагином
+
+jQuery.fn.z_autocomplete = function(url, settings ) 
 {
 	return this.each( function()//do it for each matched element
 	{
@@ -41,7 +43,7 @@ jQuery.fn.autocomplete = function(url, settings )
 		var typingTimeout;
 		var size = 0;
 		var selected = 0;
-
+        valueInput.val(textInput.attr('data-key')); // 
 		settings = jQuery.extend(//provide default settings
 		{
 			minChars : 1,
@@ -86,6 +88,10 @@ jQuery.fn.autocomplete = function(url, settings )
 						{
 							settings.after(textInput,text);
 						}
+                        // если  остается  один  пункт и  совпадает  с  введенным,  проставляем  ключ
+                        if(size ==1 && data[0][key] == textInput.val() ){
+                           valueInput.val(key);  ;
+                        }
 					}
 					textInput.removeClass('autocomplete-loading');
 				});

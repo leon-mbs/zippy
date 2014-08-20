@@ -12,6 +12,7 @@
 
         const ERROR_DATAROW_COMPONENT_EXISTS = "Компонент '%s' уже существует в '%s'";
         const ERROR_INVALID_ID = "Неверный ID  компонента ('%s')";
+        const ERROR_INVALID_CREATE_ID = "Не задан  ID для  компонента ('%s')";
         const ERROR_INVALID_TREELINK = "Неверная  ссылка ";
 
         const ERROR_NOT_FOUND_PROPERTY_BINDING = "Поле '%s' объекта '%s' недоступно  для  связывания";

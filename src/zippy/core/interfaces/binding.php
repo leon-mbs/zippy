@@ -9,14 +9,13 @@ namespace Zippy\Interfaces;
 interface Binding
 {
 
-        /**
-         * Получить  данные из  поля  привязанного объекта
-         */
-        public function getValue();
+    /**
+     * Получить  данные из  поля  привязанного объекта
+     */
+    public function getValue();
 
-        /**
-         * Присвоить  данные   полю  привязанного  объекта
-         */
-        public function setValue($value);
+    /**
+     * Присвоить  данные   полю  привязанного  объекта
+     */
+    public function setValue($value);
 }
-

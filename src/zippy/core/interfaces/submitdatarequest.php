@@ -9,10 +9,10 @@ namespace Zippy\Interfaces;
 interface SubmitDataRequest
 {
 
-        /**
-         * Получить дынные  с  HTTP запроса
-         */
-        public function getRequestData();
+    /**
+     * Получить дынные  с  HTTP запроса
+     */
+    public function getRequestData();
 }
 
 ?>

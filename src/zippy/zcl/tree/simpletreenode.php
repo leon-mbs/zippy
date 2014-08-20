@@ -9,15 +9,14 @@ namespace ZCL\Tree;
 class SimpleTreeNode extends TreeNode
 {
 
-        public function __construct($caption, $loading = false)
-        {
-                parent::__construct($caption, null, $loading);
-        }
+    public function __construct($caption, $loading = false)
+    {
+        parent::__construct($caption, null, $loading);
+    }
 
-        protected function getRenderedLink()
-        {
-                return $this->text;
-        }
+    protected function getRenderedLink()
+    {
+        return $this->text;
+    }
 
 }
-

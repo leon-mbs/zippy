@@ -9,9 +9,8 @@ namespace Zippy\Interfaces;
 interface Requestable
 {
 
-        /**
-         * Вызывется  при  перенаправлении  компоненту  HTTP запроса
-         */
-        public function RequestHandle();
+    /**
+     * Вызывется  при  перенаправлении  компоненту  HTTP запроса
+     */
+    public function RequestHandle();
 }
-

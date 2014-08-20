@@ -10,13 +10,12 @@ namespace Zippy\Binding;
 class ArrayPropertyBinding extends PropertyBinding
 {
 
-        /**
-         *  Очистка  привязанного  массива.
-         */
-        public function clear()
-        {
-                $this->obj->{$this->propertyname} = array();
-        }
+    /**
+     *  Очистка  привязанного  массива.
+     */
+    public function clear()
+    {
+        $this->obj->{$this->propertyname} = array();
+    }
 
 }
-

@@ -9,17 +9,17 @@ namespace Zippy\Interfaces;
 interface ClickListener
 {
 
-        /**
-         * Устанавливает обработчик  события
-         * @param  mixed  Объект
-         * @param  string Имя  метода - обработчика
-         */
-        public function setClickHandler(EventReceiver $receiver, $handler);
+    /**
+     * Устанавливает обработчик  события
+     * @param  mixed  Объект
+     * @param  string Имя  метода - обработчика
+     */
+    public function setClickHandler(EventReceiver $receiver, $handler);
 
-        /**
-         * Вызывает  срабатывание  обработчика
-         */
-        // public function OnClick();
+    /**
+     * Вызывает  срабатывание  обработчика
+     */
+    // public function OnClick();
 }
 
 /**

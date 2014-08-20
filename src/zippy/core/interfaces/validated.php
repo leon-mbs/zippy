@@ -12,10 +12,9 @@ use \Zippy\Validator\Validator;
 interface Validated
 {
 
-        /**
-         * добавляет  валидатор к  объекту
-         * Как  правило объект  содержит  массив   валидаторов  вызываемых  по  очереди
-         */
-        public function addValidator(Validator $validator);
+    /**
+     * добавляет  валидатор к  объекту
+     * Как  правило объект  содержит  массив   валидаторов  вызываемых  по  очереди
+     */
+    public function addValidator(Validator $validator);
 }
-

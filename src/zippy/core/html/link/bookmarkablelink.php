@@ -12,57 +12,56 @@ use \Zippy\Binding\SimpleBinding;
 class BookmarkableLink extends AbstractLink
 {
 
-        private $link;
+    private $link;
 
-        /**
-         * Конструктор
-         * @param  string ID компонента
-         * @param  string Адрес  ссылки
-         */
-        public function __construct($id, $link = "")
-        {
-                AbstractLink::__construct($id);
-                $this->link = $link;
-        }
+    /**
+     * Конструктор
+     * @param  string ID компонента
+     * @param  string Адрес  ссылки
+     */
+    public function __construct($id, $link = "")
+    {
+        AbstractLink::__construct($id);
+        $this->link = $link;
+    }
 
-        /**
-         * @see  HtmlComponent
-         */
-        public function RenderImpl()
-        {
-                $link = $this->getLink();
-                if (strlen($link) > 0) {
-                        if (strpos($link, '://') === false) {
-                                // $link = "http://".$_SERVER["HTTP_HOST"]."/". $link;
-                                if ($link[0] != '/')
-                                        $link = '/' . $link;
-                        }
-                        $this->setAttribute("href", $link);
-                }
+    /**
+     * @see  HtmlComponent
+     */
+    public function RenderImpl()
+    {
+        $link = $this->getLink();
+        if (strlen($link) > 0) {
+            if (strpos($link, '://') === false) {
+                // $link = "http://".$_SERVER["HTTP_HOST"]."/". $link;
+                if ($link[0] != '/')
+                    $link = '/' . $link;
+            }
+            $this->setAttribute("href", $link);
         }
+    }
 
-        /**
-         * возвращает ссыоку
-         * 
-         */
-        public function getLink()
-        {
-                if ($this->link instanceof Binding) {
-                        return $this->link->getValue();
-                } else {
-                        return $this->link;
-                }
+    /**
+     * возвращает ссыоку
+     * 
+     */
+    public function getLink()
+    {
+        if ($this->link instanceof Binding) {
+            return $this->link->getValue();
+        } else {
+            return $this->link;
         }
+    }
 
-        /**
-         * Устнанавливает  ссылку
-         * 
-         * @param mixed $link
-         */
-        public function setLink($link)
-        {
-                $this->link = $link;
-        }
+    /**
+     * Устнанавливает  ссылку
+     * 
+     * @param mixed $link
+     */
+    public function setLink($link)
+    {
+        $this->link = $link;
+    }
 
 }
-

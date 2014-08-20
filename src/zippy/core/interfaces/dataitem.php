@@ -10,10 +10,9 @@ namespace Zippy\Interfaces;
 interface DataItem
 {
 
-        /**
-         * Возвращает  уникальный   ключ
-         * @return  int  ID
-         */
-        public function getID();
+    /**
+     * Возвращает  уникальный   ключ
+     * @return  int  ID
+     */
+    public function getID();
 }
-

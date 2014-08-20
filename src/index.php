@@ -2,7 +2,7 @@
 
 define("_ROOT", __DIR__ . '/');
 
-require_once _ROOT . 'lib/autoload.php';
+require_once _ROOT . 'vendor/autoload.php';
 require_once _ROOT . 'zippy/zippy.inc.php';
 
 //загрузка классов  страниц и  других  пользовательских  классов
@@ -43,7 +43,6 @@ try {
     $app = new Application('Pages\Main');
 
     $app->Run();
-    
 } catch (\Zippy\Exception $e) {
     echo $e->getMessage();
 } catch (Exception $e) {

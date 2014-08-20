@@ -12,86 +12,103 @@ use \Zippy\Html\WebPage;
 class PageManager
 {
 
-        const HISTORY_SIZE = 10;
+    const HISTORY_SIZE = 20;
 
-        private $pages = array();
-        private $index = 0;
+    private $pages = array();
+    private $index = 0;
+    private $prevpage = null;
+    
+    /**
+     * Добавляет новую  страницу  (объект  WebPage) в  список.
+     * @param WebPage страница
+     * @return  int номер  страницы
+     */
+    public final function putPage(WebPage $page)
+    {
+        $page->beforeSaveToSession();
 
-        /**
-         * Добавляет новую  страницу  (объект  WebPage) в  список.
-         * @param WebPage страница
-         * @return  int номер  страницы
-         */
-        public final function putPage(WebPage $page)
-        {
-                $page->beforeSaveToSession();
-
-                $this->pages[++$this->index] = ($page);
-                if ($this->index > self::HISTORY_SIZE) {
-                        $this->pages[$this->index - self::HISTORY_SIZE] = null;
-                }
-
-
-                return $this->index;
+        $this->pages[++$this->index] = ($page);
+        if ($this->index > self::HISTORY_SIZE) {
+            $this->pages[$this->index - self::HISTORY_SIZE] = null;
         }
 
-        /**
-         * Возвращает  из сессии  страницу  по  номеру   и  версии
-         * @param Integer  Номер  страницы
-         * @param int  Версия  страницы
-         * @return  WebPage   страница
-         */
-        public final function getPage($number)
-        {
-                if (isset($this->pages[$number])) {
-
-                        $page = ($this->pages[$number]);
-
-                        if ($page instanceof WebPage) {
-                                $page->afterRestoreFromSession();
-                        } else {
-                                $page = null;
-                        }
-                        return $page;
-                }
-
-                return null;
+        
+        $prevpage = $this->pages[$this->index -1];
+        if($prevpage instanceof \Zippy\Html\WebPage ){
+            
+            if(get_class($prevpage) != get_class($page)){
+            //  если страница  изменилась запоминаем  к  предыдущую
+                $this->prevpage =  get_class($prevpage);
+            }
         }
 
-        /**
-         * Возвращает  из сессии последнюю добавленую страницу
-         * @return  WebPage  страница
-         */
-        public final function getLastPage()
-        {
-                $this->getPage($this->index);
+        return $this->index;
+    }
+
+    /**
+     * Возвращает  из сессии  страницу  по  номеру   и  версии
+     * @param Integer  Номер  страницы
+     * @param int  Версия  страницы
+     * @return  WebPage   страница
+     */
+    public final function getPage($number)
+    {
+        if (isset($this->pages[$number])) {
+
+            $page = ($this->pages[$number]);
+
+            if ($page instanceof WebPage) {
+                $page->afterRestoreFromSession();
+            } else {
+                $page = null;
+            }
+            return $page;
         }
 
-        /**
-         * Обновляет  персистентные  данные  страницы.
-         * @param WebPage  Экземпляр класса страницы
-         * @param int  Номер  страницы
-         * @param mixed  Версия  страницы
-         */
-        public final function updatePage(WebPage $page, $number)
-        {
+        return null;
+    }
 
-                $page->beforeSaveToSession();
-                $this->pages[$number] = $page;
-        }
+    /**
+     * Возвращает  из сессии последнюю добавленую страницу
+     * @return  WebPage  страница
+     */
+    public final function getLastPage()
+    {
+        $this->getPage($this->index);
+    }
 
-        public function __sleep()
-        {
-                $this->pages = gzcompress(serialize($this->pages));
-                return array('pages', 'index');
-        }
+    /**
+     * Обновляет  персистентные  данные  страницы.
+     * @param WebPage  Экземпляр класса страницы
+     * @param int  Номер  страницы
+     * @param mixed  Версия  страницы
+     */
+    public final function updatePage(WebPage $page, $number)
+    {
 
-        public function __wakeup()
-        {
-                if (is_array($this->pages))
-                        return;
-                $this->pages = unserialize(gzuncompress($this->pages));
-        }
+        $page->beforeSaveToSession();
+        $this->pages[$number] = $page;
+    }
 
+    public function __sleep()
+    {
+        $this->pages = gzcompress(serialize($this->pages));
+        return array('pages', 'index','prevpage');
+    }
+
+    public function __wakeup()
+    {
+        if (is_array($this->pages))
+            return;
+        $this->pages = unserialize(gzuncompress($this->pages));
+    }
+
+    /**
+    * возвращает класс предыдущей страницы
+    * 
+    */
+    public function getPrevPage(){
+        return  $this->prevpage;
+    }
+    
 }
-

@@ -9,16 +9,15 @@ namespace Zippy\Interfaces;
 interface ChangeListener
 {
 
-        /**
-         * Устанавливает обработчик  события
-         * @param  mixed  Объект
-         * @param  string Имя  метода - обработчика
-         */
-        public function setChangeHandler(EventReceiver $receiver, $handler);
+    /**
+     * Устанавливает обработчик  события
+     * @param  mixed  Объект
+     * @param  string Имя  метода - обработчика
+     */
+    public function setChangeHandler(EventReceiver $receiver, $handler);
 
-        /**
-         * Вызывает  срабатывание  обработчика
-         */
-        public function OnChange();
+    /**
+     * Вызывает  срабатывание  обработчика
+     */
+    public function OnChange();
 }
-

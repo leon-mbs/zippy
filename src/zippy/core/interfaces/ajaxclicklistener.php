@@ -10,11 +10,10 @@ namespace Zippy\Interfaces;
 interface AjaxClickListener
 {
 
-        /**
-         * Устанавливает обработчик  события
-         * @param  mixed  Объект
-         * @param  string Имя  метода - обработчика
-         */
-        public function setAjaxClickHandler(EventReceiver $receiver, $handler);
+    /**
+     * Устанавливает обработчик  события
+     * @param  mixed  Объект
+     * @param  string Имя  метода - обработчика
+     */
+    public function setAjaxClickHandler(EventReceiver $receiver, $handler);
 }
-

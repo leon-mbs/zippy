@@ -8,14 +8,13 @@ namespace Zippy\Html\Form\Validator;
 class NumericValidator extends Validator
 {
 
-        protected function check($value)
-        {
-                if (is_numeric($value)) {
-                        return true;
-                } else {
-                        return strlen($this->message) > 0 ? $this->message : ERROR_VALIDATE_NUMERIC;
-                }
+    protected function check($value)
+    {
+        if (is_numeric($value)) {
+            return true;
+        } else {
+            return strlen($this->message) > 0 ? $this->message : ERROR_VALIDATE_NUMERIC;
         }
+    }
 
 }
-

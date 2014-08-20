@@ -30,11 +30,16 @@ class Date extends TextInput
 
         /**
          * Возвращает дату   в виде timestamp
-         * 
+         * @param mixed $endday - установить  конец  дня 
          */
-        public function getDate()
+        public function getDate($endday = false)
         {
-                return strtotime($this->getText());
+                $date = strtotime($this->getText());
+                if($endday == true){
+                   $d = date('Y-m-d',$date);
+                   $date = strtotime($d .' 23:59:59'); 
+                }
+                return $date;
         }
 
         /**
@@ -45,10 +50,10 @@ class Date extends TextInput
          */
         public function setDate($t = null)
         {
-                if ($t == null && $t == 0) {
-                        $this->setText("");
-                } else {
+                if ($t > 0) {
                         $this->setText(date('Y-m-d', $t));
+                } else {
+                        $this->setText("");
                 }
         }
 

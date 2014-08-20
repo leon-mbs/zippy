@@ -15,94 +15,92 @@ use \Zippy\Event;
 class CheckBox extends HtmlFormDataElement implements ChangeListener, Requestable
 {
 
-        private $event;
+    private $event;
 
-        /**
-         * Конструктор
-         * @param mixed  ID
-         * @param Значение елеента  или  поле  привязанного объекта
-         */
-        public function __construct($id, $value = false)
-        {
-                parent::__construct($id);
-                $this->setValue($value);
+    /**
+     * Конструктор
+     * @param mixed  ID
+     * @param Значение елеента  или  поле  привязанного объекта
+     */
+    public function __construct($id, $value = false)
+    {
+        parent::__construct($id);
+        $this->setValue($value);
+    }
+
+    /**
+     * @see  HtmlComponent
+     */
+    public function RenderImpl()
+    {
+
+        if ($this->getValue() == true || $this->getValue() == 1) {
+            $this->setAttribute("checked", "On");
+        } else
+            $this->setAttribute("checked", null);
+
+        $this->setAttribute("name", $this->id);
+        // if set event
+        if ($this->event != null) {
+            $formid = WebApplication::$context["currentform"];
+            //  $this->attributes["onclick"]="javascript:{ $('#".$formattr["id"]."_hf').val('submit1') ; $('#".$formattr["id"]."').submit();}";
+
+            $url = $this->owner->getURLNode() . '::' . $this->id;
+            $url = substr($url, 2 + strpos($url, 'q='));
+            $this->setAttribute("onclick", "javascript:{  $('#" . $formid . "_q').attr('value','" . $url . "');$('#" . $formid . "').submit();}");
         }
+    }
 
-        /**
-         * @see  HtmlComponent
-         */
-        public function RenderImpl()
-        {
+    /**
+     * @see SubmitDataRequest
+     */
+    public function getRequestData()
+    {
+        $this->setValue(isset($_REQUEST[$this->id]));
+    }
 
-                if ($this->getValue() == true || $this->getValue() == 1) {
-                        $this->setAttribute("checked", "On");
-                }
-                else
-                        $this->setAttribute("checked", null);
+    /**
+     * @see Requestable
+     */
+    public function RequestHandle()
+    {
+        $this->OnChange();
+    }
 
-                $this->setAttribute("name", $this->id);
-                // if set event
-                if ($this->event != null) {
-                        $formid = WebApplication::$context["currentform"];
-                        //  $this->attributes["onclick"]="javascript:{ $('#".$formattr["id"]."_hf').val('submit1') ; $('#".$formattr["id"]."').submit();}";
+    /**
+     * @see  ChangeListener
+     */
+    public function setChangeHandler(EventReceiver $receiver, $handler)
+    {
 
-                        $url = $this->owner->getURLNode() . '::' . $this->id;
-                        $url = substr($url, 2 + strpos($url, 'q='));
-                        $this->setAttribute("onclick", "javascript:{  $('#" . $formid . "_q').attr('value','" . $url . "');$('#" . $formid . "').submit();}");
-                }
+        $this->event = new Event($receiver, $handler);
+    }
+
+    /**
+     * @see ChangeListener
+     */
+    public function OnChange()
+    {
+        if ($this->event != null) {
+            $this->event->onEvent($this);
         }
+    }
 
-        /**
-         * @see SubmitDataRequest
-         */
-        public function getRequestData()
-        {
-                $this->setValue(isset($_REQUEST[$this->id]));
-        }
+    /**
+     * Устанавливает  checkbox
+     * @param  boolean
+     */
+    public function setChecked($checked)
+    {
+        $this->setValue($checked);
+    }
 
-        /**
-         * @see Requestable
-         */
-        public function RequestHandle()
-        {
-                $this->OnChange();
-        }
-
-        /**
-         * @see  ChangeListener
-         */
-        public function setChangeHandler(EventReceiver $receiver, $handler)
-        {
-
-                $this->event = new Event($receiver, $handler);
-        }
-
-        /**
-         * @see ChangeListener
-         */
-        public function OnChange()
-        {
-                if ($this->event != null) {
-                        $this->event->onEvent($this);
-                }
-        }
-
-        /**
-         * Устанавливает  checkbox
-         * @param  boolean
-         */
-        public function setChecked($checked)
-        {
-                $this->setValue($checked);
-        }
-
-        /**
-         * Установлен  ли checkbox
-         */
-        public function isChecked()
-        {
-                return $this->getValue() === true;
-        }
+    /**
+     * Установлен  ли checkbox
+     */
+    public function isChecked()
+    {
+        return $this->getValue() === TRUE;
+    }
 
 }
-

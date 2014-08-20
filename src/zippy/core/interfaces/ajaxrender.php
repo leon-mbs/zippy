@@ -10,10 +10,9 @@ namespace Zippy\Interfaces;
 interface AjaxRender
 {
 
-        /**
-         * Возвращает JavaScript код  для   рендеринга на клиенте
-         * @return string
-         */
-        public function AjaxAnswer();
+    /**
+     * Возвращает JavaScript код  для   рендеринга на клиенте
+     * @return string
+     */
+    public function AjaxAnswer();
 }
-

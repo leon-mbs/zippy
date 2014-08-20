@@ -11,26 +11,25 @@ use \Zippy\Interfaces\Binding;
 class SimpleBinding implements Binding
 {
 
-        private $value = "";
+    private $value = "";
 
-        /**
-         * Конструктор
-         * @param mixed  Значение
-         */
-        public function __construct($value)
-        {
-                $this->value = $value;
-        }
+    /**
+     * Конструктор
+     * @param mixed  Значение
+     */
+    public function __construct($value)
+    {
+        $this->value = $value;
+    }
 
-        public function getValue()
-        {
-                return $this->value;
-        }
+    public function getValue()
+    {
+        return $this->value;
+    }
 
-        public function setValue($value)
-        {
-                $this->value = $value;
-        }
+    public function setValue($value)
+    {
+        $this->value = $value;
+    }
 
 }
-
