@@ -69,7 +69,7 @@ class HttpRequest
         if (isset($_REQUEST["p"])) {
             $this->querytype = self::QUERY_PAGE;
             $this->request_page = "\\" . ltrim(str_replace("/", "\\", $_REQUEST["p"]), "\\");
-            $this->request_page_arg = isset($_REQUEST["arg"]) ? explode('/', $_REQUEST["arg"]) : array();
+            $this->request_page_arg = isset($_REQUEST["arg"]) ? explode('/', trim($_REQUEST["arg"],'/')) : array();
             return;
         }
         // URI формируемый  BookmarkableLink (в частности, ЧПУ) 

@@ -92,6 +92,8 @@ class CheckBox extends HtmlFormDataElement implements ChangeListener, Requestabl
      */
     public function setChecked($checked)
     {
+        $checked == 1 ? true : $checked ;
+        $checked === 'true' ? true : $checked  ;
         $this->setValue($checked);
     }
 

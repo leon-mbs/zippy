@@ -216,27 +216,44 @@ abstract class Entity implements \Zippy\Interfaces\DataItem
 
     /**
      * Возвращает  одну  строку  из набора
-     *         
+     * строки  должны  быть  уникальны        
      * @param mixed $where
-     * @param mixed $orderbyfield
-     * @param mixed $orderbydir
      */
-    public static function findOne($where = "", $orderbyfield = null, $orderbydir = null)
+    public static function findOne($where = "")
     {
         $list = self::find($where, $orderbyfield, $orderbydir);
 
         if (count($list) == 0) {
             return null;
-        }
+        }   
         if (count($list) == 1) {
 
-            return array_pop($list);
+            return  array_pop($list);  
         }
         if (count($list) > 1) {
             throw new \Zippy\Exception("Метод findOne вернул  больше  одной  записи. Условие: [{$where}]");
         }
     }
 
+    /**
+     * Возвращает  первую  строку  из набора
+     * @param mixed $where
+     */
+    public static function getFirst($where = "",$orderbyfield = null, $orderbydir = null)
+    {
+        $list = self::find($where, $orderbyfield, $orderbydir,1);
+
+        if (count($list) == 0) {
+            return null;
+        } 
+        
+        return  array_pop($list); 
+       
+        
+    }
+    
+    
+    
     /**
      * Сохраняет  сущность  в  БД
      * Если  сущность новая создает запись 

@@ -125,15 +125,18 @@ class Form extends HtmlContainer
                 $component->setText('');
             }
 
-            if ($component instanceof TextArea) {
-                $component->setText('');
-            }
+         //   if ($component instanceof TextArea) {
+        //        $component->setText('');
+        //    }
             if ($component instanceof CheckBox) {
                 $component->setChecked(false);
             }
             if ($component instanceof DropDownChoice) {
                 $component->setValue(0);
             }
+            if ($component instanceof AutocompleteTextInput) {
+                $component->setKey(0);
+            }            
         }
     }
 

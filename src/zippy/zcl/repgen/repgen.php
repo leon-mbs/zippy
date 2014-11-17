@@ -218,6 +218,7 @@ class RepGen
      * @param mixed $bottom горизрнтальные итоги
      */
     public function generatePivot(array $detail, array $left, array $top, array $right, array $bottom)
+    
     {
         $content = @file_get_contents($this->template);
         if (strlen($content) == 0) {

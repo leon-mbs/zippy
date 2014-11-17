@@ -160,12 +160,14 @@ class DropDownChoice extends HtmlFormDataElement implements ChangeListener, Ajax
 
     public function setOptionList($optionlist)
     {
-        $this->optionlist = $optionlist;
-        $this->setValue(-1);
+        if(is_array($optionlist)){
+            $this->optionlist = $optionlist;
+            $this->setValue(-1);
+        }
     }
 
     /**
-     * Возвразает  массив  списка  комбобокса
+     * Возвращает  массив  списка  комбобокса
      * 
      */
     public function getOptionList()
@@ -186,4 +188,6 @@ class DropDownChoice extends HtmlFormDataElement implements ChangeListener, Ajax
         $this->optionlist[$value] = $text;
     }
 
+    
+    
 }
