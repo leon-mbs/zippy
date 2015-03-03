@@ -55,7 +55,7 @@ class ClickLink extends AbstractLink implements ClickListener, AjaxClickListener
             $this->setAttribute("onclick", "if(beforeZippy('{$this->id}') ==false) return false;window.location='{$url}';event.returnValue=false; return false;");
         } else {
             $url = $this->owner->getURLNode() . "::" . $this->id . "&ajax=true";
-            $this->setAttribute("onclick", "getUpdate('{$url}');event.returnValue=false; return false;");
+            $this->setAttribute("onclick", "if(beforeZippy('{$this->id}') ==false) return false;getUpdate('{$url}');event.returnValue=false; return false;");
         }
     }
 

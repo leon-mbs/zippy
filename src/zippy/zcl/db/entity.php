@@ -409,10 +409,25 @@ abstract class Entity implements \Zippy\Interfaces\DataItem
         return $conn->qstr($str);
     }
 
+    
+    /**
+    * Добавление  слешей   строку
+    * 
+    * @param mixed $str
+    */
     public static function escape($str)
     {
         $conn = DB::getConnect();
         return mysqli_real_escape_string($conn->_connectionID, $str);
     }
-
+     /**
+    * Форматирование  даты в   сответствии  с  SQL  диалектом 
+    * 
+    * @param mixed $dt   Timestamp
+    */
+    public static function dbdate($dt)
+    {
+        $conn = DB::getConnect();
+        return $conn->DBDate( $dt);
+    }
 }

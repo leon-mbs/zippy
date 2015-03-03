@@ -177,6 +177,12 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
         }
     }
 
+    /**
+    * Переход  по  имени  якоря (после  загрузки страницы)
+    * 
+    * @param mixed $name
+    */
+    
     protected function goAnkor($name){
         $this->_ankor  = $name;
     }

@@ -50,6 +50,7 @@ jQuery.fn.z_autocomplete = function(url, settings )
 			timeout: 1000,
 			after : null,
 			before : null,
+            onchange : null,
 			validSelection : true,
 			parameters : {'inputName' : valueInput.attr('name'), 'inputId' : textInput.attr('id')}
 		} , settings);
@@ -82,7 +83,15 @@ jQuery.fn.z_autocomplete = function(url, settings )
 						  //on mouse hover over elements set selected class and on click set the selected value and close list
 						  list.show().children().
 						  hover(function() { $(this).addClass("selected").siblings().removeClass("selected");}, function() { $(this).removeClass("selected") } ).
-						  click(function () { valueInput.val( $(this).attr('value') );textInput.val( $(this).text() ); clear(); });
+						  click(function () { valueInput.val( $(this).attr('value') );textInput.val( $(this).text() ); 
+                          
+                          
+                       if (settings.onchange != null) 
+                        {
+                            settings.onchange();
+                        }
+                          
+                          clear(); });
 						}
 						if (settings.after == "function") 
 						{

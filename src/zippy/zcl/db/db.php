@@ -78,6 +78,7 @@ class DB
         $this->conn = \ADONewConnection(self::$driver);
         $this->conn->Connect(self::$dbhost, self::$dbuser, self::$dbpassword, self::$dbname);
         $this->conn->Execute("SET NAMES 'utf8'");
+        
     }
 
 }

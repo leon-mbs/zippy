@@ -16,7 +16,8 @@ class PageManager
 
     private $pages = array();
     private $index = 0;
-    private $prevpage = null;
+    
+    private $pchain = array();
     
     /**
      * Добавляет новую  страницу  (объект  WebPage) в  список.
@@ -37,8 +38,9 @@ class PageManager
         if($prevpage instanceof \Zippy\Html\WebPage ){
             
             if(get_class($prevpage) != get_class($page)){
-            //  если страница  изменилась запоминаем  к  предыдущую
-                $this->prevpage =  get_class($prevpage);
+            //  если страница  изменилась запоминаем  
+
+                $this->pchain[] = get_class($page);
             }
         }
 
@@ -93,7 +95,7 @@ class PageManager
     public function __sleep()
     {
         $this->pages = gzcompress(serialize($this->pages));
-        return array('pages', 'index','prevpage');
+        return array('pages', 'index','pchain');
     }
 
     public function __wakeup()
@@ -108,7 +110,8 @@ class PageManager
     * 
     */
     public function getPrevPage(){
-        return  $this->prevpage;
+        array_pop($this->pchain);
+        return  array_pop($this->pchain);
     }
     
 }
