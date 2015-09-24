@@ -10,7 +10,7 @@ use \Zippy\Interfaces\EventReceiver;
 use \Zippy\Event;
 
 /**
- * Компонент  тэга  &lt;input type=&quot;checkbox&quot;&gt; 
+ * Компонент  тэга  &lt;input type=&quot;checkbox&quot;&gt;
  */
 class CheckBox extends HtmlFormDataElement implements ChangeListener, Requestable
 {
@@ -42,7 +42,7 @@ class CheckBox extends HtmlFormDataElement implements ChangeListener, Requestabl
         $this->setAttribute("name", $this->id);
         // if set event
         if ($this->event != null) {
-            $formid = WebApplication::$context["currentform"];
+            $formid = $this->getFormOwner()->id;
             //  $this->attributes["onclick"]="javascript:{ $('#".$formattr["id"]."_hf').val('submit1') ; $('#".$formattr["id"]."').submit();}";
 
             $url = $this->owner->getURLNode() . '::' . $this->id;

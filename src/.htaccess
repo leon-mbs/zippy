@@ -1,12 +1,16 @@
-
-AddDefaultCharset UTF-8
-
+AddDefaultCharset utf-8
 DirectoryIndex index.php
+
+ 
+Redirect 301 http://zippy.com.ua/novosti.html http://zippy.com.ua/news
+Redirect 301 http://zippy.com.ua/biblioteka_komponentov.html http://zippy.com.ua/biblioteka_komponentov
+Redirect 301 http://zippy.com.ua/architectura.html http://zippy.com.ua/Zippy-framework/architectura
+Redirect 301 http://zippy.com.ua/Zippy-framework/dopolnitelnhie_vozmojnosti.html http://zippy.com.ua/Zippy-framework/dopolnitelnhie_vozmojnosti
 
 RewriteEngine on
 RewriteBase / 
 
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(\/index\.php.{0,}|[-#a-zA-Z0-9\/_]+)$ /index.php [L,QSA]
+RewriteRule ^(.*)$ index.php [L,QSA]
+RewriteRule .* /index.php [L,QSA]
 

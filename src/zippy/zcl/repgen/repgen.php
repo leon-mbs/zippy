@@ -74,10 +74,8 @@ class RepGen
 
         $html = pq('body')->html();
         //очищаем  незаполненные   поля
-
-        foreach ($ds as $field => $data) {
-            $html = str_replace("{{$field}}", "", $html);
-        }
+        $html=preg_replace('#{.*?}#s','$1',$html);
+       
         return $html;
     }
 
@@ -200,11 +198,10 @@ class RepGen
             }
         }
         $html = pq('body')->html();
-        //очищаем  незаполненрые   поля
-        foreach ($ds as $field => $data) {
-            $html = str_replace("{{$field}}", "", $html);
-        }
 
+        //очищаем  незаполненрые   поля
+        $html=preg_replace('#{.*?}#s','$1',$html);
+        
         return $html;
     }
 

@@ -14,14 +14,15 @@ class Paginator extends HtmlComponent implements Requestable
 {
 
     private $datalist;
-    private $size = 20;
+    private $maxbuttons = 14;
+    private $firstButton = 1;
 
     /**
      * Конструктор
      * @param string ID
      * @param  DataList Объект  использующий  paginator
      */
-    public function __construct($id, AbstractList $datalist)
+    public function __construct($id, \Zippy\Html\DataList\AbstractList $datalist)
     {
         parent::__construct($id);
         $this->datalist = $datalist;
@@ -45,19 +46,32 @@ class Paginator extends HtmlComponent implements Requestable
      */
     public function getContent($pages, $currentpage)
     {
-        $content = "<ul class=\"paginator\">";
-        if ($pages == 1)
-            return "";
+        if ($pages == 1)  return "";
 
-        if ($currentpage > 1) {
-            $content .= "<li class=\" first\"><a  href=\"javascript:void(0);\"  onclick=\"" . $this->getUrl(1) . "\">&nbsp;</a></li>";
+        if($this->getAttribute('data-maxbtn') > 0){
+            $this->maxbuttons = $this->getAttribute('data-maxbtn') -1;
+        }
+        $content = "<ul class=\"pagination\">";
+
+
+        if($currentpage - $this->firstButton > $this->maxbuttons){
+
+            $this->firstButton =  $currentpage  - $this->maxbuttons;
+        }
+        if($currentpage < $this->firstButton){
+            $this->firstButton = $currentpage-1;
         }
 
-        if ($currentpage > 1) {
-            //  $content .= "<li class=\"disabled\"><a  href=\"javascript:void(0);\" >...</a></li>";
-        }
+        if ($this->firstButton > 1) {
+           $content .= "<Li><a   href='void(0);' onclick=\"" . $this->getUrl(1) . "\"><span aria-hidden=\"true\">&laquo;</span></a></li>";
+           $content .= "<Li><a   href='void(0);' onclick=\"" . $this->getUrl($currentpage - 1) . "\"><span aria-hidden=\"true\">&lsaquo;</span></a></li>";
+           $content .= "<li ><a  href=\"javascript:void(0);\" >&hellip;</a></li>";
+         }
 
-        for ($i = 1; $i <= $pages; $i++) {
+
+
+        for ($i = $this->firstButton; $i <= $this->firstButton + $this->maxbuttons; $i++) {
+            if($i > $pages) break;
             if ($currentpage == $i) {
                 $content .= "<li class=\"active\"><a  href=\"javascript:void(0);\" > {$i} </a></li>";
             } else {
@@ -65,12 +79,11 @@ class Paginator extends HtmlComponent implements Requestable
             }
         }
 
-        if ($currentpage < $pages) {
-            //  $content .= "<li><a  href=\"javascript:void(0);\"  onclick=\"" . $this->getUrl($currentpage + 1) . "\">&nbsp;</a></li>";
-        }
+        if($pages > $this->firstButton + $this->maxbuttons){
+               $content .= "<li ><a  href=\"javascript:void(0);\" >&hellip;</a></li>";
+               $content .= "<li><a href='void(0);' onclick=\"" . $this->getUrl($currentpage + 1) . "\"aria-label=\"Next\">       <span aria-hidden=\"true\">&rsaquo;</span></a></li>";
+               $content .= "<li><a href='void(0);' onclick=\"" . $this->getUrl($pages) . "\"aria-label=\"Next\">       <span aria-hidden=\"true\">&raquo;</span></a></li>";
 
-        if ($currentpage < $pages) {
-            $content .= "<li class=\" last\"><a  href=\"javascript:void(0);\"  onclick=\"" . $this->getUrl($pages) . "\">&nbsp;</a></li>";
         }
 
         return $content . "</ul>";
@@ -82,6 +95,7 @@ class Paginator extends HtmlComponent implements Requestable
     public final function RequestHandle()
     {
         $p = WebApplication::$app->getRequest()->request_params[$this->id];
+        $this->OnPage($p[0]);
         $this->datalist->setCurrentPage($p[0]);
         $this->datalist->Reload();
     }
@@ -105,14 +119,22 @@ class Paginator extends HtmlComponent implements Requestable
 
     /**
      * Устанавливает  размер  пагинатора
-     * 
-     * @param mixed $size
+     *
+     * @param mixed $maxbuttons
      */
-    public final function setSize($size)
+    public final function setMaxButtons($maxbuttons)
     {
-        if ($size > 5) {
-            $this->size = $size;
+        if ($maxbuttons > 1) {
+            $this->maxbuttons = $maxbuttons-1;
         }
     }
 
+    /**
+    * перегружается  для получения  номера страницы при  клике  на  паггинатор
+    *
+    * @param mixed $pageno
+    */
+    public function OnPage($pageno){
+
+    }
 }

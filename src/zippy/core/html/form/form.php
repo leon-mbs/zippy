@@ -34,12 +34,9 @@ class Form extends HtmlContainer
     protected function beforeRender()
     {
 
-        WebApplication::$context["formcount"] ++;   //Нумеруем  формы
 
         $url = $this->owner->getURLNode();
 
-        // $formid = "form" . WebApplication::$context["formcount"];
-        WebApplication::$context["currentform"] = $this->id;
 
         $this->setAttribute("id", $this->id);
         $this->setAttribute("name", $this->id);
@@ -52,13 +49,7 @@ class Form extends HtmlContainer
         $HtmlTag->append("<input type=\"submit\" name=\"{$this->id}_s\" id=\"{$this->id}_s\" style=\"display:none\" >");
     }
 
-    /**
-     * @see HtmlComponent
-     */
-    protected function AfterRender()
-    {
-        WebApplication::$context["currentform"] = null;
-    }
+
 
     /**
      * @see Requestable
@@ -115,7 +106,7 @@ class Form extends HtmlContainer
 
     /**
      * Очистка  элементов  формы
-     * 
+     *
      */
     public function clean()
     {
@@ -136,7 +127,7 @@ class Form extends HtmlContainer
             }
             if ($component instanceof AutocompleteTextInput) {
                 $component->setKey(0);
-            }            
+            }
         }
     }
 

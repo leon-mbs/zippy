@@ -4,7 +4,7 @@ namespace Zippy\Html;
 
 /**
  *  Компонент  для  тэга  &lt;IMG&gt;
- *  
+ *
  */
 class Image extends HtmlComponent implements \Zippy\Interfaces\Requestable, \Zippy\Interfaces\AjaxRender
 {
@@ -20,21 +20,37 @@ class Image extends HtmlComponent implements \Zippy\Interfaces\Requestable, \Zip
     /**
      * Конструктор
      * @param string ID  компонента
-     * @param string  Тип  подгрузки  изображения.
-     * Возможные   вариантыЖ
-     * Image::$DEFAULT_TYPE  - обычный  путь  к  файлу   в  атрибуте  src - по  умоляанию
-     * Image::$URLDATA_TYPE  - URL Data
-     * Image::$DYNAMIC_TYPE  - динамическое   формирование  изображение  в  методе binaryOutput
-     */
+     * @param string  адрес  изображения
+       */
     public function __construct($id, $src = "")
     {
         parent::__construct($id);
         $this->src = $src;
     }
 
+    /**
+    * Тип  подгрузки изображения
+    *
+    * @param mixed $type
+    * Возможные   вариантыЖ
+    * Image::$DEFAULT_TYPE  - обычный  путь  к  файлу   в  атрибуте  src - по  умоляанию
+    * Image::$URLDATA_TYPE  - URL Data
+    * Image::$DYNAMIC_TYPE  - динамическое   формирование  изображение  в  методе binaryOutput
+    *
+    */
     public function setType($type)
     {
         $this->type = $type;
+    }
+
+    /**
+    * адрес  изображения
+    *
+    * @param mixed $src
+    */
+    public function setUrl($src)
+    {
+        $this->src = $src;
     }
 
     /**
@@ -71,7 +87,7 @@ class Image extends HtmlComponent implements \Zippy\Interfaces\Requestable, \Zip
 
     /**
      * рендеринг
-     * @see Zippy\Html\HtmlComponent 
+     * @see Zippy\Html\HtmlComponent
      */
     protected function RenderImpl()
     {
@@ -90,13 +106,13 @@ class Image extends HtmlComponent implements \Zippy\Interfaces\Requestable, \Zip
     {
         $this->setSource();
         $_src = $this->getAttribute('src');
-        return "$('#{$this->id}').attr('src',{$_src}')";
+        return "$('#{$this->id}').attr('src','{$_src}')";
     }
 
     /**
      * Формирует  бинарный   выходной   поток
-     * по умолчанию  считывает имя файла с src 
-     * переопределяется   в  классе наследннике для реализации реализации собственного вывода
+     * по умолчанию  считывает имя файла с src
+     * переопределяется   в  классе наследннике для реализации собственного вывода
      * Должна  заканчиваться die
      */
     protected function binaryOutput()

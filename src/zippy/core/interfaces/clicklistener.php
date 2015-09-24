@@ -22,7 +22,4 @@ interface ClickListener
     // public function OnClick();
 }
 
-/**
-* @todo возмоджность  вставки  в  щnclick  обработчика  отмены
-*/
 

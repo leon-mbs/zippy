@@ -12,10 +12,14 @@ class File extends HtmlFormDataElement
      * Конструктор
      * @param mixed  ID
      */
-    public function __construct($id)
+    public function __construct($id,$multy=false)
     {
         parent::__construct($id);
         $this->setAttribute("name", $this->id);
+        if($multy){
+            $this->setAttribute("name", $this->id .'[]');
+            $this->setAttribute("multiple",  'multiple');
+        }
     }
 
     /**

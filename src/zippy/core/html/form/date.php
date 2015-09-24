@@ -20,7 +20,7 @@ class Date extends TextInput
         {
                 TextInput::RenderImpl();
 
-                $url = $this->owner->getURLNode() . "::" . $this->id . "&ajax=true";
+               // $url = $this->owner->getURLNode() . "::" . $this->id . "&ajax=true";
 
                 $js = "$('#{$this->id}').datepicker( {dateFormat : 'yy-m-d' });";
 

@@ -4,7 +4,7 @@ namespace ZCL\Captcha;
 
 /**
  * Класс,  реализующий  простейшую  капчу.
- * Для  использования   собственной  реализации  класс нужно отнаследовать 
+ * Для  использования   собственной  реализации  класс нужно отнаследовать
  * и переопределить методы OnCode  и OnImage
  * Пример  использования http://examples.zippy.com.ua/Example4
  */
@@ -15,12 +15,12 @@ class Captcha extends \Zippy\Html\HtmlComponent implements \Zippy\Interfaces\Aja
     private $refresh;
     protected $code;
     protected $created;
-    public $x = 50;
+    public $x = 60;
     public $y = 20;
 
     /**
      * Конструктор
-     * 
+     *
      * @param mixed $id
      * @param mixed $refresh  если  true генерится код для обновления  через  AJAX
      * @return Captcha
@@ -33,7 +33,7 @@ class Captcha extends \Zippy\Html\HtmlComponent implements \Zippy\Interfaces\Aja
     }
 
     /**
-     * Реализует  алгоритм  прорисовки изображения. 
+     * Реализует  алгоритм  прорисовки изображения.
      * Может  быть  перегружен для  пользовательской  реализации.
      * @return  ссылка  на  ресурс изображения
      */
@@ -70,7 +70,7 @@ class Captcha extends \Zippy\Html\HtmlComponent implements \Zippy\Interfaces\Aja
 
     /**
      * Возвращает  код
-     * 
+     *
      */
     public function checkCode($code)
     {
@@ -82,7 +82,7 @@ class Captcha extends \Zippy\Html\HtmlComponent implements \Zippy\Interfaces\Aja
 
     /**
      * Обновление кода капчи
-     * 
+     *
      */
     public function Refresh()
     {
@@ -92,7 +92,7 @@ class Captcha extends \Zippy\Html\HtmlComponent implements \Zippy\Interfaces\Aja
 
     /**
      *  Отдает бинарный поток с изображением
-     * 
+     *
      */
     protected function binaryOutput()
     {
@@ -107,7 +107,7 @@ class Captcha extends \Zippy\Html\HtmlComponent implements \Zippy\Interfaces\Aja
     /**
      * Обработчик HTTP запроса.  Возвращает  изображение  в  бинарный
      *  поток  или  ссылку для атрибута  src при  обновлении  изображения
-     * 
+     *
      */
     public function RequestHandle()
     {
@@ -122,7 +122,7 @@ class Captcha extends \Zippy\Html\HtmlComponent implements \Zippy\Interfaces\Aja
 
     /**
      * @see HttpComponent
-     * 
+     *
      */
     protected function RenderImpl()
     {
@@ -136,7 +136,7 @@ class Captcha extends \Zippy\Html\HtmlComponent implements \Zippy\Interfaces\Aja
 
     /**
      * возвращает  код  для  обновления   атрибута  src
-     * 
+     *
      */
     public function AjaxAnswer()
     {

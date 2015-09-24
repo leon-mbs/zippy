@@ -161,7 +161,7 @@ abstract class Entity implements \Zippy\Interfaces\DataItem
             }
         }
 
-        if (offset >= 0 or $count >= 0) {
+        if ($offset >= 0 or $count >= 0) {
             $rs = $conn->SelectLimit($sql, $count, $offset);
         } else {
             $rs = $conn->Execute($sql);
@@ -400,7 +400,7 @@ abstract class Entity implements \Zippy\Interfaces\DataItem
 
     /**
      * Обработка строки  перед вставкой   в  запрос
-     * после  обработки  строка  не  требует кавыек
+     * после  обработки  строка  не  требует кавычек
      * @param mixed $str
      */
     public static function qstr($str)
@@ -409,9 +409,10 @@ abstract class Entity implements \Zippy\Interfaces\DataItem
         return $conn->qstr($str);
     }
 
+
     
     /**
-    * Добавление  слешей   строку
+    * Добавление  слешей  в строку
     * 
     * @param mixed $str
     */
@@ -420,7 +421,8 @@ abstract class Entity implements \Zippy\Interfaces\DataItem
         $conn = DB::getConnect();
         return mysqli_real_escape_string($conn->_connectionID, $str);
     }
-     /**
+   
+    /**
     * Форматирование  даты в   сответствии  с  SQL  диалектом 
     * 
     * @param mixed $dt   Timestamp

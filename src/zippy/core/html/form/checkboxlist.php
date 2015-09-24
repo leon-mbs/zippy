@@ -39,7 +39,7 @@ class CheckBoxList extends HtmlFormDataElement
                 $attributes = $attributes . $key . "=\"{$value}\" ";
             }
             $checked = $item['value'] === true ? ' checked="on"' : '';
-            $out = $out . "<nobr><input style=\"border:none;\" type=\"checkbox\" name=\"{$this->id}::{$id}\" {$checked} />{$item['caption']}</nobr>";
+            $out = $out . "<nobr><input   type=\"checkbox\" name=\"{$this->id}::{$id}\" {$checked} />{$item['caption']}</nobr>";
             $out .= $this->delimiter;
         }
         $out = substr($out, 0, strlen($out) - strlen($this->delimiter));

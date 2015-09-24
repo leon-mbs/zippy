@@ -38,10 +38,10 @@ class SubmitLink extends AbstractLink implements ClickListener, Requestable
     public function RenderImpl()
     {
 
-        if (WebApplication::$context["currentform"] == null) {
+        if ($this->getFormOwner() == null) {
             throw new \Zippy\Exception("Element '" . $this->id . "' outside   FORM tag");
         }
-        $formid = WebApplication::$context["currentform"];
+        $formid = $this->getFormOwner()->id;
 
         if ($this->disabled == true) {
             $this->setAttribute("href", "");

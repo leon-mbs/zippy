@@ -42,6 +42,9 @@ abstract class HtmlComponent
         if (!is_string($id) || strlen($id) == 0) {
             throw new ZE(sprintf(ERROR_INVALID_CREATE_ID, get_class($this)));
         }
+        if ( in_array($id,array('add'))) {
+            throw new ZE(sprintf(ERROR_INVALID_ID, $id));
+        }
         $this->id = $id;
         $this->attributes["id"] = $id;
 
@@ -108,7 +111,7 @@ abstract class HtmlComponent
      */
     protected function onAdded()
     {
-        
+
     }
 
     /**
@@ -136,6 +139,21 @@ abstract class HtmlComponent
             return $this->owner->getPageOwner();
         }
     }
+    /**
+     *  Возвращает ссылку на объект формы в которую добавлен  компонент
+     *  @return  Form
+     */
+    public function getFormOwner()
+    {
+        if ($this->owner == null) {
+            return null;
+        }
+        if ($this->owner instanceof \Zippy\Html\Form\Form) {
+            return $this->owner;
+        } else {
+            return $this->owner->getFormOwner();
+        }
+    }
 
     /**
      * Управляет  видимостью  компонента
@@ -161,7 +179,7 @@ abstract class HtmlComponent
      */
     protected function RenderImpl()
     {
-        
+
     }
 
     /**
@@ -176,20 +194,22 @@ abstract class HtmlComponent
         $attributes = $HtmlTag->attr('*'); //атрибуты с шаблона
         unset($attributes["zippy"]);
 
-        $tagid = $HtmlTag->attr('id');
-        if (isset($attributes['id']) && !isset($this->attributes['id'])) {
-            $this->attributes['id'] = $attributes['id'];
-        }
-
-        if (!isset($attributes['id']) && !isset($this->attributes['id'])) {
-            $this->attributes['id'] = $this->id;
-        }
+        $attributes['id'] = $this->id;
 
         if (isset($this->attributes["class"])) {
-            $attributes['class'] = $attributes['class'] . ' ' . $this->attributes["class"];
+            if(strlen($this->attributes["class"]) >0){
+              $attributes['class'] = $attributes['class'] . ' ' . $this->attributes["class"];    
+            } else {
+               $attributes['class'] = str_replace($this->attributes["class"],"",$attributes['class']); 
+            }
+            
         }
         if (isset($this->attributes["style"])) {
-            $attributes['style'] = $attributes['style'] . $this->attributes["class"];
+            if(strlen($this->attributes["style"]) >0){
+              $attributes['style'] = $attributes['style'] . ';  ' . $this->attributes["style"];    
+            } else {
+               $attributes['style'] = str_replace($this->attributes["style"],"",$attributes['style']); 
+            }           
         }
 
         foreach ($attributes as $key => $value) {
@@ -197,6 +217,7 @@ abstract class HtmlComponent
             if (!isset($this->attributes[$key])) {
                 $this->attributes[$key] = $value;
             }
+            
         }
 
 
@@ -207,12 +228,15 @@ abstract class HtmlComponent
         foreach ($this->attributes as $name => $value) {
             $attr = $this->getAttribute($name);
             $HtmlTag->attr($name, $attr);
+            if(strlen($attr) == 0){
+              $HtmlTag->removeAttr($name);  
+            }
         }
         $this->afterRender();
     }
 
     /**
-     * Возвращает  ссылку  на  HTML таг. Используется  библиотека  PHPQuery  
+     * Возвращает  ссылку  на  HTML таг. Используется  библиотека  PHPQuery
      */
     protected function getTag($tagname = "")
     {
@@ -247,7 +271,7 @@ abstract class HtmlComponent
      */
     protected function beforeRender()
     {
-        
+
     }
 
     /**
@@ -255,7 +279,7 @@ abstract class HtmlComponent
      */
     protected function afterRender()
     {
-        
+
     }
 
     /**
@@ -267,8 +291,8 @@ abstract class HtmlComponent
     }
 
     /**
-     * возвращает  связаный  тег  
-     * 
+     * возвращает  связаный  тег
+     *
      */
     protected function getLabelTag()
     {

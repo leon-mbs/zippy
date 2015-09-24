@@ -8,13 +8,13 @@ use \Zippy\Html\HtmlContainer;
  * Класс  приложения. Обеспечивает жизненный  цикл  страниц, управление  сессией
  * и обработку  HTTP запросов.
  * Для  использования необходимо отнаследоватся  и  переопределить,  как  минимум,
- * getTemplate().  
- * 
+ * getTemplate().
+ *
  */
 abstract class WebApplication
 {
 
-    public static $context = array("currentform" => null, "formcount" => 0);
+
     private $currentpage = null;
     public static $app = null;
     private $macros = array();
@@ -79,7 +79,7 @@ abstract class WebApplication
     {
 
         if (is_array($arg1) == false) {
-            //$this->currentpage = new $name($arg1, $arg2, $arg3, $arg4, $arg5);    
+            //$this->currentpage = new $name($arg1, $arg2, $arg3, $arg4, $arg5);
             $arg1 = func_get_args();
             $arg1 = array_slice($arg1, 1);
         }
@@ -107,8 +107,8 @@ abstract class WebApplication
         $this->currentpage->args = $arg1; //запоминаем аргументы страницы
 
         $this->response->setPageIndex($this->getPageManager()->putPage($this->currentpage));
-        
-        
+
+
     }
 
     /**
@@ -143,8 +143,13 @@ abstract class WebApplication
 
             $this->currentpage = $this->getPageManager()->getPage($this->request->getRequestIndex());
             if ($this->currentpage == null) {
-                //$this->response->to404Page();
-                $this->LoadPage($this->request->request_page);
+                if(strlen($this->request->request_page) > 2)
+                {
+                  $this->LoadPage($this->request->request_page);
+                } else {
+                  $this->currentpage = $this->getPageManager()->getLastPage();
+                }
+
             }
 
             $this->response->setPageIndex($this->getRequest()->getRequestIndex());
@@ -179,7 +184,7 @@ abstract class WebApplication
                 if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     // обновляем  страницу  в  сессии  не   меняю  версию
                     //  WebSession::getSession()->getPageManager()->updatePage($this->currentpage, $request[0]);
-                    //$this->Render();   
+                    //$this->Render();
                     //  $this->_saveSession();
                     $this->response->toBaseUrl();
                 }
@@ -197,7 +202,8 @@ abstract class WebApplication
         }
 
 
-
+        $this->response->JSrender .= $this->currentpage->JSrender;
+        $this->response->JSrenderDocReady .= $this->currentpage->JSrenderDocReady;
 
         $this->response->output();
     }
@@ -230,7 +236,7 @@ abstract class WebApplication
         $doc = \phpQuery::newDocumentHTML($template);
 
         $basepage = get_parent_class($renderpage);
-        // если  страница  не  базовая   а  дочерняя     
+        // если  страница  не  базовая   а  дочерняя
         if ($basepage !== "Zippy\\Html\\WebPage") {
 
             $basetemplate = WebApplication::getApplication()->getTemplate($basepage, $renderpage->layout);
@@ -282,10 +288,10 @@ abstract class WebApplication
             pq('title')->text($renderpage->_title);
         }
         if (strlen($renderpage->_keywords) > 0) {
-            pq('keywords')->text($renderpage->_keywords);
+            pq('meta[name="keywords"]')->attr('content',$renderpage->_keywords);
         }
         if (strlen($renderpage->_description) > 0) {
-            pq('description')->text($renderpage->_description);
+            pq('meta[name="description"]')->attr('content',$renderpage->_description);
         }
 
 
@@ -314,7 +320,7 @@ abstract class WebApplication
      */
     protected function Route($uri)
     {
-        
+
     }
 
     /**
@@ -346,7 +352,7 @@ abstract class WebApplication
     }
 
     /**
-     * Возвращает  менеджер  страниц 
+     * Возвращает  менеджер  страниц
      * @return PageManager
      */
     protected function getPageManager()
@@ -359,7 +365,7 @@ abstract class WebApplication
 
     /**
      * Устанавливает  адрес  страницы 404
-     *        
+     *
      * @param mixed $url
      */
     public function set404($url)
@@ -369,9 +375,71 @@ abstract class WebApplication
 
         /**
     * возвращает имя класса предыдущей страницы
-    * 
+    *
     */
     public  function getPrevPage(){
        return $this->getPageManager()->getPrevPage();
+    }
+
+   /**
+     * Редирект на  страницу 404
+     *
+     */
+    public static function Redirect404()
+    {
+        self::$app->getResponse()->to404Page();
+    }
+
+    /**
+     * Редирект на  предыдущую страницу
+     *
+     */
+    public static function RedirectBack()
+    {
+        $pagename = self::$app->getPageManager()->getPrevPage();
+        $pagename = '\\' . rtrim($pagename, '\\');
+
+        if($pagename == "\\") {
+            self::$app->response->toIndexPage();
+            return;
+        }
+        self::$app->response->Redirect($pagename, array());
+    }
+
+    /**
+    * Вызывается  перед обработкой  запроса
+    * Перегружается  в  приложении
+    * если  есть префикс (например указан  язык)
+    * возвращает массив  с  элементами:
+    * префикс
+    * uri без префикса
+    * @param mixed $uri
+    */
+    public function beforeRequest($uri){
+       return null;
+    }
+
+ /**
+     * Выполняет клиентский редирект  на  страницу
+     *
+     * @param mixed $page     Имя класса  страницы
+     * @param mixed $arg1
+     * @param mixed $arg2
+     * @param mixed $arg3
+     * @param mixed $arg4
+     * @param mixed $arg5
+     */
+    public static function Redirect($page, $arg1 = null, $arg2 = null, $arg3 = null, $arg4 = null, $arg5 = null)
+    {
+        self::$app->getResponse()->Redirect($page, $arg1, $arg2, $arg3, $arg4, $arg5);
+    }
+
+    /**
+     * Редирект на  домашнюю  страницу
+     *
+     */
+    public static function RedirectHome()
+    {
+        self::$app->getResponse()->toIndexPage();
     }
 }

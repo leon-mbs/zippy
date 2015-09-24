@@ -22,15 +22,10 @@ class RedirectLink extends AbstractLink implements Requestable
      * @param boolean Если  true  - рендерит  bookmarkable  ссылку
      * @param boolean Если  true  - кодирует ссылку
      */
-    public function __construct($id, $pagename, $params = array(), $bookmarkable = true, $encode = false)
+    public function __construct($id, $pagename="", $params = array(), $bookmarkable = true, $encode = false)
     {
         AbstractLink::__construct($id);
-        $this->pagename = $pagename;
-        $this->params = $params;
-        if (!is_array($params))
-            $this->params = array($params);
-        $this->bookmarkable = $bookmarkable;
-        $this->encode = $encode;
+        $this->setLink($pagename, $params, $bookmarkable, $encode);
     }
 
     /**
@@ -72,11 +67,11 @@ class RedirectLink extends AbstractLink implements Requestable
                 if (strlen($url) % 3 == 2)
                     $url .= ' ';
 
-                $url = $_BASEURL . "/index.php?r=" . base64_encode(serialize(array($this->pagename, $this->params)));
+                $url = $_BASEURL . "/?r=" . base64_encode(serialize(array($this->pagename, $this->params)));
             } else {
                 $this->pagename = str_replace("\\", "/", ltrim($this->pagename, "\\"));
 
-                $url = $_BASEURL . "/index.php?p=" . $this->pagename;
+                $url = $_BASEURL . "/?p=" . $this->pagename;
                 if (count($this->params) > 0) {
                     $_param = implode("/", $this->params);
                     $url .= "&arg=" . $_param;
@@ -87,5 +82,14 @@ class RedirectLink extends AbstractLink implements Requestable
         }
         $this->setAttribute("href", "{$url}");
     }
-
+ 
+    public function setLink($pagename, $params = array(), $bookmarkable = true, $encode = false)
+    {
+        $this->pagename = $pagename;
+        $this->params = $params;
+        if (!is_array($params))
+            $this->params = array($params);
+        $this->bookmarkable = $bookmarkable;
+        $this->encode = $encode;
+    }
 }

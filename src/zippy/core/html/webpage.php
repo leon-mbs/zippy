@@ -23,6 +23,9 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
     private $afterRequestEvents = array();  //array  of callbacks
     private $_ajax;
     private $_ankor ='';
+    
+    public $JSrender = "";
+    public $JSrenderDocReady = "";    
 
     /**
      * Конструктор
@@ -99,6 +102,10 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
         }
     }
 
+    /**
+    * Рендерит  компоненты для  ajax ответа
+    * 
+    */
     public function renderAjax()
     {
         if (is_array($this->_ajax)) {
@@ -182,8 +189,28 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
     * 
     * @param mixed $name
     */
-    
     protected function goAnkor($name){
         $this->_ankor  = $name;
     }
+    
+
+    public function setTitle($title)    {
+        $this->_title = $title;
+    }
+    public function setDescription($description)    {
+        $this->_description = $description;
+    }
+    public function setKeywords($keywords)    {
+        $this->_keywords = $keywords;
+    }
+    
+    public function addJavaScript($js, $docready = false)
+    {
+
+        if ($docready === true) {
+            $this->JSrenderDocReady = ( $js . "\n");
+        } else {
+            $this->JSrender = ( $js . "\n");
+        }
+    }    
 }

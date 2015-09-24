@@ -20,7 +20,7 @@ class AutocompleteTextInput extends TextInput implements Requestable
 
     /**
      * Конструктор
-     * @param  Zippy ID 
+     * @param  Zippy ID
      * @param  Минимальное  количество  символов
      * @param  Таймаут в  мс.
      */
@@ -36,9 +36,9 @@ class AutocompleteTextInput extends TextInput implements Requestable
         TextInput::RenderImpl();
 
         $onchange= "null";
-        
+
         if ($this->event2 != null) {
-            $formid = WebApplication::$context["currentform"];
+            $formid = $this->getFormOwner()->id;
 
             if ($this->event2->isajax == false) {
 
@@ -49,14 +49,13 @@ class AutocompleteTextInput extends TextInput implements Requestable
                 $url = $this->owner->getURLNode() . "::" . $this->id;
                 $url = substr($url, 2 + strpos($url, 'q='));
                 $_BASEURL = WebApplication::$app->getResponse()->getHostUrl();
-                $onchange =  "function() { $('#" . $formid . "_q').attr('value','" . $url . "'); submitForm('{$formid}','{$_BASEURL}/index.php?ajax=true'); }";
+                $onchange =  "function() { $('#" . $formid . "_q').attr('value','" . $url . "'); submitForm('{$formid}','{$_BASEURL}/?ajax=true'); }";
             }
-        }        
+        }
         $url = $this->owner->getURLNode() . "::" . $this->id . "&ajax=true";
-        
+
         $js = "
-                    $('#{$this->id}').z_autocomplete('{$url}',{minChars:{$this->minChars},timeout:{$this->timeout},onchange:  $onchange  });
-                      ";
+                    $('#{$this->id}').z_autocomplete('{$url}',{minChars:{$this->minChars},timeout:{$this->timeout},onchange:  $onchange  }); ";
         $this->setAttribute("data-key", $this->key);
         $this->setAttribute("autocomplete", 'off');
 
@@ -71,10 +70,10 @@ class AutocompleteTextInput extends TextInput implements Requestable
 
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
              $this->OnChange();
-             return;    
+             return;
         }
-        
-     
+
+
         $this->setValue($_REQUEST['text']);
         $arr = $this->OnAutocomplete();
         if (is_array($arr)) {
@@ -146,7 +145,7 @@ class AutocompleteTextInput extends TextInput implements Requestable
         $this->setChangeHandler($receiver, $handler);
         $this->event2->isajax = true;
     }
-    
+
     /**
      * @see ChangeListener
      */
@@ -155,5 +154,5 @@ class AutocompleteTextInput extends TextInput implements Requestable
         if ($this->event2 != null) {
             $this->event2->onEvent($this);
         }
-    }    
+    }
 }

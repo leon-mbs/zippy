@@ -19,6 +19,7 @@ class HttpRequest
     public $request_page;
     public $request_page_arg = array();
     public $uri;
+    private $prefix ="";
     public $querytype = self::QUERY_HOME;
     private $pageindex = 0;
 
@@ -28,7 +29,13 @@ class HttpRequest
      */
     public function __construct()
     {
-
+         $uri = $_SERVER["REQUEST_URI"];
+         $uri_ = WebApplication::$app->beforeRequest($uri);
+         if(is_array($uri_))  {
+            $this->prefix = $uri_[0];
+            $uri = $uri_[1];
+         }
+         
         // основной  тип URI генерируемый  компонентами  фреймворка
         if (isset($_REQUEST["q"])) {
 
@@ -74,9 +81,9 @@ class HttpRequest
         }
         // URI формируемый  BookmarkableLink (в частности, ЧПУ) 
 
-        if (strlen($_SERVER["REQUEST_URI"]) > 1 && strpos($_SERVER["REQUEST_URI"], '/?') === false && strpos($_SERVER["REQUEST_URI"], '/index.php') === false) {
+        if (strlen($uri) > 1 && strpos($uri, '/?') === false && strpos($uri, '/index.php') === false) {
             $this->querytype = self::QUERY_SEF;
-            $this->uri = ltrim($_SERVER["REQUEST_URI"], '/');
+            $this->uri = ltrim($uri, '/');
         }
     }
 
@@ -105,6 +112,15 @@ class HttpRequest
     public function isBinaryRequest()
     {
         return isset($_REQUEST["binary"]);
+    }
+    public function getPrefix()
+    {
+        return $this->prefix;
+    } 
+ 
+    public function setPrefix($prefix)
+    {
+         $this->prefix = $prefix;;
     }
 
 }

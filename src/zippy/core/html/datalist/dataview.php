@@ -10,7 +10,7 @@ use \Zippy\Event;
 /**
  * Класс  вывода  табличных  данных
  * может  использватся  с  тэгом  TABLE или  вложенными  DIV
- * например 
+ * например
  * &lt;table zippy="id">
  *   &lt;tr zippy="rowid" >
  *  Элементы  строки  формируются разработчиком  при  имплементации  обработчика
@@ -48,7 +48,7 @@ class DataView extends AbstractList
         $i = 1;
 
         foreach ($list as $item) {           //$datarow = new DataRow($this->id,$list[0]);
-            $datarow = new DataRow($this->id, $item, $i++);
+            $datarow = new DataRow($this->id, $item, $i++,$i-1+$this->pagesize * ($this->currentpage -1));
             $this->add($datarow);
             $this->rowevent->onEvent($datarow); //вызов  обработчика добавляющего  данные  или   елементы  в  строку
             $datarow->updateChildId();
@@ -123,10 +123,10 @@ class DataView extends AbstractList
     }
 
     /**
-     *  Устанавливает  выделеную строку. 
+     *  Устанавливает  выделеную строку.
      * Строка выделяется  добавлением CSS класса  заданного
      * методом setSelectedClass
-     * 
+     *
      * @param mixed $id   ID  выделяемой строки
      */
     public function setSelectedRow($id)
@@ -136,7 +136,7 @@ class DataView extends AbstractList
 
     /**
      * Возвращает  номер  выделеной  строки
-     * 
+     *
      */
     public function getSelectedRow()
     {
@@ -145,7 +145,7 @@ class DataView extends AbstractList
 
     /**
      * Устанавливает CSS  класс  для   выбранной   строки
-     * 
+     *
      * @param mixed $selectedclass
      */
     public function setSelectedClass($selectedclass)

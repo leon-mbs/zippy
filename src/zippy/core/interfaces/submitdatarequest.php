@@ -10,7 +10,7 @@ interface SubmitDataRequest
 {
 
     /**
-     * Получить дынные  с  HTTP запроса
+     * Получить данные  с  HTTP запроса
      */
     public function getRequestData();
 }

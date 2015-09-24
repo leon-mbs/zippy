@@ -31,6 +31,7 @@ class HttpResponse
     {
         if (strlen($this->redirect) > 0) {
             header("Location: " . $this->redirect);
+           // echo "<script>window.location='{$this->redirect}'</script>";
             die;
         }
         if (WebApplication::$app->getRequest()->isBinaryRequest() == true) {
@@ -65,18 +66,18 @@ class HttpResponse
 
     /**
      * редирект на  главную  страницу
-     * 
+     *
      */
     public function toIndexPage()
     {
-        $this->redirect = "/index.php";
+        $this->redirect = "/";
         // header("Location: /index.php");
         //  die;
     }
 
     /**
      * Редирект непосредственно  по  адресу
-     * 
+     *
      */
     public function toPage($url)
     {
@@ -86,7 +87,7 @@ class HttpResponse
     /**
      * редирект на текущую  страницу без  параметров
      * (применяется  для "сброса" адресной  строки
-     * 
+     *
      */
     public function toBaseUrl()
     {
@@ -97,7 +98,7 @@ class HttpResponse
 
     /**
      * Добавляет  JavaScript код для  AJAX ответа
-     * 
+     *
      * @param mixed $js
      */
     public function addAjaxResponse($js)
@@ -134,18 +135,18 @@ class HttpResponse
 
         $js = "
                     <script type=\"text/javascript\">
-                    
+
                     ";
         if (strlen($this->JSrenderDocReady) > 0) {
             $js .= "   $(document).ready(function()
                         {
                         {$this->JSrenderDocReady}
-                        } )                
+                        } )
                       ";
         }
         $js .= $this->JSrender . "
-                        
-                   
+
+
                     </script>"
         ;
 
@@ -158,9 +159,10 @@ class HttpResponse
      */
     public final function getBaseUrl()
     {
-        $pagename = get_class(WebApplication::$app->getCurrentPage());
-        $pagename = str_replace("\\", "/", $pagename);
-        return $this->getHostUrl() . "/index.php?q=" . $pagename . ":" . $this->pageindex;
+        //$pagename = get_class(WebApplication::$app->getCurrentPage());
+        //$pagename = str_replace("\\", "/", $pagename);
+        //return $this->getHostUrl() . "/?q=" . $pagename . ":" . $this->pageindex;
+        return $this->getHostUrl() . "/?q=p:" . $this->pageindex;
     }
 
     /**
@@ -178,7 +180,7 @@ class HttpResponse
         }
 
         WebApplication::$app->LoadPage($name, $arg1, $arg2, $arg3, $arg4, $arg5);
-        //   $url = "/index.php?q=" . $this->getPageManager()->session->putPage($this->currentpage) . "::1";
+        //   $url = "/?q=" . $this->getPageManager()->session->putPage($this->currentpage) . "::1";
         //   $this->saveSession(serialize($this->session));
         $this->toBaseUrl($name);
         $this->output();
@@ -190,14 +192,17 @@ class HttpResponse
     }
 
     /**
-     * 
+     *
      * @return string
      */
     public final function getHostUrl()
     {
         $http = empty($_SERVER["HTTPS"]) ? 'http' : 'https';
 
-        return $http . "://" . $_SERVER["HTTP_HOST"];
+        $url =  $http . "://" . $_SERVER["HTTP_HOST"];
+        $prefix = WebApplication::$app->getRequest()->getPrefix();
+        $url = strlen($prefix) > 0 ? $url . '/' . $prefix  : $url;
+        return $url;
     }
 
     public final function setPageIndex($index)
@@ -217,7 +222,7 @@ class HttpResponse
 
     /**
      * Перенаправляет на  страницу 404
-     * 
+     *
      */
     public function to404Page()
     {
@@ -234,21 +239,22 @@ class HttpResponse
     /**
      *  редирект на  предыдущую  страницу
      */
+     /*
     public final function toBack()
     {
         $pagename = WebApplication::$app->getPrevPage();
-        
+
         // $pagename = str_replace("\\", "/", $pagename);
         $pagename = '\\' . rtrim($pagename, '\\');
-        //$this->redirect = $this->getHostUrl() . "/index.php?q=" . $pagename . ":" . $this->pageindex--;
+        //$this->redirect = $this->getHostUrl() . "/?q=" . $pagename . ":" . $this->pageindex--;
         if($pagename== "\\") {
             $this->toIndexPage();
             return;
         }
         $this->Redirect($pagename, array());
     }
+*/
 
-    
-    
-    
+
+
 }

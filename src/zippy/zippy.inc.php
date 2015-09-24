@@ -4,7 +4,7 @@ namespace Zippy;
 
 define('ZIPPY_DIR', __DIR__ . '/');
 
-require_once(ZIPPY_DIR . "lang/ru.php");
+require_once(ZIPPY_DIR . "core/constants.php");
 
 $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 $ADODB_QUOTE_FIELDNAMES = true;

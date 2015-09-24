@@ -14,7 +14,7 @@ use \Zippy\Interfaces\EventReceiver;
  */
 class SubmitButton extends HtmlComponent implements ClickListener, Requestable
 {
-
+      
     private $event;
 
     /**
@@ -23,11 +23,11 @@ class SubmitButton extends HtmlComponent implements ClickListener, Requestable
     public function RenderImpl()
     {
 
-        if (WebApplication::$context["currentform"] == null) {
+        if ( $this->getFormOwner() == null) {
             throw new \Zippy\Exception("Element '" . $this->id . "' outside   FORM tag");
         }
 
-        $formid = WebApplication::$context["currentform"];
+        $formid =  $this->getFormOwner()->id;
         //  $this->attributes["onclick"]="javascript:{ $('#".$formattr["id"]."_hf').val('submit1') ; $('#".$formattr["id"]."').submit();}";
         $url = $this->owner->getURLNode() . '::' . $this->id;
         $url = substr($url, 2 + strpos($url, 'q='));

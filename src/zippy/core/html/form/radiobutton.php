@@ -11,7 +11,7 @@ use \Zippy\Interfaces\EventReceiver;
 use \Zippy\Event;
 
 /**
- * Компонент  тэга  &lt;input type=&quot;radio&quot;&gt; 
+ * Компонент  тэга  &lt;input type=&quot;radio&quot;&gt;
  */
 class RadioButton extends HtmlFormDataElement implements ChangeListener, Requestable
 {
@@ -21,9 +21,9 @@ class RadioButton extends HtmlFormDataElement implements ChangeListener, Request
     /**
      * Конструктор
      * @param  mixed  ID
-     * @param  mixed  привязка выбранного  значения для  группы  
+     * @param  mixed  привязка выбранного  значения для  группы
      * @param  mixed  значение для  радиокнопки
-     * @param  mixed  устанавливает имя  группы  для  радиокнопки. Если  не  задаоно имя  группы  берется 
+     * @param  mixed  устанавливает имя  группы  для  радиокнопки. Если  не  задаоно имя  группы  берется
      * с  $binding.
      */
     public function __construct($id, PropertyBinding $binding, $itemvalue, $groupname = null)
@@ -51,7 +51,7 @@ class RadioButton extends HtmlFormDataElement implements ChangeListener, Request
         $this->setAttribute("value", $this->itemvalue);
         // if set event
         if ($this->event != null) {
-            $formid = WebApplication::$context["currentform"];
+            $formid = $this->getFormOwner()->id;
             $url = $this->owner->getURLNode() . '::' . $this->id;
             $url = substr($url, 2 + strpos($url, 'q='));
             $this->setAttribute("onchange", "javascript:{  $('#" . $formid . "_q').attr('value','" . $url . "');$('#" . $formid . "').submit();}");

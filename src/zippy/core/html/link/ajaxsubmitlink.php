@@ -23,15 +23,15 @@ class AjaxSubmitLink extends AbstractLink implements AjaxClickListener, Requesta
     public function RenderImpl()
     {
 
-        if (WebApplication::$context["currentform"] == null) {
+        if ($this->getFormOwner() == null) {
             throw new \Zippy\Exception("Element '" . $this->id . "' outside   FORM tag");
         }
-        $formid = WebApplication::$context["currentform"];
+        $formid = $this->getFormOwner()->id;
 
         $url = $this->owner->getURLNode() . "::" . $this->id;
         $url = substr($url, 2 + strpos($url, 'q='));
         $_BASEURL = WebApplication::$app->getResponse()->getHostUrl();
-        $this->setAttribute("onclick", "if(beforeZippy('{$this->id}') ==false) return false; $('#" . $formid . "_q').attr('value','" . $url . "'); submitForm('{$formid}','{$_BASEURL}/index.php?ajax=true');");
+        $this->setAttribute("onclick", "if(beforeZippy('{$this->id}') ==false) return false; $('#" . $formid . "_q').attr('value','" . $url . "'); submitForm('{$formid}','{$_BASEURL}/?ajax=true');");
     }
 
     /**

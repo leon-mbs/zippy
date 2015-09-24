@@ -38,6 +38,9 @@ class EntityDataSource implements \Zippy\Interfaces\DataSource
                 $sortfield = $_s[0];
                 $desc = $_s[1];
             }
+            if(count($_s)>2){
+                $desc ="";
+            }
         }
         $class = $this->class;
         return $class::find($this->where, $sortfield, $desc, $count, $start);
