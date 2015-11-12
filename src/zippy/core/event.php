@@ -39,10 +39,12 @@ class Event
           };
           }
          */
-        if ($this->receiver != null)
+        if ($this->receiver != null) {
             return $this->receiver->{$this->handler}($sender, $params);
-        else
+        }
+        else {
             return $this->handler($sender, $params);
+        }
     }
 
 }

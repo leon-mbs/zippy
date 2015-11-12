@@ -202,8 +202,6 @@ abstract class WebApplication
         }
 
 
-        $this->response->JSrender .= $this->currentpage->JSrender;
-        $this->response->JSrenderDocReady .= $this->currentpage->JSrenderDocReady;
 
         $this->response->output();
     }

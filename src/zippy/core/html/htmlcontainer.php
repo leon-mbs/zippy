@@ -76,7 +76,7 @@ abstract class HtmlContainer extends HtmlComponent implements Requestable
     }
 
     /**
-     * Перегрузка  данного  метода  позволяет   
+     * Перегрузка  данного  метода  позволяет
      * получить  доступ  к  дочернему   компоненту как к полю  объекта
      *
      * $this->add(new Label('msg'));
@@ -85,7 +85,7 @@ abstract class HtmlContainer extends HtmlComponent implements Requestable
      *
      *
      * @param string  ID компонента
-     * @return HtmlComponent         * 
+     * @return HtmlComponent         *
      */
     public final function __get($id)
     {

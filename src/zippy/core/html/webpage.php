@@ -23,9 +23,8 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
     private $afterRequestEvents = array();  //array  of callbacks
     private $_ajax;
     private $_ankor ='';
-    
-    public $JSrender = "";
-    public $JSrenderDocReady = "";    
+
+
 
     /**
      * Конструктор
@@ -33,7 +32,7 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
      */
     public function __construct()
     {
-        
+
     }
 
     /**
@@ -65,7 +64,7 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
      */
     public function beforeSaveToSession()
     {
-        
+
     }
 
     /**
@@ -73,14 +72,14 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
      */
     public function afterRestoreFromSession()
     {
-        
+
     }
 
     /**
      *   Вызывается в  реализации  страницы  после  AJAX запроса
      * для   елементов которые  должны  перерендерится на   клиенте
      *
-     * @param  mixed  id  или массив id (значений   атттрибута  zippy) компонентов 
+     * @param  mixed  id  или массив id (значений   атттрибута  zippy) компонентов
      * @param  string Произвольный JavaScript код для  выполнения  на  клиенте после Ajax вызова
      *
      * @see AjaxRender
@@ -104,7 +103,7 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
 
     /**
     * Рендерит  компоненты для  ajax ответа
-    * 
+    *
     */
     public function renderAjax()
     {
@@ -122,7 +121,7 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
 
     /**
      * @see HttpComponent
-     * 
+     *
      */
     public function Render()
     {
@@ -157,7 +156,7 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
 
     /**
      * Вызывается  перед requestHandler
-     * 
+     *
      */
     public function beforeRequest()
     {
@@ -172,7 +171,7 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
 
     /**
      * Вызывается  после requestHandler
-     * 
+     *
      */
     public function afterRequest()
     {
@@ -186,13 +185,13 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
 
     /**
     * Переход  по  имени  якоря (после  загрузки страницы)
-    * 
+    *
     * @param mixed $name
     */
     protected function goAnkor($name){
         $this->_ankor  = $name;
     }
-    
+
 
     public function setTitle($title)    {
         $this->_title = $title;
@@ -203,14 +202,6 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
     public function setKeywords($keywords)    {
         $this->_keywords = $keywords;
     }
-    
-    public function addJavaScript($js, $docready = false)
-    {
 
-        if ($docready === true) {
-            $this->JSrenderDocReady = ( $js . "\n");
-        } else {
-            $this->JSrender = ( $js . "\n");
-        }
-    }    
+
 }
