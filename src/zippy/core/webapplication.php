@@ -226,9 +226,9 @@ abstract class WebApplication
 
         //загружаем  соответсвующий  шаблон
         $template = $this->getTemplate(get_class($renderpage), $renderpage->layout);
-        foreach ($this->macros as $name => $value) {
-            $template = str_ireplace("{" . $name . "}", $value, $template);
-        }
+
+
+
 
 
         $doc = \phpQuery::newDocumentHTML($template);
@@ -238,9 +238,11 @@ abstract class WebApplication
         if ($basepage !== "Zippy\\Html\\WebPage") {
 
             $basetemplate = WebApplication::getApplication()->getTemplate($basepage, $renderpage->layout);
-            foreach ($this->macros as $name => $value) {
-                $basetemplate = str_ireplace("{" . $name . "}", $value, $basetemplate);
-            }
+           // if(count($renderpage->_tvars) >0){
+           //    $m = new \Mustache_Engine();
+            //   $basetemplate= $m->render($basetemplate, $renderpage->_tvars);
+          //  }
+
 
             $bdoc = \phpQuery::newDocumentHTML($basetemplate);
             //восстанавливаем  по умолчанию
@@ -296,6 +298,14 @@ abstract class WebApplication
 
         $response = '<!DOCTYPE HTML>' . pq('html')->htmlOuter(); //HTML  в  выходной  поток
 
+        if(count($renderpage->_tvars) >0){
+           $m = new \Mustache_Engine();
+           $response= $m->render($response, $renderpage->_tvars);
+        }
+
+        foreach ($this->macros as $name => $value) {
+            $response = str_ireplace("{" . $name . "}", $value, $response);
+        }
         $this->response->setContent($response);
     }
 
@@ -332,7 +342,7 @@ abstract class WebApplication
     }
 
     /**
-     * Возвращает  оьхект  HttpRequest
+     * Возвращает  объект  HttpRequest
      * @return HttpRequest
      */
     public final function getRequest()
@@ -429,7 +439,9 @@ abstract class WebApplication
      */
     public static function Redirect($page, $arg1 = null, $arg2 = null, $arg3 = null, $arg4 = null, $arg5 = null)
     {
-        self::$app->getResponse()->Redirect($page, $arg1, $arg2, $arg3, $arg4, $arg5);
+        if(self::$app instanceof WebApplication){
+           self::$app->getResponse()->Redirect($page, $arg1, $arg2, $arg3, $arg4, $arg5);
+        }
     }
 
     /**

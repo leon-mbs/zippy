@@ -18,7 +18,7 @@ abstract class AbstractList extends HtmlContainer
     /**
      * Конструктор
      * @param  ID компонента
-     * @param  Zippy\Interfaces\DataSource Источник данных 
+     * @param  Zippy\Interfaces\DataSource Источник данных
      */
     public function __construct($id, $DataSource)
     {
@@ -102,14 +102,16 @@ abstract class AbstractList extends HtmlContainer
     /**
      * Обновляет  данные  с  провайдера
      */
-    public function Reload()
+    public function Reload($resetpage=true)
     {
-        
+          if($resetpage){
+            $this->setCurrentPage(1);
+         }
     }
 
     /**
      * Возвращает  ссылку  на  источник данных
-     * 
+     *
      */
     public function getDataSource()
     {

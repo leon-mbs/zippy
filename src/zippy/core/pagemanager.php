@@ -34,7 +34,7 @@ class PageManager
         }
 
         
-        $prevpage = $this->pages[$this->index -1];
+        $prevpage = @$this->pages[$this->index -1];
         if($prevpage instanceof \Zippy\Html\WebPage ){
             
             if(get_class($prevpage) != get_class($page)){

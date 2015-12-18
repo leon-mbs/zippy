@@ -97,7 +97,7 @@ class Paginator extends HtmlComponent implements Requestable
         $p = WebApplication::$app->getRequest()->request_params[$this->id];
         $this->OnPage($p[0]);
         $this->datalist->setCurrentPage($p[0]);
-        $this->datalist->Reload();
+        $this->datalist->Reload(false);
     }
 
     private function getUrl($pageno)

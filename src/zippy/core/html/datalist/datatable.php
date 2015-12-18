@@ -57,8 +57,10 @@ class DataTable extends AbstractList implements Requestable, AjaxRender
     /**
      * Обновляет  данные  с  провайдера
      */
-    public function Reload()
+    public function Reload($resetpage=true)
     {
+        parent::Reload($resetpage);
+
         $this->datalist = $this->getItems();
     }
 
@@ -72,7 +74,7 @@ class DataTable extends AbstractList implements Requestable, AjaxRender
             $this->sortf = $p[1];
             $this->sortd = $p[2];
             $this->currentpage = 1;
-  
+
         }
         if ($p[0] == 'pag') {
             $this->currentpage = $p[1];

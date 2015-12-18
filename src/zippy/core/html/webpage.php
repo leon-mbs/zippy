@@ -23,6 +23,7 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
     private $afterRequestEvents = array();  //array  of callbacks
     private $_ajax;
     private $_ankor ='';
+    public $_tvars = array();  //переменные  для  шаблонизатора Mustache
 
 
 
@@ -202,6 +203,8 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
     public function setKeywords($keywords)    {
         $this->_keywords = $keywords;
     }
+   
+   
 
 
 }

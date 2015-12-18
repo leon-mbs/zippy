@@ -126,6 +126,11 @@ abstract class HtmlContainer extends HtmlComponent implements Requestable
                 if ($label->size() == 1) {  //прячем  связаный  тег label
                     $label->remove();
                 }
+              if ($label->size() > 1) {  //прячем  связаный  тег label
+                    foreach($label  as $l) {
+                       pq($l)->remove();
+                    }
+                }
             }
         }
         //   $this->afterRender();

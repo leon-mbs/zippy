@@ -41,7 +41,7 @@ class HttpResponse
 
         Header("Content-Type: text/html;charset=UTF-8");
         Header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
-        Header("Cache-Control: no-cache, must-revalidate");
+        Header("Cache-Control: no-store,no-cache, must-revalidate");
         Header("Pragma: no-cache");
         Header("Last-Modified: Mon, 26 Jul 2100 05:00:00 GMT");
 

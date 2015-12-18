@@ -40,8 +40,10 @@ class DataView extends AbstractList
     /**
      * Обновляет  данные  с  провайдера
      */
-    public function Reload()
+    public function Reload($resetpage=true)
     {
+        parent::Reload($resetpage);
+
         $this->components = array();
 
         $list = $this->getItems();
