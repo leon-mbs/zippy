@@ -10,15 +10,15 @@ namespace ZCL\DB;
 abstract class Entity implements \Zippy\Interfaces\DataItem
 {
 
-
+    
     protected $fields = array();  //список  полей
 
     /**
      * Конструктор
-     *
-     * @param mixed $row  массив инициализирующий некторые
+     * 
+     * @param mixed $row  массив инициализирующий некторые 
      * или  все  поля объекта
-     *
+     * 
      */
 
     function __construct($row = null)
@@ -31,7 +31,7 @@ abstract class Entity implements \Zippy\Interfaces\DataItem
 
     /**
      * Инициализация полей  сущности
-     *
+     * 
      */
     protected function init()
     {
@@ -41,7 +41,7 @@ abstract class Entity implements \Zippy\Interfaces\DataItem
 
     /**
      * Устанавливает  значение поля
-     *
+     * 
      * @param mixed $name
      * @param mixed $value
      */
@@ -52,7 +52,7 @@ abstract class Entity implements \Zippy\Interfaces\DataItem
 
     /**
      * Возвращает  значение  поля
-     *
+     * 
      * @param mixed $name
      * @return mixed
      */
@@ -63,7 +63,7 @@ abstract class Entity implements \Zippy\Interfaces\DataItem
 
     /**
      * Возвращает поля сущности  в  виде  ассоциативного  массива
-     *
+     * 
      */
     public final function getData()
     {
@@ -72,7 +72,7 @@ abstract class Entity implements \Zippy\Interfaces\DataItem
 
     /**
      * Возвращает значение  уникального  ключа  сущности
-     *
+     * 
      */
     public final function getID()
     {
@@ -110,7 +110,7 @@ abstract class Entity implements \Zippy\Interfaces\DataItem
 
     /**
      * Возвращает  количество  сущностй  в  БД  по  критерию
-     *
+     * 
      * @param mixed $where
      */
     public static function findCnt($where = "")
@@ -133,7 +133,7 @@ abstract class Entity implements \Zippy\Interfaces\DataItem
 
     /**
      * Возвращает  массив  сущностей  из  БД  по  критерию
-     *
+     * 
      * @param mixed $where   Условие  для предиката where
      * @param mixed $orderbyfield
      * @param mixed $orderbydir
@@ -194,8 +194,8 @@ abstract class Entity implements \Zippy\Interfaces\DataItem
 
     /**
      * Возвращает  массив ключ/имя  из  БД  по  критерию
-     * Может  использоватся  для заполнения выпадающих списков
-     *
+     * Может  использоватся  для заполнения выпадающих списков 
+     * 
      * @param string $fieldname   Имя  поля представляющее имя сущности.
      * @param mixed $where   Условие  для предиката where
      * @param mixed $orderbyfield
@@ -216,7 +216,7 @@ abstract class Entity implements \Zippy\Interfaces\DataItem
 
     /**
      * Возвращает  одну  строку  из набора
-     * строки  должны  быть  уникальны
+     * строки  должны  быть  уникальны        
      * @param mixed $where
      */
     public static function findOne($where = "")
@@ -225,10 +225,10 @@ abstract class Entity implements \Zippy\Interfaces\DataItem
 
         if (count($list) == 0) {
             return null;
-        }
+        }   
         if (count($list) == 1) {
 
-            return  array_pop($list);
+            return  array_pop($list);  
         }
         if (count($list) > 1) {
             throw new \Zippy\Exception("Метод findOne вернул  больше  одной  записи. Условие: [{$where}]");
@@ -245,19 +245,19 @@ abstract class Entity implements \Zippy\Interfaces\DataItem
 
         if (count($list) == 0) {
             return null;
-        }
-
-        return  array_pop($list);
-
-
+        } 
+        
+        return  array_pop($list); 
+       
+        
     }
-
-
-
+    
+    
+    
     /**
      * Сохраняет  сущность  в  БД
-     * Если  сущность новая создает запись
-     *
+     * Если  сущность новая создает запись 
+     * 
      */
     public function save()
     {
@@ -326,7 +326,7 @@ abstract class Entity implements \Zippy\Interfaces\DataItem
      * Метаданные  содержат  имя  таблицы, имя  ключевого  поля
      * а  также  имя  представления  если  такое  существует  в  БД
      * Например  array('table' => 'system_users','view' => 'system_users_view', 'keyfield' => 'user_id')
-     *
+     * 
      * Вместо  испоользования  метода   можно  импользоввать  аннтации  возде  определения  класса
      * анноации  именуются   аналогично  ключам  массива метаданных.
      */
@@ -362,7 +362,7 @@ abstract class Entity implements \Zippy\Interfaces\DataItem
     /**
      * Вызывается  перед сохранением  сущности
      * Если  возвращает  false  сохранение  отменяется
-     *
+     * 
      */
     protected function beforeSave()
     {
@@ -371,27 +371,27 @@ abstract class Entity implements \Zippy\Interfaces\DataItem
 
     /**
      * Вызывается  после  сохранения сущности
-     *
+     * 
      * @param mixed $update - true  если обновление
      */
     protected function afterSave($update)
     {
-
+        
     }
 
     /**
      * Вызывается   после  загрузки  сущности  из  БД
-     *
+     * 
      */
     protected function afterLoad()
     {
-
+        
     }
 
     /**
      * Выщывается перед  удалением  сущности
      * если  возвращает  false  удаление  отеняется
-     *
+     * 
      */
     protected function beforeDelete()
     {
@@ -410,9 +410,10 @@ abstract class Entity implements \Zippy\Interfaces\DataItem
     }
 
 
+    
     /**
     * Добавление  слешей  в строку
-    *
+    * 
     * @param mixed $str
     */
     public static function escape($str)
@@ -420,10 +421,10 @@ abstract class Entity implements \Zippy\Interfaces\DataItem
         $conn = DB::getConnect();
         return mysqli_real_escape_string($conn->_connectionID, $str);
     }
-
+   
     /**
-    * Форматирование  даты в   сответствии  с  SQL  диалектом
-    *
+    * Форматирование  даты в   сответствии  с  SQL  диалектом 
+    * 
     * @param mixed $dt   Timestamp
     */
     public static function dbdate($dt)

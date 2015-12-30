@@ -30,6 +30,7 @@ class BookmarkableLink extends AbstractLink
      */
     public function RenderImpl()
     {
+        parent::RenderImpl();
         $link = $this->getLink();
         if (strlen($link) > 0) {
             if (strpos($link, '://') === false) {
@@ -43,7 +44,7 @@ class BookmarkableLink extends AbstractLink
 
     /**
      * возвращает ссыоку
-     * 
+     *
      */
     public function getLink()
     {
@@ -56,7 +57,7 @@ class BookmarkableLink extends AbstractLink
 
     /**
      * Устнанавливает  ссылку
-     * 
+     *
      * @param mixed $link
      */
     public function setLink($link)

@@ -9,11 +9,12 @@ use \Zippy\Interfaces\Binding;
  * Базовый   класс для  компонентов HTML ссылок
  *
  */
-abstract class AbstractLink extends HtmlComponent
+abstract class AbstractLink extends \Zippy\Html\HtmlContainer
 {
 
     protected $value = null;
     protected $disabled = false;
+
 
     public function __construct($id)
     {
@@ -66,5 +67,8 @@ abstract class AbstractLink extends HtmlComponent
     {
         $this->disabled = $disabled;
     }
-
+   public function RenderImpl()
+    {
+        parent::RenderImpl();
+    }
 }

@@ -55,7 +55,7 @@ class RedirectLink extends AbstractLink implements Requestable
      */
     public function RenderImpl()
     {
-
+        parent::RenderImpl();
         if ($this->bookmarkable === true) {
 
 
@@ -82,7 +82,7 @@ class RedirectLink extends AbstractLink implements Requestable
         }
         $this->setAttribute("href", "{$url}");
     }
- 
+
     public function setLink($pagename, $params = array(), $bookmarkable = true, $encode = false)
     {
         $this->pagename = $pagename;

@@ -13,14 +13,16 @@ class EntityDataSource implements \Zippy\Interfaces\DataSource
     private $class;  //Имя  класса  унаследованного  от  Entity
     private $where;  //выражение для  WHERE
     private $order;  //выражение для  ORDER BY
+    private $count;  //количество
 
     //   private $top;    //ограничение  количества
 
-    public function __construct($class, $where = "", $order = "")
+    public function __construct($class, $where = "", $order = "",$count=0)
     {
         $this->class = $class;
         $this->where = $where;
         $this->order = $order;
+        $this->count = $count;
     }
 
     public function getItemCount()
@@ -31,6 +33,12 @@ class EntityDataSource implements \Zippy\Interfaces\DataSource
 
     public function getItems($start = -1, $count = -1, $sortfield = null, $desc = null)
     {
+        if($this->count >0) {  // приоритет если  задано
+           $count =$this->count;
+           $start=0;
+        }
+
+
         if (strlen($this->order) > 0 && strlen($sortfield) == 0) {
             $sortfield = $this->order;
             $_s = explode(" ",$sortfield) ;

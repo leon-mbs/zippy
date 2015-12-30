@@ -8,7 +8,7 @@ use \Zippy\Interfaces\AjaxRender;
 
 /**
  *  Компонент  для строчного  тэга типа  SPAN и  т.д.
- *  
+ *
  */
 class Label extends HtmlComponent implements AjaxRender
 {
@@ -91,16 +91,16 @@ class Label extends HtmlComponent implements AjaxRender
     }
 
     /**
-     * Добавления значения  которое  подгрузится с  помощю AJAX 
+     * Добавления значения  которое  подгрузится с  помощю AJAX
      * после загрузки страницы
-     * 
+     *
      * @param mixed $url   Адрес  страницы   с  данными
      * @param mixed $html    если  true жданные  вставятся в  DOM  как  html
      */
     public function setAjaxText($url, $html = false)
     {
 
-        $this->ajaxvalue = "$.get('{$url}', function(data) {  
+        $this->ajaxvalue = "$.get('{$url}', function(data) {
                     $('#{$this->id}')." . ($html ? "html" : "text") . "(data) });";
     }
 

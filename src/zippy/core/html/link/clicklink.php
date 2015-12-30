@@ -38,6 +38,8 @@ class ClickLink extends AbstractLink implements ClickListener, AjaxClickListener
      */
     public function RenderImpl()
     {
+        parent::RenderImpl();
+
         if ($this->event == null) {
             $this->setAttribute("href", "");
             $this->setAttribute("onclick", "");
