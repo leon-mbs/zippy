@@ -69,7 +69,7 @@ class Captcha extends \Zippy\Html\HtmlComponent implements \Zippy\Interfaces\Aja
     }
 
     /**
-     * Возвращает  код
+     * Проверка  кода
      *
      */
     public function checkCode($code)
@@ -87,7 +87,7 @@ class Captcha extends \Zippy\Html\HtmlComponent implements \Zippy\Interfaces\Aja
     public function Refresh()
     {
         $this->code = $this->OnCode();
-        $created = time();
+        $this->created = time();
     }
 
     /**

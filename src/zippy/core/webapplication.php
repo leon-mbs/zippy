@@ -299,6 +299,11 @@ abstract class WebApplication
         $response = '<!DOCTYPE HTML>' . pq('html')->htmlOuter(); //HTML  в  выходной  поток
 
         if(count($renderpage->_tvars) >0){
+
+            //востанавливаем  скобки  в тегах
+           $response = str_replace("\"%7B%7B","\"{{",$response);
+           $response = str_replace("%7D%7D\"","}}\"",$response);
+
            $m = new \Mustache_Engine();
            $response= $m->render($response, $renderpage->_tvars);
         }
