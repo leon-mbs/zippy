@@ -26,14 +26,23 @@ class DropDownChoice extends HtmlFormDataElement implements ChangeListener, Ajax
      * @param  array  Массив  значений
      * @param  Текущее значение  елемента
      */
-    public function __construct($id, $optionlist = array(), $value = -1)
+    public function __construct($id, $optionlist = array(), $value = -1,$bgupdate = false)
     {
         parent::__construct($id);
         $this->setValue($value);
 
         $this->optionlist = $optionlist;
+        $this->bgupdate = $bgupdate;
     }
 
+      protected function onAdded()
+      {
+                 if($this->bgupdate){
+                    $page =$this->getPageOwner();
+                    $this->setAjaxChangeHandler($page,'OnBackgroundUpdate') ;
+                }
+      }    
+    
     /**
      * 3
      * @see  HtmlComponent
@@ -193,6 +202,13 @@ class DropDownChoice extends HtmlFormDataElement implements ChangeListener, Ajax
         $this->optionlist[$value] = $text;
     }
     
-
-
+    /**
+    * возвращает текст  выбраного  значения
+    * 
+    */
+    public function getValueName(){
+        $list = $this->optionlist instanceOf Binding ? $this->optionlist->getValue() : $this->optionlist;
+        return $list[$this->getValue()];
+    }
+    
 }

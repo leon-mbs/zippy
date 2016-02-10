@@ -204,7 +204,13 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
         $this->_keywords = $keywords;
     }
    
-   
-
+    /**
+    * функция  фонового  обновления  значения элемента  формы
+    * 
+    * @param mixed $sender
+    */
+    public function OnBackgroundUpdate($sender){
+         
+    }
 
 }

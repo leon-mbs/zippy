@@ -6,16 +6,19 @@ use \Zippy\WebApplication;
 use \Zippy\Interfaces\Requestable;
 use \Zippy\Event;
 use \Zippy\Interfaces\EventReceiver;
+use \Zippy\Interfaces\AjaxChangeListener;
 
 /**
  * Компонент  тэга  &lt;input type=&quot;text&quot;&gt; с  автозавершением
  */
-class AutocompleteTextInput extends TextInput implements Requestable
+class AutocompleteTextInput extends TextInput implements Requestable,AjaxChangeListener
 {
 
     public $minChars = 2;
     public $timeout = 100;
     private $key = 0;
+     private $event2 = null;
+     private $event = null;
 
 
     /**
@@ -24,13 +27,20 @@ class AutocompleteTextInput extends TextInput implements Requestable
      * @param  Минимальное  количество  символов
      * @param  Таймаут в  мс.
      */
-    public function __construct($id, $minChars = 2, $timeout = 100)
+    public function __construct($id, $minChars = 2, $timeout = 100,$bgupdate = false)
     {
         parent::__construct($id);
         $this->minChars = $minChars;
         $this->timeout = $timeout;
+          $this->bgupdate = $bgupdate;
     }
-
+       protected function onAdded()
+      {
+                 if($this->bgupdate){
+                    $page =$this->getPageOwner();
+                    $this->setAjaxChangeHandler($page,'OnBackgroundUpdate') ;
+                }
+    }
     public function RenderImpl()
     {
         TextInput::RenderImpl();
