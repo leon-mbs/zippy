@@ -135,7 +135,7 @@ class DataTable extends AbstractList implements Requestable, AjaxRender
                         $sort = 'glyphicon glyphicon-sort-by-attributes-alt';
                     }
                 }
-                $url = $this->getURLNode() . ':sort:' . $column->fieldname . ':' . ($sort === 'asc' ? 'desc' : 'asc');
+                $url = $this->getURLNode() . ':sort:' . $column->fieldname . ':' . ($this->sortd === 'asc' ? 'desc' : 'asc');
                 $onclick = "window.location='{$url}'";
                 if ($this->useajax) {
                     $onclick = "getUpdate('{$url}&ajax=true');event.returnValue=false; return false;";
@@ -217,14 +217,14 @@ class DataTable extends AbstractList implements Requestable, AjaxRender
      */
     private function renderFooter()
     {
-        if ($this->paginator) {
+        if (!$this->paginator) {
             return "";
         }
         $currentpage = $this->currentpage;
 
         $content = '<ul class="pagination">';
         $pages = $this->getPageCount();
-        if (count($pages) <= 1)
+        if ($pages <= 1)
             return '';
 
         if($currentpage - $this->firstButton > $this->maxbuttons){
