@@ -74,16 +74,17 @@ class DataTable extends AbstractList implements Requestable, AjaxRender
             $this->sortf = $p[1];
             $this->sortd = $p[2];
             $this->currentpage = 1;
-
+            $this->Reload();
         }
         if ($p[0] == 'pag') {
             $this->currentpage = $p[1];
+            $this->Reload(false);
         }
         if ($p[0] == 'cellclick' && $this->cellclickevent instanceof \Zippy\Event) {
             $items = array_values($this->datalist);
             $this->cellclickevent->onEvent($this, array('dataitem' => $items[$p[2] - 1], 'field' => $p[1], 'rownumber' => $p[2]));
         }
-        $this->Reload();
+
         if ($this->useajax) {
             WebApplication::$app->getResponse()->addAjaxResponse($this->AjaxAnswer());
         }
@@ -187,7 +188,7 @@ class DataTable extends AbstractList implements Requestable, AjaxRender
 
                     $onclick = "window.location='{$url}'";
                 }
-                if ($this->useajax) {
+                if ($column->clickable && $this->useajax) {
                     $onclick = "getUpdate('{$url}&ajax=true');event.returnValue=false; return false;";
                 }
 
@@ -218,6 +219,9 @@ class DataTable extends AbstractList implements Requestable, AjaxRender
     private function renderFooter()
     {
         if (!$this->paginator) {
+            return "";
+        }
+        if ( count($this->columns)==0) {
             return "";
         }
         $currentpage = $this->currentpage;
@@ -318,6 +322,14 @@ class DataTable extends AbstractList implements Requestable, AjaxRender
     public function setSelectedClass($selectedclass)
     {
         $this->selectedclass = $selectedclass;
+    }
+
+    /**
+    * Удаляет  все столбцы
+    *
+    */
+    public  function removeAllColumns(){
+       $this->columns =array();
     }
 
 }

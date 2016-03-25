@@ -63,7 +63,9 @@ class Form extends HtmlContainer
                 if ($component instanceof SubmitDataRequest) {
                     //проверяем что элемент не находится в невидимой панели
                     if ($this->checkInvisibleOwner($component) == false) {
-                        $component->getRequestData();
+                        if($component->isVisible()){
+                            $component->getRequestData();
+                        }
                     }
                 }
             }
