@@ -1,0 +1,18 @@
+{
+    "name": "leon-mbs/zippy",
+    "description": "Компонентный событийно-ориентированный PHP фреймворк",
+    "keywords": [  "framework", "php" ],
+    "homepage": "http://zippy.com.ua/Zippy-framework/opisanie",
+
+    "license": "MIT",
+    
+    "require": {
+       "php": ">=5.3.3",
+        "coderockr/php-query": "dev-master",
+        "adodb/adodb-php": "dev-master",
+        "mustache/mustache": "dev-master"
+    },
+    "autoload" : {
+		"files" : ["zippy.inc.php"]
+	}
+}

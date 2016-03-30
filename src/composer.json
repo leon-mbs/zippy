@@ -1,8 +1,0 @@
-{
-    "require": {
-        "coderockr/php-query": "dev-master",
-        "adodb/adodb-php": "dev-master",
-        "mustache/mustache": "dev-master"
-    }
-
-}
