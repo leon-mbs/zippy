@@ -11,7 +11,7 @@
        "php": ">=5.3.3",
        "coderockr/php-query": "*", 
         "adodb/adodb-php": "*",
-        "mustache/mustache": "*
+        "mustache/mustache": "*"
     },
     "autoload" : {
 		"files" : ["zippy.inc.php"]
