@@ -9,9 +9,7 @@
      
     "require": {
        "php": ">=5.3.3",
-      
-        "adodb/adodb-php": "dev-master",
-        "mustache/mustache": "dev-master"
+       "coderockr/php-query": "dev-master"
     },
     "autoload" : {
 		"files" : ["zippy.inc.php"]
