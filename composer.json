@@ -5,7 +5,7 @@
     "homepage": "http://zippy.com.ua/Zippy-framework/opisanie",
 
     "license": "MIT",
-    
+    "minimum-stability": "dev",  
     "require": {
        "php": ">=5.3.3",
         "coderockr/php-query": "dev-master",
