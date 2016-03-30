@@ -6,7 +6,7 @@
 
     "license": "MIT",
     "minimum-stability": "dev", 
-    "prefer-stable": "true",
+     
     "require": {
        "php": ">=5.3.3",
         "coderockr/php-query": "dev-master",
