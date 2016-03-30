@@ -8,7 +8,10 @@
     "minimum-stability": "dev", 
      
     "require": {
-       "php": ">=5.3.3"
+       "php": ">=5.3.3",
+        
+        "adodb/adodb-php": "dev-master",
+        "mustache/mustache": "dev-master"
     },
     "autoload" : {
 		"files" : ["zippy.inc.php"]
