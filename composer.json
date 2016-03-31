@@ -10,7 +10,7 @@
      
     "require": {
      "php": ">=5.3.3",      
-         "mustache/mustache": "~2.9",
+         "mustache/mustache": "dev-master",
              
         "adodb/adodb-php": "v5.20.3"         
     },
