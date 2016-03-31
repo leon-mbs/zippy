@@ -14,7 +14,158 @@
         "coderockr/php-query": "dev-master" ,           
         "adodb/adodb-php": "dev-master"         
     },
-  
+    "packages": [
+        {
+            "name": "adodb/adodb-php",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ADOdb/ADOdb.git",
+                "reference": "40998f213df921b40a04345946ce2a6770520ea3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ADOdb/ADOdb/zipball/40998f213df921b40a04345946ce2a6770520ea3",
+                "reference": "40998f213df921b40a04345946ce2a6770520ea3",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "adodb.inc.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause",
+                "LGPL-2.1"
+            ],
+            "authors": [
+                {
+                    "name": "John Lim",
+                    "email": "jlim@natsoft.com",
+                    "role": "Author"
+                },
+                {
+                    "name": "Damien Regad",
+                    "role": "Current maintainer"
+                },
+                {
+                    "name": "Mark Newnham",
+                    "role": "Developer"
+                }
+            ],
+            "description": "ADOdb is a PHP database abstraction layer library",
+            "homepage": "http://adodb.sourceforge.net/",
+            "keywords": [
+                "abstraction",
+                "database",
+                "layer",
+                "library",
+                "php"
+            ],
+            "time": "2016-03-24 23:59:44"
+        },
+        {
+            "name": "coderockr/php-query",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Coderockr/phpQuery.git",
+                "reference": "942dff329b484bcadedce5255dab2ea01c9b8d6a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Coderockr/phpQuery/zipball/942dff329b484bcadedce5255dab2ea01c9b8d6a",
+                "reference": "942dff329b484bcadedce5255dab2ea01c9b8d6a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "phpQuery": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Mit"
+            ],
+            "authors": [
+                {
+                    "name": "Duvanmonsa",
+                    "email": "duvanmonsa@gmail.com",
+                    "homepage": "https://github.com/duvanmonsa",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Elton Minetto",
+                    "email": "eminetto@coderockr.com",
+                    "homepage": "https://github.com/eminetto",
+                    "role": "Developer"
+                }
+            ],
+            "description": "phpQuery",
+            "homepage": "https://github.com/coderockr/phpQuery",
+            "keywords": [
+                "lib",
+                "phpQuery"
+            ],
+            "time": "2016-02-05 16:04:06"
+        },
+
+        {
+            "name": "mustache/mustache",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bobthecow/mustache.php.git",
+                "reference": "0bb2f76e2f34a8864a32be34c4ec66274d76c05e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bobthecow/mustache.php/zipball/0bb2f76e2f34a8864a32be34c4ec66274d76c05e",
+                "reference": "0bb2f76e2f34a8864a32be34c4ec66274d76c05e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.4"
+            },
+            "require-dev": {
+                "fabpot/php-cs-fixer": "~1.6",
+                "phpunit/phpunit": "~3.7|~4.0|~5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Mustache": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Justin Hileman",
+                    "email": "justin@justinhileman.info",
+                    "homepage": "http://justinhileman.com"
+                }
+            ],
+            "description": "A Mustache implementation in PHP.",
+            "homepage": "https://github.com/bobthecow/mustache.php",
+            "keywords": [
+                "mustache",
+                "templating"
+            ],
+            "time": "2016-02-27 19:22:46"
+        }
+    ],  
     "autoload" : {
 		"files" : ["zippy.inc.php"]
 	}
