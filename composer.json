@@ -11,16 +11,11 @@
     "require": {
          "php": ">=5.3.3"
 ,  
-         "mustache/mustache": "dev-master",
-        "coderockr/php-query": "dev-master" ,           
-        "adodb/adodb-php": "dev-master"         
+         "mustache/mustache": "@dev",
+        "coderockr/php-query": "@dev" ,           
+        "adodb/adodb-php": "@dev"         
     },
-    "repositories": [
-    {
-        "type": "git",
-        "url": "https://github.com/bobthecow/mustache.php.git"
-    }
-],
+  
     "autoload" : {
 		"files" : ["zippy.inc.php"]
 	}
