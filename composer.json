@@ -10,7 +10,7 @@
      
     "require": {
      "php": ">=5.3.3",      
-         "mustache/mustache": "2.10.0",
+         "mustache/mustache": "dev-master",
         "coderockr/php-query": "dev-master" ,           
         "adodb/adodb-php": "dev-master"         
     },
