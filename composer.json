@@ -9,11 +9,10 @@
    "prefer-stable" : true,
      
     "require": {
-         "php": ">=5.3.3"
-,  
-         "mustache/mustache": "@dev",
-        "coderockr/php-query": "@dev" ,           
-        "adodb/adodb-php": "@dev"         
+         
+         "mustache/mustache": "dev-master",
+        "coderockr/php-query": "dev-master" ,           
+        "adodb/adodb-php": "dev-master"         
     },
   
     "autoload" : {
