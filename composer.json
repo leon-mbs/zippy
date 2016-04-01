@@ -23,16 +23,5 @@
     ], 
     "autoload" : {
         "files" : ["zippy.inc.php"]
-    },
-        "scripts": {
-        "post-install-cmd": [
-          "Zippy\\Installer::postInstall"   
-        ],
-        "post-update-cmd": [
-              "Zippy\\Installer::postUpdate" 
-        ],
-        "post-create-project-cmd": [
-            "Zippy\\Installer::postCreateProject"   
-        ]
-    } 
+    }
 }
