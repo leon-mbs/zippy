@@ -31,6 +31,12 @@ spl_autoload_register('\Zippy\autoload');
 class Installer 
 {
     public static function postCreateProject($event){
+      
+    }
+    public static function postUpdate($event){
+        $params = $event->getComposer()->getPackage()->getExtra();
+    }
+    public static function postInstall($event){
        $package = $event->getOperation()->getPackage();
        $installationManager = $event->getComposer()->getInstallationManager();
 
@@ -46,12 +52,6 @@ class Installer
         }       
         $event->getIO()->write($originDir);
         $event->getIO()->write($installPath);
-    }
-    public static function postUpdate($event){
-        $params = $event->getComposer()->getPackage()->getExtra();
-    }
-    public static function postInstall($event){
-        $params = $event->getComposer()->getPackage()->getExtra();
     }
     
 }
