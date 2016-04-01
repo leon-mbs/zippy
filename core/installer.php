@@ -12,6 +12,9 @@ class Installer
         $params = $event->getComposer()->getPackage()->getExtra();
     }
     public static function postInstall($event){
+       
+       $event->getIO()->write("Hi\n");
+        
        $package = $event->getOperation()->getPackage();
        $installationManager = $event->getComposer()->getInstallationManager();
 
