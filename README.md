@@ -6,7 +6,7 @@
 
 Домашняя страница:  [http://zippy.com.ua/](http://zippy.com.ua/)
 
-[Скачать](https://github.com/leon-mbs/zippy/releases/download/v1.0.8/Framework.zip) в  виде  минимального  приложения.
+[Скачать](http://zippy.com.ua/download/erp-full.zip) в  виде  минимального  приложения.
 
 Требования: PHP5.3.3+
 
