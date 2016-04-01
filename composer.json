@@ -13,7 +13,8 @@
          "mustache/mustache": "~2.10",
          "electrolinux/phpquery" :">=0.9.6",   
          "adodb/adodb-php": "v5.20.3"         
-    },
+    },  
+    
      "authors": [
         {
             "name": "Леонид Мартынюк",
