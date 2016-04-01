@@ -3,7 +3,7 @@
 define("_ROOT", __DIR__ . '/');
 
 require_once _ROOT . 'vendor/autoload.php';
-
+require_once _ROOT . 'zippy/zippy.inc.php';
 
 //загрузка классов  страниц и  других  пользовательских  классов
 function autoload($className)
