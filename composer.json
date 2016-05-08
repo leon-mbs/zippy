@@ -5,22 +5,22 @@
     "homepage": "http://zippy.com.ua/Zippy-framework/opisanie",
 
     "license": "MIT",
-   "minimum-stability" : "dev", 
+   "minimum-stability" : "dev",
    "prefer-stable" : true,
-    "type": "library", 
+    "type": "library",
     "require": {
-         "php": ">=5.3.3",      
+         "php": ">=5.3.3",
          "mustache/mustache": "~2.10",
-         "electrolinux/phpquery" :">=0.9.6",   
-         "adodb/adodb-php": "v5.20.3"         
-    },  
-    
+         "leon-mbs/zdb": "dev-master",
+         "electrolinux/phpquery" :">=0.9.6"
+    },
+
      "authors": [
         {
             "name": "Леонид Мартынюк",
-            "email": "leon.mbs@gmail.com" 
+            "email": "leon.mbs@gmail.com"
         }
-    ], 
+    ],
     "autoload" : {
         "files" : ["zippy.inc.php"]
     }
