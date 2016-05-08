@@ -2,9 +2,11 @@
 
 namespace ZCL\DB;
 
+
+
 abstract class TreeEntity extends Entity
 {
-    
+
     /**
      * Возврашает  метаданные для   выборки  из  БД
      * Реализуется  конкретными  сущностями имплементирующими  класс  Entity
@@ -12,9 +14,9 @@ abstract class TreeEntity extends Entity
      * а  также  имя  представления  если  такое  существует  в  БД
      * Например  array('table' => 'system_users','view' => 'system_users_view', 'keyfield' => 'user_id')
      * Для  работы   с  данными  иерархическогго типа вводятся  дополнительные   параметрыЖ
-     * 'parentfield' - поле с родительскич id и 'pathfield' - строчное  поле хранения материализованного 
-     *  пути 
-     * 
+     * 'parentfield' - поле с родительскич id и 'pathfield' - строчное  поле хранения материализованного
+     *  пути
+     *
      * Вместо  испоользования  метода   можно  импользоввать  аннтации  возде  определения  класса
      * анноации  именуются   аналогично  ключам  массива метаданных.
      */
@@ -51,11 +53,11 @@ abstract class TreeEntity extends Entity
 
     /**
      * Создает  дерево на  основе  иерархии  сущностей
-     * 
+     *
      * @param mixed $tree  Ссылка  на  компонент  \ZCL\Tree\Tree
-     * @param mixed $fname  Наименование  поля  сущности,  значение которого  будет  использовано 
+     * @param mixed $fname  Наименование  поля  сущности,  значение которого  будет  использовано
      * именования узла  дерева
-     * @param mixed $rootname  Имя  виртуального  корневого  узла, если  есть 
+     * @param mixed $rootname  Имя  виртуального  корневого  узла, если  есть
      * необходимость  чтобы  дерево  имело  один  корневой  узед
      */
     public static function generateTree(\ZCL\Tree\Tree $tree, $fname, $rootname = "Root")
@@ -123,7 +125,7 @@ abstract class TreeEntity extends Entity
 
     /**
      * Перемешение  узла  дерева  в  другой   ужел
-     * 
+     *
      * @param mixed $pid   Id узла перемешения
      */
     public function moveTo($pid)
@@ -163,7 +165,7 @@ abstract class TreeEntity extends Entity
 
     /**
      * Получение  дочерних  узлов
-     *  
+     *
      * @param mixed $all   Если  false  получаем только  непостредственнвх потомков
      */
     public function getChildren($all = false)
@@ -181,7 +183,7 @@ abstract class TreeEntity extends Entity
 
     /**
      * Удаление  узла
-     * 
+     *
      * @param mixed $rec  Ксли  true  дочерние  узлы  удаляются  рекурсивно,
      *  иначе  удаляются  одним  запросом  к  БД
      */
@@ -207,7 +209,7 @@ abstract class TreeEntity extends Entity
     }
 
     /**
-     * 
+     *
      * @see   Entity
      */
     protected function afterSave($update)

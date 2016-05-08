@@ -9,12 +9,7 @@ namespace ZCL\DB;
  */
 abstract class Entity extends  \ZDB\DB\Entity  implements \Zippy\Interfaces\DataItem
 {
-
-}
-
-abstract class Entity implements \Zippy\Interfaces\DataItem
-{
-
+ 
 
     protected $fields = array();  //список  полей
 
