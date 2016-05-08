@@ -226,7 +226,7 @@ abstract class TreeEntity extends Entity
             $parent = $class::load($this->{$meta['parentfield']});
             $this->{$meta['pathfield']} = $parent->{$meta['pathfield']} . sprintf('%08s', $this->{$meta['keyfield']});
         }
-        $conn = \ZCL\DB\DB::getConnect();
+        $conn = \ZDB\DB\DB::getConnect();
         $conn->Execute("UPDATE {$meta['table']} set  {$meta['pathfield']} ='" . $this->{$meta['pathfield']} . "' where  {$meta['keyfield']} = " . $this->{$meta['keyfield']});
     }
 

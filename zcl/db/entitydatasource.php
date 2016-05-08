@@ -37,21 +37,14 @@ class EntityDataSource implements \Zippy\Interfaces\DataSource
            $count =$this->count;
            $start=0;
         }
-
+        $orderby  = strlen($sortfield) >0 ? $sortfield .' '  . $desc : "";
 
         if (strlen($this->order) > 0 && strlen($sortfield) == 0) {
-            $sortfield = $this->order;
-            $_s = explode(" ",$sortfield) ;
-            if(count($_s)==2){
-                $sortfield = $_s[0];
-                $desc = $_s[1];
-            }
-            if(count($_s)>2){
-                $desc ="";
-            }
+            $orderby = $this->order;
+ 
         }
         $class = $this->class;
-        return $class::find($this->where, $sortfield, $desc, $count, $start);
+        return $class::find($this->where, $orderby,   $count, $start);
     }
 
     public function getItem($id)
