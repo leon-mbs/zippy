@@ -3,7 +3,6 @@
 namespace ZCL\DB;
 
 
-
 abstract class TreeEntity extends Entity
 {
 
@@ -54,10 +53,10 @@ abstract class TreeEntity extends Entity
     /**
      * Создает  дерево на  основе  иерархии  сущностей
      *
-     * @param mixed $tree  Ссылка  на  компонент  \ZCL\Tree\Tree
-     * @param mixed $fname  Наименование  поля  сущности,  значение которого  будет  использовано
+     * @param mixed $tree Ссылка  на  компонент  \ZCL\Tree\Tree
+     * @param mixed $fname Наименование  поля  сущности,  значение которого  будет  использовано
      * именования узла  дерева
-     * @param mixed $rootname  Имя  виртуального  корневого  узла, если  есть
+     * @param mixed $rootname Имя  виртуального  корневого  узла, если  есть
      * необходимость  чтобы  дерево  имело  один  корневой  узед
      */
     public static function generateTree(\ZCL\Tree\Tree $tree, $fname, $rootname = "Root")
@@ -97,9 +96,11 @@ abstract class TreeEntity extends Entity
      */
     public static function delete($id)
     {
+        $meta = $class::getMetadata();
+
         if (is_numeric($id)) {
             $class = get_called_class();
-            $meta = $class::getMetadata();
+
             $obj = $class::load($id);
         } else {
             $obj = $id;
@@ -126,7 +127,7 @@ abstract class TreeEntity extends Entity
     /**
      * Перемешение  узла  дерева  в  другой   ужел
      *
-     * @param mixed $pid   Id узла перемешения
+     * @param mixed $pid Id узла перемешения
      */
     public function moveTo($pid)
     {
@@ -160,13 +161,13 @@ abstract class TreeEntity extends Entity
         $meta = $class::getMetadata();
 
         return;
-        $class::load($this->{$meta['parentfield']});
+        //$class::load($this->{$meta['parentfield']});
     }
 
     /**
      * Получение  дочерних  узлов
      *
-     * @param mixed $all   Если  false  получаем только  непостредственнвх потомков
+     * @param mixed $all Если  false  получаем только  непостредственнвх потомков
      */
     public function getChildren($all = false)
     {
@@ -184,7 +185,7 @@ abstract class TreeEntity extends Entity
     /**
      * Удаление  узла
      *
-     * @param mixed $rec  Ксли  true  дочерние  узлы  удаляются  рекурсивно,
+     * @param mixed $rec Ксли  true  дочерние  узлы  удаляются  рекурсивно,
      *  иначе  удаляются  одним  запросом  к  БД
      */
     public function deleteChildren($rec = true)
@@ -214,19 +215,20 @@ abstract class TreeEntity extends Entity
      */
     protected function afterSave($update)
     {
+        $meta = $this->getMetadata();
         if (strlen($this->{$meta['pathfield']}) > 0) {
             return;
         }
 
         $class = get_called_class();
-        $meta = $class::getMetadata();
+ 
 
         $this->{$meta['pathfield']} = sprintf('%08s', $this->{$meta['keyfield']});
         if ($this->{$meta['parentfield']} > 0) {
             $parent = $class::load($this->{$meta['parentfield']});
             $this->{$meta['pathfield']} = $parent->{$meta['pathfield']} . sprintf('%08s', $this->{$meta['keyfield']});
         }
-        $conn = \ZDB\DB\DB::getConnect();
+        $conn = \ZDB\DB::getConnect();
         $conn->Execute("UPDATE {$meta['table']} set  {$meta['pathfield']} ='" . $this->{$meta['pathfield']} . "' where  {$meta['keyfield']} = " . $this->{$meta['keyfield']});
     }
 

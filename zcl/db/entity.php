@@ -7,16 +7,16 @@ namespace ZCL\DB;
  * Реализует паттерн  Active Directory
  * Предназначен  для   автоматизации стандартных  над  записями  в  БД
  */
-abstract class Entity extends  \ZDB\DB\Entity  implements \Zippy\Interfaces\DataItem
+abstract class Entity extends \ZDB\Entity implements \Zippy\Interfaces\DataItem
 {
- 
+
 
     protected $fields = array();  //список  полей
 
     /**
      * Конструктор
      *
-     * @param mixed $row  массив инициализирующий некторые
+     * @param mixed $row массив инициализирующий некторые
      * или  все  поля объекта
      *
      */
@@ -25,7 +25,6 @@ abstract class Entity extends  \ZDB\DB\Entity  implements \Zippy\Interfaces\Data
     {
         parent::__construct($row);
     }
-
 
 
     /**
