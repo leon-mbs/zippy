@@ -3,9 +3,7 @@
 namespace ZCL\DB;
 
 /**
- * Базовый  класс  для  бизнес-сущностей
- * Реализует паттерн  Active Directory
- * Предназначен  для   автоматизации стандартных  над  записями  в  БД
+ * Расширение  \ZDB\Entity  для  работы  с  компонентами фреймворка
  */
 abstract class Entity extends \ZDB\Entity implements \Zippy\Interfaces\DataItem
 {
