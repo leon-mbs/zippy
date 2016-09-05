@@ -38,7 +38,7 @@ class Date extends TextInput implements  Requestable,ChangeListener, AjaxChangeL
 
                // $url = $this->owner->getURLNode() . "::" . $this->id . "&ajax=true";
 
-                $js = "$('#{$this->id}').datepicker( {dateFormat : 'yy-m-d' });";
+                $js = "$('#{$this->id}').datepick( {dateFormat : 'yy-m-d' });";
        if ($this->event != null) {
             $formid = $this->getFormOwner()->id;
 

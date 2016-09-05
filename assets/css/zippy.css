@@ -4,7 +4,7 @@
 /* autocomplete */
 input.autocomplete-loading
 {
-    background-image:url(images/autocomplete.gif);
+    /*background-image:url(images/autocomplete.gif); */
     background-position: center right;
     background-repeat:no-repeat;
 }
