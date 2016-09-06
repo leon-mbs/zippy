@@ -11,6 +11,7 @@ use \Zippy\Interfaces\Requestable;
 
 /**
  * Компонент  тэга  &lt;input type=&quot;text&quot;&gt; с  календарем (используется jQuery)
+ * https://github.com/kbwood/datepick
  */
 class Date extends TextInput implements  Requestable,ChangeListener, AjaxChangeListener
 {

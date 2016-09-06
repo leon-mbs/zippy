@@ -1,6 +1,6 @@
 <?php
 
-namespace ZCL\BT;
+namespace Zippy\Html\Form;
 
 use \Zippy\WebApplication;
 use \Zippy\Event;
@@ -10,10 +10,10 @@ use \Zippy\Interfaces\EventReceiver;
 use \Zippy\Interfaces\Requestable;
 
 /**
- * Twitter Botstrap компонент  тэга  &lt;input type=&quot;text&quot;&gt; с  календарем
- * 
+ * Компонент  тэга  &lt;input type=&quot;text&quot;&gt; для ввода  даты и времени (используется jQuery)
+ * https://github.com/mugifly/jquery-simple-datetimepicker
  */
-class DatePicker extends \Zippy\Html\Form\TextInput implements  Requestable,ChangeListener, AjaxChangeListener
+class DateTime extends TextInput implements  Requestable,ChangeListener, AjaxChangeListener
 {
       
         private $event;
@@ -35,11 +35,11 @@ class DatePicker extends \Zippy\Html\Form\TextInput implements  Requestable,Chan
     }
         public function RenderImpl()
         {
-                \Zippy\Html\Form\TextInput::RenderImpl();
+                TextInput::RenderImpl();
 
                // $url = $this->owner->getURLNode() . "::" . $this->id . "&ajax=true";
 
-                $js = "$('#{$this->id}').datepicker( {autoclose:true,format : 'yyyy-mm-dd' });";
+                $js = "$('#{$this->id}').appendDtpicker( {dateFormat : 'YYYY-MM-DD hh:mm',closeOnSelected:true });";
        if ($this->event != null) {
             $formid = $this->getFormOwner()->id;
 
@@ -47,15 +47,15 @@ class DatePicker extends \Zippy\Html\Form\TextInput implements  Requestable,Chan
                 $url = $this->owner->getURLNode() . '::' . $this->id;
                 $url = substr($url, 2 + strpos($url, 'q='));
                 $this->setAttribute("onchange", "javascript:{ $('#" . $formid . "_q').attr('value','" . $url . "');$('#" . $formid . "').submit();}");
-                 $js = "$('#{$this->id}').datetimepicker( {format : 'yyyy-mm-dd'}).on('changeDate', function() {  
+                 $js = "$('#{$this->id}').dtpicker( {dateFormat : 'yy-m-d' ,onSelect: function() {  
                    $('#" . $formid . "_q').attr('value','" . $url . "');$('#" . $formid . "').submit()
-                } }   ));";
+                } }   );";
               } else {
                 $url = $this->owner->getURLNode() . "::" . $this->id;
                 $url = substr($url, 2 + strpos($url, 'q='));
                 $_BASEURL = WebApplication::$app->getResponse()->getHostUrl();
                  
-                $js = "$('#{$this->id}').datetimepicker( {format : 'yyyy-mm-dd'}).on('changeDate', function() {  
+                $js = "$('#{$this->id}').dtpicker( {dateFormat : 'yy-m-d' ,onSelect: function() {  
                    $('#" . $formid . "_q').attr('value','" . $url . "'); submitForm('{$formid}','{$_BASEURL}/?ajax=true')
                 } }   );";
                 
@@ -75,7 +75,7 @@ class DatePicker extends \Zippy\Html\Form\TextInput implements  Requestable,Chan
         {
                 $date = strtotime($this->getText());
                 if($endday == true){
-                   $d = date('yyyy-mm-dd',$date);
+                   $d = date('Y-m-d',$date);
                    $date = strtotime($d .' 23:59:59'); 
                 }
                 return $date;
@@ -90,7 +90,7 @@ class DatePicker extends \Zippy\Html\Form\TextInput implements  Requestable,Chan
         public function setDate($t = null)
         {
                 if ($t > 0) {
-                        $this->setText(date('Y-m-d', $t));
+                        $this->setText(date('Y-m-d H:i', $t));
                 } else {
                         $this->setText("");
                 }
