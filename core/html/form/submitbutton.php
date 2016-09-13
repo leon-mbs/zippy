@@ -14,7 +14,7 @@ use \Zippy\Interfaces\EventReceiver;
  */
 class SubmitButton extends HtmlComponent implements ClickListener, Requestable
 {
-      
+
     private $event;
 
     /**
@@ -56,7 +56,7 @@ class SubmitButton extends HtmlComponent implements ClickListener, Requestable
      */
     public function OnClick()
     {
-        if ($this->event != null) {
+        if ($this->event != null && strlen($this->getAttribute('disabled'))==0) {
             $this->event->onEvent($this);
         }
     }
