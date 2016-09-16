@@ -39,15 +39,15 @@ class Date extends TextInput implements  Requestable,ChangeListener, AjaxChangeL
 
                // $url = $this->owner->getURLNode() . "::" . $this->id . "&ajax=true";
 
-                $js = "$('#{$this->id}').datepick( {dateFormat : 'yy-m-d' });";
+                $js = "$('#{$this->id}').pickadate(  {    format: 'yyyy-mm-dd' });";
        if ($this->event != null) {
             $formid = $this->getFormOwner()->id;
 
               if ($this->event->isajax == false) {
                 $url = $this->owner->getURLNode() . '::' . $this->id;
                 $url = substr($url, 2 + strpos($url, 'q='));
-                $this->setAttribute("onchange", "javascript:{ $('#" . $formid . "_q').attr('value','" . $url . "');$('#" . $formid . "').submit();}");
-                 $js = "$('#{$this->id}').datepicker( {dateFormat : 'yy-m-d' ,onSelect: function() {  
+                $this->setAttribute("onchange", "javascript:{ $('#" . $formid . "_q').attr('value','" . $url . "');$('#" . $formid . "').submit(); }");
+                 $js = "$('#{$this->id}').pickadate( {format: 'yyyy-mm-dd',onSet: function() {  alert(3);
                    $('#" . $formid . "_q').attr('value','" . $url . "');$('#" . $formid . "').submit()
                 } }   );";
               } else {
@@ -55,7 +55,7 @@ class Date extends TextInput implements  Requestable,ChangeListener, AjaxChangeL
                 $url = substr($url, 2 + strpos($url, 'q='));
                 $_BASEURL = WebApplication::$app->getResponse()->getHostUrl();
                  
-                $js = "$('#{$this->id}').datepicker( {dateFormat : 'yy-m-d' ,onSelect: function() {  
+                $js = "$('#{$this->id}').pickadate( {format: 'yyyy-mm-dd' ,onSet: function() {  
                    $('#" . $formid . "_q').attr('value','" . $url . "'); submitForm('{$formid}','{$_BASEURL}/?ajax=true')
                 } }   );";
                 

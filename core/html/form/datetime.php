@@ -39,7 +39,7 @@ class DateTime extends TextInput implements  Requestable,ChangeListener, AjaxCha
 
                // $url = $this->owner->getURLNode() . "::" . $this->id . "&ajax=true";
 
-                $js = "$('#{$this->id}').appendDtpicker( {dateFormat : 'YYYY-MM-DD hh:mm',closeOnSelected:true });";
+                $js = "$('#{$this->id}').pickatime( {format : 'HH:i',interval:5 });";
        if ($this->event != null) {
             $formid = $this->getFormOwner()->id;
 
@@ -47,7 +47,7 @@ class DateTime extends TextInput implements  Requestable,ChangeListener, AjaxCha
                 $url = $this->owner->getURLNode() . '::' . $this->id;
                 $url = substr($url, 2 + strpos($url, 'q='));
                 $this->setAttribute("onchange", "javascript:{ $('#" . $formid . "_q').attr('value','" . $url . "');$('#" . $formid . "').submit();}");
-                 $js = "$('#{$this->id}').dtpicker( {dateFormat : 'yy-m-d' ,onSelect: function() {  
+                 $js = "$('#{$this->id}').pickatime( {format : 'HH:i' ,onSet: function() {  
                    $('#" . $formid . "_q').attr('value','" . $url . "');$('#" . $formid . "').submit()
                 } }   );";
               } else {
