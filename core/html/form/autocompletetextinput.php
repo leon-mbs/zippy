@@ -126,6 +126,7 @@ class AutocompleteTextInput extends TextInput implements Requestable,AjaxChangeL
         foreach ($this->validators as $validator) {
             $validator->validate($this, $this->getValue());
         }
+        if(strlen(trim($this->getValue()))==0) $this->key =0;
     }
 
     //возвращает  ключ  для   выбранного значения

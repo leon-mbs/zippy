@@ -96,10 +96,11 @@ abstract class TreeEntity extends Entity
      */
     public static function delete($id)
     {
+        $class = get_called_class();
         $meta = $class::getMetadata();
 
         if (is_numeric($id)) {
-            $class = get_called_class();
+            
 
             $obj = $class::load($id);
         } else {
