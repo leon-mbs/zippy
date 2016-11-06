@@ -63,9 +63,9 @@ class Paginator extends HtmlComponent implements Requestable
         }
 
         if ($this->firstButton > 1) {
-           $content .= "<Li><a   href='void(0);' onclick=\"" . $this->getUrl(1) . "\"><span aria-hidden=\"true\">&laquo;</span></a></li>";
-           $content .= "<Li><a   href='void(0);' onclick=\"" . $this->getUrl($currentpage - 1) . "\"><span aria-hidden=\"true\">&lsaquo;</span></a></li>";
-           $content .= "<li ><a  href=\"javascript:void(0);\" >&hellip;</a></li>";
+           $content .= "<Li class=\"page-item\" ><a  class=\"page-link\"   href='void(0);' onclick=\"" . $this->getUrl(1) . "\"><span aria-hidden=\"true\">&laquo;</span></a></li>";
+           $content .= "<Li class=\"page-item\" ><a   class=\"page-link\"   href='void(0);' onclick=\"" . $this->getUrl($currentpage - 1) . "\"><span aria-hidden=\"true\">&lsaquo;</span></a></li>";
+           $content .= "<li class=\"page-item\"  ><a  class=\"page-link\"   href=\"javascript:void(0);\" >&hellip;</a></li>";
          }
 
 
@@ -73,16 +73,16 @@ class Paginator extends HtmlComponent implements Requestable
         for ($i = $this->firstButton; $i <= $this->firstButton + $this->maxbuttons; $i++) {
             if($i > $pages) break;
             if ($currentpage == $i) {
-                $content .= "<li class=\"active\"><a  href=\"javascript:void(0);\" > {$i} </a></li>";
+                $content .= "<li class=\"page-item active\"><a   class=\"page-link\"  href=\"javascript:void(0);\" > {$i} </a></li>";
             } else {
-                $content .= "<li><a  href=\"javascript:void(0);\"  onclick=\"" . $this->getUrl($i) . "\"> {$i} </a></li>";
+                $content .= "<li class=\"page-item\" ><a   class=\"page-link\"  href=\"javascript:void(0);\"  onclick=\"" . $this->getUrl($i) . "\"> {$i} </a></li>";
             }
         }
 
         if($pages > $this->firstButton + $this->maxbuttons){
-               $content .= "<li ><a  href=\"javascript:void(0);\" >&hellip;</a></li>";
-               $content .= "<li><a href='void(0);' onclick=\"" . $this->getUrl($currentpage + 1) . "\"aria-label=\"Next\">       <span aria-hidden=\"true\">&rsaquo;</span></a></li>";
-               $content .= "<li><a href='void(0);' onclick=\"" . $this->getUrl($pages) . "\"aria-label=\"Next\">       <span aria-hidden=\"true\">&raquo;</span></a></li>";
+               $content .= "<li class=\"page-item\" ><a class=\"page-link\" href=\"javascript:void(0);\" >&hellip;</a></li>";
+               $content .= "<li class=\"page-item\" ><a   class=\"page-link\" href='void(0);' onclick=\"" . $this->getUrl($currentpage + 1) . "\"aria-label=\"Next\">       <span aria-hidden=\"true\">&rsaquo;</span></a></li>";
+               $content .= "<li class=\"page-item\" ><a   class=\"page-link\" href='void(0);' onclick=\"" . $this->getUrl($pages) . "\"aria-label=\"Next\">       <span aria-hidden=\"true\">&raquo;</span></a></li>";
 
         }
 
