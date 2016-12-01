@@ -9,7 +9,7 @@
    "prefer-stable" : true,
     "type": "library",
     "require": {
-         "php": ">=5.3.3",
+         "php": ">=5.4.0",
          "mustache/mustache": "~2.10",
          "leon-mbs/zdb": ">=1.0.3",
          "electrolinux/phpquery" :">=0.9.6"
@@ -20,7 +20,10 @@
             "name": "Леонид Мартынюк",
             "email": "leon.mbs@gmail.com"
         }
-    ],
+    ],"config": {
+
+        "vendor-dir": "./myvendors"
+    },
     "autoload" : {
         "files" : ["zippy.inc.php"]
     }
