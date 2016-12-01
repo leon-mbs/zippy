@@ -20,10 +20,7 @@
             "name": "Леонид Мартынюк",
             "email": "leon.mbs@gmail.com"
         }
-    ],"config": {
-
-        "vendor-dir": "./myvendors"
-    },
+    ],
     "autoload" : {
         "files" : ["zippy.inc.php"]
     }
