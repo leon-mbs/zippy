@@ -1,0 +1,9 @@
+{
+    "require": {
+
+        "php": ">=5.4",
+        "leon-mbs/zippy": "dev-master",
+
+    }  
+ 
+} 

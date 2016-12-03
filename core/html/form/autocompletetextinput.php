@@ -54,22 +54,50 @@ class AutocompleteTextInput extends TextInput implements Requestable,AjaxChangeL
 
                 $url = $this->owner->getURLNode() . '::' . $this->id;
                 $url = substr($url, 2 + strpos($url, 'q='));
-                $onchange =  "function(){ $('#" . $formid . "_q').attr('value','" . $url . "');$('#" . $formid . "').submit();}";
+                $onchange =  " { $('#" . $formid . "_q').attr('value','" . $url . "');$('#" . $formid . "').submit();}";
             } else {
                 $url = $this->owner->getURLNode() . "::" . $this->id;
                 $url = substr($url, 2 + strpos($url, 'q='));
                 $_BASEURL = WebApplication::$app->getResponse()->getHostUrl();
-                $onchange =  "function() { $('#" . $formid . "_q').attr('value','" . $url . "'); submitForm('{$formid}','{$_BASEURL}/?ajax=true'); }";
+                $onchange =  "  { $('#" . $formid . "_q').attr('value','" . $url . "'); submitForm('{$formid}','{$_BASEURL}/?ajax=true'); }";
             }
         }
         $url = $this->owner->getURLNode() . "::" . $this->id . "&ajax=true";
 
         $js = "
-                    $('#{$this->id}').z_autocomplete('{$url}',{minChars:{$this->minChars},timeout:{$this->timeout},onchange:  $onchange  }); ";
-        $this->setAttribute("data-key", $this->key);
-        $this->setAttribute("autocomplete", 'off');
+                    $('#{$this->id}').typeahead(
+                    {   
+                    minLength:{$this->minChars},
+                    source: function (query, process) {
+                         
+                        return $.getJSON('{$url}&text=' + query, function (data) {
+                            return process(data);
+                        });
+                    },
+                    highlighter: function(item) {
+                          var parts = item.split('_');
+                          parts.shift();
+                          return parts.join('_');
+                      }, 
+                    updater: function(item) {
+                      var parts = item.split('_');   ;
+                      var userId = parts.shift();   
+                      $('#{$this->id}_id').val( userId);
+                   
+                      return parts.join('_');
+                   } ,
+                   afterSelect :function(item) {
+                        {$onchange}     
+                   }
+                   }); 
+                   $('#{$this->id}').after('<input type=\"hidden\" id=\"{$this->id}_id\" name=\"{$this->id}_id\"  value=\"{$this->key}\"/>');
 
-        WebApplication::$app->getResponse()->addJavaScript($js, true);
+                  ";
+      //  $this->setAttribute("data-key", $this->key);
+        $this->setAttribute("autocomplete", 'off');
+        
+
+         WebApplication::$app->getResponse()->addJavaScript($js, true);
     }
 
     /**
@@ -82,15 +110,18 @@ class AutocompleteTextInput extends TextInput implements Requestable,AjaxChangeL
              $this->OnChange();
              return;
         }
-
-
+                                 
+       
         $this->setValue($_REQUEST['text']);
         $arr = $this->OnAutocomplete();
         if (is_array($arr)) {
             foreach ($arr as $key => $value) {
-                $posts[] = array($key => $value);
+                //$posts[] = array("id"=>$key, "value"=> $value);
+                $posts[] =     $key."_".$value;
             }
-        }
+        }    
+    
+        
         WebApplication::$app->getResponse()->addAjaxResponse(json_encode($posts));
     }
 
@@ -101,7 +132,7 @@ class AutocompleteTextInput extends TextInput implements Requestable,AjaxChangeL
     public function OnAutocomplete()
     {
         if ($this->event != null) {
-            return $this->event->onEvent($this);
+          return    $this->event->onEvent($this);
         }
         return null;
     }
@@ -121,8 +152,8 @@ class AutocompleteTextInput extends TextInput implements Requestable,AjaxChangeL
      */
     public function getRequestData()
     {
-        $this->setValue($_REQUEST[$this->id . "_text"]);
-        $this->key = $_REQUEST[$this->id];
+        $this->setValue($_REQUEST[$this->id ]);
+        $this->key = $_REQUEST[$this->id. "_id"];
         foreach ($this->validators as $validator) {
             $validator->validate($this, $this->getValue());
         }
