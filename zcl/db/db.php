@@ -9,6 +9,5 @@ namespace ZCL\DB;
  */
 class DB extends \ZDB\DB
 {
-
-
+    
 }

@@ -14,14 +14,14 @@ use \Zippy\Exception as ZE;
 class DataRow extends HtmlContainer
 {
 
-    private $number,$allnumber, $dataitem = null;
+    private $number, $allnumber, $dataitem = null;
 
     /**
      *  Конструктор
      * @param DataItem Елемент данных  отображаемый  строкой  таблицы
      * @param mixed Номер строки
      */
-    public function __construct($id, DataItem $dataitem, $number,$allnumber="")
+    public function __construct($id, DataItem $dataitem, $number, $allnumber = "")
     {
         HtmlComponent::__construct($id . "_" . $number);
         $this->dataitem = $dataitem;

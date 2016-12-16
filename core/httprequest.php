@@ -19,7 +19,7 @@ class HttpRequest
     public $request_page;
     public $request_page_arg = array();
     public $uri;
-    private $prefix ="";
+    private $prefix = "";
     public $querytype = self::QUERY_HOME;
     private $pageindex = 0;
 
@@ -29,13 +29,13 @@ class HttpRequest
      */
     public function __construct()
     {
-         $uri = $_SERVER["REQUEST_URI"];
-         $uri_ = WebApplication::$app->beforeRequest($uri);
-         if(is_array($uri_))  {
+        $uri = $_SERVER["REQUEST_URI"];
+        $uri_ = WebApplication::$app->beforeRequest($uri);
+        if (is_array($uri_)) {
             $this->prefix = $uri_[0];
             $uri = $uri_[1];
-         }
-         
+        }
+
         // основной  тип URI генерируемый  компонентами  фреймворка
         if (isset($_REQUEST["q"])) {
 
@@ -54,7 +54,7 @@ class HttpRequest
             $this->request_c = array("page");
             foreach (array_slice($this->request, 1) as $cid) {
                 $arr = explode(':', $cid); //id  компонента
-                $this->request_params[$arr[0]] = array_slice($arr, 1); 
+                $this->request_params[$arr[0]] = array_slice($arr, 1);
                 $this->request_c[] = $arr[0];
             }
 
@@ -76,7 +76,7 @@ class HttpRequest
         if (isset($_REQUEST["p"])) {
             $this->querytype = self::QUERY_PAGE;
             $this->request_page = "\\" . ltrim(str_replace("/", "\\", $_REQUEST["p"]), "\\");
-            $this->request_page_arg = isset($_REQUEST["arg"]) ? explode('/', trim($_REQUEST["arg"],'/')) : array();
+            $this->request_page_arg = isset($_REQUEST["arg"]) ? explode('/', trim($_REQUEST["arg"], '/')) : array();
             return;
         }
         // URI формируемый  BookmarkableLink (в частности, ЧПУ) 
@@ -113,14 +113,16 @@ class HttpRequest
     {
         return isset($_REQUEST["binary"]);
     }
+
     public function getPrefix()
     {
         return $this->prefix;
-    } 
- 
+    }
+
     public function setPrefix($prefix)
     {
-         $this->prefix = $prefix;;
+        $this->prefix = $prefix;
+        ;
     }
 
 }

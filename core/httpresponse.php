@@ -31,7 +31,7 @@ class HttpResponse
     {
         if (strlen($this->redirect) > 0) {
             header("Location: " . $this->redirect);
-           // echo "<script>window.location='{$this->redirect}'</script>";
+            // echo "<script>window.location='{$this->redirect}'</script>";
             die;
         }
         if (WebApplication::$app->getRequest()->isBinaryRequest() == true) {
@@ -199,9 +199,9 @@ class HttpResponse
     {
         $http = empty($_SERVER["HTTPS"]) ? 'http' : 'https';
 
-        $url =  $http . "://" . $_SERVER["HTTP_HOST"];
+        $url = $http . "://" . $_SERVER["HTTP_HOST"];
         $prefix = WebApplication::$app->getRequest()->getPrefix();
-        $url = strlen($prefix) > 0 ? $url . '/' . $prefix  : $url;
+        $url = strlen($prefix) > 0 ? $url . '/' . $prefix : $url;
         return $url;
     }
 
@@ -239,22 +239,19 @@ class HttpResponse
     /**
      *  редирект на  предыдущую  страницу
      */
-     /*
-    public final function toBack()
-    {
-        $pagename = WebApplication::$app->getPrevPage();
+    /*
+      public final function toBack()
+      {
+      $pagename = WebApplication::$app->getPrevPage();
 
-        // $pagename = str_replace("\\", "/", $pagename);
-        $pagename = '\\' . rtrim($pagename, '\\');
-        //$this->redirect = $this->getHostUrl() . "/?q=" . $pagename . ":" . $this->pageindex--;
-        if($pagename== "\\") {
-            $this->toIndexPage();
-            return;
-        }
-        $this->Redirect($pagename, array());
-    }
-*/
-
-
-
+      // $pagename = str_replace("\\", "/", $pagename);
+      $pagename = '\\' . rtrim($pagename, '\\');
+      //$this->redirect = $this->getHostUrl() . "/?q=" . $pagename . ":" . $this->pageindex--;
+      if($pagename== "\\") {
+      $this->toIndexPage();
+      return;
+      }
+      $this->Redirect($pagename, array());
+      }
+     */
 }

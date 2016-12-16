@@ -40,7 +40,7 @@ class DataView extends AbstractList
     /**
      * Обновляет  данные  с  провайдера
      */
-    public function Reload($resetpage=true)
+    public function Reload($resetpage = true)
     {
         parent::Reload($resetpage);
 
@@ -50,7 +50,7 @@ class DataView extends AbstractList
         $i = 1;
 
         foreach ($list as $item) {           //$datarow = new DataRow($this->id,$list[0]);
-            $datarow = new DataRow($this->id, $item, $i++,$i-1+$this->pagesize * ($this->currentpage -1));
+            $datarow = new DataRow($this->id, $item, $i++, $i - 1 + $this->pagesize * ($this->currentpage - 1));
             $this->add($datarow);
             $this->rowevent->onEvent($datarow); //вызов  обработчика добавляющего  данные  или   елементы  в  строку
             $datarow->updateChildId();

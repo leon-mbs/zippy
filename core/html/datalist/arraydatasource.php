@@ -39,7 +39,7 @@ class ArrayDataSource implements DataSource
             $this->data = new \Zippy\Binding\ArrayPropertyBinding($source, $property);
         } else {
             $this->data = $source;
-        }  
+        }
     }
 
     /**
@@ -98,5 +98,5 @@ class ArrayDataSource implements DataSource
     {
         $this->data = $source;
     }
-          
+
 }

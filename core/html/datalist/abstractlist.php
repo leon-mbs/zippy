@@ -102,11 +102,11 @@ abstract class AbstractList extends HtmlContainer
     /**
      * Обновляет  данные  с  провайдера
      */
-    public function Reload($resetpage=true)
+    public function Reload($resetpage = true)
     {
-          if($resetpage){
+        if ($resetpage) {
             $this->setCurrentPage(1);
-         }
+        }
     }
 
     /**

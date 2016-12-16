@@ -41,7 +41,6 @@ class EntityDataSource implements \Zippy\Interfaces\DataSource
 
         if (strlen($this->order) > 0 && strlen($sortfield) == 0) {
             $orderby = $this->order;
-
         }
         $class = $this->class;
         return $class::find($this->where, $orderby, $count, $start);

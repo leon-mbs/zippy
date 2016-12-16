@@ -14,10 +14,5 @@ interface ChangeListener
      * @param  mixed  Объект
      * @param  string Имя  метода - обработчика
      */
-    public function setChangeHandler(EventReceiver $receiver, $handler);
-
-    /**
-     * Вызывает  срабатывание  обработчика
-     */
-    public function OnChange();
+    public function onChange(EventReceiver $receiver, $handler, $ajax = true);
 }

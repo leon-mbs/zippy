@@ -22,7 +22,7 @@ class RedirectLink extends AbstractLink implements Requestable
      * @param boolean Если  true  - рендерит  bookmarkable  ссылку
      * @param boolean Если  true  - кодирует ссылку
      */
-    public function __construct($id, $pagename="", $params = array(), $bookmarkable = true, $encode = false)
+    public function __construct($id, $pagename = "", $params = array(), $bookmarkable = true, $encode = false)
     {
         AbstractLink::__construct($id);
         $this->setLink($pagename, $params, $bookmarkable, $encode);
@@ -92,4 +92,5 @@ class RedirectLink extends AbstractLink implements Requestable
         $this->bookmarkable = $bookmarkable;
         $this->encode = $encode;
     }
+
 }

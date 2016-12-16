@@ -14,7 +14,6 @@ use \Zippy\Html\HtmlContainer;
 abstract class WebApplication
 {
 
-
     private $currentpage = null;
     public static $app = null;
     private $macros = array();
@@ -107,8 +106,6 @@ abstract class WebApplication
         $this->currentpage->args = $arg1; //запоминаем аргументы страницы
 
         $this->response->setPageIndex($this->getPageManager()->putPage($this->currentpage));
-
-
     }
 
     /**
@@ -143,13 +140,11 @@ abstract class WebApplication
 
             $this->currentpage = $this->getPageManager()->getPage($this->request->getRequestIndex());
             if ($this->currentpage == null) {
-                if(strlen($this->request->request_page) > 2)
-                {
-                  $this->LoadPage($this->request->request_page);
+                if (strlen($this->request->request_page) > 2) {
+                    $this->LoadPage($this->request->request_page);
                 } else {
-                  $this->currentpage = $this->getPageManager()->getLastPage();
+                    $this->currentpage = $this->getPageManager()->getLastPage();
                 }
-
             }
 
             $this->response->setPageIndex($this->getRequest()->getRequestIndex());
@@ -218,8 +213,12 @@ abstract class WebApplication
         $renderpage = $this->currentpage;
 
         if ($this->request->isAjaxRequest()) {
-            $renderpage->renderAjax();
-            return;
+
+        
+
+           if(false==$renderpage->renderAjax())  return;
+
+            
         }
 
 
@@ -238,10 +237,10 @@ abstract class WebApplication
         if ($basepage !== "Zippy\\Html\\WebPage") {
 
             $basetemplate = WebApplication::getApplication()->getTemplate($basepage, $renderpage->layout);
-           // if(count($renderpage->_tvars) >0){
-           //    $m = new \Mustache_Engine();
+            // if(count($renderpage->_tvars) >0){
+            //    $m = new \Mustache_Engine();
             //   $basetemplate= $m->render($basetemplate, $renderpage->_tvars);
-          //  }
+            //  }
 
 
             $bdoc = \phpQuery::newDocumentHTML($basetemplate);
@@ -288,26 +287,32 @@ abstract class WebApplication
             pq('title')->text($renderpage->_title);
         }
         if (strlen($renderpage->_keywords) > 0) {
-            pq('meta[name="keywords"]')->attr('content',$renderpage->_keywords);
+            pq('meta[name="keywords"]')->attr('content', $renderpage->_keywords);
         }
         if (strlen($renderpage->_description) > 0) {
-            pq('meta[name="description"]')->attr('content',$renderpage->_description);
+            pq('meta[name="description"]')->attr('content', $renderpage->_description);
         }
 
 
 
         $response = '<!DOCTYPE HTML>' . pq('html')->htmlOuter(); //HTML  в  выходной  поток
 
-        if(count($renderpage->_tvars) >0){
+        if (count($renderpage->_tvars) > 0) {
 
             //востанавливаем  скобки  в тегах
-           $response = str_replace("\"%7B%7B","\"{{",$response);
-           $response = str_replace("%7D%7D\"","}}\"",$response);
+            $response = str_replace("\"%7B%7B", "\"{{", $response);
+            $response = str_replace("%7D%7D\"", "}}\"", $response);
 
-           $m = new \Mustache_Engine();
-           $response= $m->render($response, $renderpage->_tvars);
+            $m = new \Mustache_Engine();
+            $response = $m->render($response, $renderpage->_tvars);
         }
 
+        if ($this->request->isAjaxRequest()) {
+            \phpQuery::newDocumentHTML($response);
+
+            $renderpage->renderAjax(true);
+            return;
+        }
         foreach ($this->macros as $name => $value) {
             $response = str_ireplace("{" . $name . "}", $value, $response);
         }
@@ -333,7 +338,7 @@ abstract class WebApplication
      */
     protected function Route($uri)
     {
-
+        
     }
 
     /**
@@ -386,15 +391,16 @@ abstract class WebApplication
         $this->getResponse()->page404 = $url;
     }
 
-        /**
-    * возвращает имя класса предыдущей страницы
-    *
-    */
-    public  function getPrevPage(){
-       return $this->getPageManager()->getPrevPage();
+    /**
+     * возвращает имя класса предыдущей страницы
+     *
+     */
+    public function getPrevPage()
+    {
+        return $this->getPageManager()->getPrevPage();
     }
 
-   /**
+    /**
      * Редирект на  страницу 404
      *
      */
@@ -412,7 +418,7 @@ abstract class WebApplication
         $pagename = self::$app->getPageManager()->getPrevPage();
         $pagename = '\\' . rtrim($pagename, '\\');
 
-        if($pagename == "\\") {
+        if ($pagename == "\\") {
             self::$app->response->toIndexPage();
             return;
         }
@@ -420,19 +426,20 @@ abstract class WebApplication
     }
 
     /**
-    * Вызывается  перед обработкой  запроса
-    * Перегружается  в  приложении
-    * если  есть префикс (например указан  язык)
-    * возвращает массив  с  элементами:
-    * префикс
-    * uri без префикса
-    * @param mixed $uri
-    */
-    public function beforeRequest($uri){
-       return null;
+     * Вызывается  перед обработкой  запроса
+     * Перегружается  в  приложении
+     * если  есть префикс (например указан  язык)
+     * возвращает массив  с  элементами:
+     * префикс
+     * uri без префикса
+     * @param mixed $uri
+     */
+    public function beforeRequest($uri)
+    {
+        return null;
     }
 
- /**
+    /**
      * Выполняет клиентский редирект  на  страницу
      *
      * @param mixed $page     Имя класса  страницы
@@ -444,8 +451,8 @@ abstract class WebApplication
      */
     public static function Redirect($page, $arg1 = null, $arg2 = null, $arg3 = null, $arg4 = null, $arg5 = null)
     {
-        if(self::$app instanceof WebApplication){
-           self::$app->getResponse()->Redirect($page, $arg1, $arg2, $arg3, $arg4, $arg5);
+        if (self::$app instanceof WebApplication) {
+            self::$app->getResponse()->Redirect($page, $arg1, $arg2, $arg3, $arg4, $arg5);
         }
     }
 
@@ -457,4 +464,5 @@ abstract class WebApplication
     {
         self::$app->getResponse()->toIndexPage();
     }
+
 }

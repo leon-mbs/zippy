@@ -4,7 +4,6 @@ namespace Zippy\Html\DataList;
 
 use \Zippy\Html\HtmlComponent;
 use \Zippy\Interfaces\Requestable;
-use \Zippy\Interfaces\AjaxRender;
 use \Zippy\WebApplication;
 
 /**
@@ -12,7 +11,7 @@ use \Zippy\WebApplication;
  * по  массиву  строк данных.
  * Предназначен  для  тэга TABLE. Может  автоматически  формировать  **пагинатор  и  сортировку.
  */
-class DataTable extends AbstractList implements Requestable, AjaxRender
+class DataTable extends AbstractList implements Requestable
 {
 
     private $columns = array();
@@ -21,12 +20,11 @@ class DataTable extends AbstractList implements Requestable, AjaxRender
     private $cellclickevent = null;
     private $selectedrow = 0;
     private $selectedclass = "";
-
     private $maxbuttons = 10;
     private $firstButton = 1;
-    private   $header =true, $paginator = false,$useajax  =false;
+    private $header = true, $paginator = false, $useajax = false;
 
-    public function __construct($id, $DataSource, $header =true, $paginator = false,$useajax  =false)
+    public function __construct($id, $DataSource, $header = true, $paginator = false, $useajax = false)
     {
         AbstractList::__construct($id, $DataSource);
         $this->header = $header;
@@ -57,7 +55,7 @@ class DataTable extends AbstractList implements Requestable, AjaxRender
     /**
      * Обновляет  данные  с  провайдера
      */
-    public function Reload($resetpage=true)
+    public function Reload($resetpage = true)
     {
         parent::Reload($resetpage);
 
@@ -117,7 +115,7 @@ class DataTable extends AbstractList implements Requestable, AjaxRender
 
         $row = "<tr  >";
 
-        foreach ($this->columns as  $column) {
+        foreach ($this->columns as $column) {
 
             if (!$column->visible) {
                 continue;
@@ -131,9 +129,9 @@ class DataTable extends AbstractList implements Requestable, AjaxRender
                 $sort = "";
                 if ($column->fieldname === $this->sortf) {
                     if ($this->sortd === 'asc') {
-                        $sort = 'glyphicon glyphicon-sort-by-attributes';
+                        $sort = 'fa fa-sort-asc';
                     } else {
-                        $sort = 'glyphicon glyphicon-sort-by-attributes-alt';
+                        $sort = 'fa fa-sort-desc';
                     }
                 }
                 $url = $this->getURLNode() . ':sort:' . $column->fieldname . ':' . ($this->sortd === 'asc' ? 'desc' : 'asc');
@@ -158,7 +156,7 @@ class DataTable extends AbstractList implements Requestable, AjaxRender
     {
 
         if (count($this->datalist) == 0) {
-            return "";//"<tr  ><td  align=\"center\" colspan=\"" . count($this->columns) . "\" >" . MSG_DATATABLE_NODATA . "</td></tr>";
+            return ""; //"<tr  ><td  align=\"center\" colspan=\"" . count($this->columns) . "\" >" . MSG_DATATABLE_NODATA . "</td></tr>";
         }
         $rownumber = 0;
         $rows = "";
@@ -221,7 +219,7 @@ class DataTable extends AbstractList implements Requestable, AjaxRender
         if (!$this->paginator) {
             return "";
         }
-        if ( count($this->columns)==0) {
+        if (count($this->columns) == 0) {
             return "";
         }
         $currentpage = $this->currentpage;
@@ -231,24 +229,25 @@ class DataTable extends AbstractList implements Requestable, AjaxRender
         if ($pages <= 1)
             return '';
 
-        if($currentpage - $this->firstButton > $this->maxbuttons){
+        if ($currentpage - $this->firstButton > $this->maxbuttons) {
 
-            $this->firstButton =  $currentpage  - $this->maxbuttons;
+            $this->firstButton = $currentpage - $this->maxbuttons;
         }
-        if($currentpage < $this->firstButton){
-            $this->firstButton = $currentpage-1;
+        if ($currentpage < $this->firstButton) {
+            $this->firstButton = $currentpage - 1;
         }
 
         if ($this->firstButton > 1) {
-           $content .= "<Li><a   href='void(0);' onclick=\"" . $this->getPaginatorLink(1) . "\"><span aria-hidden=\"true\">&laquo;</span></a></li>";
-           $content .= "<Li><a   href='void(0);' onclick=\"" . $this->getPaginatorLink($currentpage - 1) . "\"><span aria-hidden=\"true\">&lsaquo;</span></a></li>";
-           $content .= "<li ><a  href=\"javascript:void(0);\" >&hellip;</a></li>";
-         }
+            $content .= "<Li><a   href='void(0);' onclick=\"" . $this->getPaginatorLink(1) . "\"><span aria-hidden=\"true\">&laquo;</span></a></li>";
+            $content .= "<Li><a   href='void(0);' onclick=\"" . $this->getPaginatorLink($currentpage - 1) . "\"><span aria-hidden=\"true\">&lsaquo;</span></a></li>";
+            $content .= "<li ><a  href=\"javascript:void(0);\" >&hellip;</a></li>";
+        }
 
 
 
         for ($i = $this->firstButton; $i <= $this->firstButton + $this->maxbuttons; $i++) {
-            if($i > $pages) break;
+            if ($i > $pages)
+                break;
             if ($currentpage == $i) {
                 $content .= "<li class=\"active\"><a  href=\"javascript:void(0);\" > {$i} </a></li>";
             } else {
@@ -256,14 +255,12 @@ class DataTable extends AbstractList implements Requestable, AjaxRender
             }
         }
 
-        if($pages > $this->firstButton + $this->maxbuttons){
-               $content .= "<li ><a  href=\"javascript:void(0);\" >&hellip;</a></li>";
-               $content .= "<li><a href='void(0);' onclick=\"" . $this->getPaginatorLink($currentpage + 1) . "\"aria-label=\"Next\">       <span aria-hidden=\"true\">&rsaquo;</span></a></li>";
-               $content .= "<li><a href='void(0);' onclick=\"" . $this->getPaginatorLink($pages) . "\"aria-label=\"Next\">       <span aria-hidden=\"true\">&raquo;</span></a></li>";
-
+        if ($pages > $this->firstButton + $this->maxbuttons) {
+            $content .= "<li ><a  href=\"javascript:void(0);\" >&hellip;</a></li>";
+            $content .= "<li><a href='void(0);' onclick=\"" . $this->getPaginatorLink($currentpage + 1) . "\"aria-label=\"Next\">       <span aria-hidden=\"true\">&rsaquo;</span></a></li>";
+            $content .= "<li><a href='void(0);' onclick=\"" . $this->getPaginatorLink($pages) . "\"aria-label=\"Next\">       <span aria-hidden=\"true\">&raquo;</span></a></li>";
         }
         return "<tr ><td class=\"footercell\" align=\"center\" colspan=\"" . count($this->columns) . "\" >{$content}</ul></td></tr>";
-
     }
 
     /**
@@ -278,19 +275,6 @@ class DataTable extends AbstractList implements Requestable, AjaxRender
             $onclick = "window.location='{$url}';event.returnValue=false; return false;";
         }
         return $onclick;
-    }
-
-    /**
-     * @see AjaxRender
-     */
-    public function AjaxAnswer()
-    {
-        $content = $this->renderHeader() . $this->renderData() . $this->renderFooter();
-
-        $content = addslashes($content);
-        $js = "$('table[zippy={$this->id}]').html('{$content}');";
-
-        return $js;
     }
 
     /**
@@ -325,40 +309,42 @@ class DataTable extends AbstractList implements Requestable, AjaxRender
     }
 
     /**
-    * Удаляет  все столбцы
-    *
-    */
-    public  function removeAllColumns(){
-       $this->columns =array();
+     * Удаляет  все столбцы
+     *
+     */
+    public function removeAllColumns()
+    {
+        $this->columns = array();
     }
 
 }
 
-  // класс  параметров  столбца
-    class Column
+// класс  параметров  столбца
+class Column
+{
+
+    public function __construct($fieldname, $title, $sortable = false, $visible = true, $clickable = false, $headerclass = "", $rowclass = "", $defaultdata = "")
     {
-        public function __construct($fieldname,$title,$sortable= false,$visible=true,$clickable=false,$headerclass="",$rowclass="",$defaultdata ="")
-        {
-            $this->fieldname = $fieldname;
-            $this->visible = $visible;
-            $this->sortable = $sortable;
-            $this->clickable = $clickable;
-            $this->title = $title;
-            $this->headerclass = $headerclass;
-            $this->defaultdata = $defaultdata;
-            $this->rowclass = $rowclass;
-
-        }
-
-        public   $visible = true;
-        public   $sortable = false;
-        public   $clickable = false;
-        public   $fieldname = ""; //  имя свойства  выводимого итема
-        public   $title = ""; //заголовок
-        public   $headerclass = ""; // css класс  заголовка
-        public   $rowclass = "";// css класс  ячейки
-        public   $defaultdata = " "; //значение  по  умолчанию
+        $this->fieldname = $fieldname;
+        $this->visible = $visible;
+        $this->sortable = $sortable;
+        $this->clickable = $clickable;
+        $this->title = $title;
+        $this->headerclass = $headerclass;
+        $this->defaultdata = $defaultdata;
+        $this->rowclass = $rowclass;
     }
+
+    public $visible = true;
+    public $sortable = false;
+    public $clickable = false;
+    public $fieldname = ""; //  имя свойства  выводимого итема
+    public $title = ""; //заголовок
+    public $headerclass = ""; // css класс  заголовка
+    public $rowclass = ""; // css класс  ячейки
+    public $defaultdata = " "; //значение  по  умолчанию
+
+}
 
 /**
 * @todo  вычисляемое   поле  ???

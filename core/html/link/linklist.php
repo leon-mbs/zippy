@@ -141,7 +141,7 @@ class LinkList extends HtmlComponent implements ClickListener, Requestable
         if ($item['type'] == 'click') {
             $this->selectedvalue = $item['value'];
             $this->setSelected($p[0]);
-            $this->OnClick();
+            $this->OnEvent();
         }
         if ($item['type'] == 'redirect') {
             WebApplication::getApplication()->getResponse()->Redirect($item['page'], $item['params']);
@@ -151,15 +151,16 @@ class LinkList extends HtmlComponent implements ClickListener, Requestable
     /**
      * @see ClickListener
      */
-    public function setClickHandler(EventReceiver $receiver, $handler)
+    public function onClick(\Zippy\Interfaces\EventReceiver $receiver, $handler, $ajax = false)
     {
-        $this->event = new Event($receiver, $handler);
+        $this->setClickHandler($receiver, $handler);
+        $this->event->isajax = $ajax;
     }
 
     /**
      * Вызывает  событие
      */
-    public function OnClick()
+    public function OnEvent()
     {
         if ($this->event != null) {
             $this->event->onEvent($this);

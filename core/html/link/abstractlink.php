@@ -66,8 +66,10 @@ abstract class AbstractLink extends \Zippy\Html\HtmlContainer
     {
         $this->disabled = $disabled;
     }
-   public function RenderImpl()
+
+    public function RenderImpl()
     {
         parent::RenderImpl();
     }
+
 }

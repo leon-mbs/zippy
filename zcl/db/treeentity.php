@@ -2,7 +2,6 @@
 
 namespace ZCL\DB;
 
-
 abstract class TreeEntity extends Entity
 {
 
@@ -100,7 +99,7 @@ abstract class TreeEntity extends Entity
         $meta = $class::getMetadata();
 
         if (is_numeric($id)) {
-            
+
 
             $obj = $class::load($id);
         } else {
@@ -222,7 +221,7 @@ abstract class TreeEntity extends Entity
         }
 
         $class = get_called_class();
- 
+
 
         $this->{$meta['pathfield']} = sprintf('%08s', $this->{$meta['keyfield']});
         if ($this->{$meta['parentfield']} > 0) {

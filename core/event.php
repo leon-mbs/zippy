@@ -33,11 +33,10 @@ class Event
      */
     public function onEvent($sender, $params = null)
     {
-                           
+
         if ($this->receiver != null) {
             return $this->receiver->{$this->handler}($sender, $params);
-        }
-        else {
+        } else {
             return $this->handler($sender, $params);
         }
     }

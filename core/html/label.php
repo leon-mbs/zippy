@@ -61,9 +61,9 @@ class Label extends HtmlComponent implements AjaxRender
     {
         $text = $this->getText();
         $text = addslashes($text);
-       if($this->html){
-           return "$('#{$this->id}').html('{$text}')";
-       }
+        if ($this->html) {
+            return "$('#{$this->id}').html('{$text}')";
+        }
         return "$('#{$this->id}').text('{$text}')";
     }
 

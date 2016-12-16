@@ -49,8 +49,6 @@ class Form extends HtmlContainer
         $HtmlTag->append("<input type=\"submit\" name=\"{$this->id}_s\" id=\"{$this->id}_s\" style=\"display:none\" >");
     }
 
-
-
     /**
      * @see Requestable
      */
@@ -63,13 +61,13 @@ class Form extends HtmlContainer
                 if ($component instanceof SubmitDataRequest) {
                     //проверяем что элемент не находится в невидимой панели
                     if ($this->checkInvisibleOwner($component) == false) {
-                        if($component->isVisible()){
+                        if ($component->isVisible()) {
                             $component->getRequestData();
                         }
                     }
                 }
             }
-            $this->OnSubmit();
+            $this->onEvent();
         }
         parent::RequestHandle();
     }
@@ -79,7 +77,7 @@ class Form extends HtmlContainer
      * @param EventReceiver Объект  метод  которого  является  обработчиком  события
      * @param string Имя  метода - обработчика
      */
-    public function setSubmitHandler(EventReceiver $receiver, $handler)
+    public function onSubmit(EventReceiver $receiver, $handler)
     {
         $this->event = new Event($receiver, $handler);
     }
@@ -87,7 +85,7 @@ class Form extends HtmlContainer
     /**
      * Вызывает  обработчик   события  отправки  формы
      */
-    public function OnSubmit()
+    public function onEvent()
     {
         if ($this->event instanceof Event) {
             $this->event->onEvent($this);
@@ -118,9 +116,9 @@ class Form extends HtmlContainer
                 $component->setText('');
             }
 
-         //   if ($component instanceof TextArea) {
-        //        $component->setText('');
-        //    }
+            //   if ($component instanceof TextArea) {
+            //        $component->setText('');
+            //    }
             if ($component instanceof CheckBox) {
                 $component->setChecked(false);
             }

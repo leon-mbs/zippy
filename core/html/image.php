@@ -21,7 +21,7 @@ class Image extends HtmlComponent implements \Zippy\Interfaces\Requestable, \Zip
      * Конструктор
      * @param string ID  компонента
      * @param string  адрес  изображения
-       */
+     */
     public function __construct($id, $src = "")
     {
         parent::__construct($id);
@@ -29,25 +29,25 @@ class Image extends HtmlComponent implements \Zippy\Interfaces\Requestable, \Zip
     }
 
     /**
-    * Тип  подгрузки изображения
-    *
-    * @param mixed $type
-    * Возможные   вариантыЖ
-    * Image::$DEFAULT_TYPE  - обычный  путь  к  файлу   в  атрибуте  src - по  умоляанию
-    * Image::$URLDATA_TYPE  - URL Data
-    * Image::$DYNAMIC_TYPE  - динамическое   формирование  изображение  в  методе binaryOutput
-    *
-    */
+     * Тип  подгрузки изображения
+     *
+     * @param mixed $type
+     * Возможные   вариантыЖ
+     * Image::$DEFAULT_TYPE  - обычный  путь  к  файлу   в  атрибуте  src - по  умоляанию
+     * Image::$URLDATA_TYPE  - URL Data
+     * Image::$DYNAMIC_TYPE  - динамическое   формирование  изображение  в  методе binaryOutput
+     *
+     */
     public function setType($type)
     {
         $this->type = $type;
     }
 
     /**
-    * адрес  изображения
-    *
-    * @param mixed $src
-    */
+     * адрес  изображения
+     *
+     * @param mixed $src
+     */
     public function setUrl($src)
     {
         $this->src = $src;

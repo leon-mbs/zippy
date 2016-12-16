@@ -16,9 +16,8 @@ class PageManager
 
     private $pages = array();
     private $index = 0;
-    
     private $pchain = array();
-    
+
     /**
      * Добавляет новую  страницу  (объект  WebPage) в  список.
      * @param WebPage страница
@@ -33,12 +32,12 @@ class PageManager
             $this->pages[$this->index - self::HISTORY_SIZE] = null;
         }
 
-        
-        $prevpage = @$this->pages[$this->index -1];
-        if($prevpage instanceof \Zippy\Html\WebPage ){
-            
-            if(get_class($prevpage) != get_class($page)){
-            //  если страница  изменилась запоминаем  
+
+        $prevpage = @$this->pages[$this->index - 1];
+        if ($prevpage instanceof \Zippy\Html\WebPage) {
+
+            if (get_class($prevpage) != get_class($page)) {
+                //  если страница  изменилась запоминаем  
 
                 $this->pchain[] = get_class($page);
             }
@@ -95,7 +94,7 @@ class PageManager
     public function __sleep()
     {
         $this->pages = gzcompress(serialize($this->pages));
-        return array('pages', 'index','pchain');
+        return array('pages', 'index', 'pchain');
     }
 
     public function __wakeup()
@@ -106,12 +105,13 @@ class PageManager
     }
 
     /**
-    * возвращает класс предыдущей страницы
-    * 
-    */
-    public function getPrevPage(){
+     * возвращает класс предыдущей страницы
+     * 
+     */
+    public function getPrevPage()
+    {
         array_pop($this->pchain);
-        return  array_pop($this->pchain);
+        return array_pop($this->pchain);
     }
-    
+
 }

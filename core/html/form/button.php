@@ -7,14 +7,13 @@ use \Zippy\Exceptions\Exception;
 use \Zippy\Event;
 use \Zippy\Html\HtmlComponent;
 use \Zippy\Interfaces\ClickListener;
-use \Zippy\Interfaces\AjaxClickListener;
 use \Zippy\Interfaces\Requestable;
 use \Zippy\Interfaces\EventReceiver;
 
 /**
  * Компонент  тэга  &lt;input type=&quot;button&quot;&gt; для отправки  формы
  */
-class Button extends HtmlComponent implements ClickListener, AjaxClickListener, Requestable
+class Button extends HtmlComponent implements ClickListener, Requestable
 {
 
     private $event;
@@ -25,12 +24,12 @@ class Button extends HtmlComponent implements ClickListener, AjaxClickListener, 
      * @param  EventReceiver Объект с методом  обработки  события
      * @param  string Имя  метода-обработчика
      */
-    public function __construct($id, EventReceiver $receiver = null, $handler = null)
+    public function __construct($id, EventReceiver $receiver = null, $handler = null, $ajax = true)
     {
         parent::__construct($id);
 
         if (is_object($receiver) && strlen($handler) > 0) {
-            $this->setClickHandler($receiver, $handler);
+            $this->onClick($receiver, $handler, $ajax);
         }
     }
 
@@ -57,30 +56,22 @@ class Button extends HtmlComponent implements ClickListener, AjaxClickListener, 
      */
     public function RequestHandle()
     {
-        $this->OnClick();
+        $this->onEvent();
     }
 
     /**
-     * @see ClickListener
+     * @see   ClickListener
      */
-    public function setClickHandler(EventReceiver $receiver, $handler)
+    public function onClick(EventReceiver $receiver, $handler, $ajax = true)
     {
         $this->event = new Event($receiver, $handler);
-    }
-
-    /**
-     * @see  AjaxClickListener
-     */
-    public function setAjaxClickHandler(EventReceiver $receiver, $handler)
-    {
-        $this->setClickHandler($receiver, $handler);
-        $this->event->isajax = true;
+        $this->event->isajax = $ajax;
     }
 
     /**
      * @see ClickListener
      */
-    public function OnClick()
+    public function onEvent()
     {
         if ($this->event != null) {
             $this->event->onEvent($this);

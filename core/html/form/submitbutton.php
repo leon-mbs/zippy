@@ -23,15 +23,21 @@ class SubmitButton extends HtmlComponent implements ClickListener, Requestable
     public function RenderImpl()
     {
 
-        if ( $this->getFormOwner() == null) {
+        if ($this->getFormOwner() == null) {
             throw new \Zippy\Exception("Element '" . $this->id . "' outside   FORM tag");
         }
 
-        $formid =  $this->getFormOwner()->id;
+        $formid = $this->getFormOwner()->id;
         //  $this->attributes["onclick"]="javascript:{ $('#".$formattr["id"]."_hf').val('submit1') ; $('#".$formattr["id"]."').submit();}";
         $url = $this->owner->getURLNode() . '::' . $this->id;
         $url = substr($url, 2 + strpos($url, 'q='));
-        $this->setAttribute("onclick", "javascript:{ if(beforeZippy('{$this->id}') ==false) return false; $('#" . $formid . "_q').attr('value','" . $url . "'); $('#" . $formid . "_s').trigger('click');}");
+        if ($this->event->isajax == false) {
+            $this->setAttribute("onclick", "javascript:{if(beforeZippy('{$this->id}') ==false) return false; $('#" . $formid . "_q').attr('value','" . $url . "'); $('#" . $formid . "_s').trigger('click');event.returnValue=false; return false;}");
+        } else {
+            $_BASEURL = WebApplication::$app->getResponse()->getHostUrl();
+            $this->setAttribute("onclick", "if(beforeZippy('{$this->id}') ==false) return false; $('#" . $formid . "_q').attr('value','" . $url . "'); submitForm('{$formid}','{$_BASEURL}/?ajax=true');");
+        }
+
         $this->setAttribute("type", 'button');
     }
 
@@ -40,23 +46,24 @@ class SubmitButton extends HtmlComponent implements ClickListener, Requestable
      */
     public function RequestHandle()
     {
-        $this->OnClick();
+        $this->OnEvent();
     }
 
     /**
      * @see ClickListener
      */
-    public function setClickHandler(EventReceiver $receiver, $handler)
+    public function onClick(EventReceiver $receiver, $handler, $ajax = true)
     {
         $this->event = new Event($receiver, $handler);
+        $this->event->isajax = $ajax;
     }
 
     /**
      * @see ClickListener
      */
-    public function OnClick()
+    public function OnEvent()
     {
-        if ($this->event != null && strlen($this->getAttribute('disabled'))==0) {
+        if ($this->event != null && strlen($this->getAttribute('disabled')) == 0) {
             $this->event->onEvent($this);
         }
     }

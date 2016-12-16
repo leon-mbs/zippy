@@ -5,7 +5,7 @@ namespace Zippy\Html\Link;
 use \Zippy\WebApplication;
 use \Zippy\Interfaces\ClickListener;
 use \Zippy\Interfaces\EventReceiver;
-use \Zippy\Interfaces\AjaxClickListener;
+ 
 use \Zippy\Interfaces\Requestable;
 use \Zippy\Event;
 
@@ -13,7 +13,7 @@ use \Zippy\Event;
  * Ссылка  вызыващая  обработчик не  имеющая  возможности  копирования  адреса  ссылки
  *
  */
-class ClickLink extends AbstractLink implements ClickListener, AjaxClickListener, Requestable
+class ClickLink extends AbstractLink implements ClickListener, Requestable
 {
 
     protected $event;
@@ -24,12 +24,12 @@ class ClickLink extends AbstractLink implements ClickListener, AjaxClickListener
      * @param  EventReceiver Объект с методом  обработки  события
      * @param  string Имя  метода-обработчика
      */
-    public function __construct($id, EventReceiver $receiver = null, $handler = null)
+    public function __construct($id, EventReceiver $receiver = null, $handler = null, $ajax = true)
     {
         parent::__construct($id);
 
         if (is_object($receiver) && strlen($handler) > 0) {
-            $this->setClickHandler($receiver, $handler);
+            $this->onClick($receiver, $handler, $ajax);
         }
     }
 
@@ -66,31 +66,23 @@ class ClickLink extends AbstractLink implements ClickListener, AjaxClickListener
      */
     public function RequestHandle()
     {
-        $this->OnClick();
+        $this->OnEvent();
         // WebApplication::getApplication()->setReloadPage();
     }
 
     /**
      * @see  ClickListener
      */
-    public function setClickHandler(EventReceiver $receiver, $handler)
+    public function onClick(EventReceiver $receiver, $handler, $ajax = false)
     {
         $this->event = new Event($receiver, $handler);
-    }
-
-    /**
-     * @see  AjaxClickListener
-     */
-    public function setAjaxClickHandler(EventReceiver $receiver, $handler)
-    {
-        $this->setClickHandler($receiver, $handler);
-        $this->event->isajax = true;
+        $this->event->isajax = $ajax;
     }
 
     /**
      * @see ClickListener
      */
-    public function OnClick()
+    public function OnEvent()
     {
         if ($this->event != null) {
             $this->event->onEvent($this);

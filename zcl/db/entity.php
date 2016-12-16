@@ -8,7 +8,6 @@ namespace ZCL\DB;
 abstract class Entity extends \ZDB\Entity implements \Zippy\Interfaces\DataItem
 {
 
-
     protected $fields = array();  //список  полей
 
     /**
@@ -24,7 +23,6 @@ abstract class Entity extends \ZDB\Entity implements \Zippy\Interfaces\DataItem
         parent::__construct($row);
     }
 
-
     /**
      * Возвращает значение  уникального  ключа  сущности
      *
@@ -33,6 +31,5 @@ abstract class Entity extends \ZDB\Entity implements \Zippy\Interfaces\DataItem
     {
         return parent::getKeyValue();
     }
-
 
 }

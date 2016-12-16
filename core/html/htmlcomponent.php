@@ -42,7 +42,7 @@ abstract class HtmlComponent
         if (!is_string($id) || strlen($id) == 0) {
             throw new ZE(sprintf(ERROR_INVALID_CREATE_ID, get_class($this)));
         }
-        if ( in_array($id,array('add'))) {
+        if (in_array($id, array('add'))) {
             throw new ZE(sprintf(ERROR_INVALID_ID, $id));
         }
         $this->id = $id;
@@ -68,8 +68,7 @@ abstract class HtmlComponent
     public function setAttribute($name, $value)
     {
 
-            $this->attributes[$name] = $value;
-
+        $this->attributes[$name] = $value;
     }
 
     /**
@@ -109,7 +108,7 @@ abstract class HtmlComponent
      */
     protected function onAdded()
     {
-
+        
     }
 
     /**
@@ -137,6 +136,7 @@ abstract class HtmlComponent
             return $this->owner->getPageOwner();
         }
     }
+
     /**
      *  Возвращает ссылку на объект формы в которую добавлен  компонент
      *  @return  Form
@@ -177,7 +177,7 @@ abstract class HtmlComponent
      */
     protected function RenderImpl()
     {
-
+        
     }
 
     /**
@@ -195,27 +195,25 @@ abstract class HtmlComponent
         $attributes['id'] = $this->id;
 
         if (isset($this->attributes["class"])) {
-            if(strlen($this->attributes["class"]) >0){
-              $attributes['class'] = $attributes['class'] . ' ' . $this->attributes["class"];
+            if (strlen($this->attributes["class"]) > 0) {
+                $attributes['class'] = $attributes['class'] . ' ' . $this->attributes["class"];
             } else {
-               $attributes['class'] = str_replace($this->attributes["class"],"",$attributes['class']);
+                $attributes['class'] = str_replace($this->attributes["class"], "", $attributes['class']);
             }
-
         }
         if (isset($this->attributes["style"])) {
-            if(strlen($this->attributes["style"]) >0){
-              $attributes['style'] = $attributes['style'] . ';  ' . $this->attributes["style"];
+            if (strlen($this->attributes["style"]) > 0) {
+                $attributes['style'] = $attributes['style'] . ';  ' . $this->attributes["style"];
             } else {
-               $attributes['style'] = str_replace($this->attributes["style"],"",$attributes['style']);
+                $attributes['style'] = str_replace($this->attributes["style"], "", $attributes['style']);
             }
         }
 
         foreach ($attributes as $key => $value) {
 
-            if (!array_key_exists($key,$this->attributes)) {
+            if (!array_key_exists($key, $this->attributes)) {
                 $this->attributes[$key] = $value;
             }
-
         }
 
 
@@ -226,8 +224,8 @@ abstract class HtmlComponent
         foreach ($this->attributes as $name => $value) {
             $attr = $this->getAttribute($name);
             $HtmlTag->attr($name, $attr);
-            if(strlen($attr) == 0){
-              $HtmlTag->removeAttr($name);
+            if (strlen($attr) == 0) {
+                $HtmlTag->removeAttr($name);
             }
         }
         $this->afterRender();
@@ -269,7 +267,7 @@ abstract class HtmlComponent
      */
     protected function beforeRender()
     {
-
+        
     }
 
     /**
@@ -277,7 +275,7 @@ abstract class HtmlComponent
      */
     protected function afterRender()
     {
-
+        
     }
 
     /**

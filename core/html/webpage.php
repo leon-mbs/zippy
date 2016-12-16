@@ -3,7 +3,6 @@
 namespace Zippy\Html;
 
 use \Zippy\WebApplication;
-use \Zippy\Interfaces\AjaxRender;
 use \Zippy\Interfaces\EventReceiver;
 
 /**
@@ -22,18 +21,17 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
     private $beforeRequestEvents = array();  //array  of callbacks
     private $afterRequestEvents = array();  //array  of callbacks
     private $_ajax;
-    private $_ankor ='';
+    private $_ankor = '';
     public $_tvars = array();  //переменные  для  шаблонизатора Mustache
-
-
 
     /**
      * Конструктор
      *
      */
+
     public function __construct()
     {
-
+        
     }
 
     /**
@@ -65,7 +63,7 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
      */
     public function beforeSaveToSession()
     {
-
+        
     }
 
     /**
@@ -73,7 +71,7 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
      */
     public function afterRestoreFromSession()
     {
-
+        
     }
 
     /**
@@ -103,20 +101,35 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
     }
 
     /**
-    * Рендерит  компоненты для  ajax ответа
-    *
-    */
-    public function renderAjax()
+     * Рендерит  компоненты для  ajax ответа
+     * @panels   рендеринг  панелей
+     */
+    public function renderAjax($panels = false)
     {
+        $haspanels = false;
         if (is_array($this->_ajax)) {
             foreach ($this->_ajax as $item) {
                 $component = $this->getComponent($item);
 
+                if ($component instanceof Panel) {
+                    $haspanels = true;                 
+                    if ($panels == true) {
+                        $responseJS = $component->AjaxAnswer();
+                        WebApplication::$app->getResponse()->addAjaxResponse($responseJS);
+                        continue;
+                    }
+                }
+
                 if ($component instanceof AjaxRender) {
+                    if ($component instanceof Panel) {
+                        continue;
+                    }
                     $responseJS = $component->AjaxAnswer();
                     WebApplication::$app->getResponse()->addAjaxResponse($responseJS);
                 }
             }
+            
+           return  $haspanels ;
         }
     }
 
@@ -126,9 +139,9 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
      */
     public function Render()
     {
-        if(strlen($this->_ankor) >0 ){
-             WebApplication::$app->getResponse()->addJavaScript("window.location='#".$this->_ankor."'", true);
-             $this->_ankor = '';
+        if (strlen($this->_ankor) > 0) {
+            WebApplication::$app->getResponse()->addJavaScript("window.location='#" . $this->_ankor . "'", true);
+            $this->_ankor = '';
         }
         $this->beforeRender();
         $this->RenderImpl();
@@ -185,32 +198,40 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
     }
 
     /**
-    * Переход  по  имени  якоря (после  загрузки страницы)
-    *
-    * @param mixed $name
-    */
-    protected function goAnkor($name){
-        $this->_ankor  = $name;
+     * Переход  по  имени  якоря (после  загрузки страницы)
+     *
+     * @param mixed $name
+     */
+    protected function goAnkor($name)
+    {
+        $this->_ankor = $name;
     }
 
-
-    public function setTitle($title)    {
+    public function setTitle($title)
+    {
         $this->_title = $title;
     }
-    public function setDescription($description)    {
+
+    public function setDescription($description)
+    {
         $this->_description = $description;
     }
-    public function setKeywords($keywords)    {
+
+    public function setKeywords($keywords)
+    {
         $this->_keywords = $keywords;
     }
-   
+
     /**
-    * функция  фонового  обновления  значения элемента  формы
-    * 
-    * @param mixed $sender
-    */
-    public function OnBackgroundUpdate($sender){
-         
+     * функция  фонового  обновления  значения элемента  формы
+     * 
+     * @param mixed $sender
+     */
+    public function OnBackgroundUpdate($sender)
+    {
+        
     }
+
+    
 
 }

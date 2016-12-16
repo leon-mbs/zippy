@@ -17,7 +17,7 @@ class TextInput extends HtmlFormDataElement implements Validated, AjaxRender
     /**
      * Конструктор
      * @param mixed  ID
-     * @param Значение елеента  или  поле  привязанного объекта
+     * @param Значение элемента  или  поле  привязанного объекта
      */
     public function __construct($id, $value = null)
     {

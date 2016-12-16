@@ -47,7 +47,13 @@ class CheckBox extends HtmlFormDataElement implements ChangeListener, Requestabl
 
             $url = $this->owner->getURLNode() . '::' . $this->id;
             $url = substr($url, 2 + strpos($url, 'q='));
-            $this->setAttribute("onclick", "javascript:{  $('#" . $formid . "_q').attr('value','" . $url . "');$('#" . $formid . "').submit();}");
+            if ($this->event->isajax == false) {
+
+                $this->setAttribute("onchange", "javascript:{ $('#" . $formid . "_q').attr('value','" . $url . "');$('#" . $formid . "_s').trigger('click');}");
+            } else {
+                $_BASEURL = WebApplication::$app->getResponse()->getHostUrl();
+                $this->setAttribute("onchange", " $('#" . $formid . "_q').attr('value','" . $url . "'); submitForm('{$formid}','{$_BASEURL}/?ajax=true');");
+            }
         }
     }
 
@@ -64,22 +70,23 @@ class CheckBox extends HtmlFormDataElement implements ChangeListener, Requestabl
      */
     public function RequestHandle()
     {
-        $this->OnChange();
+        $this->OnEvent();
     }
 
     /**
      * @see  ChangeListener
      */
-    public function setChangeHandler(EventReceiver $receiver, $handler)
+    public function onChange(EventReceiver $receiver, $handler, $ajax = true)
     {
 
         $this->event = new Event($receiver, $handler);
+        $this->event->isajax = $ajax;
     }
 
     /**
      * @see ChangeListener
      */
-    public function OnChange()
+    public function OnEvent()
     {
         if ($this->event != null) {
             $this->event->onEvent($this);
@@ -92,8 +99,8 @@ class CheckBox extends HtmlFormDataElement implements ChangeListener, Requestabl
      */
     public function setChecked($checked)
     {
-        $checked = $checked == 1 ? true : $checked ;
-        $checked = $checked === 'true' ? true : $checked  ;
+        $checked = $checked == 1 ? true : $checked;
+        $checked = $checked === 'true' ? true : $checked;
         $this->setValue($checked);
     }
 

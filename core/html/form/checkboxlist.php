@@ -39,8 +39,8 @@ class CheckBoxList extends HtmlFormDataElement
                 $attributes = $attributes . $key . "=\"{$value}\" ";
             }
             $checked = $item['value'] === true ? ' checked="on"' : '';
- 
-            $out .= $this->RenderItem($this->id.'::'.$id,$checked,$item['caption'],$attributes,$this->delimiter);
+
+            $out .= $this->RenderItem($this->id . '::' . $id, $checked, $item['caption'], $attributes, $this->delimiter);
         }
         $out = substr($out, 0, strlen($out) - strlen($this->delimiter));
 
@@ -48,19 +48,19 @@ class CheckBoxList extends HtmlFormDataElement
     }
 
     /**
-    * Рендерит чекбокс.  Мжет быть перегружен  для  кастомного рендеринга.
-    * 
-    * @param mixed $name
-    * @param mixed $checked
-    * @param mixed $caption
-    * @param mixed $attr
-    * @param mixed $delimiter
-    */
-    public function   RenderItem($name,$checked, $caption="",$attr="",$delimiter="")
+     * Рендерит чекбокс.  Мжет быть перегружен  для  кастомного рендеринга.
+     * 
+     * @param mixed $name
+     * @param mixed $checked
+     * @param mixed $caption
+     * @param mixed $attr
+     * @param mixed $delimiter
+     */
+    public function RenderItem($name, $checked, $caption = "", $attr = "", $delimiter = "")
     {
-        return   "<nobr><input   type=\"checkbox\" name=\"{$name}\" {$attr} {$checked}  /> {$caption}</nobr>{$delimiter}";
+        return "<nobr><input   type=\"checkbox\" name=\"{$name}\" {$attr} {$checked}  /> {$caption}</nobr>{$delimiter}";
     }
-    
+
     /**
      * Добавить  чекер в  список
      * @param mixed  Номер  чекера

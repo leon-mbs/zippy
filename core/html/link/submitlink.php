@@ -23,12 +23,12 @@ class SubmitLink extends AbstractLink implements ClickListener, Requestable
      * @param  EventReceiver Объект с методом  обработки  события
      * @param  string Имя  мтода-обработчика
      */
-    public function __construct($id, EventReceiver $receiver = null, $handler = null)
+    public function __construct($id, EventReceiver $receiver = null, $handler = null, $ajax = false)
     {
         parent::__construct($id);
 
         if (is_object($receiver) && strlen($handler) > 0) {
-            $this->setClickHandler($receiver, $handler);
+            $this->onClick($receiver, $handler, $ajax);
         }
     }
 
@@ -51,7 +51,14 @@ class SubmitLink extends AbstractLink implements ClickListener, Requestable
 
         $url = $this->owner->getURLNode() . '::' . $this->id;
         $url = substr($url, 2 + strpos($url, 'q='));
-        $this->setAttribute("onclick", "javascript:{if(beforeZippy('{$this->id}') ==false) return false; $('#" . $formid . "_q').attr('value','" . $url . "'); $('#" . $formid . "').submit();event.returnValue=false; return false;}");
+        if ($this->event->isajax == false) {
+            $this->setAttribute("onclick", "javascript:{if(beforeZippy('{$this->id}') ==false) return false; $('#" . $formid . "_q').attr('value','" . $url . "'); $('#" . $formid . "').submit();event.returnValue=false; return false;}");
+        } else {
+            $_BASEURL = WebApplication::$app->getResponse()->getHostUrl();
+            $this->setAttribute("onclick", "if(beforeZippy('{$this->id}') ==false) return false; $('#" . $formid . "_q').attr('value','" . $url . "'); submitForm('{$formid}','{$_BASEURL}/?ajax=true');");
+        }
+
+
         //    $this->setAttribute("onclick","javascript:{ var q = $('#".$formid."_q').attr('value');$('#".$formid."_q').attr('value',q+'::".$this->id."');$('#".$formid."').submit();return  false;}");
     }
 
@@ -60,25 +67,23 @@ class SubmitLink extends AbstractLink implements ClickListener, Requestable
      */
     public function RequestHandle()
     {
-        $this->OnClick();
-    }
-
-    /**
-     * @see  ClickListener
-     */
-    public function setClickHandler(EventReceiver $receiver, $handler)
-    {
-        $this->event = new Event($receiver, $handler);
+        $this->OnEvent();
     }
 
     /**
      * @see ClickListener
      */
-    public function OnClick()
+    public function OnEvent()
     {
         if ($this->event != null) {
             $this->event->onEvent($this);
         }
+    }
+
+    public function onClick(EventReceiver $receiver, $handler, $ajax = false)
+    {
+        $this->event = new Event($receiver, $handler);
+        $this->event->isajax = $ajax;
     }
 
 }

@@ -5,7 +5,6 @@ namespace Zippy\Html\Form;
 use \Zippy\WebApplication;
 use \Zippy\Interfaces\Binding;
 use \Zippy\Interfaces\ChangeListener;
-use \Zippy\Interfaces\AjaxChangeListener;
 use \Zippy\Interfaces\Requestable;
 use \Zippy\Interfaces\AjaxRender;
 use \Zippy\Interfaces\EventReceiver;
@@ -14,7 +13,7 @@ use \Zippy\Event;
 /**
  * Компонент  тэга  &lt;select&gt;
  */
-class DropDownChoice extends HtmlFormDataElement implements ChangeListener, AjaxChangeListener, Requestable, AjaxRender
+class DropDownChoice extends HtmlFormDataElement implements ChangeListener, Requestable, AjaxRender
 {
 
     private $optionlist;
@@ -26,7 +25,7 @@ class DropDownChoice extends HtmlFormDataElement implements ChangeListener, Ajax
      * @param  array  Массив  значений
      * @param  Текущее значение  елемента
      */
-    public function __construct($id, $optionlist = array(), $value = -1,$bgupdate = false)
+    public function __construct($id, $optionlist = array(), $value = -1, $bgupdate = false)
     {
         parent::__construct($id);
         $this->setValue($value);
@@ -35,14 +34,14 @@ class DropDownChoice extends HtmlFormDataElement implements ChangeListener, Ajax
         $this->bgupdate = $bgupdate;
     }
 
-      protected function onAdded()
-      {
-                 if($this->bgupdate){
-                    $page =$this->getPageOwner();
-                    $this->setAjaxChangeHandler($page,'OnBackgroundUpdate') ;
-                }
-      }    
-    
+    protected function onAdded()
+    {
+        if ($this->bgupdate) {
+            $page = $this->getPageOwner();
+            $this->onChange($page, 'OnBackgroundUpdate', true);
+        }
+    }
+
     /**
      * 3
      * @see  HtmlComponent
@@ -58,14 +57,13 @@ class DropDownChoice extends HtmlFormDataElement implements ChangeListener, Ajax
         if ($this->event != null) {
             $formid = $this->getFormOwner()->id;
 
+            $url = $this->owner->getURLNode() . '::' . $this->id;
+            $url = substr($url, 2 + strpos($url, 'q='));
+
             if ($this->event->isajax == false) {
 
-                $url = $this->owner->getURLNode() . '::' . $this->id;
-                $url = substr($url, 2 + strpos($url, 'q='));
                 $this->setAttribute("onchange", "javascript:{ $('#" . $formid . "_q').attr('value','" . $url . "');$('#" . $formid . "').submit();}");
             } else {
-                $url = $this->owner->getURLNode() . "::" . $this->id;
-                $url = substr($url, 2 + strpos($url, 'q='));
                 $_BASEURL = WebApplication::$app->getResponse()->getHostUrl();
                 $this->setAttribute("onchange", " $('#" . $formid . "_q').attr('value','" . $url . "'); submitForm('{$formid}','{$_BASEURL}/?ajax=true');");
             }
@@ -97,15 +95,13 @@ class DropDownChoice extends HtmlFormDataElement implements ChangeListener, Ajax
         //$html = $tag->html();
 
         if (count($list) == 0) {
-              //WebApplication::$app->getResponse()->addJavaScript("$('#" . $this->id . " :nth-child(" . $this->getValue() . ")').attr('selected', 'selected') ;", true);
-               $js = "$('#" . $this->id . " option').each(function() {    if($(this).val() == '" . $this->getValue() . "') {        $(this).prop(\"selected\", true);   }});";
+            //WebApplication::$app->getResponse()->addJavaScript("$('#" . $this->id . " :nth-child(" . $this->getValue() . ")').attr('selected', 'selected') ;", true);
+            $js = "$('#" . $this->id . " option').each(function() {    if($(this).val() == '" . $this->getValue() . "') {        $(this).prop(\"selected\", true);   }});";
 
-                WebApplication::$app->getResponse()->addJavaScript($js, true);
-               // WebApplication::$app->getResponse()->addJavaScript("$(\"#" . $this->id . "\" ).filter('[value=1]').prop('selected', true)", true);
-              //  WebApplication::$app->getResponse()->addJavaScript("$(\"#" . $this->id . ">option[value='" . $this->getValue() . "']\").prop('selected','selected')", true);
-              //  WebApplication::$app->getResponse()->addJavaScript("$(\"#" . $this->id . ">option[value='" . $this->getValue() . "']\").attr('selected','selected')", true);
-
-
+            WebApplication::$app->getResponse()->addJavaScript($js, true);
+            // WebApplication::$app->getResponse()->addJavaScript("$(\"#" . $this->id . "\" ).filter('[value=1]').prop('selected', true)", true);
+            //  WebApplication::$app->getResponse()->addJavaScript("$(\"#" . $this->id . ">option[value='" . $this->getValue() . "']\").prop('selected','selected')", true);
+            //  WebApplication::$app->getResponse()->addJavaScript("$(\"#" . $this->id . ">option[value='" . $this->getValue() . "']\").attr('selected','selected')", true);
         }
     }
 
@@ -122,7 +118,7 @@ class DropDownChoice extends HtmlFormDataElement implements ChangeListener, Ajax
      */
     public function RequestHandle()
     {
-        $this->OnChange();
+        $this->OnEvent();
     }
 
     /**
@@ -143,24 +139,17 @@ class DropDownChoice extends HtmlFormDataElement implements ChangeListener, Ajax
     /**
      * @see  ChangeListener
      */
-    public function setChangeHandler(EventReceiver $receiver, $handler)
+    public function onChange(EventReceiver $receiver, $handler, $ajax = true)
     {
-        $this->event = new Event($receiver, $handler);
-    }
 
-    /**
-     * @see  AjaxChangeListener
-     */
-    public function setAjaxChangeHandler(EventReceiver $receiver, $handler)
-    {
-        $this->setChangeHandler($receiver, $handler);
-        $this->event->isajax = true;
+        $this->event = new Event($receiver, $handler);
+        $this->event->isajax = $ajax;
     }
 
     /**
      * @see ChangeListener
      */
-    public function OnChange()
+    public function OnEvent()
     {
         if ($this->event != null) {
             $this->event->onEvent($this);
@@ -174,7 +163,7 @@ class DropDownChoice extends HtmlFormDataElement implements ChangeListener, Ajax
 
     public function setOptionList($optionlist)
     {
-        if(is_array($optionlist)){
+        if (is_array($optionlist)) {
             $this->optionlist = $optionlist;
             $this->setValue(-1);
         }
@@ -201,14 +190,15 @@ class DropDownChoice extends HtmlFormDataElement implements ChangeListener, Ajax
             return;
         $this->optionlist[$value] = $text;
     }
-    
+
     /**
-    * возвращает текст  выбраного  значения
-    * 
-    */
-    public function getValueName(){
+     * возвращает текст  выбраного  значения
+     * 
+     */
+    public function getValueName()
+    {
         $list = $this->optionlist instanceOf Binding ? $this->optionlist->getValue() : $this->optionlist;
         return $list[$this->getValue()];
     }
-    
+
 }

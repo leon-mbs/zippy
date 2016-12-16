@@ -7,7 +7,7 @@ namespace Zippy\Html;
  *  Используется для управления  группой   компонентов, например  скрытия  методом  SetVisible
  *
  */
-class Panel extends HtmlContainer implements \Zippy\Interfaces\ClickListener, \Zippy\Interfaces\AjaxClickListener, \Zippy\Interfaces\Requestable
+class Panel extends HtmlContainer implements \Zippy\Interfaces\ClickListener, \Zippy\Interfaces\Requestable, \Zippy\Interfaces\AjaxRender
 {
 
     protected $event = null;
@@ -47,35 +47,47 @@ class Panel extends HtmlContainer implements \Zippy\Interfaces\ClickListener, \Z
     public function RequestHandle()
     {
         parent::RequestHandle();
-        $this->OnClick();
+        $this->OnEvent();
         // WebApplication::getApplication()->setReloadPage();
     }
 
     /**
      * @see  ClickListener
      */
-    public function setClickHandler(\Zippy\Interfaces\EventReceiver $receiver, $handler)
-    {
-        $this->event = new \Zippy\Event($receiver, $handler);
-    }
-
-    /**
-     * @see  AjaxClickListener
-     */
-    public function setAjaxClickHandler(\Zippy\Interfaces\EventReceiver $receiver, $handler)
+    public function onClick(\Zippy\Interfaces\EventReceiver $receiver, $handler, $ajax = false)
     {
         $this->setClickHandler($receiver, $handler);
-        $this->event->isajax = true;
+        $this->event->isajax = $ajax;
     }
 
     /**
      * @see ClickListener
      */
-    public function OnClick()
+    public function OnEvent()
     {
         if ($this->event != null) {
             $this->event->onEvent($this);
         }
+    }
+
+    /**
+     * @see AjaxRender
+     * рендлерит  панель  вместе  с  содержимы  для  ajax  ответа.
+     * В  панели  не  должно быть клиентских компонентов  требующих инициализацию
+     * с  помощью javascript.
+     */
+    public function AjaxAnswer()
+    {
+        $HtmlTag = pq('[zippy="' . $this->id . '"]');
+        $html = $HtmlTag->html();
+
+        $html=json_encode($html);
+
+        $js = "var _h =  {$html} ;   ";
+        
+        $js .= "$('#{$this->id}').html(_h);";
+
+        return $js;
     }
 
 }
