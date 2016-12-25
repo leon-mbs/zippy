@@ -19,7 +19,7 @@ class Tags extends \Zippy\Html\Form\HtmlFormDataElement
      * 
      * 
      * @param mixed $id
-     * @param mixed $options  Массив  опций жлемента в  виде  ключ-значение
+     * @param mixed $options  Массив  опций элемента в  виде  ключ-значение
      */
     public function __construct($id, $options = null)
     {

@@ -52,7 +52,7 @@ class SubmitButton extends HtmlComponent implements ClickListener, Requestable
     /**
      * @see ClickListener
      */
-    public function onClick(EventReceiver $receiver, $handler, $ajax = true)
+    public function onClick(EventReceiver $receiver, $handler, $ajax = false)
     {
         $this->event = new Event($receiver, $handler);
         $this->event->isajax = $ajax;

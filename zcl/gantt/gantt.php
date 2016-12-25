@@ -12,7 +12,7 @@ use \Zippy\Event;
  * Класс-backend для jQuery  плагина  jqGanttView
  * 
  */
-class Gantt extends HtmlComponent implements Requestable
+class Gantt extends HtmlComponent implements \Zippy\Interfaces\Requestable
 {
 
     private $event = null;

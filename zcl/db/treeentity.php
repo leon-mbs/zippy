@@ -54,13 +54,14 @@ abstract class TreeEntity extends Entity
      *
      * @param mixed $tree Ссылка  на  компонент  \ZCL\Tree\Tree
      * @param mixed $fname Наименование  поля  сущности,  значение которого  будет  использовано
+     * @param mixed $tagfieldname Наименование  поля  для тега  
      * именования узла  дерева
      * @param mixed $rootname Имя  виртуального  корневого  узла, если  есть
      * необходимость  чтобы  дерево  имело  один  корневой  узед
      */
-    public static function generateTree(\ZCL\Tree\Tree $tree, $fname, $rootname = "Root")
+    public static function generateTree(\ZCL\BT\Tree $tree, $fname, $rootname = "//",$tagfieldname='')
     {
-        $tree->removeNodes();
+       // $tree->removeNodes();
 
         $class = get_called_class();
         $meta = $class::getMetadata();
@@ -75,7 +76,7 @@ abstract class TreeEntity extends Entity
         $first = null;
         $nodelist = array();
         foreach ($itemlist as $item) {
-            $node = new \ZCL\Tree\TreeNode($item->{$fname}, $item);
+            $node = new \ZCL\BT\TreeNode($item->{$fname}, $item->node_id);
             $parentnode = @$nodelist[$item->{$meta['parentfield']}];
 
             $tree->addNode($node, $parentnode);
@@ -85,9 +86,8 @@ abstract class TreeEntity extends Entity
                 $first = $node;
         }
 
-        $tree->setSelectedNode($first);
-        $first->setSelected(true);
-        $first->setActive(true);
+        //$tree->setSelectedNode($first);
+ 
     }
 
     /**

@@ -24,7 +24,7 @@ abstract class HtmlComponent
     //  private $cssstyle = "";
     //   private $cssclass = "";
     protected $owner = null;
-    protected $options = array();
+     
     //   public  $uid;
     //  private   static  $uidcounter = 0;
     // protected $HtmlTag=null;
@@ -278,13 +278,7 @@ abstract class HtmlComponent
         
     }
 
-    /**
-     * Устанавливает  массив   опций  компонента
-     */
-    final public function setOptions(array $options = array())
-    {
-        $this->options = array_merge($this->options, $options);
-    }
+     
 
     /**
      * возвращает  связаный  тег
