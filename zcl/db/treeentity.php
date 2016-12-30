@@ -61,7 +61,7 @@ abstract class TreeEntity extends Entity
      */
     public static function generateTree(\ZCL\BT\Tree $tree, $fname, $rootname = "//",$tagfieldname='')
     {
-       // $tree->removeNodes();
+         $tree->removeNodes();
 
         $class = get_called_class();
         $meta = $class::getMetadata();

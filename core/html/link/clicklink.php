@@ -40,17 +40,18 @@ class ClickLink extends AbstractLink implements ClickListener, Requestable
     {
         parent::RenderImpl();
 
-        if ($this->event == null) {
-            $this->setAttribute("href", "");
-            $this->setAttribute("onclick", "");
-            return;
-        }
 
         if ($this->disabled == true) {
             $this->setAttribute("href", "");
-            $this->setAttribute("onclick", "");
+            //$this->setAttribute("onclick", "");
             return;
         }
+        if ($this->event == null) {
+            $this->setAttribute("href", "");
+          //  $this->setAttribute("onclick", "");
+            return;
+        }
+        
         $this->setAttribute("href", "javascript:void(0);");
         if ($this->event->isajax == false) {
             $url = $this->owner->getURLNode() . "::" . $this->id;

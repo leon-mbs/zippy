@@ -9,6 +9,10 @@ use \Zippy\Html\HtmlComponent;
 use \Zippy\Event;
 use \Zippy\Interfaces\EventReceiver;
 
+/**
+* Компонент  древовидного меню
+* https://github.com/maxwells/bootstrap-treeview
+*/
 class Tree extends HtmlComponent  implements \Zippy\Interfaces\Requestable
 {
 
@@ -198,8 +202,10 @@ return explist;
         $op = $params[0];
         $this->selectedid = $params[2];
         $this->selectednodeid = $params[1];
-
-        $this->expanded = explode(',',trim($params[3],','));
+        
+        if(strlen($params[3])>0){
+            $this->expanded = explode(',',trim($params[3],','));
+        }
         
         if ($this->event != null && $op=='sel') {
             $this->event->onEvent($this, $this->selectedid);
@@ -230,12 +236,23 @@ return explist;
     }
     
     /**
-    * возвращает кастомный id активного  узла
+    * возвращает или  устанавливает кастомный id активного  узла
     * 
     */
-    public function selectedNodeId(){
+    public function selectedNodeId($id=null){
+        
+        if($id>0){
+          $this->selectedid =$id;    
+        }
         return $this->selectedid;
+        
     }
+    
+      public function removeNodes() {
+          $this->nodes = array();
+          $this->children = array();
+          $this->number =1;
+      }
 }
 
 class TreeNode
@@ -283,7 +300,7 @@ class TreeNode
          
         }
      $js .="   } ";
-     
+       
         $c = array();
         foreach ($this->children as $child) {
             $c[] = $child->Render();
