@@ -52,6 +52,7 @@ class Tree extends HtmlComponent  implements \Zippy\Interfaces\Requestable
                   checkedIcon:'fa fa-check-square-o',
                   uncheckedIcon:'fa fa-square-o',
                   showBorder: false,
+                  showTags: true,
                   "; 
                  
                   if(@$this->options['showTags'] === true){
@@ -75,7 +76,7 @@ class Tree extends HtmlComponent  implements \Zippy\Interfaces\Requestable
                 
                 
                 
-                $js .= "   $('#{$this->id}').on('nodeSelected', function(event, node) {  
+                $js  = "   $('#{$this->id}').on('nodeSelected', function(event, node) {  
                    
                    
                    
@@ -267,7 +268,7 @@ class TreeNode
     public $icon = ""; //иконки  для  узла
     public $checked = false;
     public $link = '';
-    public $zippyid  ;
+    public $zippyid =0;
   
 
     public function __construct($text, $id)
@@ -285,8 +286,8 @@ class TreeNode
             $js .="
             ,href: \"{$this->link}\"";
         }
-     if (count($this->tags) > 0) {
-            $js .=",tags: ['{$this->tags}\"'] ";
+      if (strlen($this->tag) > 0) {
+            $js .=",tags: ['{$this->tag}'] ";
         }
         if ($this->isselected != null) {
             $js .="

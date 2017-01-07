@@ -49,46 +49,8 @@ abstract class TreeEntity extends Entity
         throw new \Zippy\Exception('getMetadata должен  быть  перегружен');
     }
 
-    /**
-     * Создает  дерево на  основе  иерархии  сущностей
-     *
-     * @param mixed $tree Ссылка  на  компонент  \ZCL\Tree\Tree
-     * @param mixed $fname Наименование  поля  сущности,  значение которого  будет  использовано
-     * @param mixed $tagfieldname Наименование  поля  для тега  
-     * именования узла  дерева
-     * @param mixed $rootname Имя  виртуального  корневого  узла, если  есть
-     * необходимость  чтобы  дерево  имело  один  корневой  узед
-     */
-    public static function generateTree(\ZCL\BT\Tree $tree, $fname, $rootname = "//",$tagfieldname='')
-    {
-         $tree->removeNodes();
-
-        $class = get_called_class();
-        $meta = $class::getMetadata();
-
-        $itemlist = $class::find('', $meta['pathfield'] . "," . $fname);
-        if (count($itemlist) == 0) { //добавляем  корень
-            $root = new $class();
-            $root->{$fname} = $rootname;
-            $root->save();
-            $itemlist[0] = $root;
-        }
-        $first = null;
-        $nodelist = array();
-        foreach ($itemlist as $item) {
-            $node = new \ZCL\BT\TreeNode($item->{$fname}, $item->node_id);
-            $parentnode = @$nodelist[$item->{$meta['parentfield']}];
-
-            $tree->addNode($node, $parentnode);
-
-            $nodelist[$item->{$meta['keyfield']}] = $node;
-            if ($first == null)
-                $first = $node;
-        }
-
-        //$tree->setSelectedNode($first);
  
-    }
+    
 
     /**
      * @see Entity
@@ -154,6 +116,7 @@ abstract class TreeEntity extends Entity
       }
      */
 
+     
     public function getParent()
     {
 
@@ -182,6 +145,8 @@ abstract class TreeEntity extends Entity
         }
     }
 
+  
+    
     /**
      * Удаление  узла
      *

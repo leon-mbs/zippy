@@ -8,6 +8,7 @@ use \Zippy\WebApplication;
 /**
  * Компонент  списка  тегов основанный  на
  * https://github.com/maxwells/bootstrap-tags
+ * Используется тэг div
  */
 class Tags extends \Zippy\Html\Form\HtmlFormDataElement
 {

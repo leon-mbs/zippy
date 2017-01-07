@@ -6,6 +6,7 @@ use \Zippy\Html\HtmlComponent;
 use \Zippy\Interfaces\Paginable;
 use \Zippy\Interfaces\EventReceiver;
 use \Zippy\Event;
+use \Zippy\WebApplication;
 
 /**
  * Класс  вывода  табличных  данных
@@ -17,13 +18,14 @@ use \Zippy\Event;
  *  события  rowevent
  *
  */
-class DataView extends AbstractList
+class DataView extends AbstractList  implements \Zippy\Interfaces\Requestable
 {
 
     private $rowevent = null;
     private $selectedRow = 0;
     private $selectedclass = "";
-
+    private $cellclickevent = null;
+  
     /**
      * Конструктор
      * @param  mixed  ID  компонента
@@ -57,6 +59,15 @@ class DataView extends AbstractList
             if ($item->getID() == $this->selectedRow && $this->selectedclass != "") {
                 $datarow->setAttribute('class', $this->selectedclass);
             }
+        if ($this->cellclickevent instanceof \Zippy\Event) {
+            $url = $this->getURLNode() .  ':' . $item->getID();
+            $onclick = "window.location='{$url}'";  
+            $onclick = "  " . $onclick . "  ";
+            $style = "  cursor:pointer; ";
+            $datarow->setAttribute('style', $style);
+            $datarow->setAttribute('onclick', $onclick);
+        }            
+            
         }
     }
 
@@ -73,6 +84,7 @@ class DataView extends AbstractList
     {
         // $this->UpdateData() ;
 
+        
         $rowtag = pq('[zippy=' . $this->id . ']');
 
         if ($rowtag->size() == 0) {
@@ -155,4 +167,23 @@ class DataView extends AbstractList
         $this->selectedclass = $selectedclass;
     }
 
+    public final function setCellClickEvent(\Zippy\Interfaces\EventReceiver $receiver, $handler)
+    {
+        $this->cellclickevent = new \Zippy\Event($receiver, $handler);
+    }  
+    
+    public final function RequestHandle()
+    {
+        $p = WebApplication::$app->getRequest()->request_params[$this->id];
+        if ($this->cellclickevent instanceof \Zippy\Event) {
+            $this->cellclickevent->onEvent($this,   $p[0] );
+            $this->setSelectedrow($p[0]);  
+            if(strlen( $this->selectedclass)>0)
+            {
+               
+               $this->Reload();
+            } 
+        }
+        
+    }  
 }

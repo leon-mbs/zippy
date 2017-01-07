@@ -81,6 +81,7 @@ class DataTable extends AbstractList implements Requestable
         if ($p[0] == 'cellclick' && $this->cellclickevent instanceof \Zippy\Event) {
             $items = array_values($this->datalist);
             $this->cellclickevent->onEvent($this, array('dataitem' => $items[$p[2] - 1], 'field' => $p[1], 'rownumber' => $p[2]));
+            $this->setSelectedrow($p[2]);
         }
 
         if ($this->useajax) {
