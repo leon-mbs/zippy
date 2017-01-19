@@ -20,7 +20,7 @@ class LinkList extends HtmlComponent implements ClickListener, Requestable
     public $delimiter = " ";
     public $list = array();
     protected $event;
-    protected $selectedvalue;
+    public $selectedvalue;
 
     /**
      * Конструктор
@@ -33,14 +33,6 @@ class LinkList extends HtmlComponent implements ClickListener, Requestable
         $this->delimiter = $delimiter;
     }
 
-    /**
-    * Возвращает значение  для выбранного ClickLink
-    * 
-    */
-    public function  getSelectedValue(){
-        return $this->selectedvalue;
-    }
-    
     /**
      * @see  HtmlComponent
      */
@@ -161,7 +153,7 @@ class LinkList extends HtmlComponent implements ClickListener, Requestable
      */
     public function onClick(\Zippy\Interfaces\EventReceiver $receiver, $handler, $ajax = false)
     {
-        $this->event = new Event($receiver, $handler);
+        $this->setClickHandler($receiver, $handler);
         $this->event->isajax = $ajax;
     }
 

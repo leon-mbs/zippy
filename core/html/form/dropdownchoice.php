@@ -139,7 +139,7 @@ class DropDownChoice extends HtmlFormDataElement implements ChangeListener, Requ
     /**
      * @see  ChangeListener
      */
-    public function onChange(EventReceiver $receiver, $handler, $ajax = true)
+    public function onChange(EventReceiver $receiver, $handler, $ajax = false)
     {
 
         $this->event = new Event($receiver, $handler);

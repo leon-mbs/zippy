@@ -173,7 +173,9 @@ class DataView extends AbstractList  implements \Zippy\Interfaces\Requestable
     }  
     
     public final function RequestHandle()
-    {
+    { 
+        parent::RequestHandle();
+    
         $p = WebApplication::$app->getRequest()->request_params[$this->id];
         if ($this->cellclickevent instanceof \Zippy\Event) {
             $this->cellclickevent->onEvent($this,   $p[0] );
