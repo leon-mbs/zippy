@@ -153,7 +153,7 @@ class LinkList extends HtmlComponent implements ClickListener, Requestable
      */
     public function onClick(\Zippy\Interfaces\EventReceiver $receiver, $handler, $ajax = false)
     {
-        $this->setClickHandler($receiver, $handler);
+        $this->event = new Event($receiver, $handler);
         $this->event->isajax = $ajax;
     }
 
@@ -205,4 +205,8 @@ class LinkList extends HtmlComponent implements ClickListener, Requestable
         }
     }
 
+    public function getSelectedValue(){
+        return $this->selectedvalue;
+    } 
+    
 }
