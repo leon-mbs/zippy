@@ -104,7 +104,7 @@ class DateTime extends TextInput implements Requestable, ChangeListener
     /**
      * @see ChangeListener
      */
-    public function OnChange()
+    public function OnEvent()
     {
         if ($this->event != null) {
             $this->event->onEvent($this);
@@ -116,7 +116,7 @@ class DateTime extends TextInput implements Requestable, ChangeListener
      */
     public function RequestHandle()
     {
-        $this->OnChange();
+        $this->OnEvent();
     }
 
 }

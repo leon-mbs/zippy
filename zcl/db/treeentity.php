@@ -116,7 +116,6 @@ abstract class TreeEntity extends Entity
       }
      */
 
-     
     public function getParent()
     {
 
@@ -145,8 +144,6 @@ abstract class TreeEntity extends Entity
         }
     }
 
-  
-    
     /**
      * Удаление  узла
      *

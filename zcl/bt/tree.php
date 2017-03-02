@@ -242,7 +242,7 @@ return explist;
     */
     public function selectedNodeId($id=null){
         
-        if($id>0){
+        if(is_integer($id)){
           $this->selectedid =$id;    
         }
         return $this->selectedid;

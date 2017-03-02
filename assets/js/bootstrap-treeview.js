@@ -273,7 +273,7 @@
 			if (!node.hasOwnProperty('selectable')) {
 				node.selectable = true;
 			}
-
+ 
 			// where provided we should preserve states
 			node.state = node.state || {};
 

@@ -37,7 +37,7 @@ class DateTimePicker extends \Zippy\Html\Form\TextInput implements Requestable, 
 
         // $url = $this->owner->getURLNode() . "::" . $this->id . "&ajax=true";
 
-        $js = "$('#{$this->id}').datetimepicker( {  format : 'yyyy-mm-dd',fontAwesome:true });";
+        $js = "$('#{$this->id}').datetimepicker( {  format : 'yyyy-mm-dd hh:ii',fontAwesome:true });";
         if ($this->event != null) {
             $formid = $this->getFormOwner()->id;
 
@@ -45,7 +45,7 @@ class DateTimePicker extends \Zippy\Html\Form\TextInput implements Requestable, 
                 $url = $this->owner->getURLNode() . '::' . $this->id;
                 $url = substr($url, 2 + strpos($url, 'q='));
                 $this->setAttribute("onchange", "javascript:{ $('#" . $formid . "_q').attr('value','" . $url . "');$('#" . $formid . "').submit();}");
-                $js = "$('#{$this->id}').datetimepicker( {format : 'yyyy-mm-dd',fontAwesome:true}).on('changeDate', function() {  
+                $js = "$('#{$this->id}').datetimepicker( {format : 'yyyy-mm-dd hh:ii',fontAwesome:true}).on('changeDate', function() {  
                    $('#" . $formid . "_q').attr('value','" . $url . "');$('#" . $formid . "').submit()
                 } }   ));";
             } else {
@@ -53,7 +53,7 @@ class DateTimePicker extends \Zippy\Html\Form\TextInput implements Requestable, 
                 $url = substr($url, 2 + strpos($url, 'q='));
                 $_BASEURL = WebApplication::$app->getResponse()->getHostUrl();
 
-                $js = "$('#{$this->id}').datetimepicker( {format : 'yyyy-mm-dd',fontAwesome:true}).on('changeDate', function() {  
+                $js = "$('#{$this->id}').datetimepicker( {format : 'yyyy-mm-dd hh:ii',fontAwesome:true}).on('changeDate', function() {  
                    $('#" . $formid . "_q').attr('value','" . $url . "'); submitForm('{$formid}','{$_BASEURL}/?ajax=true')
                 } }   );";
             }
