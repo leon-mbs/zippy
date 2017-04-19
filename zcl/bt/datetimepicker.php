@@ -15,6 +15,7 @@ class DateTimePicker extends \Zippy\Html\Form\TextInput implements Requestable, 
 {
 
     private $event;
+  private $min,$max;
 
     public function __construct($id, $value = null, $bgupdate = false)
     {
@@ -30,14 +31,32 @@ class DateTimePicker extends \Zippy\Html\Form\TextInput implements Requestable, 
             $this->onChange($page, 'OnBackgroundUpdate', true);
         }
     }
-
+    /**
+    * set range
+    * 
+    * @param mixed $min
+    * @param mixed $max
+    */
+    public function setMinMax($min,$max=null)
+    {
+       $this->min = $min; 
+       $this->max = $max; 
+    }
     public function RenderImpl()
     {
         \Zippy\Html\Form\TextInput::RenderImpl();
 
         // $url = $this->owner->getURLNode() . "::" . $this->id . "&ajax=true";
 
-        $js = "$('#{$this->id}').datetimepicker( {  format : 'yyyy-mm-dd hh:ii',fontAwesome:true });";
+        
+        if($this->min >0){
+           $min=", startDate:  '". date("Y-m-d h:i",$this->min) ."' ";    
+        }
+        if($this->max >0){
+           $max=", endDate:  '". date("Y-m-d h:i",$this->max) ."' ";    
+        }        
+        
+        $js = "$('#{$this->id}').datetimepicker( {  format : 'yyyy-mm-dd hh:ii',fontAwesome:true ,autoclose:true {$min} {$max}  });";
         if ($this->event != null) {
             $formid = $this->getFormOwner()->id;
 
@@ -84,7 +103,7 @@ class DateTimePicker extends \Zippy\Html\Form\TextInput implements Requestable, 
     public function setDate($t = null)
     {
         if ($t > 0) {
-            $this->setText(date('yyyy-mm-dd', $t));
+            $this->setText(date('Y-m-d h:i', $t));
         } else {
             $this->setText("");
         }

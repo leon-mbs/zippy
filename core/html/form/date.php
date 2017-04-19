@@ -16,6 +16,7 @@ class Date extends TextInput implements Requestable, ChangeListener
 {
 
     private $event;
+    private $min,$max;
 
     public function __construct($id, $value = null, $bgupdate = false)
     {
@@ -32,13 +33,31 @@ class Date extends TextInput implements Requestable, ChangeListener
         }
     }
 
+    /**
+    * set range
+    * 
+    * @param mixed $min
+    * @param mixed $max
+    */
+    public function setMinMax($min,$max=null)
+    {
+       $this->min = $min; 
+       $this->max = $max; 
+    }
+    
     public function RenderImpl()
     {
         TextInput::RenderImpl();
 
         // $url = $this->owner->getURLNode() . "::" . $this->id . "&ajax=true";
-
-        $js = "$('#{$this->id}').pickadate(  {    format: 'yyyy-mm-dd' });";
+        if($this->min >0){
+           $min=", min: new Date(". date("Y,m-1,d",$this->min) .")";    
+        }
+        if($this->max >0){
+           $max=", max: new Date(". date("Y,m-1,d",$this->max) .")";    
+        }
+         
+        $js = "$('#{$this->id}').pickadate(  {    format: 'yyyy-mm-dd' {$min} {$max} });";
         if ($this->event != null) {
             $formid = $this->getFormOwner()->id;
 
@@ -46,7 +65,7 @@ class Date extends TextInput implements Requestable, ChangeListener
                 $url = $this->owner->getURLNode() . '::' . $this->id;
                 $url = substr($url, 2 + strpos($url, 'q='));
                 $this->setAttribute("onchange", "javascript:{ $('#" . $formid . "_q').attr('value','" . $url . "');$('#" . $formid . "').submit(); }");
-                $js = "$('#{$this->id}').pickadate( {format: 'yyyy-mm-dd',onSet: function() {  alert(3);
+                $js = "$('#{$this->id}').pickadate( {format: 'yyyy-mm-dd',onSet: function() {   ;
                    $('#" . $formid . "_q').attr('value','" . $url . "');$('#" . $formid . "').submit()
                 } }   );";
             } else {

@@ -39,9 +39,9 @@ class RadioButton extends HtmlFormDataElement implements ChangeListener, Request
      */
     public function RenderImpl()
     {
-
-        if ($this->getValue() != null && $this->getValue() == $this->itemvalue) {
-            $this->setAttribute("checked", "On");
+        $v=  $this->getValue();
+        if ($v !== null && $v == $this->itemvalue) {
+            $this->setAttribute("checked", "checked");
         } else {
             $this->setAttribute("checked", null);
         }

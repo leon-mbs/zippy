@@ -24,7 +24,7 @@ abstract class AbstractList extends HtmlContainer
     {
         HtmlContainer::__construct($id);
         $this->DataSource = $DataSource;
-        $this->pagesize = 100;
+        $this->pagesize = 25;
     }
 
     /**

@@ -29,7 +29,6 @@ class DataView extends AbstractList  implements \Zippy\Interfaces\Requestable
     /**
      * Конструктор
      * @param  mixed  ID  компонента
-     * @param  mixed  ID  строки
      * @param  mixed   Провадер  данных для  таблицы
      */
     public function __construct($id, $DataSource, EventReceiver $receiver, $handler)
