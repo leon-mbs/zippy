@@ -11,22 +11,21 @@ use \Zippy\Event;
 
 /**
  * Класс  отображающий  разбивку  списка  по страницам
- * По умолячанию используется Pagination из TB
+ * По умолячанию используется Pager из TB
  */
-class Paginator extends HtmlComponent implements Requestable
+class Pager extends HtmlComponent implements Requestable
 {
 
     private $datalist;
-    private $maxbuttons = 14;
-    private $firstButton = 1;
     private $ajax;
     protected $event=null;
+    private $prev="Previous",$next="Next";
   
     /**
      * Конструктор
      * @param string ID
      * @param  DataList Объект  использующий  paginator
-     * @param  ajax исппольховать  ajax
+     * @param  ajax исппользовать  ajax
      */
     public function __construct($id, \Zippy\Html\DataList\AbstractList $datalist, $ajax = false)
     {
@@ -56,43 +55,19 @@ class Paginator extends HtmlComponent implements Requestable
         if ($pages == 1)
             return "";
 
-        if ($this->getAttribute('data-maxbtn') > 0) {
-            $this->maxbuttons = $this->getAttribute('data-maxbtn') - 1;
+ 
+        $content = "<ul class=\"pager\">";
+
+
+        if ($currentpage >1) {
+            $content .= "<li  class=\"previous\" ><a   href=\"javascript:void(0);\" onclick=\"" . $this->getUrl($currentpage - 1) . "\">{$this->prev}</a></li>";
+        }  
+        if ($currentpage < $pages ) {
+            $content .= "<li  class=\"next\"><a    href=\"javascript:void(0);\" onclick=\"" . $this->getUrl($currentpage + 1) . "\">{$this->next}</a></li>";
         }
-        $content = "<ul class=\"pagination\">";
+   
 
-
-        if ($currentpage - $this->firstButton > $this->maxbuttons) {
-
-            $this->firstButton = $currentpage - $this->maxbuttons;
-        }
-        if ($currentpage < $this->firstButton) {
-            $this->firstButton = $currentpage - 1;
-        }
-
-        if ($this->firstButton > 1) {
-            $content .= "<Li class=\"page-item\" ><a  class=\"page-link\"   href='void(0);' onclick=\"" . $this->getUrl(1) . "\"><span aria-hidden=\"true\">&laquo;</span></a></li>";
-            $content .= "<Li class=\"page-item\" ><a   class=\"page-link\"   href='void(0);' onclick=\"" . $this->getUrl($currentpage - 1) . "\"><span aria-hidden=\"true\">&lsaquo;</span></a></li>";
-            $content .= "<li class=\"page-item\"  ><a  class=\"page-link\"   href=\"javascript:void(0);\" >&hellip;</a></li>";
-        }
-
-
-
-        for ($i = $this->firstButton; $i <= $this->firstButton + $this->maxbuttons; $i++) {
-            if ($i > $pages)
-                break;
-            if ($currentpage == $i) {
-                $content .= "<li class=\"page-item active\"><a   class=\"page-link\"  href=\"javascript:void(0);\" > {$i} </a></li>";
-            } else {
-                $content .= "<li class=\"page-item\" ><a   class=\"page-link\"  href=\"javascript:void(0);\"  onclick=\"" . $this->getUrl($i) . "\"> {$i} </a></li>";
-            }
-        }
-
-        if ($pages > $this->firstButton + $this->maxbuttons) {
-            $content .= "<li class=\"page-item\" ><a class=\"page-link\" href=\"javascript:void(0);\" >&hellip;</a></li>";
-            $content .= "<li class=\"page-item\" ><a   class=\"page-link\" href='void(0);' onclick=\"" . $this->getUrl($currentpage + 1) . "\"aria-label=\"Next\">       <span aria-hidden=\"true\">&rsaquo;</span></a></li>";
-            $content .= "<li class=\"page-item\" ><a   class=\"page-link\" href='void(0);' onclick=\"" . $this->getUrl($pages) . "\"aria-label=\"Next\">       <span aria-hidden=\"true\">&raquo;</span></a></li>";
-        }
+    
 
         return $content . "</ul>";
     }
@@ -148,15 +123,14 @@ class Paginator extends HtmlComponent implements Requestable
     }
 
     /**
-     * Устанавливает  размер  пагинатора
-     *
-     * @param mixed $maxbuttons
-     */
-    public final function setMaxButtons($maxbuttons)
-    {
-        if ($maxbuttons > 1) {
-            $this->maxbuttons = $maxbuttons - 1;
-        }
+    * Устанавливает нажписи на  кнопках
+    * 
+    * @param mixed $prev
+    * @param mixed $next
+    */
+    public function setLabes($prev,$next){
+        $this->prev = $prev;
+        $this->next = $next;
     }
 
     
