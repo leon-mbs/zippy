@@ -20,6 +20,7 @@ abstract class WebApplication
     private $reloadPage = false;
     private $request;
     private $response;
+    private $routes = array(); 
 
     // public  $doc;
     /**
@@ -128,8 +129,57 @@ abstract class WebApplication
             $this->LoadPage($this->request->request_page, $this->request->request_page_arg);
         }
 
+        if ($this->request->querytype == HttpRequest::QUERY_REST) {
+                
+               $uarr = explode("/",$this->request->uri) ;
+                   foreach($this->routes as $k=>$v){
+                    
+                    
+                    if($uarr[0] ==ltrim($k,'/')){
+                        $pr = "\\". ltrim($v,"\\");
+                       
+                        $classapi = new $v();
+                         $uarr = array_slice($uarr, 1);
+                        if($classapi instanceof \Zippy\RestFull){
+                            $classapi->Execute(count($uarr)>0 ? $uarr[0] : 0);
+                            
+                            die;
+                        }
+                        break;
+                    }
+                }            
+                //$classapi = new \ReflectionClass($uarr[0]);
+                
+                 
+     
+                        
+        }
         if ($this->request->querytype == HttpRequest::QUERY_SEF) {
-            $this->Route($this->request->uri);
+            $this->currentpage = null;
+            
+            $uri = ltrim($this->request->uri,'/');
+            $uarr = explode("/",$uri) ;
+            
+             
+                foreach($this->routes as $k=>$v){
+                    
+                    
+                    if($uarr[0] ==ltrim($k,'/')){
+                        $pr = "\\". ltrim($v,"\\");
+                        $uarr = array_slice($uarr, 1);
+                        $this->LoadPage($pr, $uarr);
+       
+                        break;
+                    }
+                }
+           
+           
+            
+            if($this->currentpage == null){
+                $this->Route($this->request->uri);    
+            }
+             
+            
         }
 
         if ($this->request->querytype == HttpRequest::QUERY_EVENT) {
@@ -465,4 +515,23 @@ abstract class WebApplication
         self::$app->getResponse()->toIndexPage();
     }
 
+    /**
+    * Добавляет записи для роутера в  виде массива
+    * ключ - URI, значение  текстовое представлеие  класса  страницы
+    * значения следующие через прямой слэш - параметры котрые пережаются в конструктор страницы
+    * И соответственно  должны  ьыть там  обьявлены
+    * Например
+    * add Route(array('user'=>"\\App\\User")):
+    * 
+    * при запросе /user/2 будет созднала страница new \App\User(2);
+    * 
+    * @param mixed $r   массив пар  для роутинга
+    */
+    public function addRoute(  $r)  {
+          if(is_array($r)){
+             $this->routes = array_merge_recursive($this->routes,$r);         
+          }
+     
+    }
+    
 }

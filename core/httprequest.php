@@ -12,6 +12,7 @@ class HttpRequest
     const QUERY_EVENT = 1;
     const QUERY_PAGE = 2;
     const QUERY_SEF = 3;
+    const QUERY_REST = 4;
 
     private $request;
     public $request_c;
@@ -30,6 +31,7 @@ class HttpRequest
     public function __construct()
     {
         $uri = $_SERVER["REQUEST_URI"];
+   
         $uri_ = WebApplication::$app->beforeRequest($uri);
         if (is_array($uri_)) {
             $this->prefix = $uri_[0];
@@ -82,8 +84,19 @@ class HttpRequest
         // URI формируемый  BookmarkableLink (в частности, ЧПУ) 
 
         if (strlen($uri) > 1 && strpos($uri, '/?') === false && strpos($uri, '/index.php') === false) {
-            $this->querytype = self::QUERY_SEF;
-            $this->uri = ltrim($uri, '/');
+            if (preg_match('/^[-#a-zA-Z0-9\/_]+$/', $uri)) {
+                $this->querytype = self::QUERY_SEF;
+                $this->uri = ltrim($uri, '/');
+            }  
+        }
+        $uri =ltrim($uri, '/') ;
+        if (strpos( $uri ,"api/") ===0) {
+            $this->querytype = self::QUERY_REST;
+            $this->uri = substr($uri,4);
+            $p = strpos( $this->uri ,"?")  ;
+            if($p>0){
+               $this->uri = substr($this->uri,0,$p) ;//remove parameters
+            }
         }
     }
 
