@@ -3,9 +3,9 @@
 namespace Zippy;
 
 /**
-* Base class for RESTFull   
+* Base class for RESTFul    
 */
-abstract class RestFull {
+abstract class RestFul {
    
    public function Execute($id){
        

@@ -140,7 +140,7 @@ abstract class WebApplication
                        
                         $classapi = new $v();
                          $uarr = array_slice($uarr, 1);
-                        if($classapi instanceof \Zippy\RestFull){
+                        if($classapi instanceof \Zippy\RestFul){
                             $classapi->Execute(count($uarr)>0 ? $uarr[0] : 0);
                             
                             die;
