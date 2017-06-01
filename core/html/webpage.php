@@ -13,7 +13,7 @@ use \Zippy\Interfaces\EventReceiver;
 abstract class WebPage extends HtmlContainer implements EventReceiver
 {
 
-    public $layout = '';
+
     public $args = '';
     public $_title = '';
     public $_description = '';
