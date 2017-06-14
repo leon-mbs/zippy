@@ -226,13 +226,9 @@ class HttpResponse
      */
     public function to404Page()
     {
-        if ($this->page404 == null) {
-            header("HTTP/1.0 404 Not Found");
-            header("HTTP/1.1 404 Not Found");
-            header("Status: 404 Not Found");
-        } else {
-            header("Location: /" . ltrim($this->page404, '/'));
-        };
+        
+            http_response_code(404);  
+     
         die;
     }
 

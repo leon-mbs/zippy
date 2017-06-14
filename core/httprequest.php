@@ -12,7 +12,7 @@ class HttpRequest
     const QUERY_EVENT = 1;
     const QUERY_PAGE = 2;
     const QUERY_SEF = 3;
-    const QUERY_REST = 4;
+ 
 
     private $request;
     public $request_c;
@@ -90,14 +90,7 @@ class HttpRequest
             }  
         }
         $uri =ltrim($uri, '/') ;
-        if (strpos( $uri ,"api/") ===0) {
-            $this->querytype = self::QUERY_REST;
-            $this->uri = substr($uri,4);
-            $p = strpos( $this->uri ,"?")  ;
-            if($p>0){
-               $this->uri = substr($this->uri,0,$p) ;//remove parameters
-            }
-        }
+       
     }
 
     /**

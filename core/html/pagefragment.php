@@ -16,7 +16,7 @@ use \Zippy\WebApplication;
 abstract class PageFragment extends HtmlContainer implements EventReceiver
 {
 
-    public $layout = '';
+  
 
     /**
      * @see  HtmlComponent

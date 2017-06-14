@@ -11,7 +11,7 @@ use \Zippy\Html\HtmlContainer;
  * getTemplate().
  *
  */
-abstract class WebApplication
+class WebApplication
 {
 
     private $currentpage = null;
@@ -21,7 +21,8 @@ abstract class WebApplication
     private $request;
     private $response;
     private $routes = array(); 
-
+    private $templates = array(); 
+   
     // public  $doc;
     /**
      * Конструктор
@@ -59,7 +60,22 @@ abstract class WebApplication
      * @param  string Имя  класса  страницы
      * @param string  имя  вида страницы если  несколько
      */
-    public abstract function getTemplate($name);
+    public   function getTemplate($name)
+    {
+          foreach($this->templates as $handler){
+             if($handler instanceof \Closure){
+                 $template = $handler($name);
+             }
+             if(is_string($handler)){
+                 $template = $handler($name);
+             }                             
+             
+              
+              if(strlen($template) >0){
+                  return $template;
+              }
+          }
+    }
 
     /**
      * Возвращает  объект  текущей  страницы
@@ -129,55 +145,11 @@ abstract class WebApplication
             $this->LoadPage($this->request->request_page, $this->request->request_page_arg);
         }
 
-        if ($this->request->querytype == HttpRequest::QUERY_REST) {
-                
-               $uarr = explode("/",$this->request->uri) ;
-                   foreach($this->routes as $k=>$v){
-                    
-                    
-                    if($uarr[0] ==ltrim($k,'/')){
-                        $pr = "\\". ltrim($v,"\\");
-                       
-                        $classapi = new $v();
-                         $uarr = array_slice($uarr, 1);
-                        if($classapi instanceof \Zippy\RestFul){
-                            $classapi->Execute(count($uarr)>0 ? $uarr[0] : 0);
-                            
-                            die;
-                        }
-                        break;
-                    }
-                }            
-                //$classapi = new \ReflectionClass($uarr[0]);
-                
-                 
-     
-                        
-        }
         if ($this->request->querytype == HttpRequest::QUERY_SEF) {
             $this->currentpage = null;
-            
-            $uri = ltrim($this->request->uri,'/');
-            $uarr = explode("/",$uri) ;
-            
-             
-                foreach($this->routes as $k=>$v){
-                    
-                    
-                    if($uarr[0] ==ltrim($k,'/')){
-                        $pr = "\\". ltrim($v,"\\");
-                        $uarr = array_slice($uarr, 1);
-                        $this->LoadPage($pr, $uarr);
-       
-                        break;
-                    }
-                }
-           
-           
-            
-            if($this->currentpage == null){
-                $this->Route($this->request->uri);    
-            }
+ 
+            $this->Route($this->request->uri);    
+   
              
             
         }
@@ -274,11 +246,11 @@ abstract class WebApplication
 
 
         //загружаем  соответсвующий  шаблон
-        $template = $this->getTemplate(get_class($renderpage), $renderpage->layout);
+        $template = $this->getTemplate(get_class($renderpage));
 
 
 
-
+        
 
         $doc = \phpQuery::newDocumentHTML($template);
 
@@ -286,7 +258,7 @@ abstract class WebApplication
         // если  страница  не  базовая   а  дочерняя
         if ($basepage !== "Zippy\\Html\\WebPage") {
 
-            $basetemplate = WebApplication::getApplication()->getTemplate($basepage, $renderpage->layout);
+            $basetemplate = WebApplication::getApplication()->getTemplate($basepage);
             // if(count($renderpage->_tvars) >0){
             //    $m = new \Mustache_Engine();
             //   $basetemplate= $m->render($basetemplate, $renderpage->_tvars);
@@ -388,7 +360,18 @@ abstract class WebApplication
      */
     protected function Route($uri)
     {
-        
+         foreach($this->routes as $handler){
+             if($handler instanceof \Closure){
+                 $res = $handler($uri);
+             }
+             if(is_string($handler)){
+                 $res = $handler($uri);
+             }                
+              if($this->currentpage instanceof \Zippy\Html\WebPage){
+                  break;
+              } 
+               
+          }      
     }
 
     /**
@@ -431,15 +414,7 @@ abstract class WebApplication
         return $_SESSION['zippy_pagemanager'];
     }
 
-    /**
-     * Устанавливает  адрес  страницы 404
-     *
-     * @param mixed $url
-     */
-    public function set404($url)
-    {
-        $this->getResponse()->page404 = $url;
-    }
+    
 
     /**
      * возвращает имя класса предыдущей страницы
@@ -515,23 +490,43 @@ abstract class WebApplication
         self::$app->getResponse()->toIndexPage();
     }
 
-    /**
-    * Добавляет записи для роутера в  виде массива
-    * ключ - URI, значение  текстовое представлеие  класса  страницы
-    * значения следующие через прямой слэш - параметры котрые пережаются в конструктор страницы
-    * И соответственно  должны  ьыть там  обьявлены
-    * Например
-    * add Route(array('user'=>"\\App\\User")):
+       /**
+    *  устанавливает   функцию ( в виде  строкового имени или замыкания) роутнга.
+    * Функция  должна  загрузить страницу по имени  класса  функцией
+    * \Zippy\WebApplication::$app->LoadPage($pagename,...)  
+    * Если  есть аргументы  они следуют  за  именем  класса страницы  и будут переданы  в   конструктор класса  страницы
     * 
-    * при запросе /user/2 будет созднала страница new \App\User(2);
     * 
-    * @param mixed $r   массив пар  для роутинга
+    * Обработчик также  может самостоятельно  обработть HTTP запрос и вернуть HTTP ответ
+    * прекративши выполнение  приложения (die())
+    * Можно  установтить несколько  функций обработчиков
+    * 
+    * @param mixed $handler
     */
-    public function addRoute(  $r)  {
-          if(is_array($r)){
-             $this->routes = array_merge_recursive($this->routes,$r);         
-          }
-     
+    public function setRoute( $handler)  {
+           if($handler instanceof \Closure){
+          
+        //  $handler = new \Opis\Closure\SerializableClosure($handler) ;
+            
+            } 
+           $this->routes[] = $handler; 
     }
     
-}
+    /**
+    *  устанавливает   функцию (в виде  строкового имени или замыкания) возвращающую содержимое файла темплейта  по  
+    * имени  класса  страницы
+    * Можно  установтить несколько  функций обработчиков
+    *  
+    * @param mixed $handler
+    */
+    public function setTemplate($handler)
+    {
+         if($handler instanceof \Closure){
+          
+        //  $handler = new \Opis\Closure\SerializableClosure($handler) ;
+         }
+         $this->templates[] = $handler; 
+         
+        
+    }
+ }

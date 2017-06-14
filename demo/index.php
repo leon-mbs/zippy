@@ -18,11 +18,16 @@ function autoload($className)
 
 spl_autoload_register('autoload');
 
-class Application extends \Zippy\WebApplication
-{
+ 
 
-    public function getTemplate($name)
-    {
+session_start();
+
+try {
+
+    $app = new \Zippy\WebApplication('Pages\Main');
+  
+    $app->setTemplate(function($classname){
+       
         //загрузка  шаблонов  для  страниц
         $path = _ROOT . "templates/" . strtolower(str_replace("Pages\\", "", $name)) . ".html";
 
@@ -33,14 +38,7 @@ class Application extends \Zippy\WebApplication
 
         return $template;
     }
-
-}
-
-session_start();
-
-try {
-
-    $app = new Application('Pages\Main');
+     }) ;
 
     $app->Run();
 } catch (\Zippy\Exception $e) {

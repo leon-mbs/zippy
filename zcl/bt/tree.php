@@ -286,8 +286,8 @@ class TreeNode
             $js .="
             ,href: \"{$this->link}\"";
         }
-      if (strlen($this->tag) > 0) {
-            $js .=",tags: ['{$this->tag}'] ";
+      if (strlen($this->tags) > 0) {
+            $js .=",tags: ['{$this->tags}'] ";
         }
         if ($this->isselected != null) {
             $js .="
