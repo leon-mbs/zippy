@@ -8,6 +8,13 @@
    "minimum-stability" : "dev",
    "prefer-stable" : true,
     "type": "library",
+     "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/leon-mbs/zdb"
+        }
+
+    ],
     "require": {
          "php": ">=5.4.0",
          "mustache/mustache": "~2.10",
