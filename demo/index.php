@@ -29,7 +29,7 @@ try {
     $app->setTemplate(function($classname){
        
         //загрузка  шаблонов  для  страниц
-        $path = _ROOT . "templates/" . strtolower(str_replace("Pages\\", "", $name)) . ".html";
+        $path = _ROOT . "templates/" . strtolower(str_replace("Pages\\", "", $classname)) . ".html";
 
         $template = file_get_contents($path);
         if ($template == false) {
@@ -37,8 +37,8 @@ try {
         }
 
         return $template;
-    }
-     }) ;
+    });
+ 
 
     $app->Run();
 } catch (\Zippy\Exception $e) {
