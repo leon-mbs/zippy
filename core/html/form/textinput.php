@@ -2,17 +2,16 @@
 
 namespace Zippy\Html\Form;
 
-use \Zippy\Validator\Validator;
-use \Zippy\Interfaces\Validated;
+ 
 use \Zippy\Interfaces\AjaxRender;
 
 /**
  * Компонент  тэга  &lt;input type=&quot;text&quot;&gt;
  */
-class TextInput extends HtmlFormDataElement implements Validated, AjaxRender
+class TextInput extends HtmlFormDataElement implements   AjaxRender
 {
 
-    protected $validators = array();
+ 
 
     /**
      * Конструктор
@@ -66,18 +65,10 @@ class TextInput extends HtmlFormDataElement implements Validated, AjaxRender
     {
 
         $this->setValue($_REQUEST[$this->id]);
-        foreach ($this->validators as $validator) {
-            $validator->validate($this, $this->getValue());
-        }
+        
     }
 
-    /**
-     * @see Validated
-     */
-    public function addValidator(Validator $validator)
-    {
-        $this->validator[] = $validator;
-    }
+  
 
     /**
      * @see AjaxRender

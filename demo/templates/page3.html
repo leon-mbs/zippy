@@ -1,0 +1,43 @@
+<html >  
+ 
+
+    <body >
+     <div class="row">
+ 
+     <div class="col-xs-12 col-md-4">
+        <div zippy="listpanel">
+        <h4>Пример  CRUD</h4>
+         <table class="table ">
+         <tr><th>ФИО</th><th>Возраст</th><th> </th></tr>
+         <tr zippy="list"><td><span zippy="fio"></span></td>
+         <td><span zippy="age"></span></td>
+         <td><a  zippy="edit"><i class="fa fa-edit"></i></a> </td>
+         </tr>
+         </table>
+        </div> 
+        <div zippy="editpanel">
+        <h4>Редактирование</h4>
+         <form zippy="editform">
+         <input type="hidden" zippy="itemid">
+         <div class="form-group">
+            <div class="form-group">
+                <label for="efio" class="  control-label">ФИО</label>
+                <input class="form-control" type="text" zippy="efio" required="required">
+            </div>
+           <div class="form-group">
+                <label for="eage" class="  control-label">Возраст</label>
+                <input class="form-control" type="text" zippy="eage" required="required">
+            </div>
+            <div class="form-group">
+            <button class="btn btn-primary btn-sm" type="submit">Ввод</button> 
+            &nbsp;<a  class="btn btn-default btn-sm"  zippy="cancel">Отмена</a>
+            </div>
+         </div>
+         
+         </form>
+        </div> 
+     </div>   
+     </div>   
+        
+    </body>
+</html>                 

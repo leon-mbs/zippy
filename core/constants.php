@@ -5,11 +5,7 @@
         const ERROR_MARKUP_OUTHERELEMENT = "Element %s outside the container";
         const ERROR_MARKUP_NOTUNIQUEID = "HTML tag has not unique  ID %s";
         const ERROR_MARKUP_NOTFOUND = "HTML tag for '%s' not found";
-
-        const ERROR_VALIDATE_EMAIL = "Invalid email";
-        const ERROR_VALIDATE_NUMERIC = "Not numeric value";
-        const ERROR_VALIDATE_REQUIRED = "Value is required";
-
+ 
         const ERROR_DATAROW_COMPONENT_EXISTS = "Component '%s' already exists  in '%s'";
         const ERROR_INVALID_ID = "Invalid ID   ('%s') ";
         const ERROR_INVALID_CREATE_ID = "No  ID for the  component ('%s')";

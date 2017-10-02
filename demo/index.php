@@ -3,33 +3,36 @@
 define("_ROOT", __DIR__ . '/');
 
 require_once _ROOT . 'vendor/autoload.php';
+ 
 
 
 //загрузка классов  страниц и  других  пользовательских  классов
 function autoload($className)
 {
-    $className = ltrim($className, '\\');
+    $className = str_replace("\\", "/", ltrim($className, '\\'));
 
-    if (strpos($className, 'Pages\\') === 0) {
-        $path = _ROOT . "pages/" . strtolower(str_replace("Pages\\", "", $className)) . ".php";
+    if (strpos($className, 'Pages/') === 0) {
+        $path = _ROOT . "pages/" . strtolower(str_replace("Pages/", "", $className)) . ".php";
+
         require_once($path);
     }
 }
 
 spl_autoload_register('autoload');
 
- 
-
 session_start();
 
-try {
-
-    $app = new \Zippy\WebApplication('Pages\Main');
+class Application extends \Zippy\WebApplication
+{
   
-    $app->setTemplate(function($classname){
-       
+    public function getTemplate($name)
+    {
         //загрузка  шаблонов  для  страниц
-        $path = _ROOT . "templates/" . strtolower(str_replace("Pages\\", "", $name)) . ".html";
+     
+        $name = str_replace("Pages\\", "", ltrim($name, '\\'));
+
+        $path = _ROOT ."templates/" .  strtolower($name) . ".html";
+ 
 
         $template = file_get_contents($path);
         if ($template == false) {
@@ -38,9 +41,34 @@ try {
 
         return $template;
     }
-     }) ;
+
+
+    public function Route($uri){
+         if($uri == '')  $uri = 'page1';
+         
+         $uria= explode("/",$uri);
+         
+         if($uria[0]=='page1'){
+            $this->LoadPage("\\Pages\\Page1");
+         }
+         else if ($uria[0]=='page2'){    
+            $this->LoadPage("\\Pages\\Page2",$uria[1]); //страница с параметром
+         }
+         else {
+            $this->getResponse()->to404Page() ;   
+         }
+    }
+
+}
+
+
+
+try {
+
+    $app = new Application('Pages\Main');
 
     $app->Run();
+
 } catch (\Zippy\Exception $e) {
     echo $e->getMessage();
 } catch (Exception $e) {

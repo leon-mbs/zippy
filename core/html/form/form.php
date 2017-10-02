@@ -67,7 +67,11 @@ class Form extends HtmlContainer
                     }
                 }
             }
-            $this->onEvent();
+            $clist =  explode("::",$_REQUEST["q"]);
+            if($clist[count($clist)-1]== $this->id)   {
+                $this->onEvent();    
+            }
+            
         }
         parent::RequestHandle();
     }
