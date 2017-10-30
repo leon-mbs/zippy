@@ -107,14 +107,7 @@ abstract class TreeEntity extends Entity
         }
     }
 
-    /*
-      public function copyTo($pid)
-      {
-
-      $class = get_called_class();
-      $meta = $class::getMetadata();
-      }
-     */
+    
 
     public function getParent()
     {
@@ -122,8 +115,8 @@ abstract class TreeEntity extends Entity
         $class = get_called_class();
         $meta = $class::getMetadata();
 
-        return;
-        //$class::load($this->{$meta['parentfield']});
+         
+        return  $class::load($this->{$meta['parentfield']});
     }
 
     /**
@@ -194,6 +187,25 @@ abstract class TreeEntity extends Entity
         $conn->Execute("UPDATE {$meta['table']} set  {$meta['pathfield']} ='" . $this->{$meta['pathfield']} . "' where  {$meta['keyfield']} = " . $this->{$meta['keyfield']});
     }
 
+    
+    /**
+    * Возвращает  цепочку  родителей  до  корня
+    * 
+    */
+    public  function getParents(){
+         $class = get_called_class();
+         $meta = $class::getMetadata(); 
+         $path = $this->{$meta['pathfield']};
+         $ap = str_split($path,8);
+         array_pop($ap);
+         if(count($ap)==0){
+             return array();
+         }
+         $ids = implode(",",$ap) ;
+         $where = $meta["keyfield"] . " in (".$ids.")";    
+         return self::find($where,$meta["keyfield"] . " desc");
+         
+    }
 }
 
 ?>

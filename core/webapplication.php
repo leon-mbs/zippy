@@ -30,6 +30,8 @@ class WebApplication
      */
     function __construct($homepage = null)
     {
+        
+          
         $this->homepage = $homepage;
 
         self::$app = $this;
@@ -136,6 +138,10 @@ class WebApplication
             throw new \Zippy\Exception(ERROR_NOT_FOUND_HOMEPAGE);
         }
 
+        if ($this->request->querytype == HttpRequest::QUERY_INVALID) {
+            $this->Redirect404();
+            return;
+        }
         if ($this->request->querytype == HttpRequest::QUERY_HOME) {
             $this->LoadPage($this->homepage);
         }

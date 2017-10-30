@@ -4,6 +4,7 @@ namespace Zippy\Html;
 
 use \Zippy\WebApplication;
 use \Zippy\Interfaces\EventReceiver;
+use \Zippy\Interfaces\AjaxRender;
 
 /**
  *  Базовый  класс  для  компонентов-страниц

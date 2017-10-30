@@ -12,6 +12,7 @@ class HttpRequest
     const QUERY_EVENT = 1;
     const QUERY_PAGE = 2;
     const QUERY_SEF = 3;
+    const QUERY_INVALID = 4;
  
 
     private $request;
@@ -21,7 +22,7 @@ class HttpRequest
     public $request_page_arg = array();
     public $uri;
     private $prefix = "";
-    public $querytype = self::QUERY_HOME;
+    public $querytype = self::QUERY_INVALID;
     private $pageindex = 0;
 
     /**
@@ -31,12 +32,12 @@ class HttpRequest
     public function __construct()
     {
         $uri = $_SERVER["REQUEST_URI"];
-   
+        /*
         $uri_ = WebApplication::$app->beforeRequest($uri);
         if (is_array($uri_)) {
             $this->prefix = $uri_[0];
             $uri = $uri_[1];
-        }
+        } */
 
         // основной  тип URI генерируемый  компонентами  фреймворка
         if (isset($_REQUEST["q"])) {
@@ -89,8 +90,15 @@ class HttpRequest
                 $this->uri = ltrim($uri, '/');
             }  
         }
+        if(strpos($uri,'index.php')>0)
+        {
+           $this->querytype = self::QUERY_HOME;   
+        }
         $uri =ltrim($uri, '/') ;
-       
+        if($uri ==""){
+           $this->querytype = self::QUERY_HOME;   
+        }
+        
     }
 
     /**

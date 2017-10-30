@@ -85,4 +85,8 @@ class RadioList extends HtmlFormDataElement
         $this->selectedvalue = isset($_REQUEST[$this->id]) ? $_REQUEST[$this->id] : -1;
     }
 
+     public function clean(){
+        $this->setValue(0);
+     }    
+    
 }

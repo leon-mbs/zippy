@@ -140,7 +140,7 @@ class DataTable extends AbstractList implements Requestable
                 if ($this->useajax) {
                     $onclick = "getUpdate('{$url}&ajax=true');event.returnValue=false; return false;";
                 }
-                $row .= ( "<th   {$css} style=\"cursor:pointer;\" onclick=\"{$onclick}\" ><span>{$column->title}</span> <span class=\"{$sort}\"></span></th>");
+                $row .= ( "<th   {$css} style=\"white-space: nowrap;cursor:pointer;\" onclick=\"{$onclick}\" ><span>{$column->title}</span> <i class=\"{$sort}\"></i></th>");
             } else {
 
                 $row .= ( "<th   {$css} ><span>{$column->title}</span></th>");
@@ -239,8 +239,8 @@ class DataTable extends AbstractList implements Requestable
         }
 
         if ($this->firstButton > 1) {
-            $content .= "<Li><a   href='void(0);' onclick=\"" . $this->getPaginatorLink(1) . "\"><span aria-hidden=\"true\">&laquo;</span></a></li>";
-            $content .= "<Li><a   href='void(0);' onclick=\"" . $this->getPaginatorLink($currentpage - 1) . "\"><span aria-hidden=\"true\">&lsaquo;</span></a></li>";
+            $content .= "<li><a   href='void(0);' onclick=\"" . $this->getPaginatorLink(1) . "\"><span aria-hidden=\"true\">&laquo;</span></a></li>";
+            $content .= "<li><a   href='void(0);' onclick=\"" . $this->getPaginatorLink($currentpage - 1) . "\"><span aria-hidden=\"true\">&lsaquo;</span></a></li>";
             $content .= "<li ><a  href=\"javascript:void(0);\" >&hellip;</a></li>";
         }
 
@@ -261,7 +261,14 @@ class DataTable extends AbstractList implements Requestable
             $content .= "<li><a href='void(0);' onclick=\"" . $this->getPaginatorLink($currentpage + 1) . "\"aria-label=\"Next\">       <span aria-hidden=\"true\">&rsaquo;</span></a></li>";
             $content .= "<li><a href='void(0);' onclick=\"" . $this->getPaginatorLink($pages) . "\"aria-label=\"Next\">       <span aria-hidden=\"true\">&raquo;</span></a></li>";
         }
-        return "<tr ><td class=\"footercell\" align=\"center\" colspan=\"" . count($this->columns) . "\" >{$content}</ul></td></tr>";
+        
+        $countall = $this->getAllRowsCount();
+        $show =  $currentpage * $this->pagesize;
+        if($pages ==$currentpage) $show = $countall;
+        if($countall <= $this->pagesize) $show = $countall;
+        
+        $content = "<table  ><tr><td valign='middle'>{$show} ".MSG_DATATABLE_RECORDS." из {$countall} &nbsp;&nbsp;&nbsp;&nbsp;</td><td align='right'> {$content}</td></tr></table>";
+        return "<tr ><td class=\"footercell\"  colspan=\"" . count($this->columns) . "\" >{$content}</ul></td></tr>";
     }
 
     /**

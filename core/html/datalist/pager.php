@@ -68,8 +68,15 @@ class Pager extends HtmlComponent implements Requestable
    
 
     
-
-        return $content . "</ul>";
+        $content = $content . "</ul>";
+        $countall = $this->datalist->getAllRowsCount();
+        $show =  $currentpage *  $this->datalist->getPageSize();
+        if($pages ==$currentpage) $show = $countall;
+        if($countall <=  $this->datalist->getPageSize()) $show = $countall;
+        
+        $content = "<table  ><tr><td valign='middle'>{$show} ".MSG_DATATABLE_RECORDS." из {$countall} &nbsp;&nbsp;&nbsp;&nbsp;</td><td align='right'> {$content}</td></tr></table>";
+        
+        return $content  ;
     }
 
     /**

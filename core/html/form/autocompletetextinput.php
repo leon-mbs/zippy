@@ -154,9 +154,7 @@ class AutocompleteTextInput extends TextInput implements Requestable
     {
         $this->setValue($_REQUEST[$this->id]);
         $this->key = $_REQUEST[$this->id . "_id"];
-        foreach ($this->validators as $validator) {
-            $validator->validate($this, $this->getValue());
-        }
+ 
         if (strlen(trim($this->getValue())) == 0)
             $this->key = 0;
     }
@@ -192,4 +190,7 @@ class AutocompleteTextInput extends TextInput implements Requestable
         }
     }
 
+     public function clean(){
+        $this->setKey(0); 
+     }
 }

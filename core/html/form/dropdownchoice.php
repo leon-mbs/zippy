@@ -200,5 +200,7 @@ class DropDownChoice extends HtmlFormDataElement implements ChangeListener, Requ
         $list = $this->optionlist instanceOf Binding ? $this->optionlist->getValue() : $this->optionlist;
         return $list[$this->getValue()];
     }
-
+     public function clean(){
+        $this->setValue(0);
+     }
 }

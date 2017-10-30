@@ -73,5 +73,7 @@ class MultipleChoice extends HtmlFormDataElement
     {
         return $list = $this->optionlist instanceOf Binding ? $this->optionlist->getValue() : $this->optionlist;
     }
-
+     public function clean(){
+        $this->setValue(array()); 
+     }
 }

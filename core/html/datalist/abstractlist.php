@@ -13,6 +13,7 @@ abstract class AbstractList extends HtmlContainer
     protected $pagesize = PHP_INT_MAX, $currentpage = 1;
     public $DataSource;
     protected $pagerowscount = 0;
+    protected $rowscount = -1;
     protected $sortf = null, $sortd = 'asc';
 
     /**
@@ -32,7 +33,11 @@ abstract class AbstractList extends HtmlContainer
      */
     public function getAllRowsCount()
     {
-        return $this->DataSource->getItemCount();
+        
+        if($this->rowscount == -1){
+           $this->rowscount = $this->DataSource->getItemCount() ;    
+        }        
+        return $this->rowscount;
     }
 
     /**
@@ -94,9 +99,9 @@ abstract class AbstractList extends HtmlContainer
      */
     public final function getPageCount()
     {
-        //$rowcount = $this->getAllRowsCount();
-        $countall = $this->getAllRowsCount();
-        return ceil($countall / $this->pagesize);
+   
+        $rowcount = $this->getAllRowsCount();
+        return ceil($rowcount / $this->pagesize);
     }
 
     /**
@@ -104,8 +109,10 @@ abstract class AbstractList extends HtmlContainer
      */
     public function Reload($resetpage = true)
     {
+        
         if ($resetpage) {
             $this->setCurrentPage(1);
+            $this->rowscount = -1 ;
         }
     }
 

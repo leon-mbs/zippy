@@ -51,4 +51,9 @@ class File extends HtmlFormDataElement
       copy($path,$tmp);
       $this->setValue($files);
       } */
+      
+      
+     public function clean(){
+        
+     }  
 }

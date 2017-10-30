@@ -100,4 +100,7 @@ class RadioButton extends HtmlFormDataElement implements ChangeListener, Request
         }
     }
 
+     public function clean(){
+        $this->setValue(-1);
+     }    
 }

@@ -67,7 +67,11 @@ class Form extends HtmlContainer
                     }
                 }
             }
-            $this->onEvent();
+            $clist =  explode("::",$_REQUEST["q"]);
+            if($clist[count($clist)-1]== $this->id)   {
+                $this->onEvent();    
+            }
+            
         }
         parent::RequestHandle();
     }
@@ -112,22 +116,12 @@ class Form extends HtmlContainer
     {
         $allchild = $this->getChildComponents(true);
         foreach ($allchild as $component) {
-            if ($component instanceof TextInput) {
-                $component->setText('');
+            
+            if($component instanceof SubmitDataRequest) {
+               $component->clean();
             }
-
-            //   if ($component instanceof TextArea) {
-            //        $component->setText('');
-            //    }
-            if ($component instanceof CheckBox) {
-                $component->setChecked(false);
-            }
-            if ($component instanceof DropDownChoice) {
-                $component->setValue(0);
-            }
-            if ($component instanceof AutocompleteTextInput) {
-                $component->setKey(0);
-            }
+         
+ 
         }
     }
 

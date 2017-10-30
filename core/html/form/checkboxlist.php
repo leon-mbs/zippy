@@ -128,12 +128,8 @@ class CheckBoxList extends HtmlFormDataElement
         return $ids;
     }
 
-    /**
-     * Очистка  массива
-     */
-    public function Clear()
-    {
-        $this->list = array();
-    }
-
+   
+     public function clean(){
+        $this->setAllChecked(false);
+     }
 }

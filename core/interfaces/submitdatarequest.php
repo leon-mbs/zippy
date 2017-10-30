@@ -13,6 +13,10 @@ interface SubmitDataRequest
      * Получить данные  с  HTTP запроса
      */
     public function getRequestData();
+    /**
+    * Очистить элемент от  данных
+    */
+    public function clean();
 }
 
 ?>

@@ -41,7 +41,6 @@ class Tree extends HtmlComponent  implements \Zippy\Interfaces\Requestable
     public function RenderImpl()
     {
         $url = $this->owner->getURLNode() . "::" . $this->id . "&ajax=true";
-       
 
 
         $js = " 
