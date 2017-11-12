@@ -11,7 +11,7 @@ abstract class AbstractList extends HtmlContainer
 {
 
     protected $pagesize = PHP_INT_MAX, $currentpage = 1;
-    public $DataSource;
+    protected $DataSource;
     protected $pagerowscount = 0;
     protected $rowscount = -1;
     protected $sortf = null, $sortd = 'asc';
@@ -124,6 +124,12 @@ abstract class AbstractList extends HtmlContainer
     {
         return $this->DataSource;
     }
+    
+    public function setDataSource($ds)
+    {
+          $this->DataSource = $ds;
+    }
+
 
     /**
      * Возвращает  данные  текущей страницы

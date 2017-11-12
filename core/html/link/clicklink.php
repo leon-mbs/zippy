@@ -28,7 +28,7 @@ class ClickLink extends AbstractLink implements ClickListener, Requestable
     {
         parent::__construct($id);
 
-        if (is_object($receiver) && strlen($handler) > 0) {
+        if (is_object($receiver) && $handler != null) {
             $this->onClick($receiver, $handler, $ajax);
         }
     }

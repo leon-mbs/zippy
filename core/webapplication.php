@@ -535,4 +535,14 @@ class WebApplication
          
         
     }
+    
+     /**
+     * Вставляет  JavaScript  в  конец   выходного  потока
+     * @param string  Код  скрипта
+     * @param  boolean Если  true  - вставка  после  загрузки  документа в  браузер
+     */
+    public static function addJavaScript($js, $docready = false)
+    {
+        return self::$app->getResponse()->addJavaScript($js,$docready);
+    }
  }

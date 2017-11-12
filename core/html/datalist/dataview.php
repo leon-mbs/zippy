@@ -55,9 +55,9 @@ class DataView extends AbstractList  implements \Zippy\Interfaces\Requestable
             $this->add($datarow);
             $this->rowevent->onEvent($datarow); //вызов  обработчика добавляющего  данные  или   елементы  в  строку
             $datarow->updateChildId();
-            if ($item->getID() == $this->selectedRow && $this->selectedclass != "") {
+            if ($datarow->getAllNumber() == $this->selectedRow && $this->selectedclass != "") {
                 $datarow->setAttribute('class', $this->selectedclass);
-            }
+        }
         if ($this->cellclickevent instanceof \Zippy\Event) {
             $url = $this->getURLNode() .  ':' . $item->getID();
             $onclick = "window.location='{$url}'";  
@@ -140,11 +140,11 @@ class DataView extends AbstractList  implements \Zippy\Interfaces\Requestable
      * Строка выделяется  добавлением CSS класса  заданного
      * методом setSelectedClass
      *
-     * @param mixed $id   ID  выделяемой строки
+     * @param mixed  Выделяемая строки
      */
-    public function setSelectedRow($id)
+    public function setSelectedRow(DataRow $row)
     {
-        $this->selectedRow = $id;
+        $this->selectedRow = $row->getAllNumber();
     }
 
     /**

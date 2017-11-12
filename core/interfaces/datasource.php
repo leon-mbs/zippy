@@ -29,5 +29,5 @@ interface DataSource
      * @param  mixed  Уникальный  ключ
      * @return DataItem
      */
-    public function getItem($id);
+    //public function getItem($id);
 }
