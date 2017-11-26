@@ -76,7 +76,7 @@ class CheckBox extends HtmlFormDataElement implements ChangeListener, Requestabl
     /**
      * @see  ChangeListener
      */
-    public function onChange(EventReceiver $receiver, $handler, $ajax = true)
+    public function onChange(EventReceiver $receiver, $handler, $ajax = false)
     {
 
         $this->event = new Event($receiver, $handler);

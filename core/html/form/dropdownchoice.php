@@ -200,7 +200,19 @@ class DropDownChoice extends HtmlFormDataElement implements ChangeListener, Requ
         $list = $this->optionlist instanceOf Binding ? $this->optionlist->getValue() : $this->optionlist;
         return $list[$this->getValue()];
     }
-     public function clean(){
+ 
+    public function clean(){
         $this->setValue(0);
      }
+    
+    /**
+    * Иициализирует комбобокс  первым значением из списка
+    *  
+    */
+    public function selectFirst(){
+      $list = $this->optionlist instanceOf Binding ? $this->optionlist->getValue() : $this->optionlist;
+      if( count($list) ==0) return;
+      $k = array_keys($list);  
+      $this->setValue($k[0]);
+    } 
 }
