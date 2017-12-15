@@ -103,7 +103,7 @@ class DateTimePicker extends \Zippy\Html\Form\TextInput implements Requestable, 
     public function setDate($t = null)
     {
         if ($t > 0) {
-            $this->setText(date('Y-m-d h:i', $t));
+            $this->setText(date('Y-m-d H:i', $t));
         } else {
             $this->setText("");
         }
