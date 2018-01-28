@@ -19,5 +19,4 @@
         const ERROR_COMPONENT_AS_PROPERTY = "Имя компонента '%s' такое же как  свойство '%s' ";
 
 
-        const MSG_DATATABLE_NODATA = "Нет данных";
-        const MSG_DATATABLE_RECORDS = "записей";
+      

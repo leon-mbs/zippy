@@ -267,7 +267,7 @@ class DataTable extends AbstractList implements Requestable
         if($pages ==$currentpage) $show = $countall;
         if($countall <= $this->pagesize) $show = $countall;
         
-        $content = "<table  ><tr><td valign='middle'>{$show} ".MSG_DATATABLE_RECORDS." из {$countall} &nbsp;&nbsp;&nbsp;&nbsp;</td><td align='right'> {$content}</td></tr></table>";
+        $content = "<table  ><tr><td valign='middle'>{$show} строк з  {$countall} &nbsp;&nbsp;&nbsp;&nbsp;</td><td align='right'> {$content}</td></tr></table>";
         return "<tr ><td class=\"footercell\"  colspan=\"" . count($this->columns) . "\" >{$content}</ul></td></tr>";
     }
 

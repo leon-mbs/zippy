@@ -76,7 +76,7 @@ class AutocompleteTextInput extends TextInput implements Requestable
                     },
                     highlighter: function(item) {
                           var parts = item.split('_');
-                          parts.shift();
+                          parts.shift(); 
                           return parts.join('_');
                       }, 
                     updater: function(item) {
@@ -192,5 +192,6 @@ class AutocompleteTextInput extends TextInput implements Requestable
 
      public function clean(){
         $this->setKey(0); 
+        $this->setText(''); 
      }
 }

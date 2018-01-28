@@ -17,7 +17,7 @@ class Paginator extends HtmlComponent implements Requestable
 {
 
     private $datalist;
-    private $maxbuttons = 14;
+    private $maxbuttons = 10;
     private $firstButton = 1;
     private $ajax;
     protected $event=null;
@@ -53,57 +53,94 @@ class Paginator extends HtmlComponent implements Requestable
      */
     public function getContent($pages, $currentpage)
     {
-        if ($pages == 1)
+        if ($pages <= 1)
             return "";
+        if ($currentpage > $pages)
+            $currentpage =1;
 
-        if ($this->getAttribute('data-maxbtn') > 0) {
-            $this->maxbuttons = $this->getAttribute('data-maxbtn') - 1;
-        }
+ 
         $content = "<ul class=\"pagination\">";
 
+        
+        
+        $iLeft=(int)$this->maxbuttons/2; 
+        $iRight=$iLeft;
 
-        if ($currentpage - $this->firstButton > $this->maxbuttons) {
-
-            $this->firstButton = $currentpage - $this->maxbuttons;
+        
+        if($pages <= $iRight+$iRight+1){
+            for($i=1; $i<=$pages ; $i++)
+            {
+              
+                 if ($currentpage == $i) {
+                    $content .= "<li class=\"page-item active\"><a   class=\"page-link\"  href=\"javascript:void(0);\" > {$i} </a></li>";
+                } else {
+                    $content .= "<li class=\"page-item\" ><a   class=\"page-link\"  href=\"javascript:void(0);\"   onclick=\"" . $this->getUrl($i) . "\"> {$i} </a></li>";
+                }               
+                
+            }         
         }
-        if ($currentpage < $this->firstButton) {
-            $this->firstButton = $currentpage - 1;
-        }
-
-        if ($this->firstButton > 1) {
-            $content .= "<Li class=\"page-item\" ><a  class=\"page-link\"   href='void(0);' onclick=\"" . $this->getUrl(1) . "\"><span aria-hidden=\"true\">&laquo;</span></a></li>";
-            $content .= "<Li class=\"page-item\" ><a   class=\"page-link\"   href='void(0);' onclick=\"" . $this->getUrl($currentpage - 1) . "\"><span aria-hidden=\"true\">&lsaquo;</span></a></li>";
-            $content .= "<li class=\"page-item\"  ><a  class=\"page-link\"   href=\"javascript:void(0);\" >&hellip;</a></li>";
-        }
-
-
-
-        for ($i = $this->firstButton; $i <= $this->firstButton + $this->maxbuttons; $i++) {
-            if ($i > $pages)
-                break;
-            if ($currentpage == $i) {
-                $content .= "<li class=\"page-item active\"><a   class=\"page-link\"  href=\"javascript:void(0);\" > {$i} </a></li>";
-            } else {
-                $content .= "<li class=\"page-item\" ><a   class=\"page-link\"  href=\"javascript:void(0);\"  onclick=\"" . $this->getUrl($i) . "\"> {$i} </a></li>";
+        else
+        if($currentpage > $iLeft && $currentpage < ($pages-$iRight))
+        {
+            $content .= "<Li class=\"page-item\" ><a  class=\"page-link\"   href='void(0);' aria-label=\"Previous\"  onclick=\"" . $this->getUrl(1) . "\"><span    aria-hidden=\"true\" >&laquo;</span></a></li>";
+            
+            for($i=$currentpage-$iLeft; $i<=$currentpage+$iRight; $i++)
+            {
+              
+                 if ($currentpage == $i) {
+                    $content .= "<li class=\"page-item active\"><a   class=\"page-link\"  href=\"javascript:void(0);\" > {$i} </a></li>";
+                } else {
+                    $content .= "<li class=\"page-item\" ><a   class=\"page-link\"  href=\"javascript:void(0);\"   onclick=\"" . $this->getUrl($i) . "\"> {$i} </a></li>";
+                }               
+                
             }
+            $content .= "<li class=\"page-item\" ><a   class=\"page-link\" href='void(0);' aria-label=\"Next\"  onclick=\"" . $this->getUrl($pages) . "\">    <span   aria-hidden=\"true\">&raquo;</span></a></li>";
+   
         }
-
-        if ($pages > $this->firstButton + $this->maxbuttons) {
-            $content .= "<li class=\"page-item\" ><a class=\"page-link\" href=\"javascript:void(0);\" >&hellip;</a></li>";
-            $content .= "<li class=\"page-item\" ><a   class=\"page-link\" href='void(0);' onclick=\"" . $this->getUrl($currentpage + 1) . "\"aria-label=\"Next\">       <span aria-hidden=\"true\">&rsaquo;</span></a></li>";
-            $content .= "<li class=\"page-item\" ><a   class=\"page-link\" href='void(0);' onclick=\"" . $this->getUrl($pages) . "\"aria-label=\"Next\">       <span aria-hidden=\"true\">&raquo;</span></a></li>";
-        }
-
+        elseif($currentpage<=$iLeft)
+        {
+                
+            $iSlice = 1+$iLeft-$currentpage;
+            for($i=1; $i<=$currentpage+($iRight+$iSlice); $i++)
+            {
+                if ($currentpage == $i) {
+                    $content .= "<li class=\"page-item active\"><a   class=\"page-link\"  href=\"javascript:void(0);\" > {$i} </a></li>";
+                } else {
+                    $content .= "<li class=\"page-item\" ><a   class=\"page-link\"  href=\"javascript:void(0);\"  onclick=\"" . $this->getUrl($i)  . "\"> {$i} </a></li>";
+                }  
+                               
+            }
+            $content .= "<li class=\"page-item\" ><a   class=\"page-link\" href='void(0);' aria-label=\"Next\"  onclick=\"" . $this->getUrl($pages)   . "\">    <span   aria-hidden=\"true\">&raquo;</span></a></li>";
+            
+        } 
+        else
+        {
+            $content .= "<Li class=\"page-item\" ><a  class=\"page-link\"   href='void(0);' aria-label=\"Previous\"  onclick=\"" . $this->getUrl(1) . "\"><span    aria-hidden=\"true\" >&laquo;</span></a></li>";
+      
+            $iSlice = $iRight-($pages - $currentpage);
+             
+            for($i=$currentpage-($iLeft+$iSlice); $i<=$pages; $i++)
+            {
+                 if ($currentpage == $i) {
+                                $content .= "<li class=\"page-item active\"><a   class=\"page-link\"  href=\"javascript:void(0);\" > {$i} </a></li>";
+                 } else {
+                                $content .= "<li class=\"page-item\" ><a   class=\"page-link\"  href=\"javascript:void(0);\"  onclick=\"" . $this->getUrl($i) . "\"> {$i} </a></li>";
+                 } 
+            }                
+                  
+        }          
+        
         $content = $content . "</ul>";
         $countall = $this->datalist->getAllRowsCount();
         $show =  $currentpage *  $this->datalist->getPageSize();
         if($pages ==$currentpage) $show = $countall;
         if($countall <=  $this->datalist->getPageSize()) $show = $countall;
+               
         
-        $content = "<table  ><tr><td valign='middle'>{$show} ".MSG_DATATABLE_RECORDS." из {$countall} &nbsp;&nbsp;&nbsp;&nbsp;</td><td align='right'> {$content}</td></tr></table>";
+        $content = "<table  ><tr><td valign='middle'>{$show} строк з {$countall} &nbsp;&nbsp;&nbsp;&nbsp;</td><td align='right'> {$content}</td></tr></table>";
         
         return $content  ;
-    }
+    }                              
 
     /**
      * @see  Requestable
@@ -167,6 +204,5 @@ class Paginator extends HtmlComponent implements Requestable
         }
     }
 
-    
-
+ 
 }
