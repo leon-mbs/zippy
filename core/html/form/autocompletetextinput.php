@@ -18,6 +18,8 @@ class AutocompleteTextInput extends TextInput implements Requestable
     private $key = 0;
     private $event2 = null;
     private $event = null;
+    public $count = 12;
+    public $matcher = "return true;";
 
     /**
      * Конструктор
@@ -31,6 +33,7 @@ class AutocompleteTextInput extends TextInput implements Requestable
         $this->minChars = $minChars;
         $this->timeout = $timeout;
         $this->bgupdate = $bgupdate;
+         
     }
 
     protected function onAdded()
@@ -63,17 +66,24 @@ class AutocompleteTextInput extends TextInput implements Requestable
             }
         }
         $url = $this->owner->getURLNode() . "::" . $this->id . "&ajax=true";
-
+        
+        if(strlen($this->matcher)>0){
+            $matcher ="matcher:function(item) {
+                    {$this->matcher}
+               }, ";
+        }
         $js = "
                     $('#{$this->id}').typeahead(
                     {   
                     minLength:{$this->minChars},
+                    items:{$this->count},
                     source: function (query, process) {
                          
                         return $.getJSON('{$url}&text=' + query, function (data) {
                             return process(data);
                         });
                     },
+                    {$matcher}
                     highlighter: function(item) {
                           var parts = item.split('_');
                           parts.shift(); 

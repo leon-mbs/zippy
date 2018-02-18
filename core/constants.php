@@ -1,22 +1,22 @@
 <?php
 
-        const ERROR_INVALID_VERSION = 'Неверный адрес  страницы';
-        const ERROR_MARKUP_NOTUSEDTAG = "Не использован тег '%s'";
-        const ERROR_MARKUP_OUTHERELEMENT = "Элемент %s вне контейнераё";
-        const ERROR_MARKUP_NOTUNIQUEID = "HTML tag с неуникальным ID %s";
-        const ERROR_MARKUP_NOTFOUND = "HTML tag для '%s' не найден";
+        const ERROR_INVALID_VERSION = 'Invalid address page';
+        const ERROR_MARKUP_NOTUSEDTAG = "Tag '%s' id not used";
+        const ERROR_MARKUP_OUTHERELEMENT = "Element %s out of container";
+        const ERROR_MARKUP_NOTUNIQUEID = "HTML tag has not unique  ID %s";
+        const ERROR_MARKUP_NOTFOUND = "HTML tag for '%s' was not found";
  
-        const ERROR_DATAROW_COMPONENT_EXISTS = "Компонент '%s' уже существует  в'%s'";
-        const ERROR_INVALID_ID = "Неверный ID   ('%s') ";
-        const ERROR_INVALID_CREATE_ID = "Нет  ID для компонента ('%s')";
-        const ERROR_INVALID_TREELINK = "Неверная ссылка ";
+        const ERROR_DATAROW_COMPONENT_EXISTS = "Component '%s' already exists in  '%s'";
+        const ERROR_INVALID_ID = "Invalid ID   ('%s') ";
+        const ERROR_INVALID_CREATE_ID = "No  ID for component ('%s')";
+        const ERROR_INVALID_TREELINK = "Invalid link ";
 
-        const ERROR_NOT_FOUND_PROPERTY_BINDING = "Поле '%s' объекта '%s' недоступно";
-        const ERROR_NOT_FOUND_EVENT_METHOD = "Метод '%s' объекта '%s' недоступен для обработчика событий";
-        const ERROR_NOT_FOUND_CHILD = "Компонент '%s' с  ID '%s' не непосредственный для владельца  ID  '%s' ";
-        const ERROR_INVALID_PARENT_NODE = "Неверрный родительский узел дерева";
-        const ERROR_COMPONENT_ALREADY_EXISTS = "Компонент '%s' уже существует  '%s' ";
-        const ERROR_COMPONENT_AS_PROPERTY = "Имя компонента '%s' такое же как  свойство '%s' ";
+        const ERROR_NOT_FOUND_PROPERTY_BINDING = "Field '%s' of object '%s' is not accessed";
+        const ERROR_NOT_FOUND_EVENT_METHOD = "Method '%s' of object '%s' is not allowed for event handler";
+        const ERROR_NOT_FOUND_CHILD = "Component '%s' with  ID '%s' is not direct for owner  ID  '%s' ";
+        const ERROR_INVALID_PARENT_NODE = "Ivalid parent node";
+        const ERROR_COMPONENT_ALREADY_EXISTS = "Component '%s' already exists  '%s' ";
+        const ERROR_COMPONENT_AS_PROPERTY = "Component name '%s' is the same as a property '%s' ";
 
 
       
