@@ -12,7 +12,7 @@ use \Zippy\Html\WebPage;
 class PageManager
 {
 
-    const HISTORY_SIZE = 20;
+    const HISTORY_SIZE = 10;
 
     private $pages = array();
     private $index = 0;

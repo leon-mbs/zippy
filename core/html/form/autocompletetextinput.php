@@ -96,7 +96,7 @@ class AutocompleteTextInput extends TextInput implements Requestable
                    
                       return parts.join('_');
                    } ,
-                   afterSelect :function(item) {
+                   afterSelect :function(item) {   
                         {$onchange}     
                    }
                    }); 
@@ -184,7 +184,7 @@ class AutocompleteTextInput extends TextInput implements Requestable
     /**
      * @see  ChangeListener
      */
-    public function onChange(EventReceiver $receiver, $handler, $ajax = true)
+    public function onChange(EventReceiver $receiver, $handler, $ajax = false)
     {
         $this->event2 = new Event($receiver, $handler);
         $this->event2->isajax = $ajax;

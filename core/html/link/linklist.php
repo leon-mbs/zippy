@@ -82,7 +82,7 @@ class LinkList extends HtmlComponent implements ClickListener, Requestable
                     $out = $out . "<a href = \"{$url}\"   {$attributes} >{$item['caption']}</a>";
                 }
                 if ($item['type'] == 'bookmarkable') {
-                    $out = $out . "<a href = \"{$item['value']}\"   {$attributes} >{$item['caption']}</a>";
+                    $out = $out . "<a href = \"{$item['href']}\"   {$attributes} >{$item['caption']}</a>";
                 }
             }
             $out .= $this->delimiter;

@@ -243,6 +243,7 @@ return explist;
         
         if(is_integer($id)){
           $this->selectedid =$id;    
+          $this->selectednodeid =$id;    
         }
         return $this->selectedid;
         
@@ -252,6 +253,9 @@ return explist;
           $this->nodes = array();
           $this->children = array();
           $this->number =1;
+          $this->selectedid =-1;    
+          $this->selectednodeid =-1;
+          $this->expanded = array();           
       }
 }
 
