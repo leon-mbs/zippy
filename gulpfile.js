@@ -18,8 +18,8 @@ var gulp      = require('gulp'), // Подключаем Gulp
         'assets/js/bootstrap3-typeahead.js',            
         'assets/js/zippy.js'    
         ])
-        .pipe(concat('allzippy.min.js')) // Собираем их в кучу в новом файле libs.min.js
-        .pipe(uglify()) // Сжимаем JS файл
+        .pipe(concat('allzippy.js')) // Собираем их в кучу в новом файле libs.min.js
+     //   .pipe(uglify()) // Сжимаем JS файл
         .pipe(gulp.dest('assets/js')); // Выгружаем в папку app/js
 });
 
@@ -27,7 +27,7 @@ var gulp      = require('gulp'), // Подключаем Gulp
     return gulp.src([ // Берем все необходимые библиотеки
 
         'assets/css/bootstrap.css',    
-        'assets/css/font-awesome.css',    
+        'assets/css/fontawesome-all.css',    
   
         'assets/css/classic.css',    
         'assets/css/classic.date.css',    
@@ -35,8 +35,8 @@ var gulp      = require('gulp'), // Подключаем Gulp
          
           
         ])
-        .pipe(concat('allzippy.min.css')) // Собираем их в кучу в новом файле libs.min.js
-        .pipe(cssnano()) // Сжимаем   файл
+        .pipe(concat('allzippy.css')) // Собираем их в кучу в новом файле libs.min.js
+       // .pipe(cssnano()) // Сжимаем   файл
         .pipe(gulp.dest('assets/css')); // Выгружаем в папку app/js
 });
 

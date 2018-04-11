@@ -97,7 +97,7 @@ class AutocompleteTextInput extends TextInput implements Requestable
                       return parts.join('_');
                    } ,
                    afterSelect :function(item) {   
-                        {$onchange}     
+                     ;   {$onchange}     
                    }
                    }); 
                    $('#{$this->id}').after('<input type=\"hidden\" id=\"{$this->id}_id\" name=\"{$this->id}_id\"  value=\"{$this->key}\"/>');

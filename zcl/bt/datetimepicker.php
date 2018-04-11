@@ -56,7 +56,7 @@ class DateTimePicker extends \Zippy\Html\Form\TextInput implements Requestable, 
            $max=", endDate:  '". date("Y-m-d h:i",$this->max) ."' ";    
         }        
         
-        $js = "$('#{$this->id}').datetimepicker( {  format : 'yyyy-mm-dd hh:ii',fontAwesome:true ,autoclose:true {$min} {$max}  });";
+        $js = "$('#{$this->id}').datetimepicker( {  format : 'yyyy-mm-dd hh:ii',fontAwesome:true ,minuteStep: 30,autoclose:true {$min} {$max}  });";
         if ($this->event != null) {
             $formid = $this->getFormOwner()->id;
 
