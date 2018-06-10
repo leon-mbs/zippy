@@ -19,7 +19,7 @@ class Pager extends HtmlComponent implements Requestable
     private $datalist;
     private $ajax;
     protected $event=null;
-    private $prev="Previous",$next="Next";
+     
   
     /**
      * Конструктор
@@ -56,14 +56,14 @@ class Pager extends HtmlComponent implements Requestable
             return "";
 
  
-        $content = "<ul class=\"pager\">";
+        $content = "";
 
 
         if ($currentpage >1) {
-            $content .= "<li  class=\"previous\" ><a   href=\"javascript:void(0);\" onclick=\"" . $this->getUrl($currentpage - 1) . "\">{$this->prev}</a></li>";
+            $content .= "<a  class=\"btn btn-primary\"   href=\"javascript:void(0);\" onclick=\"" . $this->getUrl($currentpage - 1) . "\"><i class=\"fa fa-arrow-left\"></i> назад</a>";
         }  
         if ($currentpage < $pages ) {
-            $content .= "<li  class=\"next\"><a    href=\"javascript:void(0);\" onclick=\"" . $this->getUrl($currentpage + 1) . "\">{$this->next}</a></li>";
+            $content .= "&nbsp;&nbsp;&nbsp;<a class=\"btn btn-primary\"  href=\"javascript:void(0);\" onclick=\"" . $this->getUrl($currentpage + 1) . "\"> вперед <i class=\"fa fa-arrow-right\"></i></a>";
         }
    
 

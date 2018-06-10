@@ -90,5 +90,8 @@ class Tags extends \Zippy\Html\Form\HtmlFormDataElement
         $tags = $_REQUEST[$this->id . '_tags'];
         $this->setValue(explode(';', $tags));
     }
-
+ 
+     public function clean(){
+        $this->_options = array();
+     }
 }

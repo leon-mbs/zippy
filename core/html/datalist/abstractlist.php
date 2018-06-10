@@ -62,7 +62,11 @@ abstract class AbstractList extends HtmlContainer
      */
     public function setPageSize($pagesize)
     {
-        $this->pagesize = $pagesize;
+        if($pagesize>0)
+           $this->pagesize = $pagesize;
+        else 
+           $this->pagesize = 20;
+        
         $this->currentpage = 1;
         // $this->Reload();
     }

@@ -12,7 +12,7 @@ use \Zippy\Html\WebPage;
 class PageManager
 {
 
-    const HISTORY_SIZE = 10;
+    const HISTORY_SIZE = 50;
 
     private $pages = array();
     private $index = 0;
@@ -27,13 +27,14 @@ class PageManager
     {
         $page->beforeSaveToSession();
 
-        $this->pages[++$this->index] = ($page);
+        
+        
+        $this->pages[++$this->index] =  ($page);
         if ($this->index > self::HISTORY_SIZE) {
             $this->pages[$this->index - self::HISTORY_SIZE] = null;
         }
 
-
-        $prevpage = @$this->pages[$this->index - 1];
+        $prevpage = @$this->unpack($this->pages[$this->index - 1]);
         if ($prevpage instanceof \Zippy\Html\WebPage) {
 
             if (get_class($prevpage) != get_class($page)) {
@@ -56,7 +57,13 @@ class PageManager
     {
         if (isset($this->pages[$number])) {
 
-            $page = ($this->pages[$number]);
+            if($this->pages[$number] instanceof WebPage)
+            {
+                $page = ($this->pages[$number]); 
+            }   else {
+                $page = $this->unpack($this->pages[$number]);    
+            }
+            
 
             if ($page instanceof WebPage) {
                 $page->afterRestoreFromSession();
@@ -75,7 +82,7 @@ class PageManager
      */
     public final function getLastPage()
     {
-        $this->getPage($this->index);
+        return  $this->getPage($this->index);
     }
 
     /**
@@ -88,12 +95,21 @@ class PageManager
     {
 
         $page->beforeSaveToSession();
-        $this->pages[$number] = $page;
+        $this->pages[$number] =  ($page);
     }
 
     public function __sleep()
     {
-        $this->pages = gzcompress(serialize($this->pages));
+       //упаковываем страницы
+       $pl = array();
+       foreach($this->pages as $n=>$p){
+          if($p instanceof WebPage){
+             $pl[]=$n;
+          } 
+       } 
+       foreach($pl as $n){
+          $this->pages[$n] = $this->pack($this->pages[$n]);  
+       } 
         return array('pages', 'index', 'pchain');
     }
 
@@ -101,7 +117,7 @@ class PageManager
     {
         if (is_array($this->pages))
             return;
-        $this->pages = unserialize(gzuncompress($this->pages));
+       // $this->pages = @unserialize(@gzuncompress($this->pages));
     }
 
     /**
@@ -114,4 +130,12 @@ class PageManager
         return array_pop($this->pchain);
     }
 
+    
+    private function pack($page){
+        return  gzcompress(serialize($page)) ;
+    }
+    private function unpack($page){
+        return  @unserialize(@gzuncompress($page)) ;
+    }
+    
 }

@@ -142,10 +142,10 @@ class WebApplication
             $this->Redirect404();
             return;
         }
+        
         if ($this->request->querytype == HttpRequest::QUERY_HOME) {
             $this->LoadPage($this->homepage);
         }
-
 
         if ($this->request->querytype == HttpRequest::QUERY_PAGE) {
             $this->LoadPage($this->request->request_page, $this->request->request_page_arg);
@@ -194,27 +194,24 @@ class WebApplication
             } else {
 
                 $this->response->setPageIndex($this->getPageManager()->putPage($this->currentpage));
-
                 if ($_SERVER["REQUEST_METHOD"] == "GET") {
                     //получаем  новую  версию  страницы
 
                     if ($this->reloadPage == true) { //если  надо  сбросить адресную строку
+                        
+                        
                         $this->response->toBaseUrl();
-                    }
+                    }  
+                    
 
                     //
                 }
                 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                    // обновляем  страницу  в  сессии  не   меняю  версию
-                    //  WebSession::getSession()->getPageManager()->updatePage($this->currentpage, $request[0]);
-                    //$this->Render();
-                    //  $this->_saveSession();
+             
                     $this->response->toBaseUrl();
                 }
             }
         }
-
-
 
         if ($this->currentpage == null) {
             $this->response->to404Page();
@@ -223,8 +220,6 @@ class WebApplication
         if ($this->response->isRedirect() != true) {
             $this->Render();
         }
-
-
 
         $this->response->output();
     }
@@ -242,10 +237,7 @@ class WebApplication
 
         if ($this->request->isAjaxRequest()) {
 
-        
-
            if(false==$renderpage->renderAjax())  return;
-
             
         }
 
