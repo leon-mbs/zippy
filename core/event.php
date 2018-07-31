@@ -4,7 +4,7 @@ namespace Zippy;
 
 use \Zippy\Interfaces\EventReceiver;
 use \Zippy\Html\HtmlComponent;
-use \Opis\Closure\SerialiazbleClosure;
+ 
 
 /**
  * Класс инкапсулирующий  обработчик  события
@@ -25,11 +25,7 @@ class Event
     {
         $this->receiver = $receiver;
         
-          if($handler instanceof \Closure){
-          // $handler->bindTo($receiver,"\\". get_class($receiver));
-           $handler = new \Opis\Closure\SerializableClosure($handler) ;
-            
-        }
+          
         $this->handler = $handler;
         
     }
@@ -42,10 +38,7 @@ class Event
     public function onEvent($sender, $params = null)
     {
         $h =$this->handler;
-        if($h instanceof \Opis\Closure\SerializableClosure){
-            
-               return $h($sender);
-        }
+ 
         if ($h != null) {
             return $this->receiver->{$h}($sender, $params);
         } else {

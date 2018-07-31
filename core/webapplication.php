@@ -65,9 +65,7 @@ class WebApplication
     public   function getTemplate($name)
     {
           foreach($this->templates as $handler){
-             if($handler instanceof \Closure){
-                 $template = $handler($name);
-             }
+              
              if(is_string($handler)){
                  $template = $handler($name);
              }                             
@@ -105,23 +103,7 @@ class WebApplication
         $classpage = new \ReflectionClass($name);
         $this->currentpage = $classpage->newInstanceArgs($arg1);
 
-
-        /*   $cnt = count($arg1);
-          switch ($cnt) {
-          case 1: $this->currentpage = new $name($arg1[0]);
-          break;
-          case 2: $this->currentpage = new $name($arg1[0], $arg1[1]);
-          break;
-          case 3: $this->currentpage = new $name($arg1[0], $arg1[1], $arg1[2]);
-          break;
-          case 4: $this->currentpage = new $name($arg1[0], $arg1[1], $arg1[2], $arg1[3]);
-          break;
-          case 5: $this->currentpage = new $name($arg1[0], $arg1[1], $arg1[2], $arg1[3], $arg1[4]);
-          break;
-          default:
-          $this->currentpage = new $name();
-          }
-         */
+     
         $this->currentpage->args = $arg1; //запоминаем аргументы страницы
 
         $this->response->setPageIndex($this->getPageManager()->putPage($this->currentpage));
@@ -359,9 +341,7 @@ class WebApplication
     protected function Route($uri)
     {
          foreach($this->routes as $handler){
-             if($handler instanceof \Closure){
-                 $res = $handler($uri);
-             }
+            
              if(is_string($handler)){
                  $res = $handler($uri);
              }                
@@ -502,16 +482,12 @@ class WebApplication
     * @param mixed $handler
     */
     public function setRoute( $handler)  {
-           if($handler instanceof \Closure){
-          
-        //  $handler = new \Opis\Closure\SerializableClosure($handler) ;
-            
-            } 
+             
            $this->routes[] = $handler; 
     }
     
     /**
-    *  устанавливает   функцию (в виде  строкового имени или замыкания) возвращающую содержимое файла темплейта  по  
+    *  устанавливает   функцию (в виде  строкового имени  ) возвращающую содержимое файла темплейта  по  
     * имени  класса  страницы
     * Можно  установтить несколько  функций обработчиков
     *  
@@ -519,10 +495,7 @@ class WebApplication
     */
     public function setTemplate($handler)
     {
-         if($handler instanceof \Closure){
-          
-        //  $handler = new \Opis\Closure\SerializableClosure($handler) ;
-         }
+    
          $this->templates[] = $handler; 
          
         
