@@ -135,7 +135,9 @@ class PageManager
         return  gzcompress(serialize($page)) ;
     }
     private function unpack($page){
-        return  @unserialize(@gzuncompress($page)) ;
+        $p=@gzuncompress($page);
+        if(strlen($p)==0) return null;
+        return   unserialize($p) ;
     }
     
 }
