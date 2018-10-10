@@ -42,7 +42,7 @@ class Label extends HtmlComponent implements AjaxRender
             \Zippy\WebApplication::$app->getResponse()->addJavaScript($this->ajaxvalue, true);
             return;
         }
-        if ($this->getText() == null)
+        if ($this->getText() === null)
             return;
 
         $HtmlTag = $this->getTag();

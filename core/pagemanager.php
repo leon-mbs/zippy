@@ -34,7 +34,7 @@ class PageManager
             $this->pages[$this->index - self::HISTORY_SIZE] = null;
         }
 
-        $prevpage = @$this->unpack($this->pages[$this->index - 1]);
+        $prevpage = $this->unpack($this->pages[$this->index - 1]);
         if ($prevpage instanceof \Zippy\Html\WebPage) {
 
             if (get_class($prevpage) != get_class($page)) {

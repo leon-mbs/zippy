@@ -57,13 +57,14 @@ class Pager extends HtmlComponent implements Requestable
 
  
         $content = "";
+        
 
 
         if ($currentpage >1) {
-            $content .= "<a  class=\"btn btn-primary mr-20\"   href=\"javascript:void(0);\" onclick=\"" . $this->getUrl($currentpage - 1) . "\"><i class=\"fa fa-arrow-left\"></i> назад</a>";
+            $content .= "<td align='left'><a      href=\"javascript:void(0);\" onclick=\"" . $this->getUrl($currentpage - 1) . "\"><i class=\"fa fa-arrow-left\"></i> следующие</a></td>";
         }  
         if ($currentpage < $pages ) {
-            $content .= " ;<a class=\"btn btn-primary\"  href=\"javascript:void(0);\" onclick=\"" . $this->getUrl($currentpage + 1) . "\"> вперед <i class=\"fa fa-arrow-right\"></i></a>";
+            $content .= " <td align='right'> <a    href=\"javascript:void(0);\" onclick=\"" . $this->getUrl($currentpage + 1) . "\"> предыдущие <i class=\"fa fa-arrow-right\"></i></a></td>";
         }
    
 
@@ -74,7 +75,10 @@ class Pager extends HtmlComponent implements Requestable
         if($pages ==$currentpage) $show = $countall;
         if($countall <=  $this->datalist->getPageSize()) $show = $countall;
         
-        $content = "<table  ><tr><td valign='middle'>{$show}   строк из {$countall} &nbsp;&nbsp;&nbsp;&nbsp;</td><td align='right'> {$content}</td></tr></table>";
+        
+        if($countall>0){
+           $content = "<table class=\"w-100\"  ><tr><td width=\"125px\" valign='middle'>{$show}   строк из {$countall} &nbsp;&nbsp;&nbsp;&nbsp;</td> {$content}</tr></table>";
+        }
         
         return $content  ;
     }

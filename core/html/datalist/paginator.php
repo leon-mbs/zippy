@@ -137,7 +137,7 @@ class Paginator extends HtmlComponent implements Requestable
         if($countall <=  $this->datalist->getPageSize()) $show = $countall;
                
         
-        $content = "<table  ><tr><td valign='middle'>{$show} строк з {$countall} &nbsp;&nbsp;&nbsp;&nbsp;</td><td align='right'> {$content}</td></tr></table>";
+        $content = "<table  ><tr><td valign='middle'>{$show} строк из {$countall} &nbsp;&nbsp;&nbsp;&nbsp;</td><td align='right'> {$content}</td></tr></table>";
         
         return $content  ;
     }                              
