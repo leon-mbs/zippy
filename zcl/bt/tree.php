@@ -184,7 +184,7 @@ return explist;
                   WebApplication::$app->getResponse()->addJavaScript($js,true);    
                 }      
         
-        if(count($this->expanded  >0)){
+        if(count($this->expanded)  >0){
           $js ="";
           foreach($this->expanded as $id)  {
             $js .= "  $('#{$this->id}').treeview('expandNode', [ {$id}, { silent: true } ]); 
