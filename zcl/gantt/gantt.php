@@ -150,7 +150,7 @@ class GanttItem
         $this->start = "new Date(" . date("Y", $start) . "," . (date("m", $start) - 1 ) . "," . date("d", $start) . ")";
 
         $this->end = "new Date(" . date("Y", $end) . "," . (date("m", $end) - 1 ) . "," . date("d", $end) . ")";
-        // $this->end =  "new Date(2010,00,05)" ;        
+           
         $this->color = $color;
     }
 

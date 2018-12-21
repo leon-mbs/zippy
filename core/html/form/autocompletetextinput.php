@@ -120,7 +120,8 @@ class AutocompleteTextInput extends TextInput implements Requestable
             $this->OnEvent2();
             return;
         }
-
+    
+        $posts=array();
 
         $this->setValue($_REQUEST['text']);
         $arr = $this->OnAutocomplete();

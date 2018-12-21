@@ -119,7 +119,7 @@
             applyLastClass(div.parent());
         }
 
-        var monthNames = ["Січень", "Лютий", "Березень", "Квітень", "Травень", "Червень", "Липень", "Серпень", "Вересень", "Жовтень", "Листопад", "Грудень"];
+        var monthNames = ["Январь", "Февраль", "Март", "Апрель", "Май", "Мюнь", "Июнь", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
 
         // Creates a 3 dimensional array [year][month][day] of every day 
         // between the given start and end dates
