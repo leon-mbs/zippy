@@ -239,9 +239,9 @@ class DataTable extends AbstractList implements Requestable
         }
 
         if ($this->firstButton > 1) {
-            $content .= "<li><a   href='void(0);' onclick=\"" . $this->getPaginatorLink(1) . "\"><span aria-hidden=\"true\">&laquo;</span></a></li>";
-            $content .= "<li><a   href='void(0);' onclick=\"" . $this->getPaginatorLink($currentpage - 1) . "\"><span aria-hidden=\"true\">&lsaquo;</span></a></li>";
-            $content .= "<li ><a  href=\"javascript:void(0);\" >&hellip;</a></li>";
+            $content .= "<li  class=\"page-item\"><a   class=\"page-link\"  href='void(0);' onclick=\"" . $this->getPaginatorLink(1) . "\"><span aria-hidden=\"true\">&laquo;</span></a></li>";
+            $content .= "<li class=\"page-item\"><a   class=\"page-link\"  href='void(0);' onclick=\"" . $this->getPaginatorLink($currentpage - 1) . "\"><span aria-hidden=\"true\">&lsaquo;</span></a></li>";
+            $content .= "<li  class=\"page-item\"><a   class=\"page-link\" href=\"javascript:void(0);\" >&hellip;</a></li>";
         }
 
 
@@ -250,16 +250,16 @@ class DataTable extends AbstractList implements Requestable
             if ($i > $pages)
                 break;
             if ($currentpage == $i) {
-                $content .= "<li class=\"active\"><a  href=\"javascript:void(0);\" > {$i} </a></li>";
+                $content .= "<li class=\"page-item active\"><a  class=\"page-link\"  href=\"javascript:void(0);\" > {$i} </a></li>";
             } else {
-                $content .= "<li><a  href=\"javascript:void(0);\"  onclick=\"" . $this->getPaginatorLink($i) . "\"> {$i} </a></li>";
+                $content .= "<li  class=\"page-item\"><a   class=\"page-link\" href=\"javascript:void(0);\"  onclick=\"" . $this->getPaginatorLink($i) . "\"> {$i} </a></li>";
             }
         }
 
         if ($pages > $this->firstButton + $this->maxbuttons) {
-            $content .= "<li ><a  href=\"javascript:void(0);\" >&hellip;</a></li>";
-            $content .= "<li><a href='void(0);' onclick=\"" . $this->getPaginatorLink($currentpage + 1) . "\"aria-label=\"Next\">       <span aria-hidden=\"true\">&rsaquo;</span></a></li>";
-            $content .= "<li><a href='void(0);' onclick=\"" . $this->getPaginatorLink($pages) . "\"aria-label=\"Next\">       <span aria-hidden=\"true\">&raquo;</span></a></li>";
+            $content .= "<li  class=\"page-item\" ><a   class=\"page-link\" href=\"javascript:void(0);\" >&hellip;</a></li>";
+            $content .= "<li  class=\"page-item\"><a  class=\"page-link\" href='void(0);' onclick=\"" . $this->getPaginatorLink($currentpage + 1) . "\"aria-label=\"Next\">       <span aria-hidden=\"true\">&rsaquo;</span></a></li>";
+            $content .= "<li  class=\"page-item\"><a  class=\"page-link\" href='void(0);' onclick=\"" . $this->getPaginatorLink($pages) . "\"aria-label=\"Next\">       <span aria-hidden=\"true\">&raquo;</span></a></li>";
         }
         
         $countall = $this->getAllRowsCount();
@@ -267,7 +267,7 @@ class DataTable extends AbstractList implements Requestable
         if($pages ==$currentpage) $show = $countall;
         if($countall <= $this->pagesize) $show = $countall;
         
-        $content = "<table  ><tr><td valign='middle'>{$show} строк з  {$countall} &nbsp;&nbsp;&nbsp;&nbsp;</td><td align='right'> {$content}</td></tr></table>";
+        $content = "<table  ><tr><td valign='middle'>{$show} строк с  {$countall} &nbsp;&nbsp;&nbsp;&nbsp;</td><td align='right'> {$content}</td></tr></table>";
         return "<tr ><td class=\"footercell\"  colspan=\"" . count($this->columns) . "\" >{$content}</ul></td></tr>";
     }
 

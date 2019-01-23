@@ -121,8 +121,10 @@ class WebApplication
         }
 
         if ($this->request->querytype == HttpRequest::QUERY_INVALID) {
-            $this->Redirect404();
-            return;
+            //self::Redirect404();
+            self::$app->getResponse()->toIndexPage();
+            self::$app->getResponse()->output();
+            die;            
         }
         
         if ($this->request->querytype == HttpRequest::QUERY_HOME) {
