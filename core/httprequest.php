@@ -85,6 +85,10 @@ class HttpRequest
         // URI формируемый  BookmarkableLink (в частности, ЧПУ) 
 
         if (strlen($uri) > 1 && strpos($uri, '/?') === false && strpos($uri, '/index.php') === false) {
+            $p = strpos($uri, '?');
+            if($p>0){  //отсекаем приклееное  фейсбуком и просими
+                $uri = substr($uri,0,$p);
+            }            
             if (preg_match('/^[-#a-zA-Z0-9\/_]+$/', $uri)) {
                 $this->querytype = self::QUERY_SEF;
                 $this->uri = ltrim($uri, '/');
