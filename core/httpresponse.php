@@ -163,7 +163,7 @@ class HttpResponse
         //$pagename = get_class(WebApplication::$app->getCurrentPage());
         //$pagename = str_replace("\\", "/", $pagename);
         //return $this->getHostUrl() . "/?q=" . $pagename . ":" . $this->pageindex;
-        return $this->getHostUrl() . "/?q=p:" . $this->pageindex;
+        return $this->getHostUrl() . "/index.php?q=p:" . $this->pageindex;
     }
 
     /**
@@ -181,7 +181,7 @@ class HttpResponse
         }
 
         WebApplication::$app->LoadPage($name, $arg1, $arg2, $arg3, $arg4, $arg5);
-        //   $url = "/?q=" . $this->getPageManager()->session->putPage($this->currentpage) . "::1";
+        //   $url = "/index.php?q=" . $this->getPageManager()->session->putPage($this->currentpage) . "::1";
         //   $this->saveSession(serialize($this->session));
         $this->toBaseUrl($name);
         $this->output();
@@ -243,7 +243,7 @@ class HttpResponse
 
       // $pagename = str_replace("\\", "/", $pagename);
       $pagename = '\\' . rtrim($pagename, '\\');
-      //$this->redirect = $this->getHostUrl() . "/?q=" . $pagename . ":" . $this->pageindex--;
+      //$this->redirect = $this->getHostUrl() . "/index.php?q=" . $pagename . ":" . $this->pageindex--;
       if($pagename== "\\") {
       $this->toIndexPage();
       return;

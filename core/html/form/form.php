@@ -41,7 +41,7 @@ class Form extends HtmlContainer
         $this->setAttribute("id", $this->id);
         $this->setAttribute("name", $this->id);
 
-        $url = substr($url, strpos($url, '?q=') + 3);
+        $url = substr($url, strpos($url, 'index.php?q=') + 3);
 
         $HtmlTag = $this->getTag('form');
         $HtmlTag->append("<input type=\"hidden\" name=\"q\" id=\"{$this->id}_q\" value=\"" . $url . "::" . $this->id . "\" >");

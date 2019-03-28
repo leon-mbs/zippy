@@ -67,11 +67,11 @@ class RedirectLink extends AbstractLink implements Requestable
                 if (strlen($url) % 3 == 2)
                     $url .= ' ';
 
-                $url = $_BASEURL . "/?r=" . base64_encode(serialize(array($this->pagename, $this->params)));
+                $url = $_BASEURL . "/index.php?r=" . base64_encode(serialize(array($this->pagename, $this->params)));
             } else {
                 $this->pagename = str_replace("\\", "/", ltrim($this->pagename, "\\"));
 
-                $url = $_BASEURL . "/?p=" . $this->pagename;
+                $url = $_BASEURL . "/index.php?p=" . $this->pagename;
                 if (count($this->params) > 0) {
                     $_param = implode("/", $this->params);
                     $url .= "&arg=" . $_param;

@@ -74,7 +74,7 @@ class HttpRequest
             return;
         }
         // URI с  именем  класса  страницы и параметрами 
-        //пример  - переход на  страницу с  классом  news : /?p=mycms/news&arg=2/4
+        //пример  - переход на  страницу с  классом  news : /index.php?p=mycms/news&arg=2/4
 
         if (isset($_REQUEST["p"])) {
             $this->querytype = self::QUERY_PAGE;
@@ -86,7 +86,7 @@ class HttpRequest
 
         if (strlen($uri) > 1 && strpos($uri, '/?') === false && strpos($uri, '/index.php') === false) {
             $p = strpos($uri, '?');
-            if($p>0){  //отсекаем приклееное  фейсбуком и просими
+            if($p>0){  //отсекаем приклееное  фейсбуком и прочими
                 $uri = substr($uri,0,$p);
             }            
             if (preg_match('/^[-#a-zA-Z0-9\/_]+$/', $uri)) {

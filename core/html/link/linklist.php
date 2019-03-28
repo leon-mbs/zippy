@@ -67,11 +67,11 @@ class LinkList extends HtmlComponent implements ClickListener, Requestable
                 if ($item['type'] == 'redirect') {
                     if ($item['encode'] == true) {
                         $_BASEURL = WebApplication::$app->getResponse()->getHostUrl();
-                        $url = $_BASEURL . "/?r=" . base64_encode(serialize(array($item['page'], $item['params'])));
+                        $url = $_BASEURL . "/index.php?r=" . base64_encode(serialize(array($item['page'], $item['params'])));
                     } else {
                         $pagename = str_replace("\\", "/", ltrim($item['page'], "\\"));
 
-                        $url = $_BASEURL . "/?p=" . $pagename;
+                        $url = $_BASEURL . "/index.php?p=" . $pagename;
                         if (count($item['params']) > 0) {
                             $_param = implode("/", $item['params']);
                             $url .= "&arg=" . $_param;
