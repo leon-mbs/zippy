@@ -16,7 +16,7 @@ class WebApplication
 
     private $currentpage = null;
     public static $app = null;
-    private $macros = array();
+     
     private $reloadPage = false;
     private $request;
     private $response;
@@ -317,23 +317,11 @@ class WebApplication
             $renderpage->renderAjax(true);
             return;
         }
-        foreach ($this->macros as $name => $value) {
-            $response = str_ireplace("{" . $name . "}", $value, $response);
-        }
+       
         $this->response->setContent($response);
     }
 
-    /**
-     * Добавляет  макрос  в  список на   уровне  прилождения
-     * Макросы - переменные   в  фигурных  скобках, используются  для  вставки  изменяемых  частей  шаблона
-     * не   связанных  с  HTML  компонентами
-     * @param  string  Имя макроса
-     * @param string Значение
-     */
-    public final function setMacros($name, $value)
-    {
-        $this->macros[$name] = $value;
-    }
+  
 
     /**
      *  Метод  выполняющий   роутинг URL запросов.  Например  для ЧПУ ссылок
