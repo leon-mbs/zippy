@@ -28,11 +28,11 @@ class WebApplication
      * Конструктор
      * @param string Имя  класса  начальной  страницы
      */
-    function __construct($homepage = null)
+    function __construct( )
     {
         
           
-        $this->homepage = $homepage;
+       
 
         self::$app = $this;
 
@@ -112,11 +112,11 @@ class WebApplication
     /**
      * Основной   цикл  приложения
      */
-    public final function Run()
+    public final function Run($homepage)
     {
         self::$app = $this;
 
-        if ($this->homepage == null) {
+        if ($homepage == null) {
             throw new \Zippy\Exception(ERROR_NOT_FOUND_HOMEPAGE);
         }
 
@@ -128,7 +128,7 @@ class WebApplication
         }
         
         if ($this->request->querytype == HttpRequest::QUERY_HOME) {
-            $this->LoadPage($this->homepage);
+            $this->LoadPage($homepage);
         }
 
         if ($this->request->querytype == HttpRequest::QUERY_PAGE) {
