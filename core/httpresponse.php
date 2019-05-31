@@ -21,7 +21,7 @@ class HttpResponse
     public function __construct()
     {
         //$this->setRequestIndex(WebApplication::$app->getRequest()->getRequestIndex())
-        $d=2;
+         
     }
 
     /**

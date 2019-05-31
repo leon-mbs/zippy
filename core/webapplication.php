@@ -11,7 +11,7 @@ use \Zippy\Html\HtmlContainer;
  * getTemplate().
  *
  */
-class WebApplication
+abstract class  WebApplication
 {
 
     private $currentpage = null;
@@ -20,8 +20,8 @@ class WebApplication
     private $reloadPage = false;
     private $request;
     private $response;
-    private $routes = array(); 
-    private $templates = array(); 
+   
+ 
    
     // public  $doc;
     /**
@@ -60,22 +60,10 @@ class WebApplication
      * Возвращает HTML шаблон по  имени класса  страницы
      * перегружается   в  классе  пользовательского  приложения
      * @param  string Имя  класса  страницы
-     * @param string  имя  вида страницы если  несколько
+   
      */
-    public   function getTemplate($name)
-    {
-          foreach($this->templates as $handler){
-              
-             if(is_string($handler)){
-                 $template = $handler($name);
-             }                             
-             
-              
-              if(strlen($template) >0){
-                  return $template;
-              }
-          }
-    }
+    protected  abstract function getTemplate($name)  ;
+   
 
     /**
      * Возвращает  объект  текущей  страницы
@@ -325,21 +313,13 @@ class WebApplication
 
     /**
      *  Метод  выполняющий   роутинг URL запросов.  Например  для ЧПУ ссылок
-     *  Переопределяется   в  пользовательском  приложении. Как  правило,  выполняет  редирект на   соответствующую  страницу
+     *  Переопределяется   в  пользовательском  приложении. 
+     *  Загружает страницу (с  параметрами) методом $this->LoadPage
      *  @param string  Входящий  запрос
      */
     protected function Route($uri)
     {
-         foreach($this->routes as $handler){
-            
-             if(is_string($handler)){
-                 $res = $handler($uri);
-             }                
-              if($this->currentpage instanceof \Zippy\Html\WebPage){
-                  break;
-              } 
-               
-          }      
+             
     }
 
     /**
@@ -458,38 +438,8 @@ class WebApplication
         self::$app->getResponse()->toIndexPage();
     }
 
-       /**
-    *  устанавливает   функцию ( в виде  строкового имени или замыкания) роутнга.
-    * Функция  должна  загрузить страницу по имени  класса  функцией
-    * \Zippy\WebApplication::$app->LoadPage($pagename,...)  
-    * Если  есть аргументы  они следуют  за  именем  класса страницы  и будут переданы  в   конструктор класса  страницы
-    * 
-    * 
-    * Обработчик также  может самостоятельно  обработть HTTP запрос и вернуть HTTP ответ
-    * прекративши выполнение  приложения (die())
-    * Можно  установтить несколько  функций обработчиков
-    * 
-    * @param mixed $handler
-    */
-    public function setRoute( $handler)  {
-             
-           $this->routes[] = $handler; 
-    }
+  
     
-    /**
-    *  устанавливает   функцию (в виде  строкового имени  ) возвращающую содержимое файла темплейта  по  
-    * имени  класса  страницы
-    * Можно  установтить несколько  функций обработчиков
-    *  
-    * @param mixed $handler
-    */
-    public function setTemplate($handler)
-    {
-    
-         $this->templates[] = $handler; 
-         
-        
-    }
     
      /**
      * Вставляет  JavaScript  в  конец   выходного  потока
@@ -500,4 +450,15 @@ class WebApplication
     {
         return self::$app->getResponse()->addJavaScript($js,$docready);
     }
+    
+/**
+     * редирект по URL
+     * 
+     * @param mixed $message
+     * @param mixed $uri
+     */
+    public static function RedirectURI($uri) {
+        self::$app->getResponse()->toPage($uri);
+    }    
+    
  }

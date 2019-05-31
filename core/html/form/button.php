@@ -31,8 +31,6 @@ class Button extends HtmlComponent implements ClickListener, Requestable
         if (is_object($receiver) && strlen($handler) > 0) {
             $this->onClick($receiver, $handler, $ajax);
         }
-        $this->setAttribute("name", $this->id);
-        
     }
 
     /**
