@@ -16,7 +16,13 @@ class SubmitButton extends HtmlComponent implements ClickListener, Requestable
 {
 
     private $event;
-
+  
+    public function __construct($id)
+    {
+        parent::__construct($id);
+    
+        $this->setAttribute("name", $this->id);
+    }    
     /**
      * @see HtmlComponent
      */
