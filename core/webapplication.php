@@ -62,7 +62,7 @@ abstract class  WebApplication
      * @param  string Имя  класса  страницы
    
      */
-    protected  abstract function getTemplate($name)  ;
+    public  abstract function getTemplate($name)  ;
    
 
     /**

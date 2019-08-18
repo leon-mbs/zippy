@@ -2,7 +2,7 @@
     "name": "leon-mbs/zippy",
     "description": "Компонентный событийно-ориентированный PHP фреймворк",
     "keywords": [  "framework", "php" ],
-    "homepage": "http://zippy.com.ua/Zippy-framework/opisanie",
+    "homepage": "https://zippy.com.ua/frm",
 
     "license": "MIT",
    "minimum-stability" : "dev",
@@ -10,7 +10,7 @@
     "type": "library",
    
     "require": {
-         "php": ">=5.4.0",
+           "php": ">=5.4.0",
          "mustache/mustache": "v2.12.0",
          "leon-mbs/zdb": "1.2.0",
          "electrolinux/phpquery" :">=0.9.6" 
