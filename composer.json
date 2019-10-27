@@ -12,7 +12,7 @@
     "require": {
            "php": ">=5.4.0",
          "mustache/mustache": "v2.12.0",
-         "leon-mbs/zdb": "1.2.1",
+         "leon-mbs/zdb": "1.2.2",
          "electrolinux/phpquery" :">=0.9.6" 
     },
 
