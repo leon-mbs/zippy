@@ -91,7 +91,8 @@ abstract class HtmlContainer extends HtmlComponent implements Requestable
     {
 
         if (!isset($this->components[$id])) {
-            throw new ZE(sprintf(ERROR_NOT_FOUND_CHILD, get_class($this), $this->id, $id));
+            $m =  sprintf(ERROR_NOT_FOUND_CHILD, get_class($this), $this->id, $id);
+            throw new ZE($m);
         };
 
         return $this->components[$id];
