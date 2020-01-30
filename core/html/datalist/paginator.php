@@ -28,11 +28,14 @@ class Paginator extends HtmlComponent implements Requestable
      * @param  DataList Объект  использующий  paginator
      * @param  ajax исппольховать  ajax
      */
-    public function __construct($id, \Zippy\Html\DataList\AbstractList $datalist, $ajax = false)
+    public function __construct($id, \Zippy\Html\DataList\AbstractList $datalist, $pagesize=0, $ajax = false)
     {
         parent::__construct($id);
         $this->datalist = $datalist;
         $this->ajax = $ajax;
+        if($pagesize>0){
+           $this->datalist->setPageSize($pagesize); 
+        }
     }
 
     /**
