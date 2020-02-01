@@ -54,7 +54,7 @@ class DateTime extends TextInput implements Requestable, ChangeListener
                 $url = substr($url, 2 + strpos($url, 'q='));
                 $_BASEURL = WebApplication::$app->getResponse()->getHostUrl();
 
-                $js = "$('#{$this->id}').dtpicker( {dateFormat : 'yy-m-d' ,onSelect: function() {  
+                $js = "$('#{$this->id}').pickatime( {format : 'HH:i' ,onSet: function() {  
                    $('#" . $formid . "_q').attr('value','" . $url . "'); submitForm('{$formid}','{$_BASEURL}/?ajax=true')
                 } }   );";
             }

@@ -10,9 +10,9 @@
     "type": "library",
    
     "require": {
-         "php": ">=7.1.0",
+         "php": ">=5.6.0",
          "mustache/mustache": "v2.13.0",
-         "leon-mbs/zdb": "1.2.5",
+         "leon-mbs/zdb": "1.2.6",
          "electrolinux/phpquery" :">=0.9.6" 
     },
 
