@@ -75,8 +75,10 @@ class ArrayDataSource implements DataSource
             }
             );
         }
-
-        return array_slice($list, $start, $count);
+        if ($start >= 0 or $count >= 0) {
+           return array_slice($list, $start, $count);
+        }
+        return $list;
     }
 
     /**
