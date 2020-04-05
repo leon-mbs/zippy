@@ -130,9 +130,9 @@ class DataTable extends AbstractList implements Requestable
                 $sort = "";
                 if ($column->fieldname === $this->sortf) {
                     if ($this->sortd === 'asc') {
-                        $sort = 'fa fa-sort-asc';
+                        $sort = 'fa fa-sort-down';
                     } else {
-                        $sort = 'fa fa-sort-desc';
+                        $sort = 'fa fa-sort-up';
                     }
                 }
                 $url = $this->getURLNode() . ':sort:' . $column->fieldname . ':' . ($this->sortd === 'asc' ? 'desc' : 'asc');
