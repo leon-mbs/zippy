@@ -13,7 +13,7 @@
          "php": ">=7.2.0",
          "mustache/mustache": "v2.13.0",
          "leon-mbs/zdb": "1.2.6",
-         "leon-mbs/phpquery" :">=0.9.6" 
+         "leon-mbs/phpquery" :">=1.0.0" 
     },
 
      "authors": [
