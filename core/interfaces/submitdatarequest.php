@@ -19,4 +19,3 @@ interface SubmitDataRequest
     public function clean();
 }
 
-?>

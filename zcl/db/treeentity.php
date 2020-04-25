@@ -158,7 +158,7 @@ abstract class TreeEntity extends Entity
             }
         } else {
             $id = $this->fields[$meta['keyfield']];
-            $conn->Execute("delete from {$meta['table']}  where " . $meta['pathfield'] . " like " . qstr('%' . sprintf('%08s', $id) . '%') . " and {$meta['keyfield']} != " . $id);
+            $conn->Execute("delete from {$meta['table']}  where " . $meta['pathfield'] . " like " . $conn->qstr('%' . sprintf('%08s', $id) . '%') . " and {$meta['keyfield']} != " . $id);
             return true;
         }
         return true;
@@ -207,5 +207,3 @@ abstract class TreeEntity extends Entity
          
     }
 }
-
-?>
