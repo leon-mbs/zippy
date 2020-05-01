@@ -15,11 +15,10 @@ class RadioList extends HtmlFormDataElement
 
     /**
      * Конструктор
-     * @param  string ID компонента
-     * @param  string Разделитель  между кнопками
+     * @param string ID компонента
+     * @param string Разделитель  между кнопками
      */
-    public function __construct($id, $delimiter = '')
-    {
+    public function __construct($id, $delimiter = '') {
         parent::__construct($id);
         $this->delimiter = $delimiter;
     }
@@ -30,8 +29,7 @@ class RadioList extends HtmlFormDataElement
      * @param string Текст возле  кнопки
      * @param array Список   аттрибутов
      */
-    public function AddRadio($value, $caption, $attributes = array())
-    {
+    public function AddRadio($value, $caption, $attributes = array()) {
         $this->list[] = array('value' => $value, 'caption' => $caption, 'attributes' => $attributes);
     }
 
@@ -39,8 +37,7 @@ class RadioList extends HtmlFormDataElement
      * Устанавливает значение
      * @param mixed значение
      */
-    public function setChecked($value)
-    {
+    public function setChecked($value) {
         $this->selectedvalue = $value;
     }
 
@@ -48,16 +45,14 @@ class RadioList extends HtmlFormDataElement
      * Возвращает  значение
      * @param mixed  Номер  в  списке
      */
-    public function getChecked()
-    {
+    public function getChecked() {
         return $this->selectedvalue;
     }
 
     /**
      * @see  HtmlComponent
      */
-    public function RenderImpl()
-    {
+    public function RenderImpl() {
         // $url = $this->owner->getURLNode()."::".$this->id ;
 
         $out = "";
@@ -79,14 +74,13 @@ class RadioList extends HtmlFormDataElement
     /**
      * @see SubmitDataRequest
      */
-    public function getRequestData()
-    {
+    public function getRequestData() {
 
         $this->selectedvalue = isset($_REQUEST[$this->id]) ? $_REQUEST[$this->id] : -1;
     }
 
-     public function clean(){
+    public function clean() {
         $this->setValue(0);
-     }    
-    
+    }
+
 }

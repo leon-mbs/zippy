@@ -18,17 +18,16 @@ class Pager extends HtmlComponent implements Requestable
 
     private $datalist;
     private $ajax;
-    protected $event=null;
-     
-  
+    protected $event = null;
+
+
     /**
      * Конструктор
      * @param string ID
-     * @param  DataList Объект  использующий  paginator
-     * @param  ajax исппользовать  ajax
+     * @param DataList Объект  использующий  paginator
+     * @param ajax исппользовать  ajax
      */
-    public function __construct($id, \Zippy\Html\DataList\AbstractList $datalist, $ajax = false)
-    {
+    public function __construct($id, \Zippy\Html\DataList\AbstractList $datalist, $ajax = false) {
         parent::__construct($id);
         $this->datalist = $datalist;
         $this->ajax = $ajax;
@@ -41,8 +40,7 @@ class Pager extends HtmlComponent implements Requestable
     /**
      * @see HtmlComponent
      */
-    protected final function RenderImpl()
-    {
+    protected final function RenderImpl() {
         $content = $this->getContent($this->datalist->getPageCount(), $this->datalist->getCurrentPage());
         $this->getTag()->html($content);
     }
@@ -50,68 +48,67 @@ class Pager extends HtmlComponent implements Requestable
     /**
      * Рендерит  список   страниц
      */
-    public function getContent($pages, $currentpage)
-    {
-        if ($pages == 1)
+    public function getContent($pages, $currentpage) {
+        if ($pages == 1) {
             return "";
+        }
 
- 
+
         $content = "";
-        
 
 
-        if ($currentpage >1) {
+        if ($currentpage > 1) {
             $content .= "<td align='left'><a      href=\"javascript:void(0);\" onclick=\"" . $this->getUrl($currentpage - 1) . "\"><i class=\"fa fa-arrow-left\"></i> следующие</a></td>";
-        }  
-        if ($currentpage < $pages ) {
+        }
+        if ($currentpage < $pages) {
             $content .= " <td align='right'> <a    href=\"javascript:void(0);\" onclick=\"" . $this->getUrl($currentpage + 1) . "\"> предыдущие <i class=\"fa fa-arrow-right\"></i></a></td>";
         }
-   
 
-    
+
         $content = $content . "</ul>";
         $countall = $this->datalist->getAllRowsCount();
-        $show =  $currentpage *  $this->datalist->getPageSize();
-        if($pages ==$currentpage) $show = $countall;
-        if($countall <=  $this->datalist->getPageSize()) $show = $countall;
-        
-        
-        if($countall>0){
-           $content = "<table class=\"w-100\"  ><tr><td width=\"125px\" valign='middle'>{$show}   строк из {$countall} &nbsp;&nbsp;&nbsp;&nbsp;</td> {$content}</tr></table>";
+        $show = $currentpage * $this->datalist->getPageSize();
+        if ($pages == $currentpage) {
+            $show = $countall;
         }
-        
-        return $content  ;
+        if ($countall <= $this->datalist->getPageSize()) {
+            $show = $countall;
+        }
+
+
+        if ($countall > 0) {
+            $content = "<table class=\"w-100\"  ><tr><td width=\"125px\" valign='middle'>{$show}   строк из {$countall} &nbsp;&nbsp;&nbsp;&nbsp;</td> {$content}</tr></table>";
+        }
+
+        return $content;
     }
 
     /**
      * @see  Requestable
      */
-    public final function RequestHandle()
-    {
+    public final function RequestHandle() {
         $p = WebApplication::$app->getRequest()->request_params[$this->id];
-        
+
         if ($this->event != null) {
-            $this->event->onEvent($this,$p[0]);
+            $this->event->onEvent($this, $p[0]);
         }
-         
+
         $this->datalist->setCurrentPage($p[0]);
         $this->datalist->Reload(false);
     }
- 
+
     /**
-    * устанавливает  обработчик  собыиий  на  переход  по  страницамю
-    * в  обработчике  событий кроме  sender  передается  второй параметр - номер  выбраной страницы  пагинацтора
-    * @param EventReceiver $receiver
-    * @param mixed $handler
-    */
-    public function onPage(EventReceiver $receiver, $handler)
-    {
+     * устанавливает  обработчик  собыиий  на  переход  по  страницамю
+     * в  обработчике  событий кроме  sender  передается  второй параметр - номер  выбраной страницы  пагинацтора
+     * @param EventReceiver $receiver
+     * @param mixed $handler
+     */
+    public function onPage(EventReceiver $receiver, $handler) {
         $this->event = new Event($receiver, $handler);
-    
+
     }
- 
-    private function getUrl($pageno)
-    {
+
+    private function getUrl($pageno) {
         $url = $this->owner->getURLNode();
 
         if ($this->ajax == true) {
@@ -128,22 +125,20 @@ class Pager extends HtmlComponent implements Requestable
     /**
      * Сбрасываем  в  начало
      */
-    public final function Reset()
-    {
+    public final function Reset() {
         $this->datalist->setCurrentPage(1);
     }
 
     /**
-    * Устанавливает нажписи на  кнопках
-    * 
-    * @param mixed $prev
-    * @param mixed $next
-    */
-    public function setLabes($prev,$next){
+     * Устанавливает нажписи на  кнопках
+     *
+     * @param mixed $prev
+     * @param mixed $next
+     */
+    public function setLabes($prev, $next) {
         $this->prev = $prev;
         $this->next = $next;
     }
 
-    
 
 }

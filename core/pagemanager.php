@@ -5,9 +5,9 @@ namespace Zippy;
 use \Zippy\Html\WebPage;
 
 /**
- * Менеджер  страниц. Содержит состояние объектов классов 
- * страниц  и их  историю. 
- * 
+ * Менеджер  страниц. Содержит состояние объектов классов
+ * страниц  и их  историю.
+ *
  */
 class PageManager
 {
@@ -23,13 +23,11 @@ class PageManager
      * @param WebPage страница
      * @return  int номер  страницы
      */
-    public final function putPage(WebPage $page)
-    {
+    public final function putPage(WebPage $page) {
         $page->beforeSaveToSession();
 
-        
-        
-        $this->pages[++$this->index] =  ($page);
+
+        $this->pages[++$this->index] = ($page);
         if ($this->index > self::HISTORY_SIZE) {
             $this->pages[$this->index - self::HISTORY_SIZE] = null;
         }
@@ -53,17 +51,15 @@ class PageManager
      * @param int  Версия  страницы
      * @return  WebPage   страница
      */
-    public final function getPage($number)
-    {
+    public final function getPage($number) {
         if (isset($this->pages[$number])) {
 
-            if($this->pages[$number] instanceof WebPage)
-            {
-                $page = ($this->pages[$number]); 
-            }   else {
-                $page = $this->unpack($this->pages[$number]);    
+            if ($this->pages[$number] instanceof WebPage) {
+                $page = ($this->pages[$number]);
+            } else {
+                $page = $this->unpack($this->pages[$number]);
             }
-            
+
 
             if ($page instanceof WebPage) {
                 $page->afterRestoreFromSession();
@@ -80,9 +76,8 @@ class PageManager
      * Возвращает  из сессии последнюю добавленую страницу
      * @return  WebPage  страница
      */
-    public final function getLastPage()
-    {
-        return  $this->getPage($this->index);
+    public final function getLastPage() {
+        return $this->getPage($this->index);
     }
 
     /**
@@ -91,53 +86,53 @@ class PageManager
      * @param int  Номер  страницы
      * @param mixed  Версия  страницы
      */
-    public final function updatePage(WebPage $page, $number)
-    {
+    public final function updatePage(WebPage $page, $number) {
 
         $page->beforeSaveToSession();
-        $this->pages[$number] =  ($page);
+        $this->pages[$number] = ($page);
     }
 
-    public function __sleep()
-    {
-       //упаковываем страницы
-       $pl = array();
-       foreach($this->pages as $n=>$p){
-          if($p instanceof WebPage){
-             $pl[]=$n;
-          } 
-       } 
-       foreach($pl as $n){
-          $this->pages[$n] = $this->pack($this->pages[$n]);  
-       } 
+    public function __sleep() {
+        //упаковываем страницы
+        $pl = array();
+        foreach ($this->pages as $n => $p) {
+            if ($p instanceof WebPage) {
+                $pl[] = $n;
+            }
+        }
+        foreach ($pl as $n) {
+            $this->pages[$n] = $this->pack($this->pages[$n]);
+        }
         return array('pages', 'index', 'pchain');
     }
 
-    public function __wakeup()
-    {
-        if (is_array($this->pages))
+    public function __wakeup() {
+        if (is_array($this->pages)) {
             return;
-       // $this->pages = @unserialize(@gzuncompress($this->pages));
+        }
+        // $this->pages = @unserialize(@gzuncompress($this->pages));
     }
 
     /**
      * возвращает класс предыдущей страницы
-     * 
+     *
      */
-    public function getPrevPage()
-    {
+    public function getPrevPage() {
         array_pop($this->pchain);
         return array_pop($this->pchain);
     }
 
-    
-    private function pack($page){
-        return  gzcompress(serialize($page)) ;
+
+    private function pack($page) {
+        return gzcompress(serialize($page));
     }
-    private function unpack($page){
-        $p=@gzuncompress($page);
-        if(strlen($p)==0) return null;
-        return   unserialize($p) ;
+
+    private function unpack($page) {
+        $p = @gzuncompress($page);
+        if (strlen($p) == 0) {
+            return null;
+        }
+        return unserialize($p);
     }
-    
+
 }

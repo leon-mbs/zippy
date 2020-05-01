@@ -16,13 +16,11 @@ use \Zippy\WebApplication;
 abstract class PageFragment extends HtmlContainer implements EventReceiver
 {
 
-  
 
     /**
      * @see  HtmlComponent
      */
-    public function Render()
-    {
+    public function Render() {
         // $template = 
         $htmltag = $this->getTag();
 
@@ -47,35 +45,31 @@ abstract class PageFragment extends HtmlContainer implements EventReceiver
      * Вызывается   страницей  владельцем  при обработке  HTTP запроса
      *
      */
-    public function RequestHandle()
-    {
+    public function RequestHandle() {
         $this->beforeRequest();
         parent::RequestHandle();
         $this->afterRequest();
     }
 
     /**
-     * Вызывается  перед  обработкой  HTTP   запроса 
+     * Вызывается  перед  обработкой  HTTP   запроса
      */
-    public function beforeRequest()
-    {
-        
+    public function beforeRequest() {
+
     }
 
     /**
      * Вызывается  после  обработки  HTTP  запроса
      */
-    public function afterRequest()
-    {
-        
+    public function afterRequest() {
+
     }
 
     /**
      * Возвращает  страницу-владельца
      * @return WebPage
      */
-    protected function getOwnerPage()
-    {
+    protected function getOwnerPage() {
         $owner = $this->getOwner();
         do {
             if ($owner instanceof \Zippy\Html\WebPage) {
@@ -90,22 +84,19 @@ abstract class PageFragment extends HtmlContainer implements EventReceiver
     /**
      * Вызывается  перед  обработкой  HTTP   запроса страницы
      */
-    public function beforeRequestPage()
-    {
-        
+    public function beforeRequestPage() {
+
     }
 
     /**
      * вызывается после  обработки  HTTP   запроса страницы
-     * 
+     *
      */
-    public function afterRequestPage()
-    {
-        
+    public function afterRequestPage() {
+
     }
 
-    protected function onAdded()
-    {
+    protected function onAdded() {
         $page = $this->getOwnerPage();
         if ($page instanceof \Zippy\Html\WebPage) {
             $page->addBeforeRequestEvent($this, 'beforeRequestPage');

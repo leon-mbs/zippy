@@ -24,7 +24,7 @@ abstract class HtmlComponent
     //  private $cssstyle = "";
     //   private $cssclass = "";
     protected $owner = null;
-     
+
     //   public  $uid;
     //  private   static  $uidcounter = 0;
     // protected $HtmlTag=null;
@@ -37,8 +37,7 @@ abstract class HtmlComponent
      * @param string
      */
 
-    public function __construct($id)
-    {
+    public function __construct($id) {
         if (!is_string($id) || strlen($id) == 0) {
             throw new ZE(sprintf(ERROR_INVALID_CREATE_ID, get_class($this)));
         }
@@ -52,32 +51,30 @@ abstract class HtmlComponent
         //   $this->uid = ++self::$uidcounter; // номер  екземпляра
     }
 
-    public function __toString()
-    {
+    public function __toString() {
         $str = get_class($this) . ' ' . $this->id;
-        if ($this->owner != null)
+        if ($this->owner != null) {
             $str = ' ' . $this->owner . '->' . get_class($this) . ' ' . $this->id;
+        }
         return $str;
     }
 
     /**
      * Установить   аттрибут для  отобюражения   в  HTML тэге
-     * @param  string  Имя  атрибута
+     * @param string  Имя  атрибута
      * @param string Значение аттрибута
      */
-    public function setAttribute($name, $value)
-    {
+    public function setAttribute($name, $value) {
 
         $this->attributes[$name] = $value;
     }
 
     /**
      * Получить  атрибут
-     * @param  string Имя  атрибута
+     * @param string Имя  атрибута
      * @return  string
      */
-    public function getAttribute($name)
-    {
+    public function getAttribute($name) {
         if (isset($this->attributes[$name])) {
             return $this->attributes[$name] instanceof Binding ? $this->attributes[$name]->getValue() : $this->attributes[$name];
         } else {
@@ -89,26 +86,23 @@ abstract class HtmlComponent
      * Возвращает список наименований аттрибутов
      * @return array
      */
-    public function getAttributeNames()
-    {
+    public function getAttributeNames() {
         return array_keys($this->attributes);
     }
 
     /**
      * Установка  коонтейнера -владельца
-     * @param  HtmlContainer Владелец
+     * @param HtmlContainer Владелец
      */
-    public function setOwner(HtmlContainer $owner)
-    {
+    public function setOwner(HtmlContainer $owner) {
         $this->owner = $owner;
     }
 
     /**
      * Вызывается  после  добавления   к  владельцу
      */
-    protected function onAdded()
-    {
-        
+    protected function onAdded() {
+
     }
 
     /**
@@ -116,17 +110,15 @@ abstract class HtmlComponent
      *
      * @return  HtmlContainer
      */
-    public function getOwner()
-    {
+    public function getOwner() {
         return $this->owner;
     }
 
     /**
      *  Возвращает ссылку на объект страницы в которую добавлен  компонент
-     *  @return  WebPage
+     * @return  WebPage
      */
-    public function getPageOwner()
-    {
+    public function getPageOwner() {
         if ($this->owner == null) {
             return null;
         }
@@ -139,10 +131,9 @@ abstract class HtmlComponent
 
     /**
      *  Возвращает ссылку на объект формы в которую добавлен  компонент
-     *  @return  Form
+     * @return  Form
      */
-    public function getFormOwner()
-    {
+    public function getFormOwner() {
         if ($this->owner == null) {
             return null;
         }
@@ -158,8 +149,7 @@ abstract class HtmlComponent
      * Невидимый  компонент  не  рендерится
      * @param boolean
      */
-    public function setVisible($visible)
-    {
+    public function setVisible($visible) {
         $this->visible = $visible;
     }
 
@@ -167,25 +157,22 @@ abstract class HtmlComponent
      * Прверяет  видимость  компонента
      * @return  boolean
      */
-    public function isVisible()
-    {
+    public function isVisible() {
         return $this->visible;
     }
 
     /**
      *  Метод  перегружаемый  компонентами  для  имплементации  своего  рендеринга
      */
-    protected function RenderImpl()
-    {
-        
+    protected function RenderImpl() {
+
     }
 
     /**
      * Метод  отвечающий  за  рендеринг  компонента
-     * @param  MarkupXmlNode
+     * @param MarkupXmlNode
      */
-    public function Render()
-    {
+    public function Render() {
 
         $HtmlTag = $this->getTag();
 
@@ -234,8 +221,7 @@ abstract class HtmlComponent
     /**
      * Возвращает  ссылку  на  HTML таг. Используется  библиотека  PHPQuery
      */
-    protected function getTag($tagname = "")
-    {
+    protected function getTag($tagname = "") {
         $HtmlTag = pq(strtolower($tagname) . '[zippy="' . $this->id . '"]');
         if (strlen($tagname) > 0 && $HtmlTag->size() == 0) {
             $HtmlTag = pq(strtoupper($tagname) . '[zippy="' . $this->id . '"]');
@@ -265,27 +251,23 @@ abstract class HtmlComponent
      * Метод, вызываемый  перед  рендерингом
      * в качестве  параметра передаются   атрибуты с  html тега
      */
-    protected function beforeRender()
-    {
-        
+    protected function beforeRender() {
+
     }
 
     /**
      * Метод, вызываемый после рендерингв
      */
-    protected function afterRender()
-    {
-        
+    protected function afterRender() {
+
     }
 
-     
 
     /**
      * возвращает  связаный  тег
      *
      */
-    protected function getLabelTag()
-    {
+    protected function getLabelTag() {
         return pq('[data-label="' . $this->id . '"]');
     }
 

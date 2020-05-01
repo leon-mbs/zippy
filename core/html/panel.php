@@ -12,12 +12,12 @@ class Panel extends HtmlContainer implements \Zippy\Interfaces\ClickListener, \Z
 
     protected $event = null;
 
-    public function RenderImpl()
-    {
+    public function RenderImpl() {
         parent::RenderImpl();
 
-        if ($this->event == null)
+        if ($this->event == null) {
             return;
+        }
 
         if ($this->event->isajax == false) {
             $url = $this->owner->getURLNode() . "::" . $this->id;
@@ -44,8 +44,7 @@ class Panel extends HtmlContainer implements \Zippy\Interfaces\ClickListener, \Z
     /**
      * @see  Requestable
      */
-    public function RequestHandle()
-    {
+    public function RequestHandle() {
         parent::RequestHandle();
         $this->OnEvent();
         // WebApplication::getApplication()->setReloadPage();
@@ -54,8 +53,7 @@ class Panel extends HtmlContainer implements \Zippy\Interfaces\ClickListener, \Z
     /**
      * @see  ClickListener
      */
-    public function onClick(\Zippy\Interfaces\EventReceiver $receiver, $handler, $ajax = false)
-    {
+    public function onClick(\Zippy\Interfaces\EventReceiver $receiver, $handler, $ajax = false) {
         $this->setClickHandler($receiver, $handler);
         $this->event->isajax = $ajax;
     }
@@ -63,8 +61,7 @@ class Panel extends HtmlContainer implements \Zippy\Interfaces\ClickListener, \Z
     /**
      * @see ClickListener
      */
-    public function OnEvent()
-    {
+    public function OnEvent() {
         if ($this->event != null) {
             $this->event->onEvent($this);
         }
@@ -76,15 +73,14 @@ class Panel extends HtmlContainer implements \Zippy\Interfaces\ClickListener, \Z
      * В  панели  не  должно быть клиентских компонентов  требующих инициализацию
      * с  помощью javascript.
      */
-    public function AjaxAnswer()
-    {
+    public function AjaxAnswer() {
         $HtmlTag = pq('[zippy="' . $this->id . '"]');
         $html = $HtmlTag->html();
 
-        $html=json_encode($html);
+        $html = json_encode($html);
 
         $js = "var _h =  {$html} ;   ";
-        
+
         $js .= "$('#{$this->id}').html(_h);";
 
         return $js;

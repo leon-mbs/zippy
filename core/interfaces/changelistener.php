@@ -11,8 +11,8 @@ interface ChangeListener
 
     /**
      * Устанавливает обработчик  события
-     * @param  mixed  Объект
-     * @param  string Имя  метода - обработчика
+     * @param mixed  Объект
+     * @param string Имя  метода - обработчика
      */
     public function onChange(EventReceiver $receiver, $handler, $ajax = true);
 }

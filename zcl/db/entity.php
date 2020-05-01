@@ -18,8 +18,7 @@ abstract class Entity extends \ZDB\Entity implements \Zippy\Interfaces\DataItem
      *
      */
 
-    function __construct($row = null)
-    {
+    function __construct($row = null) {
         parent::__construct($row);
     }
 
@@ -27,8 +26,7 @@ abstract class Entity extends \ZDB\Entity implements \Zippy\Interfaces\DataItem
      * Возвращает значение  уникального  ключа  сущности
      *
      */
-    public final function getID()
-    {
+    public final function getID() {
         return parent::getKeyValue();
     }
 

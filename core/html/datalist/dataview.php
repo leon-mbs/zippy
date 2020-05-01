@@ -18,21 +18,20 @@ use \Zippy\WebApplication;
  *  события  rowevent
  *
  */
-class DataView extends AbstractList  implements \Zippy\Interfaces\Requestable
+class DataView extends AbstractList implements \Zippy\Interfaces\Requestable
 {
 
     private $rowevent = null;
     private $selectedRow = null;
     private $selectedclass = "";
     private $cellclickevent = null;
-  
+
     /**
      * Конструктор
-     * @param  mixed  ID  компонента
-     * @param  mixed   Провадер  данных для  таблицы
+     * @param mixed  ID  компонента
+     * @param mixed   Провадер  данных для  таблицы
      */
-    public function __construct($id, $DataSource, EventReceiver $receiver, $handler)
-    {
+    public function __construct($id, $DataSource, EventReceiver $receiver, $handler) {
         AbstractList::__construct($id, $DataSource);
 
         $this->rowevent = new Event($receiver, $handler);
@@ -41,8 +40,7 @@ class DataView extends AbstractList  implements \Zippy\Interfaces\Requestable
     /**
      * Обновляет  данные  с  провайдера
      */
-    public function Reload($resetpage = true)
-    {
+    public function Reload($resetpage = true) {
         parent::Reload($resetpage);
 
         $this->components = array();
@@ -53,18 +51,17 @@ class DataView extends AbstractList  implements \Zippy\Interfaces\Requestable
         foreach ($list as $item) {           //$datarow = new DataRow($this->id,$list[0]);
             $datarow = new DataRow($this->id, $item, $i++, $i - 1 + $this->pagesize * ($this->currentpage - 1));
             $this->add($datarow);
-            if($this->rowevent instanceof Event){
-               $this->rowevent->onEvent($datarow); //вызов  обработчика добавляющего  данные  или   елементы  в  строку   
+            if ($this->rowevent instanceof Event) {
+                $this->rowevent->onEvent($datarow); //вызов  обработчика добавляющего  данные  или   елементы  в  строку
             }
             $datarow->updateChildId();
-            if($this->selectedRow instanceof DataRow) {
-       if ($datarow->getAllNumber() == $this->selectedRow->getAllNumber() && $this->selectedclass != "") {
-                $datarow->setAttribute('class', $this->selectedclass);
-        }      
+            if ($this->selectedRow instanceof DataRow) {
+                if ($datarow->getAllNumber() == $this->selectedRow->getAllNumber() && $this->selectedclass != "") {
+                    $datarow->setAttribute('class', $this->selectedclass);
+                }
             }
-           
-                   
-            
+
+
         }
     }
 
@@ -77,11 +74,10 @@ class DataView extends AbstractList  implements \Zippy\Interfaces\Requestable
     /**
      * @see HtmlComponent
      */
-    public final function RenderImpl()
-    {
+    public final function RenderImpl() {
         // $this->UpdateData() ;
 
-        
+
         $rowtag = pq('[zippy=' . $this->id . ']');
 
         if ($rowtag->size() == 0) {
@@ -121,18 +117,18 @@ class DataView extends AbstractList  implements \Zippy\Interfaces\Requestable
                     pq($child)->attr("id", $id . $_id);
                 }
             }
-            
+
             if ($this->cellclickevent instanceof \Zippy\Event) {
-                $url = $this->getURLNode() .  ':' . ($i-1);
-                $onclick = "window.location='{$url}'";  
+                $url = $this->getURLNode() . ':' . ($i - 1);
+                $onclick = "window.location='{$url}'";
                 $onclick = "  " . $onclick . "  ";
                 $style = "  cursor:pointer; ";
                 $row->setAttribute('style', $style);
                 $row->setAttribute('onclick', $onclick);
-                 pq($row)->attr("style",   $style);
-                 pq($row)->attr("onclick",   $onclick);
-            }             
-            
+                pq($row)->attr("style", $style);
+                pq($row)->attr("onclick", $onclick);
+            }
+
         }
 
 
@@ -152,19 +148,17 @@ class DataView extends AbstractList  implements \Zippy\Interfaces\Requestable
      *
      * @param mixed  Выделяемая строка
      */
-    public function setSelectedRow(DataRow $row=null)
-    { 
- 
-          $this->selectedRow=$row;
- 
+    public function setSelectedRow(DataRow $row = null) {
+
+        $this->selectedRow = $row;
+
     }
 
     /**
      * Возвращает  номер  выделеной  строки
      *
      */
-    public function getSelectedRow()
-    {
+    public function getSelectedRow() {
         return $this->selectedRow;
     }
 
@@ -173,34 +167,31 @@ class DataView extends AbstractList  implements \Zippy\Interfaces\Requestable
      *
      * @param mixed $selectedclass
      */
-    public function setSelectedClass($selectedclass)
-    {
+    public function setSelectedClass($selectedclass) {
         $this->selectedclass = $selectedclass;
     }
 
-    public final function setCellClickEvent(\Zippy\Interfaces\EventReceiver $receiver, $handler)
-    {
+    public final function setCellClickEvent(\Zippy\Interfaces\EventReceiver $receiver, $handler) {
         $this->cellclickevent = new \Zippy\Event($receiver, $handler);
-    }  
-    
-    public final function RequestHandle()
-    { 
+    }
+
+    public final function RequestHandle() {
         parent::RequestHandle();
-    
+
         $p = WebApplication::$app->getRequest()->request_params[$this->id];
         if ($this->cellclickevent instanceof \Zippy\Event) {
-            
-           
+
+
             $srow = null;
-            foreach($this->getDataRows() as $row)   {
-                  if($row->getNumber() == $p[0] ){
-                       $srow   = $row;
-                  }
+            foreach ($this->getDataRows() as $row) {
+                if ($row->getNumber() == $p[0]) {
+                    $srow = $row;
+                }
             }
-           
+
             $this->cellclickevent->onEvent($srow);
-             
+
         }
-        
-    }  
+
+    }
 }

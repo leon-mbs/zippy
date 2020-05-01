@@ -18,18 +18,16 @@ class HttpResponse
     private $redirect = "";
     public $page404 = null;
 
-    public function __construct()
-    {
+    public function __construct() {
         //$this->setRequestIndex(WebApplication::$app->getRequest()->getRequestIndex())
-         
+
     }
 
     /**
      * Формирует  выходной  поток  данных
      * @return string
      */
-    public function output()
-    {
+    public function output() {
         if (strlen($this->redirect) > 0) {
             header("Location: " . $this->redirect);
             // echo "<script>window.location='{$this->redirect}'</script>";
@@ -69,8 +67,7 @@ class HttpResponse
      * редирект на  главную  страницу
      *
      */
-    public function toIndexPage()
-    {
+    public function toIndexPage() {
         $this->redirect = "/";
         // header("Location: /index.php");
         //  die;
@@ -80,8 +77,7 @@ class HttpResponse
      * Редирект непосредственно  по  адресу
      *
      */
-    public function toPage($url)
-    {
+    public function toPage($url) {
         $this->redirect = $url;
     }
 
@@ -90,8 +86,7 @@ class HttpResponse
      * (применяется  для "сброса" адресной  строки
      *
      */
-    public function toBaseUrl()
-    {
+    public function toBaseUrl() {
         if (strlen($this->redirect) == 0) { //если  не  было редиректа
             $this->redirect = $this->getBaseUrl();
         }
@@ -102,24 +97,22 @@ class HttpResponse
      *
      * @param mixed $js
      */
-    public function addAjaxResponse($js)
-    {
+    public function addAjaxResponse($js) {
 
-        $this->content .= ( $js . "\n");
+        $this->content .= ($js . "\n");
     }
 
     /**
      * Вставляет  JavaScript  в  конец   выходного  потока
      * @param string  Код  скрипта
-     * @param  boolean Если  true  - вставка  после  загрузки  документа в  браузер
+     * @param boolean Если  true  - вставка  после  загрузки  документа в  браузер
      */
-    public function addJavaScript($js, $docready = false)
-    {
+    public function addJavaScript($js, $docready = false) {
 
         if ($docready === true) {
-            $this->JSrenderDocReady .= ( $js . "\n");
+            $this->JSrenderDocReady .= ($js . "\n");
         } else {
-            $this->JSrender .= ( $js . "\n");
+            $this->JSrender .= ($js . "\n");
         }
     }
 
@@ -127,8 +120,7 @@ class HttpResponse
      * Возвращает  результирующий  JavaScript  код  при  формировании  выходного  HTML  потока
      * @return  string JavaScript  код
      */
-    private function getJS()
-    {
+    private function getJS() {
 
         if (strlen($this->JSrenderDocReady . $this->JSrender) == 0) {
             return "";
@@ -148,8 +140,7 @@ class HttpResponse
         $js .= $this->JSrender . "
 
 
-                    </script>"
-        ;
+                    </script>";
 
         return $js;
     }
@@ -158,8 +149,7 @@ class HttpResponse
      *  Возвращает для  дочерних елементов базовую  часть  URL с  номером и  версией страницы
      * @return string
      */
-    public final function getBaseUrl()
-    {
+    public final function getBaseUrl() {
         //$pagename = get_class(WebApplication::$app->getCurrentPage());
         //$pagename = str_replace("\\", "/", $pagename);
         //return $this->getHostUrl() . "/?q=" . $pagename . ":" . $this->pageindex;
@@ -174,8 +164,7 @@ class HttpResponse
      * @param array массив параметров страницы
      *
      */
-    public final function Redirect($name, $arg1 = null, $arg2 = null, $arg3 = null, $arg4 = null, $arg5 = null)
-    {
+    public final function Redirect($name, $arg1 = null, $arg2 = null, $arg3 = null, $arg4 = null, $arg5 = null) {
         if ($name instanceof \Zippy\Html\WebPage) {
             $name = get_class($name);
         }
@@ -183,12 +172,11 @@ class HttpResponse
         WebApplication::$app->LoadPage($name, $arg1, $arg2, $arg3, $arg4, $arg5);
         //   $url = "/index.php?q=" . $this->getPageManager()->session->putPage($this->currentpage) . "::1";
         //   $this->saveSession(serialize($this->session));
-        $this->toBaseUrl($name);
+        $this->toBaseUrl();
         $this->output();
     }
 
-    public final function setContent($content)
-    {
+    public final function setContent($content) {
         $this->content = $content;
     }
 
@@ -196,8 +184,7 @@ class HttpResponse
      *
      * @return string
      */
-    public final function getHostUrl()
-    {
+    public final function getHostUrl() {
         $http = empty($_SERVER["HTTPS"]) ? 'http' : 'https';
 
         $url = $http . "://" . $_SERVER["HTTP_HOST"];
@@ -206,18 +193,15 @@ class HttpResponse
         return $url;
     }
 
-    public final function setPageIndex($index)
-    {
+    public final function setPageIndex($index) {
         $this->pageindex = $index;
     }
 
-    public final function setGzip($gzip)
-    {
+    public final function setGzip($gzip) {
         $this->gzip = $gzip;
     }
 
-    public final function isRedirect()
-    {
+    public final function isRedirect() {
         return strlen($this->redirect) > 0;
     }
 
@@ -225,11 +209,10 @@ class HttpResponse
      * Перенаправляет на  страницу 404
      *
      */
-    public function to404Page()
-    {
-        
-            header("HTTP/1.0 404 Not Found"); 
-     
+    public function to404Page() {
+
+        header("HTTP/1.0 404 Not Found");
+
         die;
     }
 

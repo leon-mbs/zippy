@@ -115,8 +115,8 @@ div.ganttview-block-container {
 div.ganttview-block {
     position: relative;
     height: 25px;
-    background-color: red
-        border: 1px solid #c0c0c0;
+    background-color: red;
+    border: 1px solid #c0c0c0;
     border-radius: 3px;
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;

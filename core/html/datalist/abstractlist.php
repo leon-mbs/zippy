@@ -18,11 +18,10 @@ abstract class AbstractList extends HtmlContainer
 
     /**
      * Конструктор
-     * @param  ID компонента
-     * @param  Zippy\Interfaces\DataSource Источник данных
+     * @param ID компонента
+     * @param Zippy\Interfaces\DataSource Источник данных
      */
-    public function __construct($id, $DataSource)
-    {
+    public function __construct($id, $DataSource) {
         HtmlContainer::__construct($id);
         $this->DataSource = $DataSource;
         $this->pagesize = PHP_INT_MAX;
@@ -31,28 +30,25 @@ abstract class AbstractList extends HtmlContainer
     /**
      * Возвращает  количество  всех  строк  в  наборе
      */
-    public function getAllRowsCount()
-    {
-        
-        if($this->rowscount == -1){
-           $this->rowscount = $this->DataSource->getItemCount() ;    
-        }        
+    public function getAllRowsCount() {
+
+        if ($this->rowscount == -1) {
+            $this->rowscount = $this->DataSource->getItemCount();
+        }
         return $this->rowscount;
     }
 
     /**
      * Возвращает  количество  всех  строк  на  текущей  странице
      */
-    public function getPageRowsCount()
-    {
+    public function getPageRowsCount() {
         return $this->pagerowscount;
     }
 
     /**
      *  Возвращает  размер  страницы
      */
-    public function getPageSize()
-    {
+    public function getPageSize() {
         return $this->pagesize;
     }
 
@@ -60,13 +56,13 @@ abstract class AbstractList extends HtmlContainer
      * Устанавливает размер  страницы  данных
      * @param int Количество строк в странице данных
      */
-    public function setPageSize($pagesize)
-    {
-        if($pagesize>0)
-           $this->pagesize = $pagesize;
-        else 
-           $this->pagesize = 20;
-        
+    public function setPageSize($pagesize) {
+        if ($pagesize > 0) {
+            $this->pagesize = $pagesize;
+        } else {
+            $this->pagesize = 20;
+        }
+
         $this->currentpage = 1;
         // $this->Reload();
     }
@@ -75,8 +71,7 @@ abstract class AbstractList extends HtmlContainer
      * Возвращает  номер  текущей  страницы
      * @return int
      */
-    public function getCurrentPage()
-    {
+    public function getCurrentPage() {
         return $this->currentpage;
     }
 
@@ -85,8 +80,7 @@ abstract class AbstractList extends HtmlContainer
      * @param int Номер  страницы
      * @see Paginator
      */
-    public function setCurrentPage($page)
-    {
+    public function setCurrentPage($page) {
         if ($page > 0 && $page <= $this->getPageCount()) {
             $this->currentpage = $page;
         } else {
@@ -101,9 +95,8 @@ abstract class AbstractList extends HtmlContainer
     /**
      * Количество  страниц  в  списке
      */
-    public final function getPageCount()
-    {
-   
+    public final function getPageCount() {
+
         $rowcount = $this->getAllRowsCount();
         return ceil($rowcount / $this->pagesize);
     }
@@ -111,12 +104,11 @@ abstract class AbstractList extends HtmlContainer
     /**
      * Обновляет  данные  с  провайдера
      */
-    public function Reload($resetpage = true)
-    {
-        
+    public function Reload($resetpage = true) {
+
         if ($resetpage) {
             $this->setCurrentPage(1);
-            $this->rowscount = -1 ;
+            $this->rowscount = -1;
         }
     }
 
@@ -124,22 +116,19 @@ abstract class AbstractList extends HtmlContainer
      * Возвращает  ссылку  на  источник данных
      *
      */
-    public function getDataSource()
-    {
+    public function getDataSource() {
         return $this->DataSource;
     }
-    
-    public function setDataSource($ds)
-    {
-          $this->DataSource = $ds;
+
+    public function setDataSource($ds) {
+        $this->DataSource = $ds;
     }
 
 
     /**
      * Возвращает  данные  текущей страницы
      */
-    protected function getItems()
-    {
+    protected function getItems() {
         $list = $this->DataSource->getItems($this->pagesize * ($this->currentpage - 1), $this->getPageSize(), $this->sortf, $this->sortd);
         $this->pagerowscount = count($list);
         return is_array($list) ? $list : array();
@@ -149,8 +138,7 @@ abstract class AbstractList extends HtmlContainer
      * Возвращает  массив  строк
      * return  array
      */
-    public function getDataRows()
-    {
+    public function getDataRows() {
         $list = array();
         foreach ($this->components as $child) {
             if ($child instanceof DataRow) {
@@ -163,8 +151,7 @@ abstract class AbstractList extends HtmlContainer
     /**
      * @see HtmlComponent
      */
-    public function Render()
-    {
+    public function Render() {
 
         $this->beforeRender();
         $this->RenderImpl();
@@ -175,8 +162,7 @@ abstract class AbstractList extends HtmlContainer
      * Устанавливает  имя  поля  и направление  сортировки.
      * Установленные  параметры  передаютя  провайдеру  данных
      */
-    public final function setSorting($field, $asc = 'asc')
-    {
+    public final function setSorting($field, $asc = 'asc') {
         $this->sortf = $field;
         $this->sortd = $asc;
     }

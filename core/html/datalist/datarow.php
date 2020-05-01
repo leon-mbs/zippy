@@ -21,8 +21,7 @@ class DataRow extends HtmlContainer
      * @param DataItem Елемент данных  отображаемый  строкой  таблицы
      * @param mixed Номер строки
      */
-    public function __construct($id, DataItem $dataitem, $number, $allnumber = "")
-    {
+    public function __construct($id, DataItem $dataitem, $number, $allnumber = "") {
         HtmlComponent::__construct($id . "_" . $number);
         $this->dataitem = $dataitem;
         $this->number = $number;
@@ -33,8 +32,7 @@ class DataRow extends HtmlContainer
      * Установить данные  в  строку
      * @param DataItem Елемент данных  отображаемый  строкой  таблицы
      */
-    public function setDataItem($dataitem)
-    {
+    public function setDataItem($dataitem) {
         $this->dataitem = $dataitem;
     }
 
@@ -42,8 +40,7 @@ class DataRow extends HtmlContainer
      * Возвращает уникальный  ключ  елемента  данных
      * @return  string
      */
-    public function getItemId()
-    {
+    public function getItemId() {
         if ($this->dataitem instanceof DataItem) {
             return $this->dataitem->getID();
         } else {
@@ -55,23 +52,21 @@ class DataRow extends HtmlContainer
      * Возвращает  елемент данных
      * @return DataItem
      */
-    public function getDataItem()
-    {
+    public function getDataItem() {
         return $this->dataitem;
     }
 
     /**
      * Добавляет  компонент  в строку-контейнер
      * переопределяет  родительский  метод
-     * @param  HtmlComponent добавляемый  компонент
+     * @param HtmlComponent добавляемый  компонент
      */
-    public function add(HtmlComponent $component)
-    {
+    public function add(HtmlComponent $component) {
 
         if (isset($this->components[$component->id]) || isset($this->components[$component->id . ":" . $this->number])) {
             //   $id = substr($component->id,0,strpos($component->id,':'));
             //   $pid = substr($this->id,0,strpos($this->id,':'));
-            throw new ZE(sprintf(ERROR_DATAROW_COMPONENT_EXISTS, $component->id, $pid));
+            throw new ZE(sprintf(ERROR_DATAROW_COMPONENT_EXISTS, $component->id ));
         }
         $this->components[$component->id] = $component;
         $component->setOwner($this);
@@ -81,8 +76,7 @@ class DataRow extends HtmlContainer
     /**
      *  Обновляет  ID компонентов  строки  с  воответствии с  номером  строки
      */
-    public function updateChildId()
-    {
+    public function updateChildId() {
         $allchild = $this->getChildComponents(true);
         foreach ($allchild as $component) {
             $_id = $component->id;
@@ -110,8 +104,7 @@ class DataRow extends HtmlContainer
      * Номер  строки на  текущей странице
      * @return  int
      */
-    public function getNumber()
-    {
+    public function getNumber() {
         return $this->number;
     }
 
@@ -119,8 +112,7 @@ class DataRow extends HtmlContainer
      * Номер  строки данных из  всего набора
      * @return  int
      */
-    public function getAllNumber()
-    {
+    public function getAllNumber() {
         return $this->allnumber;
     }
 
@@ -128,8 +120,7 @@ class DataRow extends HtmlContainer
      * Возвращает дочерний элемент  по  ID
      * @return
      */
-    public function getChildElement($id)
-    {
+    public function getChildElement($id) {
         return $this->{$id . '_' . $this->getNumber()};
     }
 
@@ -137,10 +128,9 @@ class DataRow extends HtmlContainer
      * Получить  дочерний   компонент
      *
      * @param string  ID компонента
-     * @param  boolean Если  false  - искать  только непосредственнно  вложенных
+     * @param boolean Если  false  - искать  только непосредственнно  вложенных
      */
-    public function getComponent($id, $desc = true)
-    {
+    public function getComponent($id, $desc = true) {
         $c = parent::getComponent($id, $desc);
         if ($c instanceof HtmlComponent) {
             return $c;

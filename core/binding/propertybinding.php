@@ -16,7 +16,7 @@ class PropertyBinding implements Binding
 
     /**
      * Конструктор
-     * @param  mixed Объект
+     * @param mixed Объект
      * @param string  Название  свойства  объекта (должно быть public)
      *
      * class Myobj
@@ -29,14 +29,12 @@ class PropertyBinding implements Binding
      *  new PropertyBinding($o,'myvalue');
      *
      */
-    public function __construct($obj, $propertyname)
-    {
+    public function __construct($obj, $propertyname) {
         $this->obj = $obj;
         $this->propertyname = $propertyname;
     }
 
-    public function getValue()
-    {
+    public function getValue() {
         if (false) {
             if (!in_array($this->propertyname, array_keys(get_object_vars($this->obj)), false)) {
                 throw new \Zippy\Exception(sprintf(ERROR_NOT_FOUND_PROPERTY_BINDING, $this->propertyname, get_class($this->obj)));
@@ -45,13 +43,11 @@ class PropertyBinding implements Binding
         return $this->obj->{$this->propertyname};
     }
 
-    public function getPropertyName()
-    {
+    public function getPropertyName() {
         return $this->propertyname;
     }
 
-    public function setValue($data)
-    {
+    public function setValue($data) {
         if (false) {
             if (!in_array($this->propertyname, array_keys(get_object_vars($this->obj)), false)) {
                 throw new \Zippy\Exception(sprintf(ERROR_NOT_FOUND_PROPERTY_BINDING, $this->propertyname, get_class($this->obj)));

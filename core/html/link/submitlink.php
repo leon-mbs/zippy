@@ -19,12 +19,11 @@ class SubmitLink extends AbstractLink implements ClickListener, Requestable
 
     /**
      * Конструктор
-     * @param  string ID компонента
-     * @param  EventReceiver Объект с методом  обработки  события
-     * @param  string Имя  мтода-обработчика
+     * @param string ID компонента
+     * @param EventReceiver Объект с методом  обработки  события
+     * @param string Имя  мтода-обработчика
      */
-    public function __construct($id, EventReceiver $receiver = null, $handler = null, $ajax = false)
-    {
+    public function __construct($id, EventReceiver $receiver = null, $handler = null, $ajax = false) {
         parent::__construct($id);
 
         if (is_object($receiver) && strlen($handler) > 0) {
@@ -35,8 +34,7 @@ class SubmitLink extends AbstractLink implements ClickListener, Requestable
     /**
      * @see HtmlComponent
      */
-    public function RenderImpl()
-    {
+    public function RenderImpl() {
         parent::RenderImpl();
         if ($this->getFormOwner() == null) {
             throw new \Zippy\Exception("Element '" . $this->id . "' outside   FORM tag");
@@ -65,23 +63,20 @@ class SubmitLink extends AbstractLink implements ClickListener, Requestable
     /**
      * @see  Requestable
      */
-    public function RequestHandle()
-    {
+    public function RequestHandle() {
         $this->OnEvent();
     }
 
     /**
      * @see ClickListener
      */
-    public function OnEvent()
-    {
+    public function OnEvent() {
         if ($this->event != null) {
             $this->event->onEvent($this);
         }
     }
 
-    public function onClick(EventReceiver $receiver, $handler, $ajax = false)
-    {
+    public function onClick(EventReceiver $receiver, $handler, $ajax = false) {
         $this->event = new Event($receiver, $handler);
         $this->event->isajax = $ajax;
     }

@@ -12,7 +12,7 @@ use \Zippy\Event;
 
 /**
  * Компонент отображающий  список  ссылок
- * 
+ *
  */
 class LinkList extends HtmlComponent implements ClickListener, Requestable
 {
@@ -24,11 +24,10 @@ class LinkList extends HtmlComponent implements ClickListener, Requestable
 
     /**
      * Конструктор
-     * @param  string ID компонента
-     * @param  string Разделитель  между ссылками
+     * @param string ID компонента
+     * @param string Разделитель  между ссылками
      */
-    public function __construct($id, $delimiter = ' ')
-    {
+    public function __construct($id, $delimiter = ' ') {
         parent::__construct($id);
         $this->delimiter = $delimiter;
     }
@@ -36,8 +35,7 @@ class LinkList extends HtmlComponent implements ClickListener, Requestable
     /**
      * @see  HtmlComponent
      */
-    public function RenderImpl()
-    {
+    public function RenderImpl() {
         $url = $this->owner->getURLNode() . "::" . $this->id;
 
         $out = "";
@@ -96,10 +94,9 @@ class LinkList extends HtmlComponent implements ClickListener, Requestable
      * Добавляет к  списку аналог ClickLink
      * @param mixed Значение  привязанное  к  ссылке
      * @param string Текст  ссылки
-     * @param  array список   аттрибутов
+     * @param array список   аттрибутов
      */
-    public function AddClickLink($value, $caption, $attributes = array())
-    {
+    public function AddClickLink($value, $caption, $attributes = array()) {
         $this->list[count($this->list) + 1] = array('type' => 'click', 'value' => $value, 'caption' => $caption, 'attributes' => $attributes, 'selected' => false, 'disabled' => false);
     }
 
@@ -107,37 +104,36 @@ class LinkList extends HtmlComponent implements ClickListener, Requestable
      * Добавляет к  списку аналог BookmarkableLink
      * @param mixed Адрес  ссылки
      * @param string Текст  ссылки
-     * @param  array список   аттрибутов
+     * @param array список   аттрибутов
      */
-    public function AddBookmarkableLink($href, $caption, $attributes = array())
-    {
+    public function AddBookmarkableLink($href, $caption, $attributes = array()) {
         $this->list[count($this->list) + 1] = array('type' => 'bookmarkable', 'href' => $href, 'caption' => $caption, 'attributes' => $attributes, 'selected' => false, 'disabled' => false);
     }
 
     /**
      * Добавляет к  списку аналог RedirectLink
      * @param mixed Страница
-     * @param  array список  параметров  страницы
+     * @param array список  параметров  страницы
      * @param string Текст ссылки
-     * @param  array список аттрибутов
+     * @param array список аттрибутов
      */
-    public function AddRedirectLink($page, $params, $caption, $attributes = array(), $bookmarkable = true, $encode = false)
-    {
+    public function AddRedirectLink($page, $params, $caption, $attributes = array(), $bookmarkable = true, $encode = false) {
         $this->list[count($this->list) + 1] = array('type' => 'redirect', 'page' => $page, 'params' => $params, 'caption' => $caption, 'attributes' => $attributes, 'bookmarkable' => $bookmarkable, 'encode' => $encode, 'selected' => false, 'disabled' => false);
     }
 
     /**
      * @see Requestable
      */
-    public function RequestHandle()
-    {
+    public function RequestHandle() {
 
         $p = WebApplication::$app->getRequest()->request_params[$this->id];
-        if (!is_numeric($p[0]))
+        if (!is_numeric($p[0])) {
             return;
+        }
         $item = $this->list[$p[0]];
-        if (!is_array($item))
+        if (!is_array($item)) {
             return;
+        }
         if ($item['type'] == 'click') {
             $this->selectedvalue = $item['value'];
             $this->setSelected($p[0]);
@@ -151,8 +147,7 @@ class LinkList extends HtmlComponent implements ClickListener, Requestable
     /**
      * @see ClickListener
      */
-    public function onClick(\Zippy\Interfaces\EventReceiver $receiver, $handler, $ajax = false)
-    {
+    public function onClick(\Zippy\Interfaces\EventReceiver $receiver, $handler, $ajax = false) {
         $this->event = new Event($receiver, $handler);
         $this->event->isajax = $ajax;
     }
@@ -160,8 +155,7 @@ class LinkList extends HtmlComponent implements ClickListener, Requestable
     /**
      * Вызывает  событие
      */
-    public function OnEvent()
-    {
+    public function OnEvent() {
         if ($this->event != null) {
             $this->event->onEvent($this);
         }
@@ -170,8 +164,7 @@ class LinkList extends HtmlComponent implements ClickListener, Requestable
     /**
      * Очистка  массива
      */
-    public function Clear()
-    {
+    public function Clear() {
         $this->list = array();
     }
 
@@ -179,8 +172,7 @@ class LinkList extends HtmlComponent implements ClickListener, Requestable
      * Устанавливает  пункт  выделенным.
      * @param mixed Номер пункта
      */
-    public function setSelected($number)
-    {
+    public function setSelected($number) {
 
         for ($i = 1; $i <= count($this->list); $i++) {
             $this->list[$i]['selected'] = false;
@@ -192,10 +184,9 @@ class LinkList extends HtmlComponent implements ClickListener, Requestable
 
     /**
      * Устанавливает  пункт  как  текст
-     * @param mixed Номер пункта   
+     * @param mixed Номер пункта
      */
-    public function setDisabled($number)
-    {
+    public function setDisabled($number) {
         for ($i = 1; $i <= count($this->list); $i++) {
             $this->list[$i]['disabled'] == false;
         }
@@ -205,8 +196,8 @@ class LinkList extends HtmlComponent implements ClickListener, Requestable
         }
     }
 
-    public function getSelectedValue(){
+    public function getSelectedValue() {
         return $this->selectedvalue;
-    } 
-    
+    }
+
 }

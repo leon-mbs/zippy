@@ -16,11 +16,10 @@ class BookmarkableLink extends AbstractLink
 
     /**
      * Конструктор
-     * @param  string ID компонента
-     * @param  string Адрес  ссылки
+     * @param string ID компонента
+     * @param string Адрес  ссылки
      */
-    public function __construct($id, $link = "")
-    {
+    public function __construct($id, $link = "") {
         AbstractLink::__construct($id);
         $this->link = $link;
     }
@@ -28,15 +27,15 @@ class BookmarkableLink extends AbstractLink
     /**
      * @see  HtmlComponent
      */
-    public function RenderImpl()
-    {
+    public function RenderImpl() {
         parent::RenderImpl();
         $link = $this->getLink();
         if (strlen($link) > 0) {
             if (strpos($link, '://') === false) {
                 // $link = "http://".$_SERVER["HTTP_HOST"]."/". $link;
-                if ($link[0] != '/')
+                if ($link[0] != '/') {
                     $link = '/' . $link;
+                }
             }
             $this->setAttribute("href", $link);
         }
@@ -46,8 +45,7 @@ class BookmarkableLink extends AbstractLink
      * возвращает ссыоку
      *
      */
-    public function getLink()
-    {
+    public function getLink() {
         if ($this->link instanceof Binding) {
             return $this->link->getValue();
         } else {
@@ -60,8 +58,7 @@ class BookmarkableLink extends AbstractLink
      *
      * @param mixed $link
      */
-    public function setLink($link)
-    {
+    public function setLink($link) {
         $this->link = $link;
     }
 

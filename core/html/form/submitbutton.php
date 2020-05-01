@@ -16,18 +16,17 @@ class SubmitButton extends HtmlComponent implements ClickListener, Requestable
 {
 
     private $event;
-  
-    public function __construct($id)
-    {
+
+    public function __construct($id) {
         parent::__construct($id);
-    
+
         $this->setAttribute("name", $this->id);
-    }    
+    }
+
     /**
      * @see HtmlComponent
      */
-    public function RenderImpl()
-    {
+    public function RenderImpl() {
 
         if ($this->getFormOwner() == null) {
             throw new \Zippy\Exception("Element '" . $this->id . "' outside   FORM tag");
@@ -50,16 +49,14 @@ class SubmitButton extends HtmlComponent implements ClickListener, Requestable
     /**
      * @see Requestable
      */
-    public function RequestHandle()
-    {
+    public function RequestHandle() {
         $this->OnEvent();
     }
 
     /**
      * @see ClickListener
      */
-    public function onClick(EventReceiver $receiver, $handler, $ajax = false)
-    {
+    public function onClick(EventReceiver $receiver, $handler, $ajax = false) {
         $this->event = new Event($receiver, $handler);
         $this->event->isajax = $ajax;
     }
@@ -67,8 +64,7 @@ class SubmitButton extends HtmlComponent implements ClickListener, Requestable
     /**
      * @see ClickListener
      */
-    public function OnEvent()
-    {
+    public function OnEvent() {
         if ($this->event != null && strlen($this->getAttribute('disabled')) == 0) {
             $this->event->onEvent($this);
         }
@@ -77,6 +73,6 @@ class SubmitButton extends HtmlComponent implements ClickListener, Requestable
 }
 
 /**
-* @todo возмоджность  вставки  в  оnclick  обработчика  отмены
-*/
+ * @todo возмоджность  вставки  в  оnclick  обработчика  отмены
+ */
 

@@ -8,12 +8,12 @@ namespace Zippy;
 class HttpRequest
 {
 
-    const QUERY_HOME = 0;
-    const QUERY_EVENT = 1;
-    const QUERY_PAGE = 2;
-    const QUERY_SEF = 3;
+    const QUERY_HOME    = 0;
+    const QUERY_EVENT   = 1;
+    const QUERY_PAGE    = 2;
+    const QUERY_SEF     = 3;
     const QUERY_INVALID = 4;
- 
+
 
     private $request;
     public $request_c;
@@ -27,10 +27,9 @@ class HttpRequest
 
     /**
      * Конструктор.  Выполняет  парсинг  HTTP запроса
-     * 
+     *
      */
-    public function __construct()
-    {
+    public function __construct() {
         $uri = $_SERVER["REQUEST_URI"];
         /*
         $uri_ = WebApplication::$app->beforeRequest($uri);
@@ -86,61 +85,54 @@ class HttpRequest
 
         if (strlen($uri) > 1 && strpos($uri, '/?') === false && strpos($uri, '/index.php') === false) {
             $p = strpos($uri, '?');
-            if($p>0){  //отсекаем приклееное  фейсбуком и прочими
-                $uri = substr($uri,0,$p);
-            }            
+            if ($p > 0) {  //отсекаем приклееное  фейсбуком и прочими
+                $uri = substr($uri, 0, $p);
+            }
             if (preg_match('/^[-#a-zA-Z0-9\/_]+$/', $uri)) {
                 $this->querytype = self::QUERY_SEF;
                 $this->uri = ltrim($uri, '/');
-            }  
+            }
         }
-        if(strpos($uri,'index.php')>0)
-        {
-           $this->querytype = self::QUERY_HOME;   
+        if (strpos($uri, 'index.php') > 0) {
+            $this->querytype = self::QUERY_HOME;
         }
-        $uri =ltrim($uri, '/') ;
-        if($uri ==""){
-           $this->querytype = self::QUERY_HOME;   
+        $uri = ltrim($uri, '/');
+        if ($uri == "") {
+            $this->querytype = self::QUERY_HOME;
         }
-        
+
     }
 
     /**
      * Возвращает  индекс  страницы
      * @return int
      */
-    public function getRequestIndex()
-    {
+    public function getRequestIndex() {
         return $this->pageindex;
     }
 
     /**
      * Проверка  был  ли запрос AJAX запросом
-     * 
+     *
      */
-    public function isAjaxRequest()
-    {
+    public function isAjaxRequest() {
         return isset($_REQUEST["ajax"]);
     }
 
     /**
      * Проверка  был  ли запрос запросом бинарного контента
-     * 
+     *
      */
-    public function isBinaryRequest()
-    {
+    public function isBinaryRequest() {
         return isset($_REQUEST["binary"]);
     }
 
-    public function getPrefix()
-    {
+    public function getPrefix() {
         return $this->prefix;
     }
 
-    public function setPrefix($prefix)
-    {
-        $this->prefix = $prefix;
-        ;
+    public function setPrefix($prefix) {
+        $this->prefix = $prefix;;
     }
 
 }

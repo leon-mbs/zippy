@@ -14,7 +14,7 @@ use \Zippy\Interfaces\AjaxRender;
 abstract class WebPage extends HtmlContainer implements EventReceiver
 {
 
- 
+
     public $args = '';
     public $_title = '';
     public $_description = '';
@@ -30,9 +30,8 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
      *
      */
 
-    public function __construct()
-    {
-        
+    public function __construct() {
+
     }
 
     /**
@@ -41,8 +40,7 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
      * @param array  Запрос  ввиде массива  элементов
      * @see WebApplication
      */
-    public function RequestHandle()
-    {
+    public function RequestHandle() {
 
         $this->beforeRequest();
 
@@ -54,38 +52,34 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
     /**
      * @see HtmlContainer
      */
-    public final function getURLNode()
-    {
+    public final function getURLNode() {
         return WebApplication::$app->getResponse()->getBaseUrl();
     }
 
     /**
      * Вызывается  перед  сохранением  страницы  в   персистентной  сессии
      */
-    public function beforeSaveToSession()
-    {
-        
+    public function beforeSaveToSession() {
+
     }
 
     /**
      * Вызывается  после  восстановлении страницы  из  персистентной  сессии
      */
-    public function afterRestoreFromSession()
-    {
-        
+    public function afterRestoreFromSession() {
+
     }
 
     /**
      *   Вызывается в  реализации  страницы  после  AJAX запроса
      * для   елементов которые  должны  перерендерится на   клиенте
      *
-     * @param  mixed  id  или массив id (значений   атттрибута  zippy) компонентов
-     * @param  string Произвольный JavaScript код для  выполнения  на  клиенте после Ajax вызова
+     * @param mixed  id  или массив id (значений   атттрибута  zippy) компонентов
+     * @param string Произвольный JavaScript код для  выполнения  на  клиенте после Ajax вызова
      *
      * @see AjaxRender
      */
-    protected function updateAjax($components, $js = null)
-    {
+    protected function updateAjax($components, $js = null) {
 
 
         if (!is_array($components)) {
@@ -105,15 +99,14 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
      * Рендерит  компоненты для  ajax ответа
      * @panels   рендеринг  панелей
      */
-    public function renderAjax($panels = false)
-    {
+    public function renderAjax($panels = false) {
         $haspanels = false;
         if (is_array($this->_ajax)) {
             foreach ($this->_ajax as $item) {
                 $component = $this->getComponent($item);
 
                 if ($component instanceof Panel) {
-                    $haspanels = true;                 
+                    $haspanels = true;
                     if ($panels == true) {
                         $responseJS = $component->AjaxAnswer();
                         WebApplication::$app->getResponse()->addAjaxResponse($responseJS);
@@ -129,8 +122,8 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
                     WebApplication::$app->getResponse()->addAjaxResponse($responseJS);
                 }
             }
-            
-           return  $haspanels ;
+
+            return $haspanels;
         }
     }
 
@@ -138,8 +131,7 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
      * @see HttpComponent
      *
      */
-    public function Render()
-    {
+    public function Render() {
         if (strlen($this->_ankor) > 0) {
             WebApplication::$app->getResponse()->addJavaScript("window.location='#" . $this->_ankor . "'", true);
             $this->_ankor = '';
@@ -154,8 +146,7 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
      * @param  $obj  Объект  регистрирующий  свою  функцию как   callback
      * @param  $func Имя функции - обработчика
      */
-    public function addBeforeRequestEvent($obj, $func)
-    {
+    public function addBeforeRequestEvent($obj, $func) {
         $this->beforeRequestEvents[] = new \Zippy\Event($obj, $func);
     }
 
@@ -164,8 +155,7 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
      * @param  $obj  Объект  регистрирующий  свою  функцию как   callback
      * @param  $func Имя функции - обработчика
      */
-    public function addAfterRequestEvent($obj, $func)
-    {
+    public function addAfterRequestEvent($obj, $func) {
         $this->afterRequestEvents[] = new \Zippy\Event($obj, $func);
     }
 
@@ -173,8 +163,7 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
      * Вызывается  перед requestHandler
      *
      */
-    public function beforeRequest()
-    {
+    public function beforeRequest() {
         $this->_ajax = array();
 
         if (count($this->beforeRequestEvents) > 0) {
@@ -188,8 +177,7 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
      * Вызывается  после requestHandler
      *
      */
-    public function afterRequest()
-    {
+    public function afterRequest() {
 
         if (count($this->afterRequestEvents) > 0) {
             foreach ($this->afterRequestEvents as $event) {
@@ -203,36 +191,30 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
      *
      * @param mixed $name
      */
-    protected function goAnkor($name)
-    {
+    protected function goAnkor($name) {
         $this->_ankor = $name;
     }
 
-    public function setTitle($title)
-    {
+    public function setTitle($title) {
         $this->_title = $title;
     }
 
-    public function setDescription($description)
-    {
+    public function setDescription($description) {
         $this->_description = $description;
     }
 
-    public function setKeywords($keywords)
-    {
+    public function setKeywords($keywords) {
         $this->_keywords = $keywords;
     }
 
     /**
      * функция  фонового  обновления  значения элемента  формы
-     * 
+     *
      * @param mixed $sender
      */
-    public function OnBackgroundUpdate($sender)
-    {
-        
+    public function OnBackgroundUpdate($sender) {
+
     }
 
-    
 
 }

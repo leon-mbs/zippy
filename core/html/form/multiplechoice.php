@@ -15,11 +15,10 @@ class MultipleChoice extends HtmlFormDataElement
 
     /**
      * Конструкт
-     * @param  mixed  ID
-     * @param  mixed  Модель данных
+     * @param mixed  ID
+     * @param mixed  Модель данных
      */
-    public function __construct($id, ArrayPropertyBinding $data, $optionlist)
-    {
+    public function __construct($id, ArrayPropertyBinding $data, $optionlist) {
         parent::__construct($id);
         $this->setValue($data);
         $this->optionlist = $optionlist;
@@ -28,18 +27,16 @@ class MultipleChoice extends HtmlFormDataElement
     /**
      * @see  HtmlComponent
      */
-    public function RenderImpl()
-    {
+    public function RenderImpl() {
         //    $this->checkInForm();
         $this->setResponseData();
         $this->setAttribute("name", $this->id . "[]");
         $this->setAttribute("multiple", "On");
     }
 
-    private function setResponseData()
-    {
+    private function setResponseData() {
 
-        $list = $this->optionlist instanceOf Binding ? $this->optionlist->getValue() : $this->optionlist;
+        $list = $this->optionlist instanceof Binding ? $this->optionlist->getValue() : $this->optionlist;
 
         foreach ($list as $key => $value) {
             $option = "<option value=\"{$key}\" ";
@@ -56,8 +53,7 @@ class MultipleChoice extends HtmlFormDataElement
     /**
      * @see SubmitDataRequest
      */
-    public function getRequestData()
-    {
+    public function getRequestData() {
         if (is_array($_REQUEST[$this->id])) {
             $this->setValue($_REQUEST[$this->id]);
         } else {
@@ -67,13 +63,13 @@ class MultipleChoice extends HtmlFormDataElement
 
     /**
      * Возвразает  массив  списка  комбобокса
-     * 
+     *
      */
-    public function getOptionList()
-    {
-        return $list = $this->optionlist instanceOf Binding ? $this->optionlist->getValue() : $this->optionlist;
+    public function getOptionList() {
+        return $list = $this->optionlist instanceof Binding ? $this->optionlist->getValue() : $this->optionlist;
     }
-     public function clean(){
-        $this->setValue(array()); 
-     }
+
+    public function clean() {
+        $this->setValue(array());
+    }
 }

@@ -16,17 +16,15 @@ class Date extends TextInput implements Requestable, ChangeListener
 {
 
     private $event;
-    private $min,$max;
+    private $min, $max;
 
-    public function __construct($id, $value = null, $bgupdate = false)
-    {
+    public function __construct($id, $value = null, $bgupdate = false) {
         parent::__construct($id);
         $this->setDate($value);
         $this->bgupdate = $bgupdate;
     }
 
-    protected function onAdded()
-    {
+    protected function onAdded() {
         if ($this->bgupdate) {
             $page = $this->getPageOwner();
             $this->onChange($page, 'OnBackgroundUpdate', true);
@@ -34,29 +32,27 @@ class Date extends TextInput implements Requestable, ChangeListener
     }
 
     /**
-    * set range
-    * 
-    * @param mixed $min
-    * @param mixed $max
-    */
-    public function setMinMax($min,$max=null)
-    {
-       $this->min = $min; 
-       $this->max = $max; 
+     * set range
+     *
+     * @param mixed $min
+     * @param mixed $max
+     */
+    public function setMinMax($min, $max = null) {
+        $this->min = $min;
+        $this->max = $max;
     }
-    
-    public function RenderImpl()
-    {
+
+    public function RenderImpl() {
         TextInput::RenderImpl();
 
         // $url = $this->owner->getURLNode() . "::" . $this->id . "&ajax=true";
-        if($this->min >0){
-           $min=", min: new Date(". date("Y,m-1,d",$this->min) .")";    
+        if ($this->min > 0) {
+            $min = ", min: new Date(" . date("Y,m-1,d", $this->min) . ")";
         }
-        if($this->max >0){
-           $max=", max: new Date(". date("Y,m-1,d",$this->max) .")";    
+        if ($this->max > 0) {
+            $max = ", max: new Date(" . date("Y,m-1,d", $this->max) . ")";
         }
-         
+
         $js = "$('#{$this->id}').pickadate(  {    format: 'yyyy-mm-dd' {$min} {$max} });";
         if ($this->event != null) {
             $formid = $this->getFormOwner()->id;
@@ -83,10 +79,9 @@ class Date extends TextInput implements Requestable, ChangeListener
 
     /**
      * Возвращает дату   в виде timestamp
-     * @param mixed $endday - установить  конец  дня 
+     * @param mixed $endday - установить  конец  дня
      */
-    public function getDate($endday = false)
-    {
+    public function getDate($endday = false) {
         $date = strtotime($this->getText());
         if ($endday == true) {
             $d = date('Y-m-d', $date);
@@ -98,11 +93,10 @@ class Date extends TextInput implements Requestable, ChangeListener
     /**
      * Устанавливает дату
      * Если  параметр не  задан  - текущая  дата
-     * 
-     * @param mixed $t - timestamp 
+     *
+     * @param mixed $t - timestamp
      */
-    public function setDate($t = null)
-    {
+    public function setDate($t = null) {
         if ($t > 0) {
             $this->setText(date('Y-m-d', $t));
         } else {
@@ -113,8 +107,7 @@ class Date extends TextInput implements Requestable, ChangeListener
     /**
      * @see  ChangeListener
      */
-    public function onChange(EventReceiver $receiver, $handler, $ajax = true)
-    {
+    public function onChange(EventReceiver $receiver, $handler, $ajax = true) {
 
         $this->event = new Event($receiver, $handler);
         $this->event->isajax = $ajax;
@@ -123,8 +116,7 @@ class Date extends TextInput implements Requestable, ChangeListener
     /**
      * @see ChangeListener
      */
-    public function OnEvent()
-    {
+    public function OnEvent() {
         if ($this->event != null) {
             $this->event->onEvent($this);
         }
@@ -133,8 +125,7 @@ class Date extends TextInput implements Requestable, ChangeListener
     /**
      * @see Requestable
      */
-    public function RequestHandle()
-    {
+    public function RequestHandle() {
         $this->OnEvent();
     }
 

@@ -21,12 +21,11 @@ class DropDownChoice extends HtmlFormDataElement implements ChangeListener, Requ
 
     /**
      * Конструктор
-     * @param  mixed  ID
-     * @param  array  Массив  значений
-     * @param  Текущее значение  елемента
+     * @param mixed  ID
+     * @param array  Массив  значений
+     * @param Текущее значение  елемента
      */
-    public function __construct($id, $optionlist = array(), $value = -1, $bgupdate = false)
-    {
+    public function __construct($id, $optionlist = array(), $value = -1, $bgupdate = false) {
         parent::__construct($id);
         $this->setValue($value);
 
@@ -34,8 +33,7 @@ class DropDownChoice extends HtmlFormDataElement implements ChangeListener, Requ
         $this->bgupdate = $bgupdate;
     }
 
-    protected function onAdded()
-    {
+    protected function onAdded() {
         if ($this->bgupdate) {
             $page = $this->getPageOwner();
             $this->onChange($page, 'OnBackgroundUpdate', true);
@@ -46,8 +44,7 @@ class DropDownChoice extends HtmlFormDataElement implements ChangeListener, Requ
      * 3
      * @see  HtmlComponent
      */
-    public function RenderImpl()
-    {
+    public function RenderImpl() {
         //    $this->checkInForm();
 
 
@@ -73,10 +70,9 @@ class DropDownChoice extends HtmlFormDataElement implements ChangeListener, Requ
         $this->setResponseData();
     }
 
-    private function setResponseData()
-    {
+    private function setResponseData() {
 
-        $list = $this->optionlist instanceOf Binding ? $this->optionlist->getValue() : $this->optionlist;
+        $list = $this->optionlist instanceof Binding ? $this->optionlist->getValue() : $this->optionlist;
         $tag = $this->getTag();
         $options = "";
         foreach ($list as $key => $value) {
@@ -108,26 +104,23 @@ class DropDownChoice extends HtmlFormDataElement implements ChangeListener, Requ
     /**
      * @see SubmitDataRequest
      */
-    public function getRequestData()
-    {
+    public function getRequestData() {
         $this->setValue($_REQUEST[$this->id]);
     }
 
     /**
      * @see Requestable
      */
-    public function RequestHandle()
-    {
+    public function RequestHandle() {
         $this->OnEvent();
     }
 
     /**
      * @see AjaxRender
      */
-    public function AjaxAnswer()
-    {
+    public function AjaxAnswer() {
 
-        $list = $this->optionlist instanceOf Binding ? $this->optionlist->getValue() : $this->optionlist;
+        $list = $this->optionlist instanceof Binding ? $this->optionlist->getValue() : $this->optionlist;
 
         $js = "$('#{$this->id}').empty();";
         foreach ($list as $key => $value) {
@@ -139,8 +132,7 @@ class DropDownChoice extends HtmlFormDataElement implements ChangeListener, Requ
     /**
      * @see  ChangeListener
      */
-    public function onChange(EventReceiver $receiver, $handler, $ajax = false)
-    {
+    public function onChange(EventReceiver $receiver, $handler, $ajax = false) {
 
         $this->event = new Event($receiver, $handler);
         $this->event->isajax = $ajax;
@@ -149,20 +141,17 @@ class DropDownChoice extends HtmlFormDataElement implements ChangeListener, Requ
     /**
      * @see ChangeListener
      */
-    public function OnEvent()
-    {
+    public function OnEvent() {
         if ($this->event != null) {
             $this->event->onEvent($this);
         }
     }
 
-    protected function getTag($tagname = "")
-    {
+    protected function getTag($tagname = "") {
         return parent::getTag('select');
     }
 
-    public function setOptionList($optionlist)
-    {
+    public function setOptionList($optionlist) {
         if (is_array($optionlist)) {
             $this->optionlist = $optionlist;
             $this->setValue(-1);
@@ -173,9 +162,8 @@ class DropDownChoice extends HtmlFormDataElement implements ChangeListener, Requ
      * Возвращает  массив  списка  комбобокса
      *
      */
-    public function getOptionList()
-    {
-        return $list = $this->optionlist instanceOf Binding ? $this->optionlist->getValue() : $this->optionlist;
+    public function getOptionList() {
+        return $list = $this->optionlist instanceof Binding ? $this->optionlist->getValue() : $this->optionlist;
     }
 
     /**
@@ -184,35 +172,36 @@ class DropDownChoice extends HtmlFormDataElement implements ChangeListener, Requ
      * @param mixed $value
      * @param mixed $text
      */
-    public function addOption($value, $text)
-    {
-        if ($this->optionlist instanceOf Binding)
+    public function addOption($value, $text) {
+        if ($this->optionlist instanceof Binding) {
             return;
+        }
         $this->optionlist[$value] = $text;
     }
 
     /**
      * возвращает текст  выбраного  значения
-     * 
+     *
      */
-    public function getValueName()
-    {
-        $list = $this->optionlist instanceOf Binding ? $this->optionlist->getValue() : $this->optionlist;
+    public function getValueName() {
+        $list = $this->optionlist instanceof Binding ? $this->optionlist->getValue() : $this->optionlist;
         return $list[$this->getValue()];
     }
- 
-    public function clean(){
+
+    public function clean() {
         $this->setValue(0);
-     }
-    
+    }
+
     /**
-    * Иициализирует комбобокс  первым значением из списка
-    *  
-    */
-    public function selectFirst(){
-      $list = $this->optionlist instanceOf Binding ? $this->optionlist->getValue() : $this->optionlist;
-      if( count($list) ==0) return;
-      $k = array_keys($list);  
-      $this->setValue($k[0]);
-    } 
+     * Иициализирует комбобокс  первым значением из списка
+     *
+     */
+    public function selectFirst() {
+        $list = $this->optionlist instanceof Binding ? $this->optionlist->getValue() : $this->optionlist;
+        if (count($list) == 0) {
+            return;
+        }
+        $k = array_keys($list);
+        $this->setValue($k[0]);
+    }
 }

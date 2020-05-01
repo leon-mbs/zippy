@@ -22,8 +22,7 @@ class Image extends HtmlComponent implements \Zippy\Interfaces\Requestable, \Zip
      * @param string ID  компонента
      * @param string  адрес  изображения
      */
-    public function __construct($id, $src = "")
-    {
+    public function __construct($id, $src = "") {
         parent::__construct($id);
         $this->src = $src;
     }
@@ -38,8 +37,7 @@ class Image extends HtmlComponent implements \Zippy\Interfaces\Requestable, \Zip
      * Image::$DYNAMIC_TYPE  - динамическое   формирование  изображение  в  методе binaryOutput
      *
      */
-    public function setType($type)
-    {
+    public function setType($type) {
         $this->type = $type;
     }
 
@@ -48,8 +46,7 @@ class Image extends HtmlComponent implements \Zippy\Interfaces\Requestable, \Zip
      *
      * @param mixed $src
      */
-    public function setUrl($src)
-    {
+    public function setUrl($src) {
         $this->src = $src;
     }
 
@@ -57,11 +54,11 @@ class Image extends HtmlComponent implements \Zippy\Interfaces\Requestable, \Zip
      * Записывает  значение  src  в зависимости  от  типа
      * *
      */
-    private function setSource()
-    {
+    private function setSource() {
         if ($this->type == self::$DEFAULT_TYPE) {
-            if (strlen($this->src) > 0)
+            if (strlen($this->src) > 0) {
                 $this->setAttribute("src", $this->src);
+            }
         }
 
         if ($this->type == self::$URLDATA_TYPE) {
@@ -76,8 +73,7 @@ class Image extends HtmlComponent implements \Zippy\Interfaces\Requestable, \Zip
     /**
      * Кодирование  URL Data
      */
-    protected function getURLData()
-    {
+    protected function getURLData() {
         $data = base64_encode(file_get_contents($this->src));
         $im = getimagesize($this->src);
         $data = "data:" . $im['mime'] . ";base64," . $data;
@@ -89,11 +85,11 @@ class Image extends HtmlComponent implements \Zippy\Interfaces\Requestable, \Zip
      * рендеринг
      * @see Zippy\Html\HtmlComponent
      */
-    protected function RenderImpl()
-    {
+    protected function RenderImpl() {
 
-        if (strlen($this->title) > 0)
+        if (strlen($this->title) > 0) {
             $this->setAttribute("title", $this->title);
+        }
 
         $this->setSource();
     }
@@ -102,8 +98,7 @@ class Image extends HtmlComponent implements \Zippy\Interfaces\Requestable, \Zip
      * Асинхронное  обновление  изображения
      * @see  \Zippy\Interfaces\AjaxRender
      */
-    public function AjaxAnswer()
-    {
+    public function AjaxAnswer() {
         $this->setSource();
         $_src = $this->getAttribute('src');
         return "$('#{$this->id}').attr('src','{$_src}')";
@@ -115,8 +110,7 @@ class Image extends HtmlComponent implements \Zippy\Interfaces\Requestable, \Zip
      * переопределяется   в  классе наследннике для реализации собственного вывода
      * Должна  заканчиваться die
      */
-    protected function binaryOutput()
-    {
+    protected function binaryOutput() {
         $data = file_get_contents($this->src);
         $im = getimagesize($this->src);
         header('Content-Length: ' . strlen($data));
@@ -130,8 +124,7 @@ class Image extends HtmlComponent implements \Zippy\Interfaces\Requestable, \Zip
      * Обработчик  запроса для   бинарного  вывода
      * @see  \Zippy\Interfaces\Requestable
      */
-    public function RequestHandle()
-    {
+    public function RequestHandle() {
         $this->binaryOutput();
     }
 

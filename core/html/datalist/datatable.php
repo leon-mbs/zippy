@@ -24,8 +24,7 @@ class DataTable extends AbstractList implements Requestable
     private $firstButton = 1;
     private $header = true, $paginator = false, $useajax = false;
 
-    public function __construct($id, $DataSource, $header = true, $paginator = false, $useajax = false)
-    {
+    public function __construct($id, $DataSource, $header = true, $paginator = false, $useajax = false) {
         AbstractList::__construct($id, $DataSource);
         $this->header = $header;
         $this->paginator = $paginator;
@@ -35,8 +34,7 @@ class DataTable extends AbstractList implements Requestable
     /**
      * @see HtmlComponent
      */
-    public final function RenderImpl()
-    {
+    public final function RenderImpl() {
         $tag = $this->getTag('table');
 
         pq($tag)->append($this->renderHeader());
@@ -47,16 +45,14 @@ class DataTable extends AbstractList implements Requestable
     /**
      * Добавляет  столбец  к  таблице.
      */
-    public final function AddColumn(Column $column)
-    {
+    public final function AddColumn(Column $column) {
         $this->columns[$column->fieldname] = $column;
     }
 
     /**
      * Обновляет  данные  с  провайдера
      */
-    public function Reload($resetpage = true)
-    {
+    public function Reload($resetpage = true) {
         parent::Reload($resetpage);
 
         $this->datalist = $this->getItems();
@@ -65,8 +61,7 @@ class DataTable extends AbstractList implements Requestable
     /**
      * @see  Requestable
      */
-    public final function RequestHandle()
-    {
+    public final function RequestHandle() {
         $p = WebApplication::$app->getRequest()->request_params[$this->id];
         if ($p[0] == 'sort') {
             $this->sortf = $p[1];
@@ -92,24 +87,21 @@ class DataTable extends AbstractList implements Requestable
     /**
      * Устанавливает  обработчик на  событие  прорисовки  ячейки.
      */
-    public final function setCellDrawEvent(\Zippy\Interfaces\EventReceiver $receiver, $handler)
-    {
+    public final function setCellDrawEvent(\Zippy\Interfaces\EventReceiver $receiver, $handler) {
         $this->cellevent = new \Zippy\Event($receiver, $handler);
     }
 
     /**
      * Устанавливает  обработчик на  click ячейки.
      */
-    public final function setCellClickEvent(\Zippy\Interfaces\EventReceiver $receiver, $handler)
-    {
+    public final function setCellClickEvent(\Zippy\Interfaces\EventReceiver $receiver, $handler) {
         $this->cellclickevent = new \Zippy\Event($receiver, $handler);
     }
 
     /**
      * Формирование  заголовка  таблицы
      */
-    private function renderHeader()
-    {
+    private function renderHeader() {
         if (!$this->header) {
             return "";
         }
@@ -123,7 +115,6 @@ class DataTable extends AbstractList implements Requestable
             }
 
             $css = strlen($column->headerclass) > 0 ? "class=\"{$column->headerclass}\"" : "";
-
 
 
             if ($column->sortable) {
@@ -140,21 +131,20 @@ class DataTable extends AbstractList implements Requestable
                 if ($this->useajax) {
                     $onclick = "getUpdate('{$url}&ajax=true');event.returnValue=false; return false;";
                 }
-                $row .= ( "<th   {$css} style=\"white-space: nowrap;cursor:pointer;\" onclick=\"{$onclick}\" ><span>{$column->title}</span> <i class=\"{$sort}\"></i></th>");
+                $row .= ("<th   {$css} style=\"white-space: nowrap;cursor:pointer;\" onclick=\"{$onclick}\" ><span>{$column->title}</span> <i class=\"{$sort}\"></i></th>");
             } else {
 
-                $row .= ( "<th   {$css} ><span>{$column->title}</span></th>");
+                $row .= ("<th   {$css} ><span>{$column->title}</span></th>");
             }
         }
-        $row .="</tr>";
+        $row .= "</tr>";
         return $row;
     }
 
     /**
      * Прорисовка  строк  с  данными.
      */
-    private function renderData()
-    {
+    private function renderData() {
 
         if (count($this->datalist) == 0) {
             return ""; //"<tr  ><td  align=\"center\" colspan=\"" . count($this->columns) . "\" >" . MSG_DATATABLE_NODATA . "</td></tr>";
@@ -204,9 +194,9 @@ class DataTable extends AbstractList implements Requestable
                     }
                 }
 
-                $row .= ( "<td  {$css} {$onclick} {$style}>{$data}</td>");
+                $row .= ("<td  {$css} {$onclick} {$style}>{$data}</td>");
             }
-            $row .="</tr>";
+            $row .= "</tr>";
             $rows .= $row;
         }
         return $rows;
@@ -215,8 +205,7 @@ class DataTable extends AbstractList implements Requestable
     /**
      * Прорисовывает  строку  с  пагинатором.
      */
-    private function renderFooter()
-    {
+    private function renderFooter() {
         if (!$this->paginator) {
             return "";
         }
@@ -227,8 +216,9 @@ class DataTable extends AbstractList implements Requestable
 
         $content = '<ul class="pagination">';
         $pages = $this->getPageCount();
-        if ($pages <= 1)
+        if ($pages <= 1) {
             return '';
+        }
 
         if ($currentpage - $this->firstButton > $this->maxbuttons) {
 
@@ -245,10 +235,10 @@ class DataTable extends AbstractList implements Requestable
         }
 
 
-
         for ($i = $this->firstButton; $i <= $this->firstButton + $this->maxbuttons; $i++) {
-            if ($i > $pages)
+            if ($i > $pages) {
                 break;
+            }
             if ($currentpage == $i) {
                 $content .= "<li class=\"page-item active\"><a  class=\"page-link\"  href=\"javascript:void(0);\" > {$i} </a></li>";
             } else {
@@ -261,12 +251,16 @@ class DataTable extends AbstractList implements Requestable
             $content .= "<li  class=\"page-item\"><a  class=\"page-link\" href='void(0);' onclick=\"" . $this->getPaginatorLink($currentpage + 1) . "\"aria-label=\"Next\">       <span aria-hidden=\"true\">&rsaquo;</span></a></li>";
             $content .= "<li  class=\"page-item\"><a  class=\"page-link\" href='void(0);' onclick=\"" . $this->getPaginatorLink($pages) . "\"aria-label=\"Next\">       <span aria-hidden=\"true\">&raquo;</span></a></li>";
         }
-        
+
         $countall = $this->getAllRowsCount();
-        $show =  $currentpage * $this->pagesize;
-        if($pages ==$currentpage) $show = $countall;
-        if($countall <= $this->pagesize) $show = $countall;
-        
+        $show = $currentpage * $this->pagesize;
+        if ($pages == $currentpage) {
+            $show = $countall;
+        }
+        if ($countall <= $this->pagesize) {
+            $show = $countall;
+        }
+
         $content = "<table  ><tr><td valign='middle'>{$show} строк с  {$countall} &nbsp;&nbsp;&nbsp;&nbsp;</td><td align='right'> {$content}</td></tr></table>";
         return "<tr ><td class=\"footercell\"  colspan=\"" . count($this->columns) . "\" >{$content}</ul></td></tr>";
     }
@@ -274,8 +268,7 @@ class DataTable extends AbstractList implements Requestable
     /**
      * Возвращает  ссылку  для  пагинатора.
      */
-    private function getPaginatorLink($pageno)
-    {
+    private function getPaginatorLink($pageno) {
         $url = $this->getURLNode() . ':pag:' . $pageno;
         if ($this->useajax) {
             $onclick = "getUpdate('{$url}&ajax=true');event.returnValue=false; return false;";
@@ -290,10 +283,9 @@ class DataTable extends AbstractList implements Requestable
      * Строка выделяется  добавлением CSS класса  заданного
      * методом setSelectedClass
      *
-     * @param mixed $id   ID  выделяемой строки
+     * @param mixed $id ID  выделяемой строки
      */
-    public function setSelectedrow($number)
-    {
+    public function setSelectedrow($number) {
         $this->selectedrow = $number;
     }
 
@@ -301,8 +293,7 @@ class DataTable extends AbstractList implements Requestable
      * Возвращает  номер  выделеной  строки
      *
      */
-    public function getSelectedRow()
-    {
+    public function getSelectedRow() {
         return $this->selectedRow;
     }
 
@@ -311,8 +302,7 @@ class DataTable extends AbstractList implements Requestable
      *
      * @param mixed $selectedclass
      */
-    public function setSelectedClass($selectedclass)
-    {
+    public function setSelectedClass($selectedclass) {
         $this->selectedclass = $selectedclass;
     }
 
@@ -320,8 +310,7 @@ class DataTable extends AbstractList implements Requestable
      * Удаляет  все столбцы
      *
      */
-    public function removeAllColumns()
-    {
+    public function removeAllColumns() {
         $this->columns = array();
     }
 
@@ -331,8 +320,7 @@ class DataTable extends AbstractList implements Requestable
 class Column
 {
 
-    public function __construct($fieldname, $title, $sortable = false, $visible = true, $clickable = false, $headerclass = "", $rowclass = "", $defaultdata = "")
-    {
+    public function __construct($fieldname, $title, $sortable = false, $visible = true, $clickable = false, $headerclass = "", $rowclass = "", $defaultdata = "") {
         $this->fieldname = $fieldname;
         $this->visible = $visible;
         $this->sortable = $sortable;
@@ -355,9 +343,9 @@ class Column
 }
 
 /**
-* @todo  вычисляемое   поле  ???
-* @todo  ссылку
-* @todo  изображение
-*
-*/
+ * @todo  вычисляемое   поле  ???
+ * @todo  ссылку
+ * @todo  изображение
+ *
+ */
 

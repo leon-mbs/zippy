@@ -8,5 +8,5 @@ namespace Zippy\Interfaces;
  */
 interface EventReceiver
 {
-    
+
 }

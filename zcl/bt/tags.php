@@ -16,13 +16,12 @@ class Tags extends \Zippy\Html\Form\HtmlFormDataElement
     private $_options = array();
 
     /**
-     * 
-     * 
+     *
+     *
      * @param mixed $id
-     * @param mixed $options  Массив  опций элемента в  виде  ключ-значение
+     * @param mixed $options Массив  опций элемента в  виде  ключ-значение
      */
-    public function __construct($id, $options = null)
-    {
+    public function __construct($id, $options = null) {
         parent::__construct($id);
         $this->setValue(array());
         if (is_array($options)) {
@@ -30,8 +29,7 @@ class Tags extends \Zippy\Html\Form\HtmlFormDataElement
         }
     }
 
-    public function RenderImpl()
-    {
+    public function RenderImpl() {
         $url = $this->owner->getURLNode() . "::" . $this->id . "&ajax=true";
 
         $data = json_encode($this->value);
@@ -66,34 +64,30 @@ class Tags extends \Zippy\Html\Form\HtmlFormDataElement
 
     /**
      * список подсказок
-     * 
+     *
      * @param mixed $sug
      */
-    public function setSuggestions($sug)
-    {
+    public function setSuggestions($sug) {
         $this->_sug = $sug;
     }
 
-    public function setTags($tags)
-    {
+    public function setTags($tags) {
         $this->setValue($tags);
     }
 
-    public function getTags()
-    {
+    public function getTags() {
         return $this->getValue();
     }
 
-    public function getRequestData()
-    {
+    public function getRequestData() {
 
         $tags = $_REQUEST[$this->id . '_tags'];
         $this->setValue(explode(';', $tags));
     }
 
-     public function clean(){
+    public function clean() {
         $this->setTags(array());
         $this->setSuggestions(array());
-     }    
-    
+    }
+
 }

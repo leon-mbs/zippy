@@ -20,10 +20,9 @@ class Form extends HtmlContainer
     /**
      * Конструктор
      * @param string ШВ
-     * @param  string  Тип запроса get  или  post
+     * @param string  Тип запроса get  или  post
      */
-    public function __construct($id, $method = "post")
-    {
+    public function __construct($id, $method = "post") {
         parent::__construct($id);
         $this->setAttribute("method", $method);
     }
@@ -31,8 +30,7 @@ class Form extends HtmlContainer
     /**
      * @see HtmlComponent
      */
-    protected function beforeRender()
-    {
+    protected function beforeRender() {
 
 
         $url = $this->owner->getURLNode();
@@ -41,7 +39,7 @@ class Form extends HtmlContainer
         $this->setAttribute("id", $this->id);
         $this->setAttribute("name", $this->id);
 
-        $url = substr($url, strpos($url, 'index.php?q=')  );
+        $url = substr($url, strpos($url, 'index.php?q='));
 
         $HtmlTag = $this->getTag('form');
         $HtmlTag->append("<input type=\"hidden\" name=\"q\" id=\"{$this->id}_q\" value=\"" . $url . "::" . $this->id . "\" >");
@@ -52,8 +50,7 @@ class Form extends HtmlContainer
     /**
      * @see Requestable
      */
-    public function RequestHandle()
-    {
+    public function RequestHandle() {
 
         if (isset($_REQUEST[$this->id . '_q'])) {
             $allchild = $this->getChildComponents(true);
@@ -67,11 +64,11 @@ class Form extends HtmlContainer
                     }
                 }
             }
-            $clist =  explode("::",$_REQUEST["q"]);
-            if($clist[count($clist)-1]== $this->id)   {
-                $this->onEvent();    
+            $clist = explode("::", $_REQUEST["q"]);
+            if ($clist[count($clist) - 1] == $this->id) {
+                $this->onEvent();
             }
-            
+
         }
         parent::RequestHandle();
     }
@@ -81,23 +78,20 @@ class Form extends HtmlContainer
      * @param EventReceiver Объект  метод  которого  является  обработчиком  события
      * @param string Имя  метода - обработчика
      */
-    public function onSubmit(EventReceiver $receiver, $handler)
-    {
+    public function onSubmit(EventReceiver $receiver, $handler) {
         $this->event = new Event($receiver, $handler);
     }
 
     /**
      * Вызывает  обработчик   события  отправки  формы
      */
-    public function onEvent()
-    {
+    public function onEvent() {
         if ($this->event instanceof Event) {
             $this->event->onEvent($this);
         }
     }
 
-    private function checkInvisibleOwner($component)
-    {
+    private function checkInvisibleOwner($component) {
         $owner = $component->getOwner();
         do {
             if ($owner->isVisible() == false) {
@@ -112,16 +106,15 @@ class Form extends HtmlContainer
      * Очистка  элементов  формы
      *
      */
-    public function clean()
-    {
+    public function clean() {
         $allchild = $this->getChildComponents(true);
         foreach ($allchild as $component) {
-            
-            if($component instanceof SubmitDataRequest) {
-               $component->clean();
+
+            if ($component instanceof SubmitDataRequest) {
+                $component->clean();
             }
-         
- 
+
+
         }
     }
 

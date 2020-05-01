@@ -20,28 +20,27 @@ class Button extends HtmlComponent implements ClickListener, Requestable
 
     /**
      * Конструктор
-     * @param  string ID компонента
-     * @param  EventReceiver Объект с методом  обработки  события
-     * @param  string Имя  метода-обработчика
+     * @param string ID компонента
+     * @param EventReceiver Объект с методом  обработки  события
+     * @param string Имя  метода-обработчика
      */
-    public function __construct($id, EventReceiver $receiver = null, $handler = null, $ajax = true)
-    {
+    public function __construct($id, EventReceiver $receiver = null, $handler = null, $ajax = true) {
         parent::__construct($id);
 
         if (is_object($receiver) && strlen($handler) > 0) {
             $this->onClick($receiver, $handler, $ajax);
         }
-        $this->setAttribute("name", $this->id);        
+        $this->setAttribute("name", $this->id);
     }
 
     /**
      * @see HtmlComponent
      */
-    public function RenderImpl()
-    {
+    public function RenderImpl() {
         $this->setAttribute("type", 'button');
-        if ($this->event == null)
+        if ($this->event == null) {
             return;
+        }
 
         if ($this->event->isajax == false) {
             $url = $this->owner->getURLNode() . "::" . $this->id;
@@ -55,16 +54,14 @@ class Button extends HtmlComponent implements ClickListener, Requestable
     /**
      * @see Requestable
      */
-    public function RequestHandle()
-    {
+    public function RequestHandle() {
         $this->onEvent();
     }
 
     /**
      * @see   ClickListener
      */
-    public function onClick(EventReceiver $receiver, $handler, $ajax = false)
-    {
+    public function onClick(EventReceiver $receiver, $handler, $ajax = false) {
         $this->event = new Event($receiver, $handler);
         $this->event->isajax = $ajax;
     }
@@ -72,8 +69,7 @@ class Button extends HtmlComponent implements ClickListener, Requestable
     /**
      * @see ClickListener
      */
-    public function onEvent()
-    {
+    public function onEvent() {
         if ($this->event != null) {
             $this->event->onEvent($this);
         }

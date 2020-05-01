@@ -11,14 +11,12 @@ class Anchor extends AbstractLink
 
     private $name;
 
-    public function __construct($id, $name = '')
-    {
+    public function __construct($id, $name = '') {
         parent::__construct($id);
         $this->name = $name;
     }
 
-    public function RenderImpl()
-    {
+    public function RenderImpl() {
 
         $this->setAttribute("name", "#" . $this->name);
     }
@@ -26,8 +24,7 @@ class Anchor extends AbstractLink
     /**
      * Установить  имя   якоря
      */
-    public function setAnchor($name)
-    {
+    public function setAnchor($name) {
         $this->name = $name;
     }
 

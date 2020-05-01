@@ -18,8 +18,7 @@ abstract class HtmlFormDataElement extends HtmlComponent implements SubmitDataRe
      * Устанавливает  значение данных  объекта
      * @param mixed  Объект данных или  PropertyBinding
      */
-    public function setValue($value)
-    {
+    public function setValue($value) {
         if ($this->value instanceof Binding && !($value instanceof Binding)) {
             $this->value->setValue($value);
         } else {
@@ -30,8 +29,7 @@ abstract class HtmlFormDataElement extends HtmlComponent implements SubmitDataRe
     /**
      * Возвращает  значение данных  объекта
      */
-    public function getValue()
-    {
+    public function getValue() {
         if ($this->value instanceof Binding) {
             return $this->value->getValue();
         } else {

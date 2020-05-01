@@ -16,34 +16,29 @@ abstract class  WebApplication
 
     private $currentpage = null;
     public static $app = null;
-     
+
     private $reloadPage = false;
     private $request;
     private $response;
-   
- 
-   
+
+
     // public  $doc;
+
     /**
      * Конструктор
      * @param string Имя  класса  начальной  страницы
      */
-    function __construct( )
-    {
-        
-          
-       
+    function __construct() {
+
 
         self::$app = $this;
-
 
 
         $this->request = new HttpRequest();
         $this->response = new HttpResponse();
     }
 
-    public function __sleep()
-    {
+    public function __sleep() {
         //avoid serialization
     }
 
@@ -51,26 +46,23 @@ abstract class  WebApplication
      * Возвращает экземпляр приложения
      * @return WebApplication
      */
-    public static final function getApplication()
-    {
+    public static final function getApplication() {
         return self::$app;
     }
 
     /**
      * Возвращает HTML шаблон по  имени класса  страницы
      * перегружается   в  классе  пользовательского  приложения
-     * @param  string Имя  класса  страницы
-   
+     * @param string Имя  класса  страницы
      */
-    public  abstract function getTemplate($name)  ;
-   
+    public abstract function getTemplate($name);
+
 
     /**
      * Возвращает  объект  текущей  страницы
      * @return WebPage
      */
-    public final function getCurrentPage()
-    {
+    public final function getCurrentPage() {
         return $this->currentpage;
     }
 
@@ -79,8 +71,7 @@ abstract class  WebApplication
      * и делает  ее  текущей.  По  сути  серверный  редирект без  изменения  адресной   строки  браузера.
      * @param string Имя класса  страницы
      */
-    public final function LoadPage($name, $arg1 = null, $arg2 = null, $arg3 = null, $arg4 = null, $arg5 = null)
-    {
+    public final function LoadPage($name, $arg1 = null, $arg2 = null, $arg3 = null, $arg4 = null, $arg5 = null) {
 
         if (is_array($arg1) == false) {
             //$this->currentpage = new $name($arg1, $arg2, $arg3, $arg4, $arg5);
@@ -91,7 +82,7 @@ abstract class  WebApplication
         $classpage = new \ReflectionClass($name);
         $this->currentpage = $classpage->newInstanceArgs($arg1);
 
-     
+
         $this->currentpage->args = $arg1; //запоминаем аргументы страницы
 
         $this->response->setPageIndex($this->getPageManager()->putPage($this->currentpage));
@@ -100,8 +91,7 @@ abstract class  WebApplication
     /**
      * Основной   цикл  приложения
      */
-    public final function Run($homepage)
-    {
+    public final function Run($homepage) {
         self::$app = $this;
 
         if ($homepage == null) {
@@ -112,9 +102,9 @@ abstract class  WebApplication
             //self::Redirect404();
             self::$app->getResponse()->toIndexPage();
             self::$app->getResponse()->output();
-            die;            
+            die;
         }
-        
+
         if ($this->request->querytype == HttpRequest::QUERY_HOME) {
             $this->LoadPage($homepage);
         }
@@ -125,11 +115,10 @@ abstract class  WebApplication
 
         if ($this->request->querytype == HttpRequest::QUERY_SEF) {
             $this->currentpage = null;
- 
-            $this->Route($this->request->uri);    
-   
-             
-            
+
+            $this->Route($this->request->uri);
+
+
         }
 
         if ($this->request->querytype == HttpRequest::QUERY_EVENT) {
@@ -170,16 +159,16 @@ abstract class  WebApplication
                     //получаем  новую  версию  страницы
 
                     if ($this->reloadPage == true) { //если  надо  сбросить адресную строку
-                        
-                        
+
+
                         $this->response->toBaseUrl();
-                    }  
-                    
+                    }
+
 
                     //
                 }
                 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-             
+
                     $this->response->toBaseUrl();
                 }
             }
@@ -200,27 +189,25 @@ abstract class  WebApplication
      * Метод,  выполняющий   формирование  выходного  HTML потока
      * на  основе  текущено  шаблона  и  данных  елементов  страницы
      */
-    private final function Render()
-    {
-        if ($this->request->isBinaryRequest())
+    private final function Render() {
+        if ($this->request->isBinaryRequest()) {
             return;
+        }
 
         $renderpage = $this->currentpage;
 
         if ($this->request->isAjaxRequest()) {
 
-           if(false==$renderpage->renderAjax())  return;
-            
-        }
+            if (false == $renderpage->renderAjax()) {
+                return;
+            }
 
+        }
 
 
         //загружаем  соответсвующий  шаблон
         $template = $this->getTemplate(get_class($renderpage));
 
-
-
-        
 
         $doc = \phpQuery::newDocumentHTML($template);
 
@@ -286,7 +273,6 @@ abstract class  WebApplication
         }
 
 
-
         $response = '<!DOCTYPE HTML>' . pq('html')->htmlOuter(); //HTML  в  выходной  поток
 
         if (count($renderpage->_tvars) > 0) {
@@ -305,21 +291,19 @@ abstract class  WebApplication
             $renderpage->renderAjax(true);
             return;
         }
-       
+
         $this->response->setContent($response);
     }
 
-  
 
     /**
      *  Метод  выполняющий   роутинг URL запросов.  Например  для ЧПУ ссылок
-     *  Переопределяется   в  пользовательском  приложении. 
+     *  Переопределяется   в  пользовательском  приложении.
      *  Загружает страницу (с  параметрами) методом $this->LoadPage
-     *  @param string  Входящий  запрос
+     * @param string  Входящий  запрос
      */
-    protected function Route($uri)
-    {
-             
+    protected function Route($uri) {
+
     }
 
     /**
@@ -327,8 +311,7 @@ abstract class  WebApplication
      * клиентского редиректа для сброса  адресной  строки
      * @param boolean
      */
-    public final function setReloadPage($value = true)
-    {
+    public final function setReloadPage($value = true) {
         $this->reloadPage = $value;
     }
 
@@ -336,8 +319,7 @@ abstract class  WebApplication
      * Возвращает  объект  HttpRequest
      * @return HttpRequest
      */
-    public final function getRequest()
-    {
+    public final function getRequest() {
         return $this->request;
     }
 
@@ -345,8 +327,7 @@ abstract class  WebApplication
      * возвращает  объект Httpresponse
      * @return HttpResponse
      */
-    public final function getResponse()
-    {
+    public final function getResponse() {
         return $this->response;
     }
 
@@ -354,22 +335,19 @@ abstract class  WebApplication
      * Возвращает  менеджер  страниц
      * @return PageManager
      */
-    protected function getPageManager()
-    {
+    protected function getPageManager() {
         if (!isset($_SESSION['zippy_pagemanager'])) {
             $_SESSION['zippy_pagemanager'] = new PageManager();
         }
         return $_SESSION['zippy_pagemanager'];
     }
 
-    
 
     /**
      * возвращает имя класса предыдущей страницы
      *
      */
-    public function getPrevPage()
-    {
+    public function getPrevPage() {
         return $this->getPageManager()->getPrevPage();
     }
 
@@ -377,8 +355,7 @@ abstract class  WebApplication
      * Редирект на  страницу 404
      *
      */
-    public static function Redirect404()
-    {
+    public static function Redirect404() {
         self::$app->getResponse()->to404Page();
     }
 
@@ -386,8 +363,7 @@ abstract class  WebApplication
      * Редирект на  предыдущую страницу
      *
      */
-    public static function RedirectBack()
-    {
+    public static function RedirectBack() {
         $pagename = self::$app->getPageManager()->getPrevPage();
         $pagename = '\\' . rtrim($pagename, '\\');
 
@@ -407,23 +383,21 @@ abstract class  WebApplication
      * uri без префикса
      * @param mixed $uri
      */
-    public function beforeRequest($uri)
-    {
+    public function beforeRequest($uri) {
         return null;
     }
 
     /**
      * Выполняет клиентский редирект  на  страницу
      *
-     * @param mixed $page     Имя класса  страницы
+     * @param mixed $page Имя класса  страницы
      * @param mixed $arg1
      * @param mixed $arg2
      * @param mixed $arg3
      * @param mixed $arg4
      * @param mixed $arg5
      */
-    public static function Redirect($page, $arg1 = null, $arg2 = null, $arg3 = null, $arg4 = null, $arg5 = null)
-    {
+    public static function Redirect($page, $arg1 = null, $arg2 = null, $arg3 = null, $arg4 = null, $arg5 = null) {
         if (self::$app instanceof WebApplication) {
             self::$app->getResponse()->Redirect($page, $arg1, $arg2, $arg3, $arg4, $arg5);
         }
@@ -433,32 +407,28 @@ abstract class  WebApplication
      * Редирект на  домашнюю  страницу
      *
      */
-    public static function RedirectHome()
-    {
+    public static function RedirectHome() {
         self::$app->getResponse()->toIndexPage();
     }
 
-  
-    
-    
-     /**
+
+    /**
      * Вставляет  JavaScript  в  конец   выходного  потока
      * @param string  Код  скрипта
-     * @param  boolean Если  true  - вставка  после  загрузки  документа в  браузер
+     * @param boolean Если  true  - вставка  после  загрузки  документа в  браузер
      */
-    public static function addJavaScript($js, $docready = false)
-    {
-        return self::$app->getResponse()->addJavaScript($js,$docready);
+    public static function addJavaScript($js, $docready = false) {
+        return self::$app->getResponse()->addJavaScript($js, $docready);
     }
-    
-/**
+
+    /**
      * редирект по URL
-     * 
+     *
      * @param mixed $message
      * @param mixed $uri
      */
     public static function RedirectURI($uri) {
         self::$app->getResponse()->toPage($uri);
-    }    
-    
- }
+    }
+
+}

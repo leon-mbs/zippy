@@ -18,8 +18,7 @@ abstract class TreeEntity extends Entity
      * Вместо  испоользования  метода   можно  импользоввать  аннтации  возде  определения  класса
      * анноации  именуются   аналогично  ключам  массива метаданных.
      */
-    protected static function getMetadata()
-    {
+    protected static function getMetadata() {
 
         $class = new \ReflectionClass(get_called_class());
         $doc = $class->getDocComment();
@@ -40,8 +39,9 @@ abstract class TreeEntity extends Entity
                 $retarr['keyfield'] = $keyfield;
                 $retarr['parentfield'] = $parentfield;
                 $retarr['pathfield'] = $pathfield;
-                if (strlen($view) > 0)
+                if (strlen($view) > 0) {
                     $retarr['view'] = $view;
+                }
 
                 return $retarr;
             }
@@ -49,14 +49,11 @@ abstract class TreeEntity extends Entity
         throw new \Zippy\Exception('getMetadata должен  быть  перегружен');
     }
 
- 
-    
 
     /**
      * @see Entity
      */
-    public static function delete($id)
-    {
+    public static function delete($id) {
         $class = get_called_class();
         $meta = $class::getMetadata();
 
@@ -91,8 +88,7 @@ abstract class TreeEntity extends Entity
      *
      * @param mixed $pid Id узла перемешения
      */
-    public function moveTo($pid)
-    {
+    public function moveTo($pid) {
         $class = get_called_class();
         $meta = $class::getMetadata();
         $old = sprintf('%08s', $this->{$meta['parentfield']});
@@ -107,16 +103,14 @@ abstract class TreeEntity extends Entity
         }
     }
 
-    
 
-    public function getParent()
-    {
+    public function getParent() {
 
         $class = get_called_class();
         $meta = $class::getMetadata();
 
-         
-        return  $class::load($this->{$meta['parentfield']});
+
+        return $class::load($this->{$meta['parentfield']});
     }
 
     /**
@@ -124,8 +118,7 @@ abstract class TreeEntity extends Entity
      *
      * @param mixed $all Если  false  получаем только  непостредственнвх потомков
      */
-    public function getChildren($all = false)
-    {
+    public function getChildren($all = false) {
         $conn = DB::getConnect();
         $class = get_called_class();
         $meta = $class::getMetadata();
@@ -143,8 +136,7 @@ abstract class TreeEntity extends Entity
      * @param mixed $rec Ксли  true  дочерние  узлы  удаляются  рекурсивно,
      *  иначе  удаляются  одним  запросом  к  БД
      */
-    public function deleteChildren($rec = true)
-    {
+    public function deleteChildren($rec = true) {
         $conn = DB::getConnect();
         $class = get_called_class();
         $meta = $class::getMetadata();
@@ -168,8 +160,7 @@ abstract class TreeEntity extends Entity
      *
      * @see   Entity
      */
-    protected function afterSave($update)
-    {
+    protected function afterSave($update) {
         $meta = $this->getMetadata();
         if (strlen($this->{$meta['pathfield']}) > 0) {
             return;
@@ -187,23 +178,23 @@ abstract class TreeEntity extends Entity
         $conn->Execute("UPDATE {$meta['table']} set  {$meta['pathfield']} ='" . $this->{$meta['pathfield']} . "' where  {$meta['keyfield']} = " . $this->{$meta['keyfield']});
     }
 
-    
+
     /**
-    * Возвращает  цепочку  родителей  до  корня
-    * 
-    */
-    public  function getParents(){
-         $class = get_called_class();
-         $meta = $class::getMetadata(); 
-         $path = $this->{$meta['pathfield']};
-         $ap = str_split($path,8);
-         array_pop($ap);
-         if(count($ap)==0){
-             return array();
-         }
-         $ids = implode(",",$ap) ;
-         $where = $meta["keyfield"] . " in (".$ids.")";    
-         return self::find($where,$meta["keyfield"] . " desc");
-         
+     * Возвращает  цепочку  родителей  до  корня
+     *
+     */
+    public function getParents() {
+        $class = get_called_class();
+        $meta = $class::getMetadata();
+        $path = $this->{$meta['pathfield']};
+        $ap = str_split($path, 8);
+        array_pop($ap);
+        if (count($ap) == 0) {
+            return array();
+        }
+        $ids = implode(",", $ap);
+        $where = $meta["keyfield"] . " in (" . $ids . ")";
+        return self::find($where, $meta["keyfield"] . " desc");
+
     }
 }

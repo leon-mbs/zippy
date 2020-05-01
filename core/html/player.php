@@ -3,7 +3,7 @@
 namespace Zippy\Html;
 
 /**
- * Компонент  медиаплеера  HTML5 
+ * Компонент  медиаплеера  HTML5
  */
 class Player extends HtmlComponent
 {
@@ -11,18 +11,16 @@ class Player extends HtmlComponent
     public $sources;
     public $src;
 
-    public function __construct($id)
-    {
+    public function __construct($id) {
         parent::__construct($id);
         $this->sources = array();
     }
 
     /**
      * рендеринг
-     * @see Zippy\Html\HtmlComponent 
+     * @see Zippy\Html\HtmlComponent
      */
-    protected function RenderImpl()
-    {
+    protected function RenderImpl() {
         $i = 0;
         $children = pq('[zippy=' . $this->id . ']  source');
         foreach ($children as $child) {
@@ -32,8 +30,9 @@ class Player extends HtmlComponent
             }
         }
 
-        if (strlen($this->src) > 0)
+        if (strlen($this->src) > 0) {
             $this->setAttribute("src", $this->src);
+        }
     }
 
 }

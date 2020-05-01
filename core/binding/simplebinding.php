@@ -17,18 +17,15 @@ class SimpleBinding implements Binding
      * Конструктор
      * @param mixed  Значение
      */
-    public function __construct($value)
-    {
+    public function __construct($value) {
         $this->value = $value;
     }
 
-    public function getValue()
-    {
+    public function getValue() {
         return $this->value;
     }
 
-    public function setValue($value)
-    {
+    public function setValue($value) {
         $this->value = $value;
     }
 

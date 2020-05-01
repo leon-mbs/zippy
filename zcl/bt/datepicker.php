@@ -10,30 +10,27 @@ use \Zippy\Interfaces\Requestable;
 
 /**
  * Twitter Botstrap компонент  тэга  &lt;input type=&quot;text&quot;&gt; с  календарем
- * 
+ *
  */
 class DatePicker extends \Zippy\Html\Form\TextInput implements Requestable, ChangeListener
 {
 
     private $event;
 
-    public function __construct($id, $value = null, $bgupdate = false)
-    {
+    public function __construct($id, $value = null, $bgupdate = false) {
         parent::__construct($id);
         $this->setDate($value);
         $this->bgupdate = $bgupdate;
     }
 
-    protected function onAdded()
-    {
+    protected function onAdded() {
         if ($this->bgupdate) {
             $page = $this->getPageOwner();
             $this->onChange($page, 'OnBackgroundUpdate', true);
         }
     }
 
-    public function RenderImpl()
-    {
+    public function RenderImpl() {
         \Zippy\Html\Form\TextInput::RenderImpl();
 
         // $url = $this->owner->getURLNode() . "::" . $this->id . "&ajax=true";
@@ -64,10 +61,9 @@ class DatePicker extends \Zippy\Html\Form\TextInput implements Requestable, Chan
 
     /**
      * Возвращает дату   в виде timestamp
-     * @param mixed $endday - установить  конец  дня 
+     * @param mixed $endday - установить  конец  дня
      */
-    public function getDate($endday = false)
-    {
+    public function getDate($endday = false) {
         $date = strtotime($this->getText());
         if ($endday == true) {
             $d = date('yyyy-mm-dd', $date);
@@ -79,11 +75,10 @@ class DatePicker extends \Zippy\Html\Form\TextInput implements Requestable, Chan
     /**
      * Устанавливает дату
      * Если  параметр не  задан  - текущая  дата
-     * 
-     * @param mixed $t - timestamp 
+     *
+     * @param mixed $t - timestamp
      */
-    public function setDate($t = null)
-    {
+    public function setDate($t = null) {
         if ($t > 0) {
             $this->setText(date('Y-m-d', $t));
         } else {
@@ -94,8 +89,7 @@ class DatePicker extends \Zippy\Html\Form\TextInput implements Requestable, Chan
     /**
      * @see  ChangeListener
      */
-    public function onChange(EventReceiver $receiver, $handler, $ajax = true)
-    {
+    public function onChange(EventReceiver $receiver, $handler, $ajax = true) {
 
         $this->event = new Event($receiver, $handler);
         $this->event->isajax = $ajax;
@@ -104,8 +98,7 @@ class DatePicker extends \Zippy\Html\Form\TextInput implements Requestable, Chan
     /**
      * @see ChangeListener
      */
-    public function OnEvent()
-    {
+    public function OnEvent() {
         if ($this->event != null) {
             $this->event->onEvent($this);
         }
@@ -114,8 +107,7 @@ class DatePicker extends \Zippy\Html\Form\TextInput implements Requestable, Chan
     /**
      * @see Requestable
      */
-    public function RequestHandle()
-    {
+    public function RequestHandle() {
         $this->OnEvent();
     }
 

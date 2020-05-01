@@ -20,14 +20,13 @@ class RadioButton extends HtmlFormDataElement implements ChangeListener, Request
 
     /**
      * Конструктор
-     * @param  mixed  ID
-     * @param  mixed  привязка выбранного  значения для  группы
-     * @param  mixed  значение для  радиокнопки
-     * @param  mixed  устанавливает имя  группы  для  радиокнопки. Если  не  задаоно имя  группы  берется
+     * @param mixed  ID
+     * @param mixed  привязка выбранного  значения для  группы
+     * @param mixed  значение для  радиокнопки
+     * @param mixed  устанавливает имя  группы  для  радиокнопки. Если  не  задаоно имя  группы  берется
      * с  $binding.
      */
-    public function __construct($id, PropertyBinding $binding, $itemvalue, $groupname = null)
-    {
+    public function __construct($id, PropertyBinding $binding, $itemvalue, $groupname = null) {
         parent::__construct($id);
         $this->setValue($binding);
         $this->itemvalue = $itemvalue;
@@ -37,9 +36,8 @@ class RadioButton extends HtmlFormDataElement implements ChangeListener, Request
     /**
      * @see  HtmlComponent
      */
-    public function RenderImpl()
-    {
-        $v=  $this->getValue();
+    public function RenderImpl() {
+        $v = $this->getValue();
         if ($v !== null && $v == $this->itemvalue) {
             $this->setAttribute("checked", "checked");
         } else {
@@ -67,24 +65,21 @@ class RadioButton extends HtmlFormDataElement implements ChangeListener, Request
     /**
      * @see SubmitDataRequest
      */
-    public function getRequestData()
-    {
+    public function getRequestData() {
         $this->setValue($_REQUEST[$this->groupname]);
     }
 
     /**
      * @see Requestable
      */
-    public function RequestHandle()
-    {
+    public function RequestHandle() {
         $this->OnEvent();
     }
 
     /**
      * @see  ChangeListener
      */
-    public function onChange(EventReceiver $receiver, $handler, $ajax = true)
-    {
+    public function onChange(EventReceiver $receiver, $handler, $ajax = true) {
 
         $this->event = new Event($receiver, $handler);
         $this->event->isajax = $ajax;
@@ -93,14 +88,13 @@ class RadioButton extends HtmlFormDataElement implements ChangeListener, Request
     /**
      * @see ChangeListener
      */
-    public function OnEvent()
-    {
+    public function OnEvent() {
         if ($this->event != null) {
             $this->event->onEvent($this);
         }
     }
 
-     public function clean(){
+    public function clean() {
         $this->setValue(-1);
-     }    
+    }
 }

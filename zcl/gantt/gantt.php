@@ -10,7 +10,7 @@ use \Zippy\Event;
 
 /**
  * Класс-backend для jQuery  плагина  jqGanttView
- * 
+ *
  */
 class Gantt extends HtmlComponent implements \Zippy\Interfaces\Requestable
 {
@@ -21,8 +21,7 @@ class Gantt extends HtmlComponent implements \Zippy\Interfaces\Requestable
     /**
      * @see HtmlComponent
      */
-    public final function RenderImpl()
-    {
+    public final function RenderImpl() {
         $id = $this->getAttribute('id');
         $url = $this->owner->getURLNode() . "::" . $this->id;
         $json = $this->getJson();
@@ -76,8 +75,7 @@ EOT;
     /**
      * @see Requestable
      */
-    public final function RequestHandle()
-    {
+    public final function RequestHandle() {
         $params = WebApplication::$app->getRequest()->request_params[$this->id];
         $action = array();
         $action['id'] = $params[0];
@@ -91,10 +89,10 @@ EOT;
     }
 
     /**
-     * Устанавливает  обработчик события.  
+     * Устанавливает  обработчик события.
      * Обработчик  должен  иметь  праметрыЖ
      * $sender - источник
-     * $event - данные  события 
+     * $event - данные  события
      * $event['action'] (может  быть 'click','drag','resize')
      * $event['id']   идентификатор  задачи
      * $event['start']   дата  начала
@@ -102,14 +100,12 @@ EOT;
      * @param EventReceiver $receiver
      * @param mixed $handler
      */
-    public function setAjaxEvent(EventReceiver $receiver, $handler)
-    {
+    public function setAjaxEvent(EventReceiver $receiver, $handler) {
 
         $this->event = new Event($receiver, $handler);
     }
 
-    private function getJson()
-    {
+    private function getJson() {
         $json = "";
 
 
@@ -122,12 +118,11 @@ EOT;
 
     /**
      * Записывает массив  задач ( массивы GanttItem )
-     * 
-     * 
+     *
+     *
      * @param mixed $data
      */
-    public function setData($data = array())
-    {
+    public function setData($data = array()) {
         $this->data = $data;
     }
 
@@ -142,18 +137,15 @@ class GanttItem
     public $end;   //timestamp
     public $color;  //css color
 
-    public function __construct($id, $title, $start, $end, $color = "")
-    {
+    public function __construct($id, $title, $start, $end, $color = "") {
 
         $this->id = $id;
         $this->title = $title;
-        $this->start = "new Date(" . date("Y", $start) . "," . (date("m", $start) - 1 ) . "," . date("d", $start) . ")";
+        $this->start = "new Date(" . date("Y", $start) . "," . (date("m", $start) - 1) . "," . date("d", $start) . ")";
 
-        $this->end = "new Date(" . date("Y", $end) . "," . (date("m", $end) - 1 ) . "," . date("d", $end) . ")";
-           
+        $this->end = "new Date(" . date("Y", $end) . "," . (date("m", $end) - 1) . "," . date("d", $end) . ")";
+
         $this->color = $color;
     }
 
 }
-
-?>

@@ -12,8 +12,7 @@ class File extends HtmlFormDataElement
      * Конструктор
      * @param mixed  ID
      */
-    public function __construct($id, $multy = false)
-    {
+    public function __construct($id, $multy = false) {
         parent::__construct($id);
         $this->setAttribute("name", $this->id);
         if ($multy) {
@@ -25,16 +24,14 @@ class File extends HtmlFormDataElement
     /**
      * Возвращает массив   с  описанием загруженного  файла - элемент массива  $_FILES
      */
-    public function getFile()
-    {
+    public function getFile() {
         return $this->getValue();
     }
 
     /**
      * @see SubmitDataRequest
      */
-    public function getRequestData()
-    {
+    public function getRequestData() {
         $this->setValue($_FILES[$this->id]);
     }
 
@@ -51,9 +48,9 @@ class File extends HtmlFormDataElement
       copy($path,$tmp);
       $this->setValue($files);
       } */
-      
-      
-     public function clean(){
-        
-     }  
+
+
+    public function clean() {
+
+    }
 }

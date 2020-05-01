@@ -19,11 +19,10 @@ class Label extends HtmlComponent implements AjaxRender
 
     /**
      * Конструктор
-     * @param  string ID елемента
-     * @param  string  Текстовое  содержание
+     * @param string ID елемента
+     * @param string  Текстовое  содержание
      */
-    public function __construct($id, $text = null, $html = false)
-    {
+    public function __construct($id, $text = null, $html = false) {
         parent::__construct($id);
 
         $this->value = $text;
@@ -34,16 +33,16 @@ class Label extends HtmlComponent implements AjaxRender
     /**
      * @see HtmlComponent
      */
-    public function RenderImpl()
-    {
+    public function RenderImpl() {
 
 
         if (strlen($this->ajaxvalue) > 0) {
             \Zippy\WebApplication::$app->getResponse()->addJavaScript($this->ajaxvalue, true);
             return;
         }
-        if ($this->getText() === null)
+        if ($this->getText() === null) {
             return;
+        }
 
         $HtmlTag = $this->getTag();
         if ($this->html) {
@@ -57,8 +56,7 @@ class Label extends HtmlComponent implements AjaxRender
      * Реализация интерфейса AjaxRender
      * @see AjaxRender
      */
-    public function AjaxAnswer()
-    {
+    public function AjaxAnswer() {
         $text = $this->getText();
         $text = addslashes($text);
         if ($this->html) {
@@ -70,8 +68,7 @@ class Label extends HtmlComponent implements AjaxRender
     /**
      * Установить  текст
      */
-    public function setText($text, $html = false)
-    {
+    public function setText($text, $html = false) {
         $this->value = $text;
         $this->html = $html;
         $this->ajaxvalue = "";
@@ -81,8 +78,7 @@ class Label extends HtmlComponent implements AjaxRender
      * Прочитать  текст
      * @return  string
      */
-    function getText()
-    {
+    function getText() {
         if ($this->value instanceof Binding) {
             return $this->value->getValue();
         } else {
@@ -94,11 +90,10 @@ class Label extends HtmlComponent implements AjaxRender
      * Добавления значения  которое  подгрузится с  помощю AJAX
      * после загрузки страницы
      *
-     * @param mixed $url   Адрес  страницы   с  данными
-     * @param mixed $html    если  true жданные  вставятся в  DOM  как  html
+     * @param mixed $url Адрес  страницы   с  данными
+     * @param mixed $html если  true жданные  вставятся в  DOM  как  html
      */
-    public function setAjaxText($url, $html = false)
-    {
+    public function setAjaxText($url, $html = false) {
 
         $this->ajaxvalue = "$.get('{$url}', function(data) {
                     $('#{$this->id}')." . ($html ? "html" : "text") . "(data) });";

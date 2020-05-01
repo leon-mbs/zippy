@@ -13,16 +13,14 @@ class TextArea extends TextInput
     /**
      * @see  HtmlFormSubmitElement
      */
-    public function setResponseData()
-    {
+    public function setResponseData() {
         $this->getTag()->text($this->getValue());
     }
 
     /**
      * @see AjaxRender
      */
-    public function AjaxAnswer()
-    {
+    public function AjaxAnswer() {
         $text = $this->getValue();
         $responseJS = "$('#{$this->id}').text('{$text}')";
 

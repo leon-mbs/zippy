@@ -11,8 +11,7 @@ abstract class CustomComponent extends HtmlComponent
     /**
      * @see  HtmlComponent
      */
-    final public function RenderImpl()
-    {
+    final public function RenderImpl() {
         $HtmlTag = $this->getTag();
         $attributes = $HtmlTag->attr('*'); //атрибуты с шаблона
         $HtmlTag->replaceWith($this->getContent($attributes));
@@ -25,7 +24,7 @@ abstract class CustomComponent extends HtmlComponent
      * интерфейсы типа Requestable и т.д.
      * Список   аттрибутов  HTML тэга (как правило,  DIV элемента) доступен
      * через  поле  attributes
-     * 
+     *
      * @return string
      */
     public abstract function getContent($attributes);

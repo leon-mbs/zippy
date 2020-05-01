@@ -15,8 +15,7 @@ abstract class AbstractLink extends \Zippy\Html\HtmlContainer
     protected $value = null;
     protected $disabled = false;
 
-    public function __construct($id)
-    {
+    public function __construct($id) {
         parent::__construct($id);
         $this->setAttribute("href", "javascript:void(0);");
     }
@@ -25,16 +24,14 @@ abstract class AbstractLink extends \Zippy\Html\HtmlContainer
      * Устанавливает  текст  ссылки. В случае  тэга  <IMG> вместо  текста  задает
      * путь к  изображению (атрибут src)
      *
-     * @param  string
+     * @param string
      */
-    public function setValue($text)
-    {
+    public function setValue($text) {
         $this->value = $text;
         return $this;
     }
 
-    function getValue()
-    {
+    function getValue() {
         if ($this->value instanceof Binding) {
             return $this->value->getValue();
         } else {
@@ -45,8 +42,7 @@ abstract class AbstractLink extends \Zippy\Html\HtmlContainer
     /**
      * @see HtmlComponent
      */
-    public function beforeRender()
-    {
+    public function beforeRender() {
         $HtmlTag = $this->getTag('a');
         $children = $HtmlTag->children('img');
 
@@ -62,13 +58,11 @@ abstract class AbstractLink extends \Zippy\Html\HtmlContainer
     /**
      * Устанавливает состояние disabled при котором ссылка отображается как текст
      */
-    public function setDisabled($disabled = true)
-    {
+    public function setDisabled($disabled = true) {
         $this->disabled = $disabled;
     }
 
-    public function RenderImpl()
-    {
+    public function RenderImpl() {
         parent::RenderImpl();
     }
 

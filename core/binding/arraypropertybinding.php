@@ -13,8 +13,7 @@ class ArrayPropertyBinding extends PropertyBinding
     /**
      *  Очистка  привязанного  массива.
      */
-    public function clear()
-    {
+    public function clear() {
         $this->obj->{$this->propertyname} = array();
     }
 

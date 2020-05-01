@@ -5,7 +5,7 @@ namespace Zippy\Html\Link;
 use \Zippy\WebApplication;
 use \Zippy\Interfaces\ClickListener;
 use \Zippy\Interfaces\EventReceiver;
- 
+
 use \Zippy\Interfaces\Requestable;
 use \Zippy\Event;
 
@@ -20,12 +20,11 @@ class ClickLink extends AbstractLink implements ClickListener, Requestable
 
     /**
      * Конструктор
-     * @param  string ID компонента
-     * @param  EventReceiver Объект с методом  обработки  события
-     * @param  string Имя  метода-обработчика
+     * @param string ID компонента
+     * @param EventReceiver Объект с методом  обработки  события
+     * @param string Имя  метода-обработчика
      */
-    public function __construct($id,   $receiver = null, $handler = null, $ajax = false)
-    {
+    public function __construct($id, $receiver = null, $handler = null, $ajax = false) {
         parent::__construct($id);
 
         if (is_object($receiver) && $handler != null) {
@@ -36,8 +35,7 @@ class ClickLink extends AbstractLink implements ClickListener, Requestable
     /**
      * @see HtmlComponent
      */
-    public function RenderImpl()
-    {
+    public function RenderImpl() {
         parent::RenderImpl();
 
 
@@ -48,10 +46,10 @@ class ClickLink extends AbstractLink implements ClickListener, Requestable
         }
         if ($this->event == null) {
             $this->setAttribute("href", "");
-          //  $this->setAttribute("onclick", "");
+            //  $this->setAttribute("onclick", "");
             return;
         }
-        
+
         $this->setAttribute("href", "javascript:void(0);");
         if ($this->event->isajax == false) {
             $url = $this->owner->getURLNode() . "::" . $this->id;
@@ -65,8 +63,7 @@ class ClickLink extends AbstractLink implements ClickListener, Requestable
     /**
      * @see  Requestable
      */
-    public function RequestHandle()
-    {
+    public function RequestHandle() {
         $this->OnEvent();
         // WebApplication::getApplication()->setReloadPage();
     }
@@ -74,8 +71,7 @@ class ClickLink extends AbstractLink implements ClickListener, Requestable
     /**
      * @see  ClickListener
      */
-    public function onClick(EventReceiver $receiver, $handler, $ajax = false)
-    {
+    public function onClick(EventReceiver $receiver, $handler, $ajax = false) {
         $this->event = new Event($receiver, $handler);
         $this->event->isajax = $ajax;
     }
@@ -83,8 +79,7 @@ class ClickLink extends AbstractLink implements ClickListener, Requestable
     /**
      * @see ClickListener
      */
-    public function OnEvent()
-    {
+    public function OnEvent() {
         if ($this->event != null) {
             $this->event->onEvent($this);
         }

@@ -23,29 +23,26 @@ class AutocompleteTextInput extends TextInput implements Requestable
 
     /**
      * Конструктор
-     * @param  Zippy ID
-     * @param  Минимальное  количество  символов
-     * @param  Таймаут в  мс.
+     * @param Zippy ID
+     * @param Минимальное  количество  символов
+     * @param Таймаут в  мс.
      */
-    public function __construct($id, $minChars = 2, $timeout = 100, $bgupdate = false)
-    {
+    public function __construct($id, $minChars = 2, $timeout = 100, $bgupdate = false) {
         parent::__construct($id);
         $this->minChars = $minChars;
         $this->timeout = $timeout;
         $this->bgupdate = $bgupdate;
-         
+
     }
 
-    protected function onAdded()
-    {
+    protected function onAdded() {
         if ($this->bgupdate) {
             $page = $this->getPageOwner();
             $this->onChange($page, 'OnBackgroundUpdate', true);
         }
     }
 
-    public function RenderImpl()
-    {
+    public function RenderImpl() {
         TextInput::RenderImpl();
 
         $onchange = "null";
@@ -66,9 +63,9 @@ class AutocompleteTextInput extends TextInput implements Requestable
             }
         }
         $url = $this->owner->getURLNode() . "::" . $this->id . "&ajax=true";
-        
-        if(strlen($this->matcher)>0){
-            $matcher ="matcher:function(item) {
+
+        if (strlen($this->matcher) > 0) {
+            $matcher = "matcher:function(item) {
                     {$this->matcher}
                }, ";
         }
@@ -113,15 +110,14 @@ class AutocompleteTextInput extends TextInput implements Requestable
     /**
      * @see Requestable
      */
-    public function RequestHandle()
-    {
+    public function RequestHandle() {
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $this->OnEvent2();
             return;
         }
-    
-        $posts=array();
+
+        $posts = array();
 
         $this->setValue($_REQUEST['text']);
         $arr = $this->OnAutocomplete();
@@ -140,8 +136,7 @@ class AutocompleteTextInput extends TextInput implements Requestable
      * Событие при автозавершении.
      * Вызывает  обработчик который  должен  вернуть  массив строк для  выпадающего списка.
      */
-    public function OnAutocomplete()
-    {
+    public function OnAutocomplete() {
         if ($this->event != null) {
             return $this->event->onEvent($this);
         }
@@ -152,8 +147,7 @@ class AutocompleteTextInput extends TextInput implements Requestable
      * Устанавливает  событие
      * @param Event
      */
-    public function onText(EventReceiver $receiver, $handler)
-    {
+    public function onText(EventReceiver $receiver, $handler) {
 
         $this->event = new Event($receiver, $handler);
     }
@@ -161,32 +155,29 @@ class AutocompleteTextInput extends TextInput implements Requestable
     /**
      * @see SubmitDataRequest
      */
-    public function getRequestData()
-    {
+    public function getRequestData() {
         $this->setValue($_REQUEST[$this->id]);
         $this->key = $_REQUEST[$this->id . "_id"];
- 
-        if (strlen(trim($this->getValue())) == 0)
+
+        if (strlen(trim($this->getValue())) == 0) {
             $this->key = 0;
+        }
     }
 
     //возвращает  ключ  для   выбранного значения
-    public function getKey()
-    {
+    public function getKey() {
         return $this->key;
     }
 
     //
-    public function setKey($key)
-    {
+    public function setKey($key) {
         $this->key = $key;
     }
 
     /**
      * @see  ChangeListener
      */
-    public function onChange(EventReceiver $receiver, $handler, $ajax = false)
-    {
+    public function onChange(EventReceiver $receiver, $handler, $ajax = false) {
         $this->event2 = new Event($receiver, $handler);
         $this->event2->isajax = $ajax;
     }
@@ -194,15 +185,14 @@ class AutocompleteTextInput extends TextInput implements Requestable
     /**
      * @see ChangeListener
      */
-    public function OnEvent2()
-    {
+    public function OnEvent2() {
         if ($this->event2 != null) {
             $this->event2->onEvent($this);
         }
     }
 
-     public function clean(){
-        $this->setKey(0); 
-        $this->setText(''); 
-     }
+    public function clean() {
+        $this->setKey(0);
+        $this->setText('');
+    }
 }

@@ -15,11 +15,10 @@ class CheckBoxList extends HtmlFormDataElement
 
     /**
      * Конструктор
-     * @param  string ID компонента
-     * @param  string Разделитель  между ссылками
+     * @param string ID компонента
+     * @param string Разделитель  между ссылками
      */
-    public function __construct($id, $delimiter = '')
-    {
+    public function __construct($id, $delimiter = '') {
         parent::__construct($id);
         $this->delimiter = $delimiter;
     }
@@ -27,8 +26,7 @@ class CheckBoxList extends HtmlFormDataElement
     /**
      * @see  HtmlComponent
      */
-    public function RenderImpl()
-    {
+    public function RenderImpl() {
         // $url = $this->owner->getURLNode()."::".$this->id ;
 
         $out = "";
@@ -49,15 +47,14 @@ class CheckBoxList extends HtmlFormDataElement
 
     /**
      * Рендерит чекбокс.  Мжет быть перегружен  для  кастомного рендеринга.
-     * 
+     *
      * @param mixed $name
      * @param mixed $checked
      * @param mixed $caption
      * @param mixed $attr
      * @param mixed $delimiter
      */
-    public function RenderItem($name, $checked, $caption = "", $attr = "", $delimiter = "")
-    {
+    public function RenderItem($name, $checked, $caption = "", $attr = "", $delimiter = "") {
         return "<nobr><input   type=\"checkbox\" name=\"{$name}\" {$attr} {$checked}  /> {$caption}</nobr>{$delimiter}";
     }
 
@@ -68,16 +65,14 @@ class CheckBoxList extends HtmlFormDataElement
      * @param string Текст возле  чекера
      * @param array Список   аттрибутов
      */
-    public function AddCheckBox($itemid, $value, $caption, $attributes = array())
-    {
+    public function AddCheckBox($itemid, $value, $caption, $attributes = array()) {
         $this->list[$itemid] = array('value' => $value, 'caption' => $caption, 'attributes' => $attributes);
     }
 
     /**
      * @see SubmitDataRequest
      */
-    public function getRequestData()
-    {
+    public function getRequestData() {
         foreach ($this->list as $id => $item) {
             $this->list[$id]['value'] = isset($_REQUEST[$this->id . '::' . $id]);
         }
@@ -88,8 +83,7 @@ class CheckBoxList extends HtmlFormDataElement
      * @param mixed номер  в  списке
      * @param mixed Состояние
      */
-    public function setChecked($id, $state)
-    {
+    public function setChecked($id, $state) {
         $this->list[$id]['value'] = $state;
     }
 
@@ -97,8 +91,7 @@ class CheckBoxList extends HtmlFormDataElement
      * Устанавливает состояние всех  чекеров  в  списке
      * @param mixed Состояние
      */
-    public function setAllChecked($state)
-    {
+    public function setAllChecked($state) {
         foreach ($this->list as $id => $item) {
             $this->list[$id]['value'] = $state;
         }
@@ -108,8 +101,7 @@ class CheckBoxList extends HtmlFormDataElement
      * Проверка  состояния чекера
      * @param mixed  Номер  в  списке
      */
-    public function isChecked($id)
-    {
+    public function isChecked($id) {
         return $this->list[$id]['value'];
     }
 
@@ -117,8 +109,7 @@ class CheckBoxList extends HtmlFormDataElement
      * Список номеров  отмеченых  чекеров
      * @return  array
      */
-    public function getCheckedList()
-    {
+    public function getCheckedList() {
         $ids = array();
         foreach ($this->list as $id => $item) {
             if ($this->list[$id]['value'] === true) {
@@ -128,8 +119,8 @@ class CheckBoxList extends HtmlFormDataElement
         return $ids;
     }
 
-   
-     public function clean(){
+
+    public function clean() {
         $this->setAllChecked(false);
-     }
+    }
 }

@@ -22,8 +22,7 @@ class RedirectLink extends AbstractLink implements Requestable
      * @param boolean Если  true  - рендерит  bookmarkable  ссылку
      * @param boolean Если  true  - кодирует ссылку
      */
-    public function __construct($id, $pagename = "", $params = array(), $bookmarkable = true, $encode = false)
-    {
+    public function __construct($id, $pagename = "", $params = array(), $bookmarkable = true, $encode = false) {
         AbstractLink::__construct($id);
         $this->setLink($pagename, $params, $bookmarkable, $encode);
     }
@@ -31,21 +30,26 @@ class RedirectLink extends AbstractLink implements Requestable
     /**
      * @see  Requestable
      */
-    public function RequestHandle()
-    {
+    public function RequestHandle() {
         $cnt = count($this->params);
         switch ($cnt) {
-            case 0: WebApplication::$app->getResponse()->Redirect($this->pagename);
+            case 0:
+                WebApplication::$app->getResponse()->Redirect($this->pagename);
                 break;
-            case 1: WebApplication::$app->getResponse()->Redirect($this->pagename, $this->params[0]);
+            case 1:
+                WebApplication::$app->getResponse()->Redirect($this->pagename, $this->params[0]);
                 break;
-            case 2: WebApplication::$app->getResponse()->Redirect($this->pagename, $this->params[0], $this->params[1]);
+            case 2:
+                WebApplication::$app->getResponse()->Redirect($this->pagename, $this->params[0], $this->params[1]);
                 break;
-            case 3: WebApplication::$app->getResponse()->Redirect($this->pagename, $this->params[0], $this->params[1], $this->params[2]);
+            case 3:
+                WebApplication::$app->getResponse()->Redirect($this->pagename, $this->params[0], $this->params[1], $this->params[2]);
                 break;
-            case 4: WebApplication::$app->getResponse()->Redirect($this->pagename, $this->params[0], $this->params[1], $this->params[2], $this->params[3]);
+            case 4:
+                WebApplication::$app->getResponse()->Redirect($this->pagename, $this->params[0], $this->params[1], $this->params[2], $this->params[3]);
                 break;
-            case 5: WebApplication::$app->getResponse()->Redirect($this->pagename, $this->params[0], $this->params[1], $this->params[2], $this->params[3], $this->params[4]);
+            case 5:
+                WebApplication::$app->getResponse()->Redirect($this->pagename, $this->params[0], $this->params[1], $this->params[2], $this->params[3], $this->params[4]);
                 break;
         }
     }
@@ -53,8 +57,7 @@ class RedirectLink extends AbstractLink implements Requestable
     /**
      * @see  HtmlComponent
      */
-    public function RenderImpl()
-    {
+    public function RenderImpl() {
         parent::RenderImpl();
         if ($this->bookmarkable === true) {
 
@@ -62,10 +65,12 @@ class RedirectLink extends AbstractLink implements Requestable
             $_BASEURL = WebApplication::$app->getResponse()->getHostUrl();
             if ($this->encode == true) {
                 $url = serialize(array($this->pagename, $this->params));
-                if (strlen($url) % 3 == 1)
+                if (strlen($url) % 3 == 1) {
                     $url .= '  ';
-                if (strlen($url) % 3 == 2)
+                }
+                if (strlen($url) % 3 == 2) {
                     $url .= ' ';
+                }
 
                 $url = $_BASEURL . "/index.php?r=" . base64_encode(serialize(array($this->pagename, $this->params)));
             } else {
@@ -83,12 +88,12 @@ class RedirectLink extends AbstractLink implements Requestable
         $this->setAttribute("href", "{$url}");
     }
 
-    public function setLink($pagename, $params = array(), $bookmarkable = true, $encode = false)
-    {
+    public function setLink($pagename, $params = array(), $bookmarkable = true, $encode = false) {
         $this->pagename = $pagename;
         $this->params = $params;
-        if (!is_array($params))
+        if (!is_array($params)) {
             $this->params = array($params);
+        }
         $this->bookmarkable = $bookmarkable;
         $this->encode = $encode;
     }

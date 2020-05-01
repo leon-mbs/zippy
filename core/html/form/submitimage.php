@@ -20,8 +20,7 @@ class SubmitImage extends HtmlComponent implements ClickListener, Requestable
     /**
      * @see  HtmlComponent
      */
-    public function RenderImpl()
-    {
+    public function RenderImpl() {
 
         if ($this->getFormOwner() == null) {
             throw new \Zippy\Exception("Element '" . $this->id . "' outside   FORM tag");
@@ -43,32 +42,28 @@ class SubmitImage extends HtmlComponent implements ClickListener, Requestable
      * Возвращает  кординаты   клика  в  виде  массива  x и y
      * @return  array
      */
-    public function getXY()
-    {
+    public function getXY() {
         return $this->getValue();
     }
 
     /**
      * @see  SubmitDataRequest
      */
-    public function getRequestData()
-    {
+    public function getRequestData() {
         $this->setValue(array('x' => $_REQUEST['x'], 'y' => $_REQUEST['y']));
     }
 
     /**
      * @see  Requestable
      */
-    public function RequestHandle()
-    {
+    public function RequestHandle() {
         $this->OnEvent();
     }
 
     /**
      * @see  ClickListener
      */
-    public function onClick(EventReceiver $receiver, $handler, $ajax = false)
-    {
+    public function onClick(EventReceiver $receiver, $handler, $ajax = false) {
         $this->event = new Event($receiver, $handler);
         $this->event->isajax = $ajax;
     }
@@ -76,8 +71,7 @@ class SubmitImage extends HtmlComponent implements ClickListener, Requestable
     /**
      * Вызывает  событие  при  клике   мышкой
      */
-    public function OnEvent()
-    {
+    public function OnEvent() {
         if ($this->event != null) {
             $this->event->onEvent($this);
         }

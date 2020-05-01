@@ -17,22 +17,19 @@ class EntityDataSource implements \Zippy\Interfaces\DataSource
 
     //   private $top;    //ограничение  количества
 
-    public function __construct($class, $where = "", $order = "", $count = 0)
-    {
+    public function __construct($class, $where = "", $order = "", $count = 0) {
         $this->class = $class;
         $this->where = $where;
         $this->order = $order;
         $this->count = $count;
     }
 
-    public function getItemCount()
-    {
+    public function getItemCount() {
         $class = $this->class;
         return $class::findCnt($this->where);
     }
 
-    public function getItems($start = -1, $count = -1, $sortfield = null, $desc = null)
-    {
+    public function getItems($start = -1, $count = -1, $sortfield = null, $desc = null) {
         if ($this->count > 0) {  // приоритет если  задано
             $count = $this->count;
             $start = 0;
@@ -46,19 +43,16 @@ class EntityDataSource implements \Zippy\Interfaces\DataSource
         return $class::find($this->where, $orderby, $count, $start);
     }
 
-    public function getItem($id)
-    {
+    public function getItem($id) {
         $class = $this->class;
         return $class::load($id);
     }
 
-    public function setWhere($where = '')
-    {
+    public function setWhere($where = '') {
         $this->where = $where;
     }
 
-    public function setOrder($order)
-    {
+    public function setOrder($order) {
         $this->order = $order;
     }
 

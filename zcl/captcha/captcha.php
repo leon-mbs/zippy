@@ -22,11 +22,10 @@ class Captcha extends \Zippy\Html\HtmlComponent implements \Zippy\Interfaces\Aja
      * Конструктор
      *
      * @param mixed $id
-     * @param mixed $refresh  если  true генерится код для обновления  через  AJAX
+     * @param mixed $refresh если  true генерится код для обновления  через  AJAX
      * @return Captcha
      */
-    public function __construct($id, $refresh = true)
-    {
+    public function __construct($id, $refresh = true) {
         parent::__construct($id);
         $this->refresh = $refresh;
         $this->Refresh();
@@ -37,8 +36,7 @@ class Captcha extends \Zippy\Html\HtmlComponent implements \Zippy\Interfaces\Aja
      * Может  быть  перегружен для  пользовательской  реализации.
      * @return  ссылка  на  ресурс изображения
      */
-    protected function OnImage()
-    {
+    protected function OnImage() {
         $im = imagecreate($this->x, $this->y);
         $bg = imagecolorallocate($im, 200, 255, 200);
         $textcolor = imagecolorallocate($im, rand(0, 255), rand(0, 200), rand(0, 255));
@@ -56,8 +54,7 @@ class Captcha extends \Zippy\Html\HtmlComponent implements \Zippy\Interfaces\Aja
      * Реализует  алгоритм  вычисление  кода. Может  быть  перегружен для  пользовательской  реализации
      * @return   строка  с кодом
      */
-    protected function OnCode()
-    {
+    protected function OnCode() {
         $chars = 'abdefhknrstyz23456789';
         $length = rand(4, 6);
         $numChars = strlen($chars);
@@ -72,8 +69,7 @@ class Captcha extends \Zippy\Html\HtmlComponent implements \Zippy\Interfaces\Aja
      * Проверка  кода
      *
      */
-    public function checkCode($code)
-    {
+    public function checkCode($code) {
         if ($this->created + self::$timeout < time()) {
             return false;
         }
@@ -84,8 +80,7 @@ class Captcha extends \Zippy\Html\HtmlComponent implements \Zippy\Interfaces\Aja
      * Обновление кода капчи
      *
      */
-    public function Refresh()
-    {
+    public function Refresh() {
         $this->code = $this->OnCode();
         $this->created = time();
     }
@@ -94,8 +89,7 @@ class Captcha extends \Zippy\Html\HtmlComponent implements \Zippy\Interfaces\Aja
      *  Отдает бинарный поток с изображением
      *
      */
-    protected function binaryOutput()
-    {
+    protected function binaryOutput() {
         $im = $this->OnImage();
         header('Content-type: image/png');
         imagepng($im);
@@ -109,8 +103,7 @@ class Captcha extends \Zippy\Html\HtmlComponent implements \Zippy\Interfaces\Aja
      *  поток  или  ссылку для атрибута  src при  обновлении  изображения
      *
      */
-    public function RequestHandle()
-    {
+    public function RequestHandle() {
         if (\Zippy\WebApplication::$app->getRequest()->isBinaryRequest()) {
             $this->binaryOutput();
         }
@@ -124,8 +117,7 @@ class Captcha extends \Zippy\Html\HtmlComponent implements \Zippy\Interfaces\Aja
      * @see HttpComponent
      *
      */
-    protected function RenderImpl()
-    {
+    protected function RenderImpl() {
 
         $url = $this->owner->getURLNode() . "::" . $this->id . "&ajax=true";
         if ($this->refresh) {
@@ -138,8 +130,7 @@ class Captcha extends \Zippy\Html\HtmlComponent implements \Zippy\Interfaces\Aja
      * возвращает  код  для  обновления   атрибута  src
      *
      */
-    public function AjaxAnswer()
-    {
+    public function AjaxAnswer() {
         $_src = $this->owner->getURLNode() . "::" . $this->id . ':' . time() . '&binary=true';
 
         return "$('#{$this->id}').attr('src','{$_src}')";
@@ -149,11 +140,10 @@ class Captcha extends \Zippy\Html\HtmlComponent implements \Zippy\Interfaces\Aja
      * Возвращает  код  капчи
      * @return  string
      */
-    public function getCode()
-    {
+    public function getCode() {
         return $this->code;
     }
 
 }
 
-?>
+

@@ -22,8 +22,7 @@ class CheckBox extends HtmlFormDataElement implements ChangeListener, Requestabl
      * @param mixed  ID
      * @param Значение елеента  или  поле  привязанного объекта
      */
-    public function __construct($id, $value = false)
-    {
+    public function __construct($id, $value = false) {
         parent::__construct($id);
         $this->setValue($value);
     }
@@ -31,13 +30,13 @@ class CheckBox extends HtmlFormDataElement implements ChangeListener, Requestabl
     /**
      * @see  HtmlComponent
      */
-    public function RenderImpl()
-    {
+    public function RenderImpl() {
 
         if ($this->getValue() == true || $this->getValue() == 1) {
             $this->setAttribute("checked", "On");
-        } else
+        } else {
             $this->setAttribute("checked", null);
+        }
 
         $this->setAttribute("name", $this->id);
         // if set event
@@ -60,24 +59,21 @@ class CheckBox extends HtmlFormDataElement implements ChangeListener, Requestabl
     /**
      * @see SubmitDataRequest
      */
-    public function getRequestData()
-    {
+    public function getRequestData() {
         $this->setValue(isset($_REQUEST[$this->id]));
     }
 
     /**
      * @see Requestable
      */
-    public function RequestHandle()
-    {
+    public function RequestHandle() {
         $this->OnEvent();
     }
 
     /**
      * @see  ChangeListener
      */
-    public function onChange(EventReceiver $receiver, $handler, $ajax = false)
-    {
+    public function onChange(EventReceiver $receiver, $handler, $ajax = false) {
 
         $this->event = new Event($receiver, $handler);
         $this->event->isajax = $ajax;
@@ -86,8 +82,7 @@ class CheckBox extends HtmlFormDataElement implements ChangeListener, Requestabl
     /**
      * @see ChangeListener
      */
-    public function OnEvent()
-    {
+    public function OnEvent() {
         if ($this->event != null) {
             $this->event->onEvent($this);
         }
@@ -95,10 +90,9 @@ class CheckBox extends HtmlFormDataElement implements ChangeListener, Requestabl
 
     /**
      * Устанавливает  checkbox
-     * @param  boolean
+     * @param boolean
      */
-    public function setChecked($checked)
-    {
+    public function setChecked($checked) {
         $checked = $checked == 1 ? true : $checked;
         $checked = $checked === 'true' ? true : $checked;
         $this->setValue($checked);
@@ -107,11 +101,11 @@ class CheckBox extends HtmlFormDataElement implements ChangeListener, Requestabl
     /**
      * Установлен  ли checkbox
      */
-    public function isChecked()
-    {
+    public function isChecked() {
         return $this->getValue() === TRUE;
     }
-         public function clean(){
-         $this->setChecked(false); 
-     }
+
+    public function clean() {
+        $this->setChecked(false);
+    }
 }

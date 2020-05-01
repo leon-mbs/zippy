@@ -15,10 +15,9 @@ class ArrayDataSource implements DataSource
 
     /**
      * Консируктор
-     * @param  array  Массив  данных или  PropertyBinding
+     * @param array  Массив  данных или  PropertyBinding
      */
-    public function getArray()
-    {
+    public function getArray() {
         if ($this->data instanceof Binding) {
             return $this->data->getValue();
         } else {
@@ -28,13 +27,12 @@ class ArrayDataSource implements DataSource
 
     /**
      * Конструктор
-     * 
-     * @param mixed $source  массив, биндинг или  ссылка  на   компонент
-     * @param mixed $property  имя  свойстава   если  первый  парметр - компонент
+     *
+     * @param mixed $source массив, биндинг или  ссылка  на   компонент
+     * @param mixed $property имя  свойстава   если  первый  парметр - компонент
      * @return ArrayDataSource
      */
-    public function __construct($source, $property = null)
-    {
+    public function __construct($source, $property = null) {
         if ($source instanceof \Zippy\Html\HtmlComponent) {
             $this->data = new \Zippy\Binding\ArrayPropertyBinding($source, $property);
         } else {
@@ -45,38 +43,37 @@ class ArrayDataSource implements DataSource
     /**
      * @see DataSource
      */
-    public function getItemCount()
-    {
+    public function getItemCount() {
         return count($this->getArray());
     }
 
     /**
      * @see DataSource
      */
-    public function getItems($start, $count, $sortfield = null, $asc = null)
-    {
+    public function getItems($start, $count, $sortfield = null, $asc = null) {
 
         $list = $this->getArray();
         if ($sortfield != null) {
 
-            uasort($list, function ($a, $b) use($sortfield, $asc ) {
+            uasort($list, function ($a, $b) use ($sortfield, $asc) {
                 if ($asc == 'desc') {
-                    if (is_numeric($a->{$sortfield}) && is_numeric($a->{$sortfield}))
+                    if (is_numeric($a->{$sortfield}) && is_numeric($a->{$sortfield})) {
                         return $b->{$sortfield} > $a->{$sortfield};
-                    else
+                    } else {
                         return strcmp($b->{$sortfield}, $a->{$sortfield});
-                }
-                else {
-                    if (is_numeric($a->{$sortfield}) && is_numeric($b->{$sortfield}))
+                    }
+                } else {
+                    if (is_numeric($a->{$sortfield}) && is_numeric($b->{$sortfield})) {
                         return $a->{$sortfield} > $b->{$sortfield};
-                    else
+                    } else {
                         return strcmp($a->{$sortfield}, $b->{$sortfield});
+                    }
                 }
             }
             );
         }
         if ($start >= 0 or $count >= 0) {
-           return array_slice($list, $start, $count);
+            return array_slice($list, $start, $count);
         }
         return $list;
     }
@@ -84,8 +81,7 @@ class ArrayDataSource implements DataSource
     /**
      * @see DataSource
      */
-    public function getItem($id)
-    {
+    public function getItem($id) {
         $list = $this->getArray();
         foreach ($list as $item) {
             if ($item->getID() === $id) {
@@ -96,8 +92,7 @@ class ArrayDataSource implements DataSource
     }
 
     //устанавливает  массив с  данными
-    public function setArray($source)
-    {
+    public function setArray($source) {
         $this->data = $source;
     }
 

@@ -80,7 +80,7 @@
                 container.append(div);
 
                 var w = jQuery("div.ganttview-vtheader", container).outerWidth() +
-                        jQuery("div.ganttview-slide-container", container).outerWidth();
+                    jQuery("div.ganttview-slide-container", container).outerWidth();
                 container.css("width", (w + 2) + "px");
 
                 new Behavior(container, opts).apply();
@@ -153,7 +153,7 @@
                 var seriesDiv = jQuery("<div>", {"class": "ganttview-vtheader-series"});
                 for (var j = 0; j < data[i].series.length; j++) {
                     seriesDiv.append(jQuery("<div>", {"class": "ganttview-vtheader-series-name"})
-                            .append(data[i].series[j].name));
+                        .append(data[i].series[j].name));
                 }
                 itemDiv.append(seriesDiv);
                 headerDiv.append(itemDiv);
@@ -176,7 +176,7 @@
                     }).append(monthNames[m] + "/" + y));
                     for (var d in dates[y][m]) {
                         daysDiv.append(jQuery("<div>", {"class": "ganttview-hzheader-day"})
-                                .append(dates[y][m][d].getDate()));
+                            .append(dates[y][m][d].getDate()));
                     }
                 }
             }
@@ -339,7 +339,7 @@
             // Remove top and left properties to avoid incorrect block positioning,
             // set position to relative to keep blocks relative to scrollbar when scrolling
             block.css("top", "").css("left", "")
-                    .css("position", "relative").css("margin-left", offset + "px");
+                .css("position", "relative").css("margin-left", offset + "px");
         }
 
         return {
