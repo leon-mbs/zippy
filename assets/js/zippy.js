@@ -1,33 +1,38 @@
+
 /*Zippy  framework*/
 
-
-function getUpdate(q) {
+ 
+ 
+ 
+function getUpdate(q)
+{
     $.ajax({
         url: q,
         dataType: "text",
-        success: function (data, textStatus) {
+        success: function(data, textStatus) {
             eval(data);
         }
 
     });
 
 }
+ 
 
-
-function submitForm(formid, q) {
+function submitForm(formid, q)
+{
 
 
     $('#' + formid).ajaxSubmit({
         url: q,
         type: "post",
-        success: function (responseText, statusText, xhr, $form) {
+        success: function(responseText, statusText, xhr, $form) {
             eval(responseText);
 
         }
     });
 
-}
-
+} 
+ 
 function beforeZippy(id) {
 
     var i = id.lastIndexOf('_');

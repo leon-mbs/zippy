@@ -1656,13 +1656,13 @@
                     $.fn.datepicker.Constructor = Datepicker;
                     var dates = $.fn.datepicker.dates = {
                         en: {
-                            days: [ 'воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота' ],
-                            daysShort: ["вос", "пон", "вто", "сре", "чет", "пят", "суб"],
-                            daysMin: [ 'вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб' ],
-                            months: [ 'января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря' ],
-                            monthsShort: [ 'янв', 'фев', 'мар', 'апр', 'май', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек' ],
-                            today: "сегодня",
-                            clear: "удалить",
+                            days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+                            daysShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+                            daysMin: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
+                            months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                            monthsShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                            today: "Today",
+                            clear: "Clear",
                             titleFormat: "MM yyyy"
                         }
                     };
