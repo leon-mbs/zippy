@@ -56,7 +56,7 @@ abstract class TreeEntity extends Entity
     public static function delete($id) {
         $class = get_called_class();
         $meta = $class::getMetadata();
-
+       
         if (is_numeric($id)) {
 
 
@@ -64,23 +64,24 @@ abstract class TreeEntity extends Entity
         } else {
             $obj = $id;
         }
-        $alowdelete = true;
-        if ($obj instanceof Entity) {
+      
+        if ($obj instanceof TreeEntity) {
             $alowdelete = $obj->beforeDelete();
-        } else {
-            return false;
-        }
-        if ($alowdelete === false) {
-            return false;
-        }
+        
+            if (strlen($allowdelete)>0) {
+               
+                 return $allowdelete;
+            }
+     
         $alowdelete = $obj->deleteChildren();
-        if ($alowdelete === false) {
-            return false;
+        if (strlen($allowdelete)>0) {
+               
+                 return $allowdelete;
         }
         $conn = DB::getConnect();
         $conn->Execute("delete from {$meta['table']}  where {$meta['keyfield']} = " . $id);
-
-        return true;
+        }
+         
     }
 
     /**
@@ -144,16 +145,16 @@ abstract class TreeEntity extends Entity
             $children = $this->getChildren();
             foreach ($children as $child) {
                 $b = $class::delete($child->getID());
-                if ($b == false) {
-                    return false;
+                if (strlen($b)>0) {
+                    return $b;
                 }
             }
         } else {
             $id = $this->fields[$meta['keyfield']];
             $conn->Execute("delete from {$meta['table']}  where " . $meta['pathfield'] . " like " . $conn->qstr('%' . sprintf('%08s', $id) . '%') . " and {$meta['keyfield']} != " . $id);
-            return true;
+            return "";
         }
-        return true;
+        return "";
     }
 
     /**
