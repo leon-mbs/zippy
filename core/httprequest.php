@@ -13,6 +13,7 @@ class HttpRequest
     const QUERY_PAGE    = 2;
     const QUERY_SEF     = 3;
     const QUERY_INVALID = 4;
+    const QUERY_METHOD = 5;
 
 
     private $request;
@@ -21,7 +22,7 @@ class HttpRequest
     public $request_page;
     public $request_page_arg = array();
     public $uri;
-    private $prefix = "";
+ 
     public $querytype = self::QUERY_INVALID;
     private $pageindex = 0;
 
@@ -31,12 +32,7 @@ class HttpRequest
      */
     public function __construct() {
         $uri = $_SERVER["REQUEST_URI"];
-        /*
-        $uri_ = WebApplication::$app->beforeRequest($uri);
-        if (is_array($uri_)) {
-            $this->prefix = $uri_[0];
-            $uri = $uri_[1];
-        } */
+  
 
         // основной  тип URI генерируемый  компонентами  фреймворка
         if (isset($_REQUEST["q"])) {
@@ -44,7 +40,7 @@ class HttpRequest
             $this->querytype = self::QUERY_EVENT;
             $this->request = explode("::", $_REQUEST["q"]);
             if (count($this->request) < 1) {
-                throw new Exception(ERROR_INVALID_VERSION);
+                throw new \Zippy\Exception(ERROR_INVALID_VERSION);
             }
 
             $arr = explode(':', $this->request[0]);
@@ -61,6 +57,38 @@ class HttpRequest
             }
 
 
+            return;
+        }
+        
+        //вызов метода
+        if (isset($_REQUEST["m"])) {
+
+            $this->querytype = self::QUERY_METHOD;
+            $this->request = explode("::", $_REQUEST["m"]);
+            if (count($this->request) < 1) {
+                throw new \Zippy\Exception(ERROR_INVALID_VERSION);
+            }
+
+            $arr = explode(':', $this->request[0]);
+
+            $this->pageindex = $arr[1];
+            $this->request_page = "\\" . ltrim(str_replace("/", "\\", $arr[0]), "\\");
+
+            $this->request_params = array();
+            $this->request_c ="";
+            $m = $this->request[1] ;
+            
+            if(strpos($m,':')>0) {
+               $arr = explode(':', $m); 
+               $this->request_c = $arr[0];
+               $this->request_params = array_slice($arr, 1);
+                
+            }   else {
+               $this->request_c = $m;    
+            }
+            
+   
+           
             return;
         }
         // URI формируемый  RedirectLink с  параметром  bookmarkable и кодированием
@@ -127,12 +155,6 @@ class HttpRequest
         return isset($_REQUEST["binary"]);
     }
 
-    public function getPrefix() {
-        return $this->prefix;
-    }
-
-    public function setPrefix($prefix) {
-        $this->prefix = $prefix;;
-    }
+   
 
 }

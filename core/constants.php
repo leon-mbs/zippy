@@ -17,6 +17,7 @@ const ERROR_NOT_FOUND_CHILD = "Component '%s' with  ID '%s' is not direct for ow
 const ERROR_INVALID_PARENT_NODE = "Ivalid parent node";
 const ERROR_COMPONENT_ALREADY_EXISTS = "Component '%s' already exists  '%s' ";
 const ERROR_COMPONENT_AS_PROPERTY = "Component name '%s' is the same as a property '%s' ";
+const ERROR_HANDLER_NOTFOUND = "No handler  for component '%s' ";
 
 
       

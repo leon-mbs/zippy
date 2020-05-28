@@ -37,10 +37,11 @@ class Event
     public function onEvent($sender, $params = null) {
         $h = $this->handler;
 
-        if ($h != null) {
+        if ($h != null && $this->receiver != null) {
             return $this->receiver->{$h}($sender, $params);
-        } else {
-            return $this->handler($sender, $params);
+        }
+        else {
+            throw new  \Zippy\Exception( sprintf(ERROR_HANDLER_NOTFOUND,$sender->id)) ;
         }
     }
 

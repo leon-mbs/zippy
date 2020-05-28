@@ -188,8 +188,6 @@ class HttpResponse
         $http = empty($_SERVER["HTTPS"]) ? 'http' : 'https';
 
         $url = $http . "://" . $_SERVER["HTTP_HOST"];
-        $prefix = WebApplication::$app->getRequest()->getPrefix();
-        $url = strlen($prefix) > 0 ? $url . '/' . $prefix : $url;
         return $url;
     }
 

@@ -121,7 +121,7 @@ abstract class  WebApplication
 
         }
 
-        if ($this->request->querytype == HttpRequest::QUERY_EVENT) {
+        if ($this->request->querytype == HttpRequest::QUERY_EVENT || $this->request->querytype == HttpRequest::QUERY_METHOD) {
             //получаем  адресуемую  страницу
             if (!is_numeric($this->request->getRequestIndex())) {
                 $this->response->to404Page();
@@ -143,8 +143,13 @@ abstract class  WebApplication
                 $this->response->output();
                 return;
             }
-
-            $this->currentpage->RequestHandle();
+            if ($this->request->querytype == HttpRequest::QUERY_EVENT){
+               $this->currentpage->RequestHandle();    
+            }
+            if ($this->request->querytype == HttpRequest::QUERY_METHOD){
+                $this->currentpage->RequestMethod();    
+            }
+            
 
             if ($this->request->isAjaxRequest() || $this->request->isBinaryRequest()) {
                 // если  Ajax запрос, отдаем  в  выходной  поток  только  ответ

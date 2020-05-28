@@ -78,7 +78,7 @@ class DropDownChoice extends HtmlFormDataElement implements ChangeListener, Requ
         foreach ($list as $key => $value) {
             // if($item instanceof SelectOption)
             $option = "<option value=\"{$key}\" ";
-
+ 
             if ($key == $this->getValue()) {
                 $option .= " selected ";
             }

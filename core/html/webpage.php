@@ -31,6 +31,7 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
      */
 
     public function __construct() {
+           
 
     }
 
@@ -139,6 +140,8 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
         $this->beforeRender();
         $this->RenderImpl();
         $this->afterRender();
+        $this->_tvars['_baseurl'] =   str_replace('?q=','?m=',$this->getURLNode())         ; 
+        
     }
 
     /**
@@ -216,5 +219,23 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
 
     }
 
+    
+    public final function RequestMethod(){
+        $m = $_SERVER["REQUEST_METHOD"] ;
+        $method =  WebApplication::$app->getRequest()->request_c;
+        $p =  WebApplication::$app->getRequest()->request_params;
+        try {
+            if($_SERVER["REQUEST_METHOD"]=='POST') {
+               $post =  file_get_contents('php://input'); 
+            }
+            $answer = $this->{$method}($p,$post); 
+        
+        }catch( \Throwable $e )
+        {
+           $answer = json_encode($e->getMessage() );    
+        }
+        
+        WebApplication::$app->getResponse()->setContent($answer) ;    
+    }
 
 }
