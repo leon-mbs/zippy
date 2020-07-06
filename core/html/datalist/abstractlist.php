@@ -162,9 +162,16 @@ abstract class AbstractList extends HtmlContainer
      * Устанавливает  имя  поля  и направление  сортировки.
      * Установленные  параметры  передаютя  провайдеру  данных
      */
-    public final function setSorting($field, $asc = 'asc') {
+    public final function setSorting($field, $dir = 'asc') {
         $this->sortf = $field;
-        $this->sortd = $asc;
+        $this->sortd = $dir;
     }
 
+    public final function getSorting(){
+       return array('field'=>$this->sortf,'dir'=>$this->sortd);  
+    }
+
+  
+    
+    
 }

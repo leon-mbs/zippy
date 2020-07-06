@@ -11,7 +11,7 @@ use \Zippy\Event;
 
 /**
  * Класс  отображающий  разбивку  списка  по страницам
- * По умолячанию используется Pagination из TB
+ * По умолячанию используется Pagination из Twitter Bootstrap
  */
 class Paginator extends HtmlComponent implements Requestable
 {

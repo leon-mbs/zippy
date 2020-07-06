@@ -194,7 +194,7 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
      *
      * @param mixed $name
      */
-    protected function goAnkor($name) {
+    public function goAnkor($name) {
         $this->_ankor = $name;
     }
 
