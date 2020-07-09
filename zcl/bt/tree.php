@@ -131,12 +131,12 @@ class Tree extends HtmlComponent implements \Zippy\Interfaces\Requestable
         
         
         function getExpanded(){
-    var explist ='';              
-  var arr=  $('#{$this->id}').treeview('getExpanded');  
-              arr.forEach(function(entry) {
-              explist = explist +','+ entry.nodeId;
-}); 
-return explist;       
+              var explist ='';              
+              var arr=  $('#{$this->id}').treeview('getExpanded');  
+                          arr.forEach(function(entry) {
+                          explist = explist +','+ entry.nodeId;
+            }); 
+            return explist;       
         }
         
         
@@ -276,7 +276,7 @@ class TreeNode
     }
 
     public function Render() {
-        $js = "{  text: \"{$this->text}\",zippyid:{$this->zippyid}  ";
+        $js = "{   text: \"{$this->text}\",zippyid:{$this->zippyid}  ";
 
         if (strlen($this->link) > 0) {
             $js .= "
@@ -284,6 +284,9 @@ class TreeNode
         }
         if (strlen($this->tags) > 0) {
             $js .= ",tags: ['{$this->tags}'] ";
+        }
+        if (strlen($this->icon) > 0) {
+            $js .= ",icon: '{$this->icon}' ";
         }
         if ($this->isselected != null) {
             $js .= "

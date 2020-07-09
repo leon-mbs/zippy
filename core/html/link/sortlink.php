@@ -122,7 +122,7 @@ class SortLink extends AbstractLink implements ClickListener, Requestable
     public function Reset() {
 
         $this->field = "";
-        $this->dor = "";
+        $this->dir = "";
 
     }
 
