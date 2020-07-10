@@ -14,7 +14,7 @@ abstract class AbstractList extends HtmlContainer
     protected $DataSource;
     protected $pagerowscount = 0;
     protected $rowscount = -1;
-    protected $sortf = null, $sortd = 'asc';
+    protected $sortf = null, $sortd = null;
 
     /**
      * Конструктор
