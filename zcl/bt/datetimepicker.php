@@ -64,7 +64,7 @@ class DateTimePicker extends \Zippy\Html\Form\TextInput implements Requestable, 
                 $this->setAttribute("onchange", "javascript:{ $('#" . $formid . "_q').attr('value','" . $url . "');$('#" . $formid . "').submit();}");
                 $js = "$('#{$this->id}').datetimepicker( {format : 'yyyy-mm-dd hh:ii',fontAwesome:true}).on('changeDate', function() {  
                    $('#" . $formid . "_q').attr('value','" . $url . "');$('#" . $formid . "').submit()
-                } }   ));";
+                }     );";
             } else {
                 $url = $this->owner->getURLNode() . "::" . $this->id;
                 $url = substr($url, 2 + strpos($url, 'q='));
@@ -108,7 +108,7 @@ class DateTimePicker extends \Zippy\Html\Form\TextInput implements Requestable, 
     /**
      * @see  ChangeListener
      */
-    public function onChange(EventReceiver $receiver, $handler, $ajax = true) {
+    public function onChange(EventReceiver $receiver, $handler, $ajax = false) {
 
         $this->event = new Event($receiver, $handler);
         $this->event->isajax = $ajax;

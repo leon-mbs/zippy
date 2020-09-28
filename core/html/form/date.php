@@ -107,7 +107,7 @@ class Date extends TextInput implements Requestable, ChangeListener
     /**
      * @see  ChangeListener
      */
-    public function onChange(EventReceiver $receiver, $handler, $ajax = true) {
+    public function onChange(EventReceiver $receiver, $handler, $ajax = false) {
 
         $this->event = new Event($receiver, $handler);
         $this->event->isajax = $ajax;
