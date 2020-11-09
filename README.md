@@ -23,6 +23,5 @@
 * Русская документация.
 * Библиотека компонентов [ZCL](http://zippy.com.ua/Zippy-framework/biblioteka_komponentov).
 
-#### Установка
-composer require leon-mbs/zippy 
+ 
 

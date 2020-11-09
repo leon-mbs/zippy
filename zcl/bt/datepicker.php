@@ -45,7 +45,7 @@ class DatePicker extends \Zippy\Html\Form\TextInput implements Requestable, Chan
                 $this->setAttribute("onchange", "javascript:{ $('#" . $formid . "_q').attr('value','" . $url . "');$('#" . $formid . "').submit();}");
                 $js = "$('#{$this->id}').datetimepicker( {format : 'yyyy-mm-dd'}).on('changeDate', function() {  
                    $('#" . $formid . "_q').attr('value','" . $url . "');$('#" . $formid . "').submit()
-                } }    );";
+                } }   ));";
             } else {
                 $url = $this->owner->getURLNode() . "::" . $this->id;
                 $url = substr($url, 2 + strpos($url, 'q='));
@@ -53,7 +53,7 @@ class DatePicker extends \Zippy\Html\Form\TextInput implements Requestable, Chan
 
                 $js = "$('#{$this->id}').datetimepicker( {format : 'yyyy-mm-dd'}).on('changeDate', function() {  
                    $('#" . $formid . "_q').attr('value','" . $url . "'); submitForm('{$formid}','{$_BASEURL}/?ajax=true')
-                }     );";
+                } }   );";
             }
         }
         WebApplication::$app->getResponse()->addJavaScript($js, true);
@@ -89,7 +89,7 @@ class DatePicker extends \Zippy\Html\Form\TextInput implements Requestable, Chan
     /**
      * @see  ChangeListener
      */
-    public function onChange(EventReceiver $receiver, $handler, $ajax = false) {
+    public function onChange(EventReceiver $receiver, $handler, $ajax = true) {
 
         $this->event = new Event($receiver, $handler);
         $this->event->isajax = $ajax;
