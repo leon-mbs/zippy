@@ -222,6 +222,14 @@ abstract class HtmlComponent
      * Возвращает  ссылку  на  HTML таг. Используется  библиотека  PHPQuery
      */
     protected function getTag($tagname = "") {
+        $p = $this->getPageOwner() ;
+        if($p instanceof \Zippy\Html\WebPage) {
+            $tag = $p->getLoadedTag($this->id) ;
+             if($tag != null) return  $tag;
+            
+        }
+     
+     
         $HtmlTag = pq(strtolower($tagname) . '[zippy="' . $this->id . '"]');
         if (strlen($tagname) > 0 && $HtmlTag->size() == 0) {
             $HtmlTag = pq(strtoupper($tagname) . '[zippy="' . $this->id . '"]');

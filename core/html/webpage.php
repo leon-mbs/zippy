@@ -24,7 +24,8 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
     private $_ajax;
     private $_ankor = '';
     public $_tvars = array();  //переменные  для  шаблонизатора Mustache
-
+    public $zarr  = array();
+ 
     /**
      * Конструктор
      *
@@ -138,12 +139,33 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
             $this->_ankor = '';
         }
         $this->beforeRender();
+        
+        
+        $this->updateTag();   
+        
+        
         $this->RenderImpl();
         $this->afterRender();
         $this->_tvars['_baseurl'] =   str_replace('?q=','?m=',$this->getURLNode())         ; 
         
     }
 
+    public function getLoadedTag($id){
+        if(isset($this->zarr[$id]))  return  pq($this->zarr[$id] );
+        else return null;
+    }  
+      
+    public function updateTag(){
+        $this->zarr = array();
+        
+        $z = pq('[zippy]') ;
+       
+        foreach($z->elements as $o){
+            $a = "".$o->getAttribute('zippy');
+            $this->zarr[$a] =  $o ;
+        }    
+    }    
+    
     /**
      * Добавляет  обработчик  на  событие  перед  обработкой  страницей  HTTP запроса
      * @param  $obj  Объект  регистрирующий  свою  функцию как   callback
@@ -194,7 +216,7 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
      *
      * @param mixed $name
      */
-    public function goAnkor($name) {
+    protected function goAnkor($name) {
         $this->_ankor = $name;
     }
 
