@@ -130,7 +130,11 @@ class DataView extends AbstractList implements \Zippy\Interfaces\Requestable
             }
 
         }
-
+        $p = $this->getPageOwner() ;
+        if($p instanceof \Zippy\Html\WebPage) {
+            $p->updateTag() ;
+   
+        }
 
         foreach ($this->getChildComponents() as $component) {
 
