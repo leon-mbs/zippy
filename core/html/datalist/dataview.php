@@ -84,15 +84,44 @@ class DataView extends AbstractList implements \Zippy\Interfaces\Requestable
             throw new \Zippy\Exception(sprintf(ERROR_MARKUP_NOTFOUND, $this->id));
         }
 
-        $currtag = $rowtag;
+        $ids = array();
+        $children = pq('[zippy=' . $this->id . ']  [zippy]');
+            foreach ($children as $child) {
+                $ids[] = pq($child)->attr("zippy");
+            }           
+        
         $c = $this->getPageRowsCount();
         $html_ = $rowtag->htmlOuter();
         $html = "";
         for ($i = 1; $i <= $c; $i++) {
+            $id = $this->id .'_'.$i;
+            
+            $rep = "zippy=\"{$id}\" id=\"{$id}\" ";
+            $h = str_replace("zippy=\"{$this->id}\"",$rep,$html_) ;
+            $h = str_replace("zippy='{$this->id}'",$rep,$h) ;
+            
+            foreach($ids as $cid){
+               $id = $cid .'_'.$i;
+               $rep = "zippy=\"{$id}\" id=\"{$id}\" ";
+               $h = str_replace("zippy=\"{$cid}\"",$rep,$h) ;
+               $h = str_replace("zippy='{$cid}'",$rep,$h) ;
+             
+            }
+            
+            $html .= $h;
+            
+            
+            
+        }
+        $rowtag->replaceWith($html);
+         
+        
+        /*
+        for ($i = 1; $i <= $c; $i++) {
             $html .= $html_;
         }
         $rowtag->replaceWith($html);
-
+      
         $rows = pq('[zippy=' . $this->id . ']'); //массив копий
         $i = 1;
 
@@ -130,6 +159,8 @@ class DataView extends AbstractList implements \Zippy\Interfaces\Requestable
             }
 
         }
+        
+        */
         $p = $this->getPageOwner() ;
         if($p instanceof \Zippy\Html\WebPage) {
             $p->updateTag() ;
