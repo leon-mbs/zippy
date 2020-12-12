@@ -22,9 +22,7 @@ class TextArea extends TextInput
      */
     public function AjaxAnswer() {
         $text = $this->getValue();
-        $responseJS = "$('#{$this->id}').text('{$text}')";
-
-        WebApplication::$app->getRespose()->addAjaxResponse($responseJS);
+        return "$('#{$this->id}').val('{$text}')";
     }
 
 }
