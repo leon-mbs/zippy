@@ -107,11 +107,15 @@ class DataView extends AbstractList implements \Zippy\Interfaces\Requestable
                $h = str_replace("zippy='{$cid}'",$rep,$h) ;
              
             }
-            
+            if ($this->cellclickevent instanceof \Zippy\Event) {
+                $url = $this->getURLNode() . ':' . ($i  );
+                $onclick = "window.location='{$url}'";
+           
+                $style = "cursor:pointer; ";
+                $h = str_replace("<tr","<tr style=\"{$style}\" onclick=\"{$onclick}\" ",$h) ;
+            }        
             $html .= $h;
-            
-            
-            
+              
         }
         $rowtag->replaceWith($html);
          

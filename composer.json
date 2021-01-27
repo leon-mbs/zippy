@@ -12,14 +12,14 @@
     "require": {
          "php": ">=7.2.0",
          "mustache/mustache": "v2.13.0",
-         "leon-mbs/zdb": "1.2.10",
+         "leon-mbs/zdb": "1.2.11",
          "leon-mbs/phpquery" :">=1.0.0" 
     },
 
      "authors": [
         {
-            "name": "Леонид Мартынюк",
-            "email": "leon.mbs@gmail.com"
+            "name": "Леонид Мартынюк" 
+            
         }
     ],
     "autoload" : {
