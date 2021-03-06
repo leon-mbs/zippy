@@ -11,16 +11,17 @@ use \Zippy\Interfaces\AjaxRender;
 class TextInput extends HtmlFormDataElement implements AjaxRender
 {
 
-
+    private $defvalue;
     /**
      * Конструктор
      * @param mixed  ID
      * @param Значение элемента  или  поле  привязанного объекта
      */
-    public function __construct($id, $value = null) {
+    public function __construct($id, $value = '') {
         parent::__construct($id);
         $this->setValue($value);
         $this->setAttribute("name", $this->id);
+        $this->defvalue = $value;
     }
 
     /**
@@ -35,7 +36,7 @@ class TextInput extends HtmlFormDataElement implements AjaxRender
      * Устанавливает  текстовое  значение
      * @param string
      */
-    public function setText($text) {
+    public function setText($text='') {
         $this->setValue($text);
     }
 
@@ -73,6 +74,6 @@ class TextInput extends HtmlFormDataElement implements AjaxRender
 
 
     public function clean() {
-        $this->setText('');
+        $this->setText($this->defvalue);
     }
 }

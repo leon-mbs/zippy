@@ -12,7 +12,7 @@
     "require": {
          "php": ">=7.2.0",
          "mustache/mustache": "v2.13.0",
-         "leon-mbs/zdb": "1.2.11",
+         "leon-mbs/zdb": "1.2.12",
          "leon-mbs/phpquery" :">=1.0.0" 
     },
 

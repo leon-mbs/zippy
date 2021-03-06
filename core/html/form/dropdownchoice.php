@@ -18,6 +18,7 @@ class DropDownChoice extends HtmlFormDataElement implements ChangeListener, Requ
 
     private $optionlist;
     private $event;
+    private $defvalue;
 
     /**
      * Конструктор
@@ -29,6 +30,7 @@ class DropDownChoice extends HtmlFormDataElement implements ChangeListener, Requ
         parent::__construct($id);
         $this->setValue($value);
 
+        $this->defvalue = $value;
         $this->optionlist = $optionlist;
         $this->bgupdate = $bgupdate;
     }
@@ -73,6 +75,7 @@ class DropDownChoice extends HtmlFormDataElement implements ChangeListener, Requ
     private function setResponseData() {
 
         $list = $this->optionlist instanceof Binding ? $this->optionlist->getValue() : $this->optionlist;
+        if(is_array($list)==false) $list = array();
         $tag = $this->getTag();
         $options = "";
         foreach ($list as $key => $value) {
@@ -189,7 +192,7 @@ class DropDownChoice extends HtmlFormDataElement implements ChangeListener, Requ
     }
 
     public function clean() {
-        $this->setValue(0);
+        $this->setValue($this->defvalue);
     }
 
     /**
