@@ -194,7 +194,7 @@ abstract class  WebApplication
      * Метод,  выполняющий   формирование  выходного  HTML потока
      * на  основе  текущено  шаблона  и  данных  елементов  страницы
      */
-    private final function Render() {
+    private   function Render() {
         if ($this->request->isBinaryRequest()) {
             return;
         }

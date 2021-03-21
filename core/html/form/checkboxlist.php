@@ -119,7 +119,14 @@ class CheckBoxList extends HtmlFormDataElement
         return $ids;
     }
 
-
+    /**
+    * удаляет  все  из списка
+    * 
+    */
+    public function removeAll() {
+       $this->list = array() ; 
+    }
+     
     public function clean() {
         $this->setAllChecked(false);
     }
