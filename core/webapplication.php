@@ -121,7 +121,7 @@ abstract class  WebApplication
 
         }
 
-        if ($this->request->querytype == HttpRequest::QUERY_EVENT || $this->request->querytype == HttpRequest::QUERY_METHOD) {
+        if ($this->request->querytype == HttpRequest::QUERY_EVENT  ) {
             //получаем  адресуемую  страницу
             if (!is_numeric($this->request->getRequestIndex())) {
                 $this->response->to404Page();
@@ -146,9 +146,7 @@ abstract class  WebApplication
             if ($this->request->querytype == HttpRequest::QUERY_EVENT){
                $this->currentpage->RequestHandle();    
             }
-            if ($this->request->querytype == HttpRequest::QUERY_METHOD){
-                $this->currentpage->RequestMethod();    
-            }
+           
             
 
             if ($this->request->isAjaxRequest() || $this->request->isBinaryRequest()) {
@@ -194,7 +192,7 @@ abstract class  WebApplication
      * Метод,  выполняющий   формирование  выходного  HTML потока
      * на  основе  текущено  шаблона  и  данных  елементов  страницы
      */
-    private   function Render() {
+    private final function Render() {
         if ($this->request->isBinaryRequest()) {
             return;
         }

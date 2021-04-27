@@ -278,5 +278,8 @@ abstract class HtmlComponent
     protected function getLabelTag() {
         return pq('[data-label="' . $this->id . '"]');
     }
+    protected function getLabelTagFor() {
+        return pq('[for="' . $this->id . '"]');
+    }
 
 }

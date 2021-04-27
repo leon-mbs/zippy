@@ -44,8 +44,7 @@ class Date extends TextInput implements Requestable, ChangeListener
 
     public function RenderImpl() {
         TextInput::RenderImpl();
-        $min='';
-        $max='';
+
         // $url = $this->owner->getURLNode() . "::" . $this->id . "&ajax=true";
         if ($this->min > 0) {
             $min = ", min: new Date(" . date("Y,m-1,d", $this->min) . ")";

@@ -126,6 +126,15 @@ abstract class HtmlContainer extends HtmlComponent implements Requestable
                         pq($l)->remove();
                     }
                 }
+                $label = $component->getLabelTagFor();
+                if ($label->size() == 1) {  //прячем  связаный  тег label
+                    $label->remove();
+                }
+                if ($label->size() > 1) {  //прячем  связаный  тег label
+                    foreach ($label as $l) {
+                        pq($l)->remove();
+                    }
+                }
             }
         }
         //   $this->afterRender();
@@ -145,7 +154,17 @@ abstract class HtmlContainer extends HtmlComponent implements Requestable
 
         if ($child != false && $this->components[$child] instanceof Requestable) {
             $this->components[$child]->RequestHandle();
+        } else {
+            if($this instanceof \Zippy\Html\WebPage)  { //ищем метод
+                 if(method_exists($this,$child)) {
+                    $this->RequestMethod($child);  
+                    
+                 }
+            }
         }
+        
+        
+        
     }
 
     /**

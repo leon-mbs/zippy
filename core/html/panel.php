@@ -2,6 +2,8 @@
 
 namespace Zippy\Html;
 
+ 
+
 /**
  *  Компонент  выполняющий   роль  контейнера  для  других  компонентов.
  *  Используется для управления  группой   компонентов, например  скрытия  методом  SetVisible
@@ -54,7 +56,9 @@ class Panel extends HtmlContainer implements \Zippy\Interfaces\ClickListener, \Z
      * @see  ClickListener
      */
     public function onClick(\Zippy\Interfaces\EventReceiver $receiver, $handler, $ajax = false) {
-        $this->setClickHandler($receiver, $handler);
+        
+        $this->event = new \Zippy\Event($receiver, $handler);
+         
         $this->event->isajax = $ajax;
     }
 

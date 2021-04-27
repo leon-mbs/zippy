@@ -13,7 +13,7 @@ class HttpRequest
     const QUERY_PAGE    = 2;
     const QUERY_SEF     = 3;
     const QUERY_INVALID = 4;
-    const QUERY_METHOD = 5;
+     
 
 
     private $request;
@@ -60,38 +60,7 @@ class HttpRequest
             return;
         }
         
-        //вызов метода
-        if (isset($_REQUEST["m"])) {
-
-            $this->querytype = self::QUERY_METHOD;
-            $this->request = explode("::", $_REQUEST["m"]);
-            if (count($this->request) < 1) {
-                throw new \Zippy\Exception(ERROR_INVALID_VERSION);
-            }
-
-            $arr = explode(':', $this->request[0]);
-
-            $this->pageindex = $arr[1];
-            $this->request_page = "\\" . ltrim(str_replace("/", "\\", $arr[0]), "\\");
-
-            $this->request_params = array();
-            $this->request_c ="";
-            $m = $this->request[1] ;
-            
-            if(strpos($m,':')>0) {
-               $arr = explode(':', $m); 
-               $this->request_c = $arr[0];
-               $this->request_params = array_slice($arr, 1);
-                
-            }   else {
-               $this->request_c = $m;    
-            }
-            
-   
-           
-            return;
-        }
-        // URI формируемый  RedirectLink с  параметром  bookmarkable и кодированием
+      // URI формируемый  RedirectLink с  параметром  bookmarkable и кодированием
         if (isset($_REQUEST["r"])) {
             $this->querytype = self::QUERY_PAGE;
             $p = unserialize(trim(base64_decode($_REQUEST["r"])));

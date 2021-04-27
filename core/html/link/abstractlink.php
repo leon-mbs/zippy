@@ -30,11 +30,6 @@ abstract class AbstractLink extends \Zippy\Html\HtmlContainer
         $this->value = $text;
         return $this;
     }
-    
-    public function setText($text) {
-        $this->setValue($text)  ;
-         
-    }
 
     function getValue() {
         if ($this->value instanceof Binding) {
