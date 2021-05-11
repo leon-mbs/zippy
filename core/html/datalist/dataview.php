@@ -228,7 +228,7 @@ class DataView extends AbstractList implements \Zippy\Interfaces\Requestable
                 }
             }
 
-            $this->cellclickevent->onEvent($srow);
+            $this->cellclickevent->onEvent($srow );
 
         }
 
