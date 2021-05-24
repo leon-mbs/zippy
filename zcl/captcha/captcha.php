@@ -47,7 +47,12 @@ class Captcha extends \Zippy\Html\HtmlComponent implements \Zippy\Interfaces\Aja
             $color = imagecolorallocate($im, rand(0, 255), rand(0, 200), rand(0, 255));
             imageline($im, rand(0, 10), rand(1, 20), rand(50, 80), rand(1, 50), $color);
         }
-        return $im;
+ob_start(); 
+    imagepng($im); 
+    $contents = ob_get_contents(); 
+ob_end_clean();         
+        
+        return $contents;
     }
 
     /**
@@ -85,18 +90,7 @@ class Captcha extends \Zippy\Html\HtmlComponent implements \Zippy\Interfaces\Aja
         $this->created = time();
     }
 
-    /**
-     *  Отдает бинарный поток с изображением
-     *
-     */
-    protected function binaryOutput() {
-        $im = $this->OnImage();
-        header('Content-type: image/png');
-        imagepng($im);
-
-
-        die;
-    }
+ 
 
     /**
      * Обработчик HTTP запроса.  Возвращает  изображение  в  бинарный
@@ -104,9 +98,7 @@ class Captcha extends \Zippy\Html\HtmlComponent implements \Zippy\Interfaces\Aja
      *
      */
     public function RequestHandle() {
-        if (\Zippy\WebApplication::$app->getRequest()->isBinaryRequest()) {
-            $this->binaryOutput();
-        }
+       
         if (\Zippy\WebApplication::$app->getRequest()->isAjaxRequest()) {
             $this->Refresh();
             \Zippy\WebApplication::$app->getResponse()->addAjaxResponse($this->AjaxAnswer());
@@ -123,7 +115,11 @@ class Captcha extends \Zippy\Html\HtmlComponent implements \Zippy\Interfaces\Aja
         if ($this->refresh) {
             $this->setAttribute("onclick", "getUpdate('{$url}');event.returnValue=false; return false;");
         }
-        $this->setAttribute('src', $this->owner->getURLNode() . "::" . $this->id . ':' . time() . '&binary=true');
+        $im = $this->OnImage();
+           
+        $src = "data:image/png;base64," . base64_encode($im);
+         
+        $this->setAttribute('src', $src);
     }
 
     /**
@@ -131,9 +127,10 @@ class Captcha extends \Zippy\Html\HtmlComponent implements \Zippy\Interfaces\Aja
      *
      */
     public function AjaxAnswer() {
-        $_src = $this->owner->getURLNode() . "::" . $this->id . ':' . time() . '&binary=true';
-
-        return "$('#{$this->id}').attr('src','{$_src}')";
+        $im = $this->OnImage();
+           
+        $src = "data:image/png;base64," . base64_encode($im);
+        return "$('#{$this->id}').attr('src','{$src}')";
     }
 
     /**
