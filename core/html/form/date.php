@@ -9,14 +9,13 @@ use \Zippy\Interfaces\EventReceiver;
 use \Zippy\Interfaces\Requestable;
 
 /**
- * Компонент  тэга  &lt;input type=&quot;text&quot;&gt; с  календарем (используется jQuery)
- * https://github.com/kbwood/datepick
- */
+ * Компонент  тэга  &lt;input type=&quot;date&quot;&gt;  
+  */
 class Date extends TextInput implements Requestable, ChangeListener
 {
 
     private $event;
-    private $min='', $max='';
+    private $min=0, $max=0;
 
     public function __construct($id, $value = null, $bgupdate = false) {
         parent::__construct($id);
@@ -32,18 +31,21 @@ class Date extends TextInput implements Requestable, ChangeListener
     }
 
     /**
-     * set range
+     * Установка  минимальной  или  максимальной  дат.  Если  не  используется  передать 0
      *
      * @param mixed $min
      * @param mixed $max
      */
-    public function setMinMax($min, $max = null) {
+    public function setMinMax($min, $max  ) {
+        if($min > $max) return;
         $this->min = $min;
         $this->max = $max;
     }
 
     public function RenderImpl() {
         TextInput::RenderImpl();
+        
+        /*
         $min='';
         $max='';
         // $url = $this->owner->getURLNode() . "::" . $this->id . "&ajax=true";
@@ -76,6 +78,15 @@ class Date extends TextInput implements Requestable, ChangeListener
             }
         }
         WebApplication::$app->getResponse()->addJavaScript($js, true);
+        */
+        $this->setAttribute('type','date') ;
+        if($this->min >0) {
+           $this->setAttribute('min',date('Y-m-d',$this->min)) ;    
+        }
+        if($this->max >0) {
+           $this->setAttribute('max',date('Y-m-d',$this->max)) ;    
+        }
+        
     }
 
     /**
@@ -97,7 +108,7 @@ class Date extends TextInput implements Requestable, ChangeListener
      *
      * @param mixed $t - timestamp
      */
-    public function setDate($t = null) {
+    public function setDate($t = 0) {
         if ($t > 0) {
             $this->setText(date('Y-m-d', $t));
         } else {

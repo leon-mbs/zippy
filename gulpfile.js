@@ -15,11 +15,11 @@ gulp.task('js', function () {
         'assets/js/jquery/picker.time.js',
         'assets/js/jquery/ru_RU.js',
         'assets/js/bootstrap3-typeahead.js',
-        'assets/js/zippy.js',
         'assets/js/bootstrap-tags.js',
         'assets/js/bootstrap-treeview.js',
         'assets/js/bootstrap-datepicker.js',
-        'assets/js/bootstrap-datetimepicker.js'
+        'assets/js/bootstrap-datetimepicker.js',
+        'assets/js/zippy.js'
 
     ])
         .pipe(concat('zippy-bundle.min.js')) // Собираем их в кучу в новом файле libs.min.js
@@ -38,11 +38,11 @@ gulp.task('jsua', function () {
         'assets/js/jquery/picker.time.js',
         'assets/js/jquery/ua_UA.js',
         'assets/js/bootstrap3-typeahead.js',
-        'assets/js/zippy.js',
         'assets/js/bootstrap-tags.js',
         'assets/js/bootstrap-treeview.js',
         'assets/js/bootstrap-datepicker-ua.js',
-        'assets/js/bootstrap-datetimepicker-ua.js'
+        'assets/js/bootstrap-datetimepicker-ua.js',
+        'assets/js/zippy.js'
 
     ])
         .pipe(concat('zippy-bundle-ua.min.js')) // Собираем их в кучу в новом файле libs.min.js
