@@ -6,31 +6,39 @@
  
 function getUpdate(q)
 {
-    $.ajax({
-        url: q,
-        dataType: "text",
-        success: function(data, textStatus) {
-            eval(data);
-        }
-
-    });
-
+ 
+    
+fetch(q)
+  .then((response) => {
+    return response.text();
+  })
+  .then((data) => {
+   eval(data);
+  });
+    
 }
  
 
 function submitForm(formid, q)
 {
-
-
-    $('#' + formid).ajaxSubmit({
-        url: q,
-        type: "post",
-        success: function(responseText, statusText, xhr, $form) {
-            eval(responseText);
-
-        }
-    });
-
+ 
+    
+    var f = document.getElementById(formid)  ;
+    let formdata = new FormData(f);
+    
+    
+    
+fetch(q,{
+  method: 'POST',
+        body: formdata  
+})
+  .then((response) => {
+    return response.text();
+  })
+  .then((data) => {
+   eval(data);
+  });    
+    
 } 
  
 function beforeZippy(id) {
