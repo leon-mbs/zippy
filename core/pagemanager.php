@@ -25,7 +25,7 @@ class PageManager
      */
     public final function putPage(WebPage $page) {
         $page->beforeSaveToSession();
-
+        
 
         $this->pages[++$this->index] = ($page);
         if ($this->index > self::HISTORY_SIZE) {
