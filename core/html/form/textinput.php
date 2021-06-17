@@ -12,6 +12,7 @@ class TextInput extends HtmlFormDataElement implements AjaxRender
 {
 
     private $defvalue;
+    private $dlist;
     /**
      * Конструктор
      * @param mixed  ID
@@ -47,6 +48,22 @@ class TextInput extends HtmlFormDataElement implements AjaxRender
         // $this->checkInForm();
 
         $this->setResponseData();
+        $this->setAttribute("list", null) ;
+        $list="";
+        if(is_array(  $this->dlist) && count(  $this->dlist)>0) {
+             $this->setAttribute("list", $this->id.'_list') ;
+             
+             $list =  "  <datalist id=\"".$this->id.'_list'."\">" ;
+             foreach($this->dlist as $option) {
+                $list .=  " <option label='{$option}' value='{$option}'>  ";
+             }
+             $list .=  "  </datalist>"  ;
+             $HtmlTag = $this->getTag();
+             $HtmlTag->after($list);
+            
+             
+        }
+        
     }
 
     protected function setResponseData() {
@@ -76,4 +93,16 @@ class TextInput extends HtmlFormDataElement implements AjaxRender
     public function clean() {
         $this->setText($this->defvalue);
     }
+
+    /**
+    * выпадающий список
+    * 
+    * @param mixed $list
+    */
+    public final function setDataList($list) {
+        if(!is_array($list)) $list = array();
+        $this->dlist  = $list;
+        
+    }
+    
 }
