@@ -20,10 +20,9 @@ class Time extends TextInput implements Requestable, ChangeListener
 
     public function __construct($id, $value = null ) {
         parent::__construct($id);
-        $this->setTime($value);
+        $this->setDateTime($value);
         
     }
-
  
 
     public function RenderImpl() {

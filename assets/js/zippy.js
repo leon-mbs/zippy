@@ -9,7 +9,7 @@ function getUpdate(q)
  
     
 fetch(q)
-  .then((response) => {
+  .then((response)=>{
     return response.text();
   })
   .then((data) => {
