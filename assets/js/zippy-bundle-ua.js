@@ -16740,30 +16740,30 @@ var FullCalendar = (function (exports) {
 FullCalendar.globalLocales.push(function () {
   'use strict';
 
-  var ru = {
-    code: 'ru',
+  var ua = {
+    code: 'ua',
     week: {
       dow: 1, // Monday is the first day of the week.
       doy: 4, // The week that contains Jan 4th is the first week of the year.
     },
     buttonText: {
-      prev: 'Пред',
-      next: 'След',
-      today: 'Сегодня',
-      month: 'Месяц',
-      week: 'Неделя',
+      prev: 'Попер',
+      next: 'Слiд',
+      today: 'Сьогоднi',
+      month: 'Мiсяць',
+      week: 'Тиждень',
       day: 'День',
-      list: 'Повестка дня',
+      list: 'Повiстка дня',
     },
-    weekText: 'Нед',
+    weekText: 'Тижд.',
     allDayText: 'Весь день',
     moreLinkText(n) {
-      return '+ ещё ' + n
+      return '+ ще ' + n
     },
-    noEventsText: 'Нет событий для отображения',
+    noEventsText: 'Нема  подiй',
   };
 
-  return ru;
+  return ua;
 
 }());
 

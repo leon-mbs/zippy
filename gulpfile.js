@@ -16,6 +16,8 @@ gulp.task('js', function () {
         'assets/js/bootstrap-tags.js',
         'assets/js/bootstrap-treeview.js',
    
+        'assets/fullcalendar/main.js'  ,
+        'assets/fullcalendar/locales/ru.js' ,
         'assets/js/zippy.js'
 
     ])
@@ -31,12 +33,14 @@ gulp.task('jsua', function () {
         'assets/js/bootstrap3-typeahead.js',
         'assets/js/bootstrap-tags.js',
         'assets/js/bootstrap-treeview.js',
- 
+        'assets/fullcalendar/main.js'  ,
+        'assets/fullcalendar/locales/ua.js' ,
+
         'assets/js/zippy.js'
 
     ])
-        .pipe(concat('zippy-bundle-ua.min.js')) // Собираем их в кучу в новом файле libs.min.js
-        .pipe(uglify()) // Сжимаем JS файл
+        .pipe(concat('zippy-bundle-ua.js')) // Собираем их в кучу в новом файле libs.min.js
+        //.pipe(uglify()) // Сжимаем JS файл
         .pipe(gulp.dest('assets/js')); // Выгружаем в папку app/js
 });
 
@@ -49,7 +53,7 @@ gulp.task('css', function () {
    
         'assets/css/bootstrap-tags.css',
         'assets/css/bootstrap-treeview.css',
-  
+        'assets/fullcalendar/main.css'
 
 
     ])
@@ -68,8 +72,9 @@ npm install gulp --save-dev
  npm install gulp-cssnano
  npm install gulp-rename
  
- gulp.js
- gulp.css
+ gulp js
+ gulp jsua
+ gulp css
  
 */
  
