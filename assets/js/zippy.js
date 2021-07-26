@@ -9,7 +9,7 @@ function getUpdate(q)
  
     
 fetch(q)
-  .then((response)=>{
+  .then((response) => {
     return response.text();
   })
   .then((data) => {
@@ -28,16 +28,16 @@ function submitForm(formid, q)
     
     
     
-fetch(q,{
-  method: 'POST',
-        body: formdata  
-})
-  .then((response) => {
-    return response.text();
-  })
-  .then((data) => {
-   eval(data);
-  });    
+    fetch(q,{
+      method: 'POST',
+            body: formdata  
+    })
+      .then((response) => {
+        return response.text();
+      })
+      .then((data) => {
+       eval(data);
+      });    
     
 } 
  
