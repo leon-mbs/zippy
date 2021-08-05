@@ -57,3 +57,45 @@ function beforeZippy(id) {
     }
     return true;
 }
+
+
+// вызов  метода страницы
+     
+// вызов  метода страницы
+function  callPageMethod(method,params,postdata,callback    )
+{
+       
+       var p='';
+       if(Array.isArray(params))  {
+           p =   params.join(':');
+       }
+       var url = window._baseurl+'::'+method+':'+p+'&ajax=true'
+       var opt={
+           method: 'GET' ,
+           credentials: "same-origin"               
+       };
+       if(postdata !=null) {
+          opt.method = "POST"
+          opt.body =  postdata  
+          if(postdata instanceof FormData)   {
+            
+          }   else {
+              //    opt.headers= {
+              //        'Content-Type': 'text/plain'
+             //     }           
+          }    
+       }
+        fetch(url,opt)                                            
+          .then((response) => {
+              
+            return response.text();
+          })
+          .then((data) => {
+                 callback(data )
+            
+          })
+          .catch(function (error) {
+            console.log('error', error)
+          });  
+
+}

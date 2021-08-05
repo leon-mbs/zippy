@@ -2,7 +2,7 @@
 
 namespace ZCL\Calendar;
  /**
- * копмонент fullcalendars
+ * компонент fullcalendars
  */
 class Calendar extends \Zippy\Html\HtmlComponent implements \Zippy\Interfaces\Requestable, \Zippy\Interfaces\AjaxRender
 {
@@ -103,11 +103,11 @@ class Calendar extends \Zippy\Html\HtmlComponent implements \Zippy\Interfaces\Re
         calendar.render();      
 EOT;
 
-        Application::$app->getResponse()->addJavaScript($js, true);
+       \Zippy\WebApplication::$app->getResponse()->addJavaScript($js, true);
     }
 
     public final function RequestHandle() {
-        $params = Application::$app->getRequest()->request_params[$this->id];
+        $params = \Zippy\WebApplication::$app->getRequest()->request_params[$this->id];
         $action = array();
 
         $action['action'] = $params[0];

@@ -249,7 +249,10 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
       
         if($_SERVER["REQUEST_METHOD"]=='POST') {
                $post =  file_get_contents('php://input'); 
-        }
+               if(count($_POST)>0) {
+                  $post = $_POST;    
+               }
+        }       
         $answer = $this->{$method}($p,$post); 
         if(strlen($answer)) {
            WebApplication::$app->getResponse()->addAjaxResponse($answer) ;        
