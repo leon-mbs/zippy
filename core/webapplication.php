@@ -172,7 +172,7 @@ abstract class  WebApplication
                 }
                 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-                    $this->response->toBaseUrl();
+                  //  $this->response->toBaseUrl();
                 }
             }
         }
@@ -210,7 +210,7 @@ abstract class  WebApplication
 
         //загружаем  соответсвующий  шаблон
         $template = $this->getTemplate(get_class($renderpage));
-
+   
 
         $doc = \phpQuery::newDocumentHTML($template);
 
@@ -261,7 +261,7 @@ abstract class  WebApplication
               pq('head')->append("<title>{$title}</title>");
               } */
         }
-
+        
         $renderpage->Render();
 
 

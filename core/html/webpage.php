@@ -221,7 +221,7 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
     protected function goAnkor($name) {
         $this->_ankor = $name;
     }
-
+  
     public function setTitle($title) {
         $this->_title = $title;
     }

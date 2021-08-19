@@ -1,26 +1,29 @@
 {
-    "name": "leon-mbs/zdb",
-    "description": "Библиотека для работы  с БД",
-    "keywords": [  "database", "php" ],
-    "homepage": "https://zippy.com.ua/zdb",   
+    "name": "leon-mbs/zippy",
+    "description": "Компонентный событийно-ориентированный PHP фреймворк",
+    "keywords": [  "framework", "php" ],
+    "homepage": "https://zippy.com.ua/frm",
 
     "license": "MIT",
    "minimum-stability" : "dev",
    "prefer-stable" : true,
     "type": "library",
+    
    
     "require": {
-         "php": ">=7.1.0",
-         "adodb/adodb-php": "v5.21.0"
+         "php": ">=7.2.0",
+         "mustache/mustache": "v2.13.0",
+         "leon-mbs/zdb": "1.5.0",
+         "leon-mbs/phpquery" :">=1.0.0" 
     },
 
      "authors": [
         {
             "name": "Леонид Мартынюк" 
-      
+            
         }
     ],
     "autoload" : {
-        "files" : ["entity.php","db.php"]
+        "files" : ["zippy.inc.php"]
     }
 }
