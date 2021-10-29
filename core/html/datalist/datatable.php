@@ -121,9 +121,9 @@ class DataTable extends AbstractList implements Requestable
                 $sort = "";
                 if ($column->fieldname === $this->sortf) {
                     if ($this->sortd === 'asc') {
-                        $sort = 'fa fa-sort-down';
+                        $sort = '&#8595;';
                     } else {
-                        $sort = 'fa fa-sort-up';
+                        $sort = '&#8593;';
                     }
                 }
                 $url = $this->getURLNode() . ':sort:' . $column->fieldname . ':' . ($this->sortd === 'asc' ? 'desc' : 'asc');
@@ -131,7 +131,7 @@ class DataTable extends AbstractList implements Requestable
                 if ($this->useajax) {
                     $onclick = "getUpdate('{$url}&ajax=true');event.returnValue=false; return false;";
                 }
-                $row .= ("<th   {$css} style=\"white-space: nowrap;cursor:pointer;\" onclick=\"{$onclick}\" ><span>{$column->title}</span> <i class=\"{$sort}\"></i></th>");
+                $row .= ("<th   {$css} style=\"white-space: nowrap;cursor:pointer;\" onclick=\"{$onclick}\" ><span>{$column->title}</span> {$sort}</th>");
             } else {
 
                 $row .= ("<th   {$css} ><span>{$column->title}</span></th>");

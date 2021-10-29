@@ -68,15 +68,15 @@ class SortLink extends AbstractLink implements ClickListener, Requestable
         $HtmlTag = $this->getTag();
         $content = $HtmlTag->text();
         if ($this->dir == "asc") {
-            $HtmlTag->html($content . " <i class=\"fa fa-sort-up\"></i>");
+            $HtmlTag->html($content . " &#8593;");
         } else {
             if ($this->dir == "desc") {
-                $HtmlTag->html($content . " <i class=\"fa fa-sort-down\"></i>");
+                $HtmlTag->html($content . "  &#8595;");
             } else {
                 $HtmlTag->text($content);
             }
         }
-
+     
 
     }
 
