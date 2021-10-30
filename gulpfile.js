@@ -47,10 +47,7 @@ gulp.task('jsua', function () {
 gulp.task('css', function () {
     return gulp.src([ // Берем все необходимые библиотеки
 
-        
-        'assets/css/fontawesome-all.css',
-
-   
+       
         'assets/css/bootstrap-tags.css',
         'assets/css/bootstrap-treeview.css',
         'assets/fullcalendar/main.css'
