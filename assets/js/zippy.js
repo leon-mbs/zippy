@@ -59,17 +59,22 @@ function beforeZippy(id) {
 }
 
 
-// вызов  метода страницы
-     
-// вызов  метода страницы
+    
+// вызов  метода страницы на бекенде
+//method -  наименования  метода
+//params  - массив параметров
+//postdata  - данные  если  POST запрос (например  FormData)
+//callback  - функция вызываемая  после успешного  ответа  сервера. Принамает  текстовый параметр)
 function  callPageMethod(method,params,postdata,callback    )
-{
+{        
        
        var p='';
        if(Array.isArray(params))  {
            p =   params.join(':');
        }
        var url = window._baseurl+'::'+method+':'+p+'&ajax=true'
+       
+     
        var opt={
            method: 'GET' ,
            credentials: "same-origin"               

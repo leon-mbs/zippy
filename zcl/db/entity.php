@@ -26,7 +26,7 @@ abstract class Entity extends \ZDB\Entity implements \Zippy\Interfaces\DataItem
      * Возвращает значение  уникального  ключа  сущности
      *
      */
-    public final function getID() {
+    public   function getID() {
         return parent::getKeyValue();
     }
 

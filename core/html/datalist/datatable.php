@@ -74,8 +74,13 @@ class DataTable extends AbstractList implements Requestable
             $this->Reload(false);
         }
         if ($p[0] == 'cellclick' && $this->cellclickevent instanceof \Zippy\Event) {
-            $items = array_values($this->datalist);
-            $this->cellclickevent->onEvent($this, array('dataitem' => $items[$p[2] - 1], 'field' => $p[1], 'rownumber' => $p[2]));
+            $items = array();
+            foreach($this->datalist as $it) {
+               $items[$it->getID()]=$it;    
+            }
+            
+           // $items = array_values($this->datalist);
+            $this->cellclickevent->onEvent($this, array('dataitem' => $items[$p[2]  ], 'field' => $p[1], 'rownumber' => $p[2]));
             $this->setSelectedrow($p[2]);
         }
 
@@ -149,10 +154,10 @@ class DataTable extends AbstractList implements Requestable
         if (count($this->datalist) == 0) {
             return ""; //"<tr  ><td  align=\"center\" colspan=\"" . count($this->columns) . "\" >" . MSG_DATATABLE_NODATA . "</td></tr>";
         }
-        $rownumber = 0;
+        //$rownumber = 0;
         $rows = "";
         foreach ($this->datalist as $item) {     //цикл  по  строкам
-            $rownumber++;
+            $rownumber = $item->getID();
 
             if ($this->selectedrow == $rownumber && $this->selectedclass != "") {
                 $row = "<tr class=\"{$this->selectedclass}\" >";

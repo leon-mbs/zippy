@@ -146,6 +146,7 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
         
         $this->RenderImpl();
         $this->afterRender();
+        //адрес страницы без парметров
         $_baseurl =  $this->getURLNode()  ;
         $this->_tvars['_baseurl'] =     $_baseurl ;
         WebApplication::$app->addJavaScript(" window._baseurl= '{$_baseurl}'")  ;

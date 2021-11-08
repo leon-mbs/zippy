@@ -49,14 +49,14 @@ class DataView extends AbstractList implements \Zippy\Interfaces\Requestable
         $i = 1;
 
         foreach ($list as $item) {           //$datarow = new DataRow($this->id,$list[0]);
-            $datarow = new DataRow($this->id, $item, $i++, $i - 1 + $this->pagesize * ($this->currentpage - 1));
+            $datarow = new DataRow($this->id, $item, $i++ );
             $this->add($datarow);
             if ($this->rowevent instanceof Event) {
                 $this->rowevent->onEvent($datarow); //вызов  обработчика добавляющего  данные  или   елементы  в  строку
             }
             $datarow->updateChildId();
             if ($this->selectedRow instanceof DataRow) {
-                if ($datarow->getAllNumber() == $this->selectedRow->getAllNumber() && $this->selectedclass != "") {
+                if ($datarow->getNumber() == $this->selectedRow->getNumber() && $this->selectedclass != "") {
                     $datarow->setAttribute('class', $this->selectedclass);
                 }
             }
@@ -90,10 +90,11 @@ class DataView extends AbstractList implements \Zippy\Interfaces\Requestable
                 $ids[] = pq($child)->attr("zippy");
             }           
         
-        $c = $this->getPageRowsCount();
+        $rows = $this->getDataRows();
         $html_ = $rowtag->htmlOuter();
         $html = "";
-        for ($i = 1; $i <= $c; $i++) {
+        foreach ($rows as $row) {
+            $i = $row->getNumber() ;
             $id = $this->id .'_'.$i;
             
             $rep = "zippy=\"{$id}\" id=\"{$id}\" ";

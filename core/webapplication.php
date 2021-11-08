@@ -280,7 +280,7 @@ abstract class  WebApplication
 
         if (count($renderpage->_tvars) > 0) {
 
-            //востанавливаем  скобки  в тегах
+            //востанавливаем  скобки Mustache в тегах
             $response = str_replace("\"%7B%7B", "\"{{", $response);
             $response = str_replace("%7D%7D\"", "}}\"", $response);
 

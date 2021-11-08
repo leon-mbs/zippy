@@ -105,7 +105,7 @@ class HttpResponse
     /**
      * Вставляет  JavaScript  в  конец   выходного  потока
      * @param string  Код  скрипта
-     * @param boolean Если  true  - вставка  после  загрузки  документа в  браузер
+     * @param boolean Если  true  - вставка  после  загрузки (onload) документа в  браузер
      */
     public function addJavaScript($js, $docready = false) {
 
@@ -128,7 +128,7 @@ class HttpResponse
 
         $js = "
                     <script type=\"text/javascript\">
-
+                    //сгенерировано  фреймворком
                     ";
         if (strlen($this->JSrenderDocReady) > 0) {
             $js .= "   $(document).ready(function()
@@ -139,7 +139,7 @@ class HttpResponse
         }
         $js .= $this->JSrender . "
 
-
+                     //сгенерировано  фреймворком
                     </script>";
 
         return $js;

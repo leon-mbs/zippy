@@ -32,7 +32,7 @@ class HttpRequest
      */
     public function __construct() {
         $uri = $_SERVER["REQUEST_URI"];
-  
+          
 
         // основной  тип URI генерируемый  компонентами  фреймворка
         if (isset($_REQUEST["q"])) {
