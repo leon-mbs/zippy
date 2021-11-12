@@ -249,9 +249,11 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
         $p =  WebApplication::$app->getRequest()->request_params;
       
         if($_SERVER["REQUEST_METHOD"]=='POST') {
-               $post =  file_get_contents('php://input'); 
+               
                if(count($_POST)>0) {
                   $post = $_POST;    
+               }  else {
+                  $post =  file_get_contents('php://input');   
                }
         }       
         $answer = $this->{$method}($p,$post); 

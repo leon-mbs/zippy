@@ -44,10 +44,10 @@ class Button extends HtmlComponent implements ClickListener, Requestable
 
         if ($this->event->isajax == false) {
             $url = $this->owner->getURLNode() . "::" . $this->id;
-            $this->setAttribute("onclick", "window.location='{$url}';");
+            $this->setAttribute("onclick", "if(beforeZippy('{$this->id}') ==false) return false;window.location='{$url}';");
         } else {
             $url = $this->owner->getURLNode() . "::" . $this->id . "&ajax=true";
-            $this->setAttribute("onclick", "getUpdate('{$url}');");
+            $this->setAttribute("onclick", "if(beforeZippy('{$this->id}') ==false) return false;getUpdate('{$url}');");
         }
     }
 
