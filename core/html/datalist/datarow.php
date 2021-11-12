@@ -14,18 +14,19 @@ use \Zippy\Exception as ZE;
 class DataRow extends HtmlContainer
 {
 
-    private $number,  $dataitem = null;
+    private $number, $rownumber, $dataitem = null;
 
     /**
      *  Конструктор
      * @param DataItem Елемент данных  отображаемый  строкой  таблицы
      * @param mixed Номер строки
      */
-    public function __construct($id, DataItem $dataitem, $number ) {
+    public function __construct($id, DataItem $dataitem, $number  ) {
         $this->number =  $dataitem->getID() ;
         if(strlen($this->number)==0) $this->number = $number;
         HtmlComponent::__construct($id . "_" . $this->number);
         $this->dataitem = $dataitem;
+        $this->rownumber = $number;
         
         
     }
@@ -104,6 +105,13 @@ class DataRow extends HtmlContainer
 
     /**
      * Номер  строки на  текущей странице
+     * @return  int
+     */
+    public function getRowNumber() {
+        return $this->rownumber;
+    }
+   /**
+     * уникальный  идентификатор  строки
      * @return  int
      */
     public function getNumber() {
