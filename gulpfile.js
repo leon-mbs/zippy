@@ -62,12 +62,12 @@ gulp.task('css', function () {
 
 /*
 npm install --global gulp
-    
 npm install gulp --save-dev
- npm install gulp-concat
- npm install gulp-uglifyjs
- npm install gulp-cssnano
- npm install gulp-rename
+
+npm install gulp-concat
+npm install gulp-uglifyjs
+npm install gulp-cssnano
+npm install gulp-rename
  
  gulp js
  gulp jsua

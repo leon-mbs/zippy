@@ -16783,7 +16783,10 @@ fetch(q)
   })
   .then((data) => {
    eval(data);
-  });
+  })
+   .catch(function (error) {
+            console.log('error', error)
+          });  
     
 }
  
@@ -16806,7 +16809,10 @@ function submitForm(formid, q)
       })
       .then((data) => {
        eval(data);
-      });    
+      }) 
+      .catch(function (error) {
+            console.log('error', error)
+          });      
     
 } 
  
@@ -16828,17 +16834,32 @@ function beforeZippy(id) {
 }
 
 
-// вызов  метода страницы
-     
-// вызов  метода страницы
-function  callPageMethod(method,params,postdata,callback    )
-{
-       
+//возвращает URL при вызове  метода страницы 
+//method -  наименования  метода
+//params  - массив параметров
+function getMethodUrl(method,params=null){
+   
        var p='';
        if(Array.isArray(params))  {
            p =   params.join(':');
        }
        var url = window._baseurl+'::'+method+':'+p+'&ajax=true'
+       return url;
+        
+}   
+
+    
+// вызов бэкэнд метода страницы на бекенде
+//method -  наименования  метода
+//params  - массив параметров//postdata  - данные  если  POST запрос (например  FormData)
+//callback  - функция вызываемая  после успешного  ответа  сервера. Принамает  текстовый параметр)
+//callerror  - функция вызываемая в  случае  шибкти  запроса
+function  callPageMethod(method,params,postdata,callback  , callerror=null     )
+{        
+       
+ 
+       var url = getMethodUrl(method,params) 
+     
        var opt={
            method: 'GET' ,
            credentials: "same-origin"               
@@ -16846,13 +16867,7 @@ function  callPageMethod(method,params,postdata,callback    )
        if(postdata !=null) {
           opt.method = "POST"
           opt.body =  postdata  
-          if(postdata instanceof FormData)   {
-            
-          }   else {
-              //    opt.headers= {
-              //        'Content-Type': 'text/plain'
-             //     }           
-          }    
+           
        }
         fetch(url,opt)                                            
           .then((response) => {
@@ -16860,11 +16875,14 @@ function  callPageMethod(method,params,postdata,callback    )
             return response.text();
           })
           .then((data) => {
-                 callback(data )
+               callback(data )
             
           })
           .catch(function (error) {
             console.log('error', error)
+            if(callerror != null){
+                callerror(error);  
+            }             
           });  
 
 }
