@@ -246,7 +246,7 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
 
     
     public final function RequestMethod($method){
-        $p =  WebApplication::$app->getRequest()->request_params;
+        $p =  WebApplication::$app->getRequest()->request_params[$method];
       
         if($_SERVER["REQUEST_METHOD"]=='POST') {
                
