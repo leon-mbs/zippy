@@ -103,5 +103,21 @@ abstract class PageFragment extends HtmlContainer implements EventReceiver
             $page->addAfterRequestEvent($this, 'afterRequestPage');
         }
     }
-
+    public final function RequestMethod($method){
+        $p =  WebApplication::$app->getRequest()->request_params[$method];
+      
+        if($_SERVER["REQUEST_METHOD"]=='POST') {
+               
+               if(count($_POST)>0) {
+                  $post = $_POST;    
+               }  else {
+                  $post =  file_get_contents('php://input');   
+               }
+        }       
+        $answer = $this->{$method}($p,$post); 
+        if(strlen($answer)) {
+           WebApplication::$app->getResponse()->addAjaxResponse($answer) ;        
+        } 
+        
+    }
 }
