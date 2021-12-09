@@ -11,18 +11,13 @@
     
    
     "require": {
-         "php": ">=7.2.0",
+         "php": ">=7.4.0",
          "mustache/mustache": "v2.13.0",
-         "leon-mbs/zdb": "1.5.1",
+         "leon-mbs/zdb": "1.5.2",
          "leon-mbs/phpquery" :">=1.0.0" 
     },
 
-     "authors": [
-        {
-            "name": "Леонид Мартынюк" 
-            
-        }
-    ],
+ 
     "autoload" : {
         "files" : ["zippy.inc.php"]
     }
