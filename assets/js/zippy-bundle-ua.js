@@ -16841,9 +16841,9 @@ function getMethodUrl(method,params=null){
    
        var p='';
        if(Array.isArray(params))  {
-           p =   params.join(':');
+           p = ':'+  params.join(':');
        }
-       var url = window._baseurl+'::'+method+':'+p+'&ajax=true'
+       var url = window._baseurl+'::'+method+p+'&ajax=true'
        return url;
         
 }   
@@ -16854,7 +16854,7 @@ function getMethodUrl(method,params=null){
 //params  - массив параметров//postdata  - данные  если  POST запрос (например  FormData)
 //callback  - функция вызываемая  после успешного  ответа  сервера. Принамает  текстовый параметр)
 //callerror  - функция вызываемая в  случае  шибкти  запроса
-function  callPageMethod(method,params,postdata,callback  , callerror=null     )
+function  callPageMethod(method,params,postdata,callback =null   , callerror=null     )
 {        
        
  
@@ -16875,7 +16875,10 @@ function  callPageMethod(method,params,postdata,callback  , callerror=null     )
             return response.text();
           })
           .then((data) => {
-               callback(data )
+               if(callback != null){
+                   callback(data ) 
+                }          
+
             
           })
           .catch(function (error) {
