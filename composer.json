@@ -12,8 +12,8 @@
    
     "require": {
          "php": ">=7.4.0",
-         "mustache/mustache": "v2.13.0",
-         "leon-mbs/zdb": "1.5.2",
+         "mustache/mustache": "v2.14.1",
+         "leon-mbs/zdb": "1.5.3",
          "leon-mbs/phpquery" :">=1.0.0" 
     },
 
