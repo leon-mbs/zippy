@@ -224,8 +224,8 @@ abstract class HtmlComponent
     protected function getTag($tagname = "") {
         $p = $this->getPageOwner() ;
         if($p instanceof \Zippy\Html\WebPage) {
-            $tag = $p->getLoadedTag($this->id) ;
-             if($tag != null) return  $tag;
+           // $tag = $p->getLoadedTag($this->id) ;
+           //  if($tag != null) return  $tag;
             
         }
      

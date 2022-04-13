@@ -123,7 +123,7 @@ class PageManager
     }
 
 
-    private function pack($page) {
+    private function pack($page) {    
         return gzcompress(serialize($page));
     }
 

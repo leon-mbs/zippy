@@ -24,7 +24,7 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
     private $_ajax;
     private $_ankor = '';
     public $_tvars = array();  //переменные  для  шаблонизатора Mustache
-    public $zarr  = array();
+  //  public $zarr  = array();
  
     /**
      * Конструктор
@@ -141,7 +141,7 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
         $this->beforeRender();
         
         
-        $this->updateTag();   
+        //$this->updateTag();   
         
         
         $this->RenderImpl();
@@ -152,7 +152,7 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
         WebApplication::$app->addJavaScript(" window._baseurl= '{$_baseurl}'")  ;
         
     }
-
+    /*
     public function getLoadedTag($id){
         if(isset($this->zarr[$id]))  return  pq($this->zarr[$id] );
         else return null;
@@ -168,7 +168,7 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
             $this->zarr[$a] =  $o ;
         }    
     }    
-    
+    */
     /**
      * Добавляет  обработчик  на  событие  перед  обработкой  страницей  HTTP запроса
      * @param  $obj  Объект  регистрирующий  свою  функцию как   callback
