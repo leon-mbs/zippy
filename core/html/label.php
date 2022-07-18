@@ -4,17 +4,17 @@ namespace Zippy\Html;
 
 use \Zippy\Binding\SimpleBinding;
 use \Zippy\Interfaces\Binding;
-use \Zippy\Interfaces\AjaxRender;
+ 
 
 /**
  *  Компонент  для строчного  тэга типа  SPAN и  т.д.
  *
  */
-class Label extends HtmlComponent implements AjaxRender
+class Label extends HtmlComponent  
 {
 
     private $value;
-    private $ajaxvalue;
+ 
     private $html = false;
 
     /**
@@ -52,18 +52,7 @@ class Label extends HtmlComponent implements AjaxRender
         }
     }
 
-    /**
-     * Реализация интерфейса AjaxRender
-     * @see AjaxRender
-     */
-    public function AjaxAnswer() {
-        $text = $this->getText();
-        $text = addslashes($text);
-        if ($this->html) {
-            return "$('#{$this->id}').html('{$text}')";
-        }
-        return "$('#{$this->id}').text('{$text}')";
-    }
+ 
 
     /**
      * Установить  текст
@@ -71,7 +60,20 @@ class Label extends HtmlComponent implements AjaxRender
     public function setText($text, $html = false) {
         $this->value = $text;
         $this->html = $html;
-        $this->ajaxvalue = "";
+        
+      if( \Zippy\WebApplication::$app->getRequest()->isAjaxRequest() ){
+        $js= "$('#{$this->id}').text('{$text}')" ;
+        if ($this->html) {
+            $js= "$('#{$this->id}').html('{$text}')";
+        }        
+          
+          
+          
+          \Zippy\WebApplication::$app->getResponse()->addAjaxResponse($js) ;            
+      }
+
+        
+        
     }
 
     /**
@@ -86,17 +88,6 @@ class Label extends HtmlComponent implements AjaxRender
         }
     }
 
-    /**
-     * Добавления значения  которое  подгрузится с  помощю AJAX
-     * после загрузки страницы
-     *
-     * @param mixed $url Адрес  страницы   с  данными
-     * @param mixed $html если  true жданные  вставятся в  DOM  как  html
-     */
-    public function setAjaxText($url, $html = false) {
-
-        $this->ajaxvalue = "$.get('{$url}', function(data) {
-                    $('#{$this->id}')." . ($html ? "html" : "text") . "(data) });";
-    }
+  
 
 }

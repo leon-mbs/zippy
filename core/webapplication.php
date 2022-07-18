@@ -201,9 +201,9 @@ abstract class  WebApplication
 
         if ($this->request->isAjaxRequest()) {
 
-            if (false == $renderpage->renderAjax()) {
+           // if (false == $renderpage->renderAjax()) {
                 return;
-            }
+          //  }
 
         }
 
@@ -289,9 +289,9 @@ abstract class  WebApplication
         }
 
         if ($this->request->isAjaxRequest()) {
-            \phpQuery::newDocumentHTML($response);
+          //  \phpQuery::newDocumentHTML($response);
 
-            $renderpage->renderAjax(true);
+          //  $renderpage->renderAjax(true);
             return;
         }
 

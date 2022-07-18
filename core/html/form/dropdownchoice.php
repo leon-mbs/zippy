@@ -131,7 +131,18 @@ class DropDownChoice extends HtmlFormDataElement implements ChangeListener, Requ
         }
         return $js;
     }
-
+   
+    public function setValue($value) {
+        
+       parent::setValue($value) ;
+       
+       if( \Zippy\WebApplication::$app->getRequest()->isAjaxRequest() ){
+          $js= "$('#{$this->id}').val('{$value}')" ;
+          \Zippy\WebApplication::$app->getResponse()->addAjaxResponse($js) ;            
+       }          
+       
+    }
+   
     /**
      * @see  ChangeListener
      */
@@ -159,6 +170,18 @@ class DropDownChoice extends HtmlFormDataElement implements ChangeListener, Requ
             $this->optionlist = $optionlist;
             $this->setValue(-1);
         }
+        
+        if( \Zippy\WebApplication::$app->getRequest()->isAjaxRequest() ){
+           $list = $this->optionlist instanceof Binding ? $this->optionlist->getValue() : $this->optionlist;
+
+           $js = "$('#{$this->id}').empty();";
+           foreach ($list as $key => $value) {
+              $js .= "$('#{$this->id}').append('<option value=\"{$key}\">{$value}</option>');";
+           }
+          
+           \Zippy\WebApplication::$app->getResponse()->addAjaxResponse($js) ;            
+        }           
+        
     }
 
     /**

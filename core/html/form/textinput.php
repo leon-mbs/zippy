@@ -5,14 +5,14 @@ namespace Zippy\Html\Form;
 use \Zippy\WebApplication;
 use \Zippy\Interfaces\ChangeListener;
 use \Zippy\Interfaces\Requestable;
-use \Zippy\Interfaces\AjaxRender;
+ 
 use \Zippy\Interfaces\EventReceiver;
 use \Zippy\Event;
 
 /**
  * Компонент  тэга  &lt;input type=&quot;text&quot;&gt;
  */
-class TextInput extends HtmlFormDataElement implements ChangeListener, Requestable, AjaxRender
+class TextInput extends HtmlFormDataElement implements ChangeListener, Requestable 
 {
 
     private $defvalue;
@@ -45,6 +45,15 @@ class TextInput extends HtmlFormDataElement implements ChangeListener, Requestab
      */
     public function setText($text='') {
         $this->setValue($text);
+        
+        
+      if( \Zippy\WebApplication::$app->getRequest()->isAjaxRequest() ){
+        $js= "$('#{$this->id}').val('{$text}')" ;
+ 
+          
+          \Zippy\WebApplication::$app->getResponse()->addAjaxResponse($js) ;            
+      }        
+        
     }
 
     /**
@@ -101,15 +110,7 @@ class TextInput extends HtmlFormDataElement implements ChangeListener, Requestab
     }
 
 
-    /**
-     * @see AjaxRender
-     */
-    public function AjaxAnswer() {
-
-        $text = $this->getValue();
-        return "$('#{$this->id}').val('{$text}')";
-    }
-
+ 
 
     public function clean() {
         $this->setText($this->defvalue);

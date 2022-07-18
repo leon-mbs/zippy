@@ -82,8 +82,8 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
      * @see AjaxRender
      */
     protected function updateAjax($components, $js = null) {
-
-
+        $this->addAjaxResponse($js) ;
+        return;
         if (!is_array($components)) {
             $components = array($components);
         }
@@ -128,7 +128,7 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
             return $haspanels;
         }
     }
-
+ 
     /**
      * @see HttpComponent
      *
@@ -263,4 +263,14 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
         
     }
 
+    /**
+    * добавляет  яваскрипт  в  конец  ответа на ajax  запрос
+    * 
+    * @param mixed $js
+    */
+    protected  function addAjaxResponse($js){
+        if (strlen($js) > 0) {
+            WebApplication::$app->getResponse()->addAjaxResponse($js);
+        }       
+    }  
 }

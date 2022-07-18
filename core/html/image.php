@@ -48,6 +48,15 @@ class Image extends HtmlComponent implements \Zippy\Interfaces\Requestable, \Zip
      */
     public function setUrl($src) {
         $this->src = $src;
+        
+      if( \Zippy\WebApplication::$app->getRequest()->isAjaxRequest() ){
+          $_src = $this->getAttribute('src');
+          $js =  "$('#{$this->id}').attr('src','{$_src}')";
+
+          
+          \Zippy\WebApplication::$app->getResponse()->addAjaxResponse($js) ;            
+      }        
+        
     }
 
     /**
@@ -68,6 +77,10 @@ class Image extends HtmlComponent implements \Zippy\Interfaces\Requestable, \Zip
         if ($this->type == self::$DYNAMIC_TYPE) {
             $this->setAttribute("src", $this->owner->getURLNode() . "::" . $this->id . ':' . time() . '&binary=true');
         }
+        
+        
+        
+        
     }
 
     /**
