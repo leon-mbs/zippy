@@ -25,6 +25,7 @@ class DataView extends AbstractList implements \Zippy\Interfaces\Requestable
     private $selectedRow = null;
     private $selectedclass = "";
     private $cellclickevent = null;
+    private $lastnumber = 0;
 
     /**
      * Конструктор
@@ -46,10 +47,10 @@ class DataView extends AbstractList implements \Zippy\Interfaces\Requestable
         $this->components = array();
 
         $list = $this->getItems();
-        $i = 1;
+        $this->lastnumber++;
 
         foreach ($list as $item) {           //$datarow = new DataRow($this->id,$list[0]);
-            $datarow = new DataRow($this->id, $item, $i++ );
+            $datarow = new DataRow($this->id, $item, $this->lastnumber++ );
             $this->add($datarow);
             if ($this->rowevent instanceof Event) {
                 $this->rowevent->onEvent($datarow); //вызов  обработчика добавляющего  данные  или   елементы  в  строку

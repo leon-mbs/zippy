@@ -85,7 +85,7 @@ abstract class  WebApplication
 
         $this->currentpage->args = $arg1; //запоминаем аргументы страницы
 
-        $this->response->setPageIndex($this->getPageManager()->putPage($this->currentpage));
+        $this->response->setPageIndex($this->getPageManager()->updatePage($this->currentpage));
     }
 
     /**
@@ -123,7 +123,7 @@ abstract class  WebApplication
 
         if ($this->request->querytype == HttpRequest::QUERY_EVENT  ) {
             //получаем  адресуемую  страницу
-            if (!is_numeric($this->request->getRequestIndex())) {
+            if (strlen($this->request->getRequestIndex())==0) {
                 $this->response->to404Page();
             }
 
@@ -154,21 +154,14 @@ abstract class  WebApplication
                 // адресуемого  елемента
                 // $this->output = $this->currentpage->getAjaxAnswer();
 
-                $this->getPageManager()->updatePage($this->currentpage, $this->getRequest()->getRequestIndex());
+                $this->getPageManager()->updatePage($this->currentpage);
             } else {
 
-                $this->response->setPageIndex($this->getPageManager()->putPage($this->currentpage));
+                $this->response->setPageIndex($this->getPageManager()->updatePage($this->currentpage));
                 if ($_SERVER["REQUEST_METHOD"] == "GET") {
-                    //получаем  новую  версию  страницы
-
                     if ($this->reloadPage == true) { //если  надо  сбросить адресную строку
-
-
                         $this->response->toBaseUrl();
                     }
-
-
-                    //
                 }
                 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 

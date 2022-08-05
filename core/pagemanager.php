@@ -17,11 +17,14 @@ class PageManager
     private $pages = array();
     private $index = 0;
     private $pchain = array();
+    private $curpage = '';
+    private $prevpage = '';
 
     /**
      * Добавляет новую  страницу  (объект  WebPage) в  список.
      * @param WebPage страница
      * @return  int номер  страницы
+     * @deprecated
      */
     public final function putPage(WebPage $page) {
         $page->beforeSaveToSession();
@@ -44,7 +47,24 @@ class PageManager
 
         return $this->index;
     }
+    /**
+     * Обновляет  персистентные  данные  страницы.
+     * @param WebPage  Экземпляр класса страницы
+     * @param int  Номер  страницы
+     * @param mixed  Версия  страницы
+     */
+    public final function updatePage(WebPage $page ) {
 
+        $page->beforeSaveToSession();
+        $pname = get_class($page)    ;
+        if($this->curpage != $pname) {
+            $this->prevpage = $this->curpage;
+            $this->pchain[] = $pname;
+        }
+        $this->curpage = $pname    ;    
+        $this->pages[$pname] = $page;
+        return $pname;
+    }
     /**
      * Возвращает  из сессии  страницу  по  номеру   и  версии
      * @param Integer  Номер  страницы
@@ -77,20 +97,10 @@ class PageManager
      * @return  WebPage  страница
      */
     public final function getLastPage() {
-        return $this->getPage($this->index);
+        return array_pop($this->pchain);
     }
 
-    /**
-     * Обновляет  персистентные  данные  страницы.
-     * @param WebPage  Экземпляр класса страницы
-     * @param int  Номер  страницы
-     * @param mixed  Версия  страницы
-     */
-    public final function updatePage(WebPage $page, $number) {
 
-        $page->beforeSaveToSession();
-        $this->pages[$number] = ($page);
-    }
 
     public function __sleep() {
         //упаковываем страницы
@@ -103,7 +113,7 @@ class PageManager
         foreach ($pl as $n) {
             $this->pages[$n] = $this->pack($this->pages[$n]);
         }
-        return array('pages', 'index', 'pchain');
+        return array('pages', 'index', 'pchain','curpage','prevpage');
     }
 
     public function __wakeup() {
