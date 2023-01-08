@@ -185,8 +185,16 @@ class HttpResponse
      * @return string
      */
     public final function getHostUrl() {
-        $http = empty($_SERVER["HTTPS"]) ? 'http' : 'https';
-
+        $http = 'http';
+        if (isset($_SERVER['HTTPS']) &&  strtolower($_SERVER['HTTPS']) !== 'off') {
+           $http = 'https';
+        }
+        elseif (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' || !empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on') {
+           $http = 'https';
+        } elseif(443 == intval($_SERVER['SERVER_PORT'] )) {
+           $http = 'https';    
+        }
+        
         $url = $http . "://" . $_SERVER["HTTP_HOST"];
         return $url;
     }

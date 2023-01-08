@@ -230,4 +230,12 @@ class DropDownChoice extends HtmlFormDataElement implements ChangeListener, Requ
         $k = array_keys($list);
         $this->setValue($k[0]);
     }
+    
+    
+    public function getIntValue() {
+        
+        return  intval($this->getValue());
+        
+    }    
+    
 }

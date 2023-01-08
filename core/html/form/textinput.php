@@ -38,6 +38,14 @@ class TextInput extends HtmlFormDataElement implements ChangeListener, Requestab
     public function getText() {
         return $this->getValue();
     }
+  
+    public  final function getInt() {
+        return  intval(trim($this->getValue()));
+    }
+
+    public final function getDouble() {
+        return  doubleval(trim($this->getValue()));
+    }
 
     /**
      * Устанавливает  текстовое  значение
