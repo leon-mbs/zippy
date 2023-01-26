@@ -152,8 +152,9 @@ class HttpResponse
     public final function getBaseUrl() {
         $pagename = get_class(WebApplication::$app->getCurrentPage());
         $pagename = str_replace("\\", "/", $pagename);
-        return $this->getHostUrl() . "/index.php?q=p:" . $pagename  ;
-        //return $this->getHostUrl() . "/index.php?q=p:" . $this->pageindex;
+      //  return $this->getHostUrl() . "/index.php?q=p:" . $pagename  ;
+        return  "/index.php?q=p:" . $pagename  ;
+
     }
 
     /**
