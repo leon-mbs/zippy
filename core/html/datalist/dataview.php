@@ -122,51 +122,7 @@ class DataView extends AbstractList implements \Zippy\Interfaces\Requestable
         $rowtag->replaceWith($html);
          
         
-        /*
-        for ($i = 1; $i <= $c; $i++) {
-            $html .= $html_;
-        }
-        $rowtag->replaceWith($html);
       
-        $rows = pq('[zippy=' . $this->id . ']'); //массив копий
-        $i = 1;
-
-        foreach ($rows as $row) {
-            $_id = '_' . $i++;
-
-            pq($row)->attr("zippy", $this->id . $_id);
-
-            $id = pq($row)->attr("id");
-            if (strlen($id) > 0) {
-                pq($row)->attr("id", $id . $_id);
-            }
-
-            $children = pq('[zippy=' . $this->id . $_id . ']  [zippy]');
-            foreach ($children as $child) {
-                $zippy = pq($child)->attr("zippy");
-
-                pq($child)->attr("zippy", $zippy . $_id);
-
-                $id = pq($child)->attr("id");
-                if (strlen($id) > 0) {
-                    pq($child)->attr("id", $id . $_id);
-                }
-            }
-
-            if ($this->cellclickevent instanceof \Zippy\Event) {
-                $url = $this->getURLNode() . ':' . ($i - 1);
-                $onclick = "window.location='{$url}'";
-                $onclick = "  " . $onclick . "  ";
-                $style = "  cursor:pointer; ";
-                $row->setAttribute('style', $style);
-                $row->setAttribute('onclick', $onclick);
-                pq($row)->attr("style", $style);
-                pq($row)->attr("onclick", $onclick);
-            }
-
-        }
-        
-        */
         $p = $this->getPageOwner() ;
         if($p instanceof \Zippy\Html\WebPage) {
            // $p->updateTag() ;
