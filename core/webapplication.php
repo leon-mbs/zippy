@@ -216,13 +216,16 @@ abstract class  WebApplication
             //    $m = new \Mustache_Engine();
             //   $basetemplate= $m->render($basetemplate, $renderpage->_tvars);
             //  }
+            
 
+            $body = $doc['body']->html() ;
+         
+            $basetemplate= str_replace('<childpage/>',$body,$basetemplate) ;
 
             $bdoc = \phpQuery::newDocumentHTML($basetemplate);
-            //восстанавливаем  по умолчанию
 
 
-            $bdoc["childpage"]->replaceWith($doc['body']->html());
+          //  $bdoc["childpage"]->replaceWith();
 
             $links = $doc['head  > link'];
             foreach ($links as $l) {
