@@ -183,16 +183,16 @@ abstract class HtmlComponent
 
         if (isset($this->attributes["class"])) {
             if (strlen($this->attributes["class"]) > 0) {
-                $attributes['class'] = $attributes['class'] . ' ' . $this->attributes["class"];
+                $attributes['class'] = ($attributes['class'] ??"") . ' ' . ($this->attributes["class"] ??"");
             } else {
                 $attributes['class'] = str_replace($this->attributes["class"], "", $attributes['class']);
             }
         }
         if (isset($this->attributes["style"])) {
             if (strlen($this->attributes["style"]) > 0) {
-                $attributes['style'] = $attributes['style'] . ';  ' . $this->attributes["style"];
+                $attributes['style'] = ($attributes['style'] ??'') . ';  ' . ($this->attributes["style"] ??'');
             } else {
-                $attributes['style'] = str_replace($this->attributes["style"], "", $attributes['style']);
+                $attributes['style'] = str_replace( ($this->attributes["style"] ??''), "", ($attributes['style'] ??''));
             }
         }
 

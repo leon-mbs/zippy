@@ -112,6 +112,7 @@ class TextInput extends HtmlFormDataElement implements ChangeListener, Requestab
      * @see SubmitDataRequest
      */
     public function getRequestData() {
+        if(!isset($_REQUEST[$this->id])) return;
 
         $this->setValue($_REQUEST[$this->id]);
 

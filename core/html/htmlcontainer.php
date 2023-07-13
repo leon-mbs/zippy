@@ -152,7 +152,7 @@ abstract class HtmlContainer extends HtmlComponent implements Requestable
 
         $child = next(WebApplication::getApplication()->getRequest()->request_c);
 
-        if ($child != false && $this->components[$child] instanceof Requestable) {
+        if ($child != false && ($this->components[$child] ??null) instanceof Requestable) {
             $this->components[$child]->RequestHandle();
         } else {
             if($this instanceof \Zippy\Html\WebPage || $this instanceof \Zippy\Html\PageFragment   )  { //ищем метод

@@ -60,7 +60,9 @@ class CheckBox extends HtmlFormDataElement implements ChangeListener, Requestabl
      * @see SubmitDataRequest
      */
     public function getRequestData() {
+        if(!isset($_REQUEST[$this->id])) return;
         $this->setValue(isset($_REQUEST[$this->id]));
+        
     }
 
     /**

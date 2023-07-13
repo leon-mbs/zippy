@@ -108,7 +108,9 @@ class DropDownChoice extends HtmlFormDataElement implements ChangeListener, Requ
      * @see SubmitDataRequest
      */
     public function getRequestData() {
-        $this->setValue($_REQUEST[$this->id]);
+        if(!isset($_REQUEST[$this->id])) return;
+        $this->setValue($_REQUEST[$this->id] );    
+        
     }
 
     /**
@@ -211,7 +213,7 @@ class DropDownChoice extends HtmlFormDataElement implements ChangeListener, Requ
      */
     public function getValueName() {
         $list = $this->optionlist instanceof Binding ? $this->optionlist->getValue() : $this->optionlist;
-        return $list[$this->getValue()];
+        return $list[$this->getValue()] ??'';
     }
 
     public function clean() {

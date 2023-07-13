@@ -32,6 +32,8 @@ class File extends HtmlFormDataElement
      * @see SubmitDataRequest
      */
     public function getRequestData() {
+        if(!isset($_REQUEST[$this->id])) return;
+        
         $this->setValue($_FILES[$this->id]);
     }
 
