@@ -2,9 +2,9 @@
 
 namespace Zippy\Html;
 
-use \Zippy\WebApplication;
-use \Zippy\Interfaces\EventReceiver;
-use \Zippy\Interfaces\AjaxRender;
+use Zippy\WebApplication;
+use Zippy\Interfaces\EventReceiver;
+use Zippy\Interfaces\AjaxRender;
 
 /**
  *  Базовый  класс  для  компонентов-страниц
@@ -13,8 +13,6 @@ use \Zippy\Interfaces\AjaxRender;
  */
 abstract class WebPage extends HtmlContainer implements EventReceiver
 {
-
-
     public $args = '';
     public $_title = '';
     public $_description = '';
@@ -24,15 +22,15 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
     private $_ajax;
     private $_ankor = '';
     public $_tvars = array();  //переменные  для  шаблонизатора Mustache
-  //  public $zarr  = array();
- 
+    //  public $zarr  = array();
+
     /**
      * Конструктор
      *
      */
 
     public function __construct() {
-           
+
 
     }
 
@@ -54,7 +52,7 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
     /**
      * @see HtmlContainer
      */
-    public final function getURLNode() {
+    final public function getURLNode() {
         return WebApplication::$app->getResponse()->getBaseUrl();
     }
 
@@ -128,7 +126,7 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
             return $haspanels;
         }
     }
- 
+
     /**
      * @see HttpComponent
      *
@@ -139,35 +137,35 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
             $this->_ankor = '';
         }
         $this->beforeRender();
-        
-        
-        //$this->updateTag();   
-        
-        
+
+
+        //$this->updateTag();
+
+
         $this->RenderImpl();
         $this->afterRender();
         //адрес страницы без парметров
         $_baseurl =  $this->getURLNode()  ;
         $this->_tvars['_baseurl'] =     $_baseurl ;
         WebApplication::$app->addJavaScript(" window._baseurl= '{$_baseurl}'")  ;
-        
+
     }
     /*
     public function getLoadedTag($id){
         if(isset($this->zarr[$id]))  return  pq($this->zarr[$id] );
         else return null;
-    }  
-      
+    }
+
     public function updateTag(){
         $this->zarr = array();
-        
+
         $z = pq('[zippy]') ;
-       
+
         foreach($z->elements as $o){
             $a = "".$o->getAttribute('zippy');
             $this->zarr[$a] =  $o ;
-        }    
-    }    
+        }
+    }
     */
     /**
      * Добавляет  обработчик  на  событие  перед  обработкой  страницей  HTTP запроса
@@ -222,7 +220,7 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
     protected function goAnkor($name) {
         $this->_ankor = $name;
     }
-  
+
     public function setTitle($title) {
         $this->_title = $title;
     }
@@ -244,33 +242,33 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
 
     }
 
-    
-    public final function RequestMethod($method){
+
+    final public function RequestMethod($method) {
         $p =  WebApplication::$app->getRequest()->request_params[$method];
         $post=null;
         if($_SERVER["REQUEST_METHOD"]=='POST') {
-               
-               if(count($_POST)>0) {
-                  $post = $_POST;    
-               }  else {
-                  $post =  file_get_contents('php://input');   
-               }
-        }       
-        $answer = $this->{$method}($p,$post); 
+
+            if(count($_POST)>0) {
+                $post = $_POST;
+            } else {
+                $post =  file_get_contents('php://input');
+            }
+        }
+        $answer = $this->{$method}($p, $post);
         if(strlen($answer)) {
-           WebApplication::$app->getResponse()->addAjaxResponse($answer) ;        
-        } 
-        
+            WebApplication::$app->getResponse()->addAjaxResponse($answer) ;
+        }
+
     }
 
     /**
     * добавляет  яваскрипт  в  конец  ответа на ajax  запрос
-    * 
+    *
     * @param mixed $js
     */
-    protected  function addAjaxResponse($js){
+    protected function addAjaxResponse($js) {
         if (strlen($js) > 0) {
             WebApplication::$app->getResponse()->addAjaxResponse($js);
-        }       
-    }  
+        }
+    }
 }

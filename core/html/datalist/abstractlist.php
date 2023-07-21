@@ -2,19 +2,20 @@
 
 namespace Zippy\Html\DataList;
 
-use \Zippy\Html\HtmlContainer;
+use Zippy\Html\HtmlContainer;
 
 /**
  *   Базовый клас  для компонентов - списков(таблиц) данных
  */
 abstract class AbstractList extends HtmlContainer
 {
-
-    protected $pagesize = PHP_INT_MAX, $currentpage = 1;
+    protected $pagesize = PHP_INT_MAX;
+    protected $currentpage = 1;
     protected $DataSource;
     protected $pagerowscount = 0;
     protected $rowscount = -1;
-    protected $sortf = null, $sortd = null;
+    protected $sortf = null;
+    protected $sortd = null;
 
     /**
      * Конструктор
@@ -95,7 +96,7 @@ abstract class AbstractList extends HtmlContainer
     /**
      * Количество  страниц  в  списке
      */
-    public final function getPageCount() {
+    final public function getPageCount() {
 
         $rowcount = $this->getAllRowsCount();
         return ceil($rowcount / $this->pagesize);
@@ -162,16 +163,16 @@ abstract class AbstractList extends HtmlContainer
      * Устанавливает  имя  поля  и направление  сортировки.
      * Установленные  параметры  передаютя  провайдеру  данных
      */
-    public final function setSorting($field, $dir = 'asc') {
+    final public function setSorting($field, $dir = 'asc') {
         $this->sortf = $field;
         $this->sortd = $dir;
     }
 
-    public final function getSorting(){
-       return array('field'=>$this->sortf,'dir'=>$this->sortd);  
+    final public function getSorting() {
+        return array('field'=>$this->sortf,'dir'=>$this->sortd);
     }
 
-  
-    
-    
+
+
+
 }

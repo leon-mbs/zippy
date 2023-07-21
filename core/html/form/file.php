@@ -7,7 +7,6 @@ namespace Zippy\Html\Form;
  */
 class File extends HtmlFormDataElement
 {
-
     /**
      * Конструктор
      * @param mixed  ID
@@ -32,8 +31,10 @@ class File extends HtmlFormDataElement
      * @see SubmitDataRequest
      */
     public function getRequestData() {
-        if(!isset($_FILES[$this->id])) return;
-        
+        if(!isset($_FILES[$this->id])) {
+            return;
+        }
+
         $this->setValue($_FILES[$this->id]);
     }
 

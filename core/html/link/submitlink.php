@@ -2,11 +2,11 @@
 
 namespace Zippy\Html\Link;
 
-use \Zippy\WebApplication;
-use \Zippy\Interfaces\EventReceiver;
-use \Zippy\Interfaces\ClickListener;
-use \Zippy\Interfaces\Requestable;
-use \Zippy\Event;
+use Zippy\WebApplication;
+use Zippy\Interfaces\EventReceiver;
+use Zippy\Interfaces\ClickListener;
+use Zippy\Interfaces\Requestable;
+use Zippy\Event;
 
 /**
  * Елемент-ссылка  которая  отправляет  форму
@@ -14,7 +14,6 @@ use \Zippy\Event;
  */
 class SubmitLink extends AbstractLink implements ClickListener, Requestable
 {
-
     private $event;
 
     /**

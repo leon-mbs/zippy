@@ -2,19 +2,18 @@
 
 namespace Zippy\Html\Form;
 
-use \Zippy\WebApplication;
-use \Zippy\Interfaces\Binding;
-use \Zippy\Interfaces\ChangeListener;
-use \Zippy\Interfaces\Requestable;
-use \Zippy\Interfaces\EventReceiver;
-use \Zippy\Event;
+use Zippy\WebApplication;
+use Zippy\Interfaces\Binding;
+use Zippy\Interfaces\ChangeListener;
+use Zippy\Interfaces\Requestable;
+use Zippy\Interfaces\EventReceiver;
+use Zippy\Event;
 
 /**
  * Компонент  тэга  &lt;input type=&quot;checkbox&quot;&gt;
  */
 class CheckBox extends HtmlFormDataElement implements ChangeListener, Requestable
 {
-
     private $event;
 
     /**
@@ -60,9 +59,11 @@ class CheckBox extends HtmlFormDataElement implements ChangeListener, Requestabl
      * @see SubmitDataRequest
      */
     public function getRequestData() {
-        if(!isset($_REQUEST[$this->id])) return;
+        if(!isset($_REQUEST[$this->id])) {
+            return;
+        }
         $this->setValue(isset($_REQUEST[$this->id]));
-        
+
     }
 
     /**
@@ -104,7 +105,7 @@ class CheckBox extends HtmlFormDataElement implements ChangeListener, Requestabl
      * Установлен  ли checkbox
      */
     public function isChecked() {
-        return $this->getValue() === TRUE;
+        return $this->getValue() === true;
     }
 
     public function clean() {

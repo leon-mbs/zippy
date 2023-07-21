@@ -2,12 +2,12 @@
 
 namespace Zippy\Html\DataList;
 
-use \Zippy\Html\HtmlComponent;
-use \Zippy\Interfaces\Requestable;
-use \Zippy\WebApplication;
-use \Zippy\HtpRequest;
-use \Zippy\Interfaces\EventReceiver;
-use \Zippy\Event;
+use Zippy\Html\HtmlComponent;
+use Zippy\Interfaces\Requestable;
+use Zippy\WebApplication;
+use Zippy\HtpRequest;
+use Zippy\Interfaces\EventReceiver;
+use Zippy\Event;
 
 /**
  * Класс  отображающий  разбивку  списка  по страницам
@@ -15,7 +15,6 @@ use \Zippy\Event;
  */
 class Paginator extends HtmlComponent implements Requestable
 {
-
     private $datalist;
     private $maxbuttons = 10;
     private $firstButton = 1;
@@ -45,7 +44,7 @@ class Paginator extends HtmlComponent implements Requestable
     /**
      * @see HtmlComponent
      */
-    protected final function RenderImpl() {
+    final protected function RenderImpl() {
         $content = $this->getContent($this->datalist->getPageCount(), $this->datalist->getCurrentPage());
         $this->getTag()->html($content);
     }
@@ -142,7 +141,7 @@ class Paginator extends HtmlComponent implements Requestable
     /**
      * @see  Requestable
      */
-    public final function RequestHandle() {
+    final public function RequestHandle() {
         $p = WebApplication::$app->getRequest()->request_params[$this->id];
 
         if ($this->event != null) {
@@ -181,7 +180,7 @@ class Paginator extends HtmlComponent implements Requestable
     /**
      * Сбрасываем  в  начало
      */
-    public final function Reset() {
+    final public function Reset() {
         $this->datalist->setCurrentPage(1);
     }
 
@@ -190,7 +189,7 @@ class Paginator extends HtmlComponent implements Requestable
      *
      * @param mixed $maxbuttons
      */
-    public final function setMaxButtons($maxbuttons) {
+    final public function setMaxButtons($maxbuttons) {
         if ($maxbuttons > 1) {
             $this->maxbuttons = $maxbuttons - 1;
         }

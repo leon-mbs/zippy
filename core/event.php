@@ -2,17 +2,16 @@
 
 namespace Zippy;
 
-use \Zippy\Interfaces\EventReceiver;
-use \Zippy\Html\HtmlComponent;
-
+use Zippy\Interfaces\EventReceiver;
+use Zippy\Html\HtmlComponent;
 
 /**
  * Класс инкапсулирующий  обработчик  события
  */
 class Event
 {
-
-    private $handler, $receiver = null;
+    private $handler;
+    private $receiver = null;
     public $isajax = false;  //если  true  рендерим  обработчик  для  ajax
 
     /**
@@ -39,9 +38,8 @@ class Event
 
         if ($h != null && $this->receiver != null) {
             return $this->receiver->{$h}($sender, $params);
-        }
-        else {
-            throw new  \Zippy\Exception( sprintf(ERROR_HANDLER_NOTFOUND,$sender->id)) ;
+        } else {
+            throw new  \Zippy\Exception(sprintf(ERROR_HANDLER_NOTFOUND, $sender->id)) ;
         }
     }
 

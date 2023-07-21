@@ -2,8 +2,8 @@
 
 namespace Zippy\Html\Link;
 
-use \Zippy\WebApplication;
-use \Zippy\Interfaces\Requestable;
+use Zippy\WebApplication;
+use Zippy\Interfaces\Requestable;
 
 /**
  * Елемент-ссылка  выполняющая  редирект
@@ -11,8 +11,11 @@ use \Zippy\Interfaces\Requestable;
  */
 class RedirectLink extends AbstractLink implements Requestable
 {
-
-    public $bookmark, $pagename, $params, $bookmarkable, $encode;
+    public $bookmark;
+    public $pagename;
+    public $params;
+    public $bookmarkable;
+    public $encode;
 
     /**
      * Конструктор

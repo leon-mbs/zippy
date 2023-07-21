@@ -9,7 +9,6 @@ namespace Zippy\Interfaces;
  */
 interface DataSource
 {
-
     /**
      * Возвращает  количество  елементов   в  наборе
      * @return int         *

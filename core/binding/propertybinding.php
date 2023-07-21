@@ -2,7 +2,7 @@
 
 namespace Zippy\Binding;
 
-use \Zippy\Interfaces\Binding;
+use Zippy\Interfaces\Binding;
 
 /**
  * Реализует привязку  данных  к  свойству  объекта.
@@ -11,8 +11,8 @@ use \Zippy\Interfaces\Binding;
  */
 class PropertyBinding implements Binding
 {
-
-    protected $obj = null, $propertyname = "";
+    protected $obj = null;
+    protected $propertyname = "";
 
     /**
      * Конструктор

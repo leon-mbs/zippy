@@ -2,12 +2,12 @@
 
 namespace Zippy\Html\Link;
 
-use \Zippy\WebApplication;
-use \Zippy\Interfaces\ClickListener;
-use \Zippy\Interfaces\EventReceiver;
+use Zippy\WebApplication;
+use Zippy\Interfaces\ClickListener;
+use Zippy\Interfaces\EventReceiver;
 
-use \Zippy\Interfaces\Requestable;
-use \Zippy\Event;
+use Zippy\Interfaces\Requestable;
+use Zippy\Event;
 
 /**
  * Ссылка  вызыващая  обработчик не  имеющая  возможности  копирования  адреса  ссылки
@@ -15,7 +15,6 @@ use \Zippy\Event;
  */
 class ClickLink extends AbstractLink implements ClickListener, Requestable
 {
-
     protected $event;
 
     /**

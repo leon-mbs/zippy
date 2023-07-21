@@ -2,8 +2,8 @@
 
 namespace Zippy\Html\Link;
 
-use \Zippy\Interfaces\Binding;
-use \Zippy\Binding\SimpleBinding;
+use Zippy\Interfaces\Binding;
+use Zippy\Binding\SimpleBinding;
 
 /**
  * Ссылка  с  возможностью  делать  закладки, копировать  и  т.д.
@@ -11,7 +11,6 @@ use \Zippy\Binding\SimpleBinding;
  */
 class BookmarkableLink extends AbstractLink
 {
-
     private $link;
 
     /**

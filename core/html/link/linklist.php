@@ -2,13 +2,13 @@
 
 namespace Zippy\Html\Link;
 
-use \Zippy\WebApplication;
-use \Zippy\HtpRequest;
-use \Zippy\Html\HtmlComponent;
-use \Zippy\Interfaces\ClickListener;
-use \Zippy\Interfaces\Requestable;
-use \Zippy\Interfaces\EventReceiver;
-use \Zippy\Event;
+use Zippy\WebApplication;
+use Zippy\HtpRequest;
+use Zippy\Html\HtmlComponent;
+use Zippy\Interfaces\ClickListener;
+use Zippy\Interfaces\Requestable;
+use Zippy\Interfaces\EventReceiver;
+use Zippy\Event;
 
 /**
  * Компонент отображающий  список  ссылок
@@ -16,7 +16,6 @@ use \Zippy\Event;
  */
 class LinkList extends HtmlComponent implements ClickListener, Requestable
 {
-
     public $delimiter = " ";
     public $list = array();
     protected $event;

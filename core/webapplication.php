@@ -2,7 +2,7 @@
 
 namespace Zippy;
 
-use \Zippy\Html\HtmlContainer;
+use Zippy\Html\HtmlContainer;
 
 /**
  * Класс  приложения. Обеспечивает жизненный  цикл  страниц, управление  сессией
@@ -11,9 +11,8 @@ use \Zippy\Html\HtmlContainer;
  * getTemplate().
  *
  */
-abstract class  WebApplication
+abstract class WebApplication
 {
-
     private $currentpage = null;
     public static $app = null;
 
@@ -28,7 +27,7 @@ abstract class  WebApplication
      * Конструктор
      * @param string Имя  класса  начальной  страницы
      */
-    function __construct() {
+    public function __construct() {
 
 
         self::$app = $this;
@@ -46,7 +45,7 @@ abstract class  WebApplication
      * Возвращает экземпляр приложения
      * @return WebApplication
      */
-    public static final function getApplication() {
+    final public static function getApplication() {
         return self::$app;
     }
 
@@ -55,14 +54,14 @@ abstract class  WebApplication
      * перегружается   в  классе  пользовательского  приложения
      * @param string Имя  класса  страницы
      */
-    public abstract function getTemplate($name);
+    abstract public function getTemplate($name);
 
 
     /**
      * Возвращает  объект  текущей  страницы
      * @return WebPage
      */
-    public final function getCurrentPage() {
+    final public function getCurrentPage() {
         return $this->currentpage;
     }
 
@@ -71,7 +70,7 @@ abstract class  WebApplication
      * и делает  ее  текущей.  По  сути  серверный  редирект без  изменения  адресной   строки  браузера.
      * @param string Имя класса  страницы
      */
-    public final function LoadPage($name, $arg1 = null, $arg2 = null, $arg3 = null, $arg4 = null, $arg5 = null) {
+    final public function LoadPage($name, $arg1 = null, $arg2 = null, $arg3 = null, $arg4 = null, $arg5 = null) {
 
         if (is_array($arg1) == false) {
             //$this->currentpage = new $name($arg1, $arg2, $arg3, $arg4, $arg5);
@@ -91,7 +90,7 @@ abstract class  WebApplication
     /**
      * Основной   цикл  приложения
      */
-    public final function Run($homepage) {
+    final public function Run($homepage) {
         self::$app = $this;
 
         if ($homepage == null) {
@@ -121,7 +120,7 @@ abstract class  WebApplication
 
         }
 
-        if ($this->request->querytype == HttpRequest::QUERY_EVENT  ) {
+        if ($this->request->querytype == HttpRequest::QUERY_EVENT) {
             //получаем  адресуемую  страницу
             if (strlen($this->request->getRequestIndex())==0) {
                 $this->response->to404Page();
@@ -143,11 +142,11 @@ abstract class  WebApplication
                 $this->response->output();
                 return;
             }
-            if ($this->request->querytype == HttpRequest::QUERY_EVENT){
-               $this->currentpage->RequestHandle();    
+            if ($this->request->querytype == HttpRequest::QUERY_EVENT) {
+                $this->currentpage->RequestHandle();
             }
-           
-            
+
+
 
             if ($this->request->isAjaxRequest() || $this->request->isBinaryRequest()) {
                 // если  Ajax запрос, отдаем  в  выходной  поток  только  ответ
@@ -165,7 +164,7 @@ abstract class  WebApplication
                 }
                 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-                  //  $this->response->toBaseUrl();
+                    //  $this->response->toBaseUrl();
                 }
             }
         }
@@ -185,7 +184,7 @@ abstract class  WebApplication
      * Метод,  выполняющий   формирование  выходного  HTML потока
      * на  основе  текущено  шаблона  и  данных  елементов  страницы
      */
-    private  function Render() {
+    private function Render() {
         if ($this->request->isBinaryRequest()) {
             return;
         }
@@ -194,16 +193,16 @@ abstract class  WebApplication
 
         if ($this->request->isAjaxRequest()) {
 
-           // if (false == $renderpage->renderAjax()) {
-                return;
-          //  }
+            // if (false == $renderpage->renderAjax()) {
+            return;
+            //  }
 
         }
 
 
         //загружаем  соответсвующий  шаблон
         $template = $this->getTemplate(get_class($renderpage));
-   
+
 
         $doc = \phpQuery::newDocumentHTML($template);
 
@@ -216,16 +215,16 @@ abstract class  WebApplication
             //    $m = new \Mustache_Engine();
             //   $basetemplate= $m->render($basetemplate, $renderpage->_tvars);
             //  }
-            
+
 
             $body = $doc['body']->html() ;
-         
-            $basetemplate= str_replace('<childpage/>',$body,$basetemplate) ;
+
+            $basetemplate= str_replace('<childpage/>', $body, $basetemplate) ;
 
             $bdoc = \phpQuery::newDocumentHTML($basetemplate);
 
 
-          //  $bdoc["childpage"]->replaceWith();
+            //  $bdoc["childpage"]->replaceWith();
 
             $links = $doc['head  > link'];
             foreach ($links as $l) {
@@ -257,7 +256,7 @@ abstract class  WebApplication
               pq('head')->append("<title>{$title}</title>");
               } */
         }
-        
+
         $renderpage->Render();
 
 
@@ -285,9 +284,9 @@ abstract class  WebApplication
         }
 
         if ($this->request->isAjaxRequest()) {
-          //  \phpQuery::newDocumentHTML($response);
+            //  \phpQuery::newDocumentHTML($response);
 
-          //  $renderpage->renderAjax(true);
+            //  $renderpage->renderAjax(true);
             return;
         }
 
@@ -310,7 +309,7 @@ abstract class  WebApplication
      * клиентского редиректа для сброса  адресной  строки
      * @param boolean
      */
-    public final function setReloadPage($value = true) {
+    final public function setReloadPage($value = true) {
         $this->reloadPage = $value;
     }
 
@@ -318,7 +317,7 @@ abstract class  WebApplication
      * Возвращает  объект  HttpRequest
      * @return HttpRequest
      */
-    public final function getRequest() {
+    final public function getRequest() {
         return $this->request;
     }
 
@@ -326,7 +325,7 @@ abstract class  WebApplication
      * возвращает  объект Httpresponse
      * @return HttpResponse
      */
-    public final function getResponse() {
+    final public function getResponse() {
         return $this->response;
     }
 

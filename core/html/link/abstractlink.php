@@ -2,8 +2,8 @@
 
 namespace Zippy\Html\Link;
 
-use \Zippy\Html\HtmlComponent;
-use \Zippy\Interfaces\Binding;
+use Zippy\Html\HtmlComponent;
+use Zippy\Interfaces\Binding;
 
 /**
  * Базовый   класс для  компонентов HTML ссылок
@@ -11,7 +11,6 @@ use \Zippy\Interfaces\Binding;
  */
 abstract class AbstractLink extends \Zippy\Html\HtmlContainer
 {
-
     protected $value = null;
     protected $disabled = false;
 
@@ -31,7 +30,7 @@ abstract class AbstractLink extends \Zippy\Html\HtmlContainer
         return $this;
     }
 
-    function getValue() {
+    public function getValue() {
         if ($this->value instanceof Binding) {
             return $this->value->getValue();
         } else {

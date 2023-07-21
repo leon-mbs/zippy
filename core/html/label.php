@@ -2,19 +2,17 @@
 
 namespace Zippy\Html;
 
-use \Zippy\Binding\SimpleBinding;
-use \Zippy\Interfaces\Binding;
- 
+use Zippy\Binding\SimpleBinding;
+use Zippy\Interfaces\Binding;
 
 /**
  *  Компонент  для строчного  тэга типа  SPAN и  т.д.
  *
  */
-class Label extends HtmlComponent  
+class Label extends HtmlComponent
 {
-
     private $value;
- 
+
     private $html = false;
 
     /**
@@ -52,7 +50,7 @@ class Label extends HtmlComponent
         }
     }
 
- 
+
 
     /**
      * Установить  текст
@@ -60,27 +58,27 @@ class Label extends HtmlComponent
     public function setText($text, $html = false) {
         $this->value = $text;
         $this->html = $html;
-        
-      if( \Zippy\WebApplication::$app->getRequest()->isAjaxRequest() ){
-        $js= "$('#{$this->id}').text('{$text}')" ;
-        if ($this->html) {
-            $js= "$('#{$this->id}').html('{$text}')";
-        }        
-          
-          
-          
-          \Zippy\WebApplication::$app->getResponse()->addAjaxResponse($js) ;            
-      }
 
-        
-        
+        if(\Zippy\WebApplication::$app->getRequest()->isAjaxRequest()) {
+            $js= "$('#{$this->id}').text('{$text}')" ;
+            if ($this->html) {
+                $js= "$('#{$this->id}').html('{$text}')";
+            }
+
+
+
+            \Zippy\WebApplication::$app->getResponse()->addAjaxResponse($js) ;
+        }
+
+
+
     }
 
     /**
      * Прочитать  текст
      * @return  string
      */
-    function getText() {
+    public function getText() {
         if ($this->value instanceof Binding) {
             return $this->value->getValue();
         } else {
@@ -88,6 +86,6 @@ class Label extends HtmlComponent
         }
     }
 
-  
+
 
 }

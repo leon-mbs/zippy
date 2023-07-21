@@ -9,7 +9,6 @@ namespace Zippy\Binding;
  */
 class ArrayPropertyBinding extends PropertyBinding
 {
-
     /**
      *  Очистка  привязанного  массива.
      */

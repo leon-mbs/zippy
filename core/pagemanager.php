@@ -2,7 +2,7 @@
 
 namespace Zippy;
 
-use \Zippy\Html\WebPage;
+use Zippy\Html\WebPage;
 
 /**
  * Менеджер  страниц. Содержит состояние объектов классов
@@ -11,8 +11,7 @@ use \Zippy\Html\WebPage;
  */
 class PageManager
 {
-
-    const HISTORY_SIZE = 50;
+    public const HISTORY_SIZE = 50;
 
     private $pages = array();
     private $index = 0;
@@ -26,9 +25,9 @@ class PageManager
      * @return  int номер  страницы
      * @deprecated
      */
-    public final function putPage(WebPage $page) {
+    final public function putPage(WebPage $page) {
         $page->beforeSaveToSession();
-        
+
 
         $this->pages[++$this->index] = ($page);
         if ($this->index > self::HISTORY_SIZE) {
@@ -39,7 +38,7 @@ class PageManager
         if ($prevpage instanceof \Zippy\Html\WebPage) {
 
             if (get_class($prevpage) != get_class($page)) {
-                //  если страница  изменилась запоминаем  
+                //  если страница  изменилась запоминаем
 
                 $this->pchain[] = get_class($page);
             }
@@ -53,7 +52,7 @@ class PageManager
      * @param int  Номер  страницы
      * @param mixed  Версия  страницы
      */
-    public final function updatePage(WebPage $page ) {
+    final public function updatePage(WebPage $page) {
 
         $page->beforeSaveToSession();
         $pname = get_class($page)    ;
@@ -61,7 +60,7 @@ class PageManager
             $this->prevpage = $this->curpage;
             $this->pchain[] = $pname;
         }
-        $this->curpage = $pname    ;    
+        $this->curpage = $pname    ;
         $this->pages[$pname] = $page;
         return $pname;
     }
@@ -71,7 +70,7 @@ class PageManager
      * @param int  Версия  страницы
      * @return  WebPage   страница
      */
-    public final function getPage($number) {
+    final public function getPage($number) {
         if (isset($this->pages[$number])) {
 
             if ($this->pages[$number] instanceof WebPage) {
@@ -96,7 +95,7 @@ class PageManager
      * Возвращает  из сессии последнюю добавленую страницу
      * @return  WebPage  страница
      */
-    public final function getLastPage() {
+    final public function getLastPage() {
         return array_pop($this->pchain);
     }
 
@@ -133,7 +132,7 @@ class PageManager
     }
 
 
-    private function pack($page) {    
+    private function pack($page) {
         return gzcompress(serialize($page));
     }
 

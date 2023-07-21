@@ -8,7 +8,6 @@ namespace Zippy\Html\Link;
  */
 class Anchor extends AbstractLink
 {
-
     private $name;
 
     public function __construct($id, $name = '') {

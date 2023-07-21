@@ -2,11 +2,11 @@
 
 namespace Zippy\Html\DataList;
 
-use \Zippy\Html\HtmlComponent;
-use \Zippy\Interfaces\Paginable;
-use \Zippy\Interfaces\EventReceiver;
-use \Zippy\Event;
-use \Zippy\WebApplication;
+use Zippy\Html\HtmlComponent;
+use Zippy\Interfaces\Paginable;
+use Zippy\Interfaces\EventReceiver;
+use Zippy\Event;
+use Zippy\WebApplication;
 
 /**
  * Класс  вывода  табличных  данных
@@ -20,7 +20,6 @@ use \Zippy\WebApplication;
  */
 class DataView extends AbstractList implements \Zippy\Interfaces\Requestable
 {
-
     private $rowevent = null;
     private $selectedRow = null;
     private $selectedclass = "";
@@ -50,7 +49,7 @@ class DataView extends AbstractList implements \Zippy\Interfaces\Requestable
         $this->lastnumber++;
 
         foreach ($list as $item) {           //$datarow = new DataRow($this->id,$list[0]);
-            $datarow = new DataRow($this->id, $item, $this->lastnumber++ );
+            $datarow = new DataRow($this->id, $item, $this->lastnumber++);
             $this->add($datarow);
             if ($this->rowevent instanceof Event) {
                 $this->rowevent->onEvent($datarow); //вызов  обработчика добавляющего  данные  или   елементы  в  строку
@@ -75,7 +74,7 @@ class DataView extends AbstractList implements \Zippy\Interfaces\Requestable
     /**
      * @see HtmlComponent
      */
-    public final function RenderImpl() {
+    final public function RenderImpl() {
         // $this->UpdateData() ;
 
 
@@ -87,46 +86,46 @@ class DataView extends AbstractList implements \Zippy\Interfaces\Requestable
 
         $ids = array();
         $children = pq('[zippy=' . $this->id . ']  [zippy]');
-            foreach ($children as $child) {
-                $ids[] = pq($child)->attr("zippy");
-            }           
-        
+        foreach ($children as $child) {
+            $ids[] = pq($child)->attr("zippy");
+        }
+
         $rows = $this->getDataRows();
         $html_ = $rowtag->htmlOuter();
         $html = "";
         foreach ($rows as $row) {
             $i = $row->getNumber() ;
             $id = $this->id .'_'.$i;
-            
+
             $rep = "zippy=\"{$id}\" id=\"{$id}\" ";
-            $h = str_replace("zippy=\"{$this->id}\"",$rep,$html_) ;
-            $h = str_replace("zippy='{$this->id}'",$rep,$h) ;
-            
-            foreach($ids as $cid){
-               $id = $cid .'_'.$i;
-               $rep = "zippy=\"{$id}\" id=\"{$id}\" ";
-               $h = str_replace("zippy=\"{$cid}\"",$rep,$h) ;
-               $h = str_replace("zippy='{$cid}'",$rep,$h) ;
-             
+            $h = str_replace("zippy=\"{$this->id}\"", $rep, $html_) ;
+            $h = str_replace("zippy='{$this->id}'", $rep, $h) ;
+
+            foreach($ids as $cid) {
+                $id = $cid .'_'.$i;
+                $rep = "zippy=\"{$id}\" id=\"{$id}\" ";
+                $h = str_replace("zippy=\"{$cid}\"", $rep, $h) ;
+                $h = str_replace("zippy='{$cid}'", $rep, $h) ;
+
             }
             if ($this->cellclickevent instanceof \Zippy\Event) {
-                $url = $this->getURLNode() . ':' . ($i  );
+                $url = $this->getURLNode() . ':' . ($i);
                 $onclick = "window.location='{$url}'";
-           
+
                 $style = "cursor:pointer; ";
-                $h = str_replace("<tr","<tr style=\"{$style}\" onclick=\"{$onclick}\" ",$h) ;
-            }        
+                $h = str_replace("<tr", "<tr style=\"{$style}\" onclick=\"{$onclick}\" ", $h) ;
+            }
             $html .= $h;
-              
+
         }
         $rowtag->replaceWith($html);
-         
-        
-      
+
+
+
         $p = $this->getPageOwner() ;
         if($p instanceof \Zippy\Html\WebPage) {
-           // $p->updateTag() ;
-   
+            // $p->updateTag() ;
+
         }
 
         foreach ($this->getChildComponents() as $component) {
@@ -168,11 +167,11 @@ class DataView extends AbstractList implements \Zippy\Interfaces\Requestable
         $this->selectedclass = $selectedclass;
     }
 
-    public final function setCellClickEvent(\Zippy\Interfaces\EventReceiver $receiver, $handler) {
+    final public function setCellClickEvent(\Zippy\Interfaces\EventReceiver $receiver, $handler) {
         $this->cellclickevent = new \Zippy\Event($receiver, $handler);
     }
 
-    public final function RequestHandle() {
+    final public function RequestHandle() {
         parent::RequestHandle();
 
         $p = WebApplication::$app->getRequest()->request_params[$this->id];
@@ -186,7 +185,7 @@ class DataView extends AbstractList implements \Zippy\Interfaces\Requestable
                 }
             }
 
-            $this->cellclickevent->onEvent($srow );
+            $this->cellclickevent->onEvent($srow);
 
         }
 

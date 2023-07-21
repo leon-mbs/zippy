@@ -2,20 +2,19 @@
 
 namespace Zippy\Html\Form;
 
-use \Zippy\WebApplication;
-use \Zippy\Interfaces\Binding;
-use \Zippy\Interfaces\ChangeListener;
-use \Zippy\Interfaces\Requestable;
-use \Zippy\Interfaces\AjaxRender;
-use \Zippy\Interfaces\EventReceiver;
-use \Zippy\Event;
+use Zippy\WebApplication;
+use Zippy\Interfaces\Binding;
+use Zippy\Interfaces\ChangeListener;
+use Zippy\Interfaces\Requestable;
+use Zippy\Interfaces\AjaxRender;
+use Zippy\Interfaces\EventReceiver;
+use Zippy\Event;
 
 /**
  * Компонент  тэга  &lt;select&gt;
  */
 class DropDownChoice extends HtmlFormDataElement implements ChangeListener, Requestable, AjaxRender
 {
-
     private $optionlist;
     private $event;
     private $defvalue;
@@ -75,13 +74,15 @@ class DropDownChoice extends HtmlFormDataElement implements ChangeListener, Requ
     private function setResponseData() {
 
         $list = $this->optionlist instanceof Binding ? $this->optionlist->getValue() : $this->optionlist;
-        if(is_array($list)==false) $list = array();
+        if(is_array($list)==false) {
+            $list = array();
+        }
         $tag = $this->getTag();
         $options = "";
         foreach ($list as $key => $value) {
             // if($item instanceof SelectOption)
             $option = "<option value=\"{$key}\" ";
- 
+
             if ($key == $this->getValue()) {
                 $option .= " selected ";
             }
@@ -108,9 +109,11 @@ class DropDownChoice extends HtmlFormDataElement implements ChangeListener, Requ
      * @see SubmitDataRequest
      */
     public function getRequestData() {
-        if(!isset($_REQUEST[$this->id])) return;
-        $this->setValue($_REQUEST[$this->id] );    
-        
+        if(!isset($_REQUEST[$this->id])) {
+            return;
+        }
+        $this->setValue($_REQUEST[$this->id]);
+
     }
 
     /**
@@ -133,18 +136,18 @@ class DropDownChoice extends HtmlFormDataElement implements ChangeListener, Requ
         }
         return $js;
     }
-   
+
     public function setValue($value) {
-        
-       parent::setValue($value) ;
-       
-       if( \Zippy\WebApplication::$app->getRequest()->isAjaxRequest() ){
-          $js= "$('#{$this->id}').val('{$value}')" ;
-          \Zippy\WebApplication::$app->getResponse()->addAjaxResponse($js) ;            
-       }          
-       
+
+        parent::setValue($value) ;
+
+        if(\Zippy\WebApplication::$app->getRequest()->isAjaxRequest()) {
+            $js= "$('#{$this->id}').val('{$value}')" ;
+            \Zippy\WebApplication::$app->getResponse()->addAjaxResponse($js) ;
+        }
+
     }
-   
+
     /**
      * @see  ChangeListener
      */
@@ -172,18 +175,18 @@ class DropDownChoice extends HtmlFormDataElement implements ChangeListener, Requ
             $this->optionlist = $optionlist;
             $this->setValue(-1);
         }
-        
-        if( \Zippy\WebApplication::$app->getRequest()->isAjaxRequest() ){
-           $list = $this->optionlist instanceof Binding ? $this->optionlist->getValue() : $this->optionlist;
 
-           $js = "$('#{$this->id}').empty();";
-           foreach ($list as $key => $value) {
-              $js .= "$('#{$this->id}').append('<option value=\"{$key}\">{$value}</option>');";
-           }
-          
-           \Zippy\WebApplication::$app->getResponse()->addAjaxResponse($js) ;            
-        }           
-        
+        if(\Zippy\WebApplication::$app->getRequest()->isAjaxRequest()) {
+            $list = $this->optionlist instanceof Binding ? $this->optionlist->getValue() : $this->optionlist;
+
+            $js = "$('#{$this->id}').empty();";
+            foreach ($list as $key => $value) {
+                $js .= "$('#{$this->id}').append('<option value=\"{$key}\">{$value}</option>');";
+            }
+
+            \Zippy\WebApplication::$app->getResponse()->addAjaxResponse($js) ;
+        }
+
     }
 
     /**
@@ -232,12 +235,12 @@ class DropDownChoice extends HtmlFormDataElement implements ChangeListener, Requ
         $k = array_keys($list);
         $this->setValue($k[0]);
     }
-    
-    
+
+
     public function getIntValue() {
-        
+
         return  intval($this->getValue());
-        
-    }    
-    
+
+    }
+
 }

@@ -7,7 +7,6 @@ namespace Zippy\Html;
  */
 abstract class CustomComponent extends HtmlComponent
 {
-
     /**
      * @see  HtmlComponent
      */
@@ -27,5 +26,5 @@ abstract class CustomComponent extends HtmlComponent
      *
      * @return string
      */
-    public abstract function getContent($attributes);
+    abstract public function getContent($attributes);
 }

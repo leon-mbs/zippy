@@ -2,35 +2,34 @@
 
 namespace Zippy\Html\Form;
 
-use \Zippy\WebApplication;
-use \Zippy\Event;
-use \Zippy\Interfaces\ChangeListener;
-use \Zippy\Interfaces\EventReceiver;
-use \Zippy\Interfaces\Requestable;
+use Zippy\WebApplication;
+use Zippy\Event;
+use Zippy\Interfaces\ChangeListener;
+use Zippy\Interfaces\EventReceiver;
+use Zippy\Interfaces\Requestable;
 
 /**
- * Компонент  тэга  &lt;input type=&quot;time&quot;&gt; 
- 
+ * Компонент  тэга  &lt;input type=&quot;time&quot;&gt;
+
  */
 class Time extends TextInput implements Requestable, ChangeListener
 {
-
     private $event;
-     
 
-    public function __construct($id, $value = null ) {
+
+    public function __construct($id, $value = null) {
         parent::__construct($id);
         $this->setDateTime($value);
-        
+
     }
- 
+
 
     public function RenderImpl() {
         TextInput::RenderImpl();
- 
-        $this->setAttribute('type','time') ;
-    
-        
+
+        $this->setAttribute('type', 'time') ;
+
+
     }
 
     /**
@@ -38,11 +37,11 @@ class Time extends TextInput implements Requestable, ChangeListener
      * $date - дата к  которой время
      */
     public function getDateTime($date) {
-        
+
         $d = date('Y-m-d', $date);
         return strtotime($d . ' '.$this->getText());
- 
-         
+
+
     }
 
     /**

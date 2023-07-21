@@ -2,16 +2,15 @@
 
 namespace Zippy\Html\Form;
 
-use \Zippy\Html\HtmlComponent;
-use \Zippy\Interfaces\SubmitDataRequest;
-use \Zippy\Interfaces\Binding;
+use Zippy\Html\HtmlComponent;
+use Zippy\Interfaces\SubmitDataRequest;
+use Zippy\Interfaces\Binding;
 
 /**
  * Базовый   класс для компонентов, способных  принимать данные  с  формы
  */
 abstract class HtmlFormDataElement extends HtmlComponent implements SubmitDataRequest
 {
-
     protected $value = null;
 
     /**
@@ -38,4 +37,3 @@ abstract class HtmlFormDataElement extends HtmlComponent implements SubmitDataRe
     }
 
 }
-

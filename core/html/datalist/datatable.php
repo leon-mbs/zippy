@@ -2,9 +2,9 @@
 
 namespace Zippy\Html\DataList;
 
-use \Zippy\Html\HtmlComponent;
-use \Zippy\Interfaces\Requestable;
-use \Zippy\WebApplication;
+use Zippy\Html\HtmlComponent;
+use Zippy\Interfaces\Requestable;
+use Zippy\WebApplication;
 
 /**
  * Класс  вывода  табличных данных. Использует  собственное  формирование строк  и  столбцов
@@ -13,7 +13,6 @@ use \Zippy\WebApplication;
  */
 class DataTable extends AbstractList implements Requestable
 {
-
     private $columns = array();
     private $datalist = array();
     private $cellevent = null;
@@ -22,7 +21,9 @@ class DataTable extends AbstractList implements Requestable
     private $selectedclass = "";
     private $maxbuttons = 10;
     private $firstButton = 1;
-    private $header = true, $paginator = false, $useajax = false;
+    private $header = true;
+    private $paginator = false;
+    private $useajax = false;
 
     public function __construct($id, $DataSource, $header = true, $paginator = false, $useajax = false) {
         AbstractList::__construct($id, $DataSource);
@@ -34,7 +35,7 @@ class DataTable extends AbstractList implements Requestable
     /**
      * @see HtmlComponent
      */
-    public final function RenderImpl() {
+    final public function RenderImpl() {
         $tag = $this->getTag('table');
 
         pq($tag)->append($this->renderHeader());
@@ -45,7 +46,7 @@ class DataTable extends AbstractList implements Requestable
     /**
      * Добавляет  столбец  к  таблице.
      */
-    public final function AddColumn(Column $column) {
+    final public function AddColumn(Column $column) {
         $this->columns[$column->fieldname] = $column;
     }
 
@@ -61,7 +62,7 @@ class DataTable extends AbstractList implements Requestable
     /**
      * @see  Requestable
      */
-    public final function RequestHandle() {
+    final public function RequestHandle() {
         $p = WebApplication::$app->getRequest()->request_params[$this->id];
         if ($p[0] == 'sort') {
             $this->sortf = $p[1];
@@ -76,10 +77,10 @@ class DataTable extends AbstractList implements Requestable
         if ($p[0] == 'cellclick' && $this->cellclickevent instanceof \Zippy\Event) {
             $items = array();
             foreach($this->datalist as $it) {
-               $items[$it->getID()]=$it;    
+                $items[$it->getID()]=$it;
             }
-            
-           // $items = array_values($this->datalist);
+
+            // $items = array_values($this->datalist);
             $this->cellclickevent->onEvent($this, array('dataitem' => $items[$p[2]  ], 'field' => $p[1], 'rownumber' => $p[2]));
             $this->setSelectedrow($p[2]);
         }
@@ -92,14 +93,14 @@ class DataTable extends AbstractList implements Requestable
     /**
      * Устанавливает  обработчик на  событие  прорисовки  ячейки.
      */
-    public final function setCellDrawEvent(\Zippy\Interfaces\EventReceiver $receiver, $handler) {
+    final public function setCellDrawEvent(\Zippy\Interfaces\EventReceiver $receiver, $handler) {
         $this->cellevent = new \Zippy\Event($receiver, $handler);
     }
 
     /**
      * Устанавливает  обработчик на  click ячейки.
      */
-    public final function setCellClickEvent(\Zippy\Interfaces\EventReceiver $receiver, $handler) {
+    final public function setCellClickEvent(\Zippy\Interfaces\EventReceiver $receiver, $handler) {
         $this->cellclickevent = new \Zippy\Event($receiver, $handler);
     }
 
@@ -324,7 +325,6 @@ class DataTable extends AbstractList implements Requestable
 // класс  параметров  столбца
 class Column
 {
-
     public function __construct($fieldname, $title, $sortable = false, $visible = true, $clickable = false, $headerclass = "", $rowclass = "", $defaultdata = "") {
         $this->fieldname = $fieldname;
         $this->visible = $visible;
@@ -353,4 +353,3 @@ class Column
  * @todo  изображение
  *
  */
-

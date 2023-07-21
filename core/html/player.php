@@ -7,7 +7,6 @@ namespace Zippy\Html;
  */
 class Player extends HtmlComponent
 {
-
     public $sources;
     public $src;
 
@@ -36,4 +35,3 @@ class Player extends HtmlComponent
     }
 
 }
-

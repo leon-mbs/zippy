@@ -2,21 +2,22 @@
 
 namespace Zippy\Html\Form;
 
-use \Zippy\WebApplication;
-use \Zippy\Binding\PropertyBinding;
-use \Zippy\Interfaces\Binding;
-use \Zippy\Interfaces\ChangeListener;
-use \Zippy\Interfaces\Requestable;
-use \Zippy\Interfaces\EventReceiver;
-use \Zippy\Event;
+use Zippy\WebApplication;
+use Zippy\Binding\PropertyBinding;
+use Zippy\Interfaces\Binding;
+use Zippy\Interfaces\ChangeListener;
+use Zippy\Interfaces\Requestable;
+use Zippy\Interfaces\EventReceiver;
+use Zippy\Event;
 
 /**
  * Компонент  тэга  &lt;input type=&quot;radio&quot;&gt;
  */
 class RadioButton extends HtmlFormDataElement implements ChangeListener, Requestable
 {
-
-    private $itemvalue, $event, $groupname;
+    private $itemvalue;
+    private $event;
+    private $groupname;
 
     /**
      * Конструктор
@@ -66,8 +67,10 @@ class RadioButton extends HtmlFormDataElement implements ChangeListener, Request
      * @see SubmitDataRequest
      */
     public function getRequestData() {
-        if(!isset($_REQUEST[$this->groupname])) return;
-        
+        if(!isset($_REQUEST[$this->groupname])) {
+            return;
+        }
+
         $this->setValue($_REQUEST[$this->groupname]);
     }
 

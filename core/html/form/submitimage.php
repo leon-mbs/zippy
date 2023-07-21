@@ -2,19 +2,18 @@
 
 namespace Zippy\Html\Form;
 
-use \Zippy\WebApplication;
-use \Zippy\Interfaces\ClickListener;
-use \Zippy\Interfaces\Requestable;
-use \Zippy\Event;
-use \Zippy\Interfaces\EventReceiver;
-use \Zippy\Html\HtmlComponent;
+use Zippy\WebApplication;
+use Zippy\Interfaces\ClickListener;
+use Zippy\Interfaces\Requestable;
+use Zippy\Event;
+use Zippy\Interfaces\EventReceiver;
+use Zippy\Html\HtmlComponent;
 
 /**
  * Компонент  тэга  &lt;input type=&quot;image&quot;&gt; для отправки  формы
  */
 class SubmitImage extends HtmlComponent implements ClickListener, Requestable
 {
-
     private $event;
 
     /**

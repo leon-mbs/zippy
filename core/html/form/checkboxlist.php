@@ -7,7 +7,6 @@ namespace Zippy\Html\Form;
  */
 class CheckBoxList extends HtmlFormDataElement
 {
-
     public $delimiter = " ";
     public $list = array();
     protected $event;

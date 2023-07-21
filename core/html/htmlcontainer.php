@@ -2,9 +2,9 @@
 
 namespace Zippy\Html;
 
-use \Zippy\WebApplication;
-use \Zippy\Exception as ZE;
-use \Zippy\Interfaces\Requestable;
+use Zippy\WebApplication;
+use Zippy\Exception as ZE;
+use Zippy\Interfaces\Requestable;
 
 /**
  *  Базовый компонент контейнера  для  других  компонентов
@@ -12,7 +12,6 @@ use \Zippy\Interfaces\Requestable;
  */
 abstract class HtmlContainer extends HtmlComponent implements Requestable
 {
-
     protected $components = array();
 
     /**
@@ -84,7 +83,7 @@ abstract class HtmlContainer extends HtmlComponent implements Requestable
      * @param string  ID компонента
      * @return HtmlComponent         *
      */
-    public final function __get($id) {
+    final public function __get($id) {
 
         if (!isset($this->components[$id])) {
             $m = sprintf(ERROR_NOT_FOUND_CHILD, get_class($this), $this->id, $id);
@@ -155,16 +154,16 @@ abstract class HtmlContainer extends HtmlComponent implements Requestable
         if ($child != false && ($this->components[$child] ??null) instanceof Requestable) {
             $this->components[$child]->RequestHandle();
         } else {
-            if($this instanceof \Zippy\Html\WebPage || $this instanceof \Zippy\Html\PageFragment   )  { //ищем метод
-                 if(method_exists($this,$child)) {
-                    $this->RequestMethod($child); //webpage methos 
-                    
-                 }
+            if($this instanceof \Zippy\Html\WebPage || $this instanceof \Zippy\Html\PageFragment) { //ищем метод
+                if(method_exists($this, $child)) {
+                    $this->RequestMethod($child); //webpage methos
+
+                }
             }
         }
-        
-        
-        
+
+
+
     }
 
     /**

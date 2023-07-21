@@ -2,19 +2,18 @@
 
 namespace Zippy\Html\Form;
 
-use \Zippy\WebApplication;
-use \Zippy\Html\HtmlContainer;
-use \Zippy\Interfaces\SubmitDataRequest;
-use \Zippy\Interfaces\Requestable;
-use \Zippy\Interfaces\EventReceiver;
-use \Zippy\Event;
+use Zippy\WebApplication;
+use Zippy\Html\HtmlContainer;
+use Zippy\Interfaces\SubmitDataRequest;
+use Zippy\Interfaces\Requestable;
+use Zippy\Interfaces\EventReceiver;
+use Zippy\Event;
 
 /**
  * Класс  компонента  HTML формы
  */
 class Form extends HtmlContainer
 {
-
     private $event;
 
     /**
@@ -40,8 +39,8 @@ class Form extends HtmlContainer
         $this->setAttribute("name", $this->id);
 
         $url = substr($url, strpos($url, 'index.php?q='));
-        $url = str_replace('index.php?q=','',$url) ;
-        
+        $url = str_replace('index.php?q=', '', $url) ;
+
         $HtmlTag = $this->getTag('form');
         $HtmlTag->append("<input type=\"hidden\" name=\"q\" id=\"{$this->id}_q\" value=\"" . $url . "::" . $this->id . "\" >");
         $HtmlTag->append("<input type=\"hidden\" name=\"{$this->id}_q\" value=\"\" >");

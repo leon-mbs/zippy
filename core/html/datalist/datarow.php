@@ -2,33 +2,33 @@
 
 namespace Zippy\Html\DataList;
 
-use \Zippy\Html\HtmlComponent;
-use \Zippy\Html\HtmlContainer;
-use \Zippy\Interfaces\DataItem;
-use \Zippy\Html\Form\RadioButton;
-use \Zippy\Exception as ZE;
+use Zippy\Html\HtmlComponent;
+use Zippy\Html\HtmlContainer;
+use Zippy\Interfaces\DataItem;
+use Zippy\Html\Form\RadioButton;
+use Zippy\Exception as ZE;
 
 /**
  * Класс  строки табличных  данных
  */
 class DataRow extends HtmlContainer
 {
-
-    private $number,    $dataitem = null;
+    private $number;
+    private $dataitem = null;
 
     /**
      *  Конструктор
      * @param DataItem Елемент данных  отображаемый  строкой  таблицы
      * @param mixed Номер строки
      */
-    public function __construct($id, DataItem $dataitem, $number  ) {
-    
-         $this->number = $number;
+    public function __construct($id, DataItem $dataitem, $number) {
+
+        $this->number = $number;
         HtmlComponent::__construct($id . "_" . $this->number);
         $this->dataitem = $dataitem;
-        
-        
-        
+
+
+
     }
 
     /**
@@ -69,7 +69,7 @@ class DataRow extends HtmlContainer
         if (isset($this->components[$component->id]) || isset($this->components[$component->id . ":" . $this->number])) {
             //   $id = substr($component->id,0,strpos($component->id,':'));
             //   $pid = substr($this->id,0,strpos($this->id,':'));
-            throw new ZE(sprintf(ERROR_DATAROW_COMPONENT_EXISTS, $component->id ));
+            throw new ZE(sprintf(ERROR_DATAROW_COMPONENT_EXISTS, $component->id));
         }
         $this->components[$component->id] = $component;
         $component->setOwner($this);
@@ -103,16 +103,16 @@ class DataRow extends HtmlContainer
         }
     }
 
-  
-   /**
-     * уникальный  идентификатор  строки
-     * @return  int
-     */
+
+    /**
+      * уникальный  идентификатор  строки
+      * @return  int
+      */
     public function getNumber() {
         return $this->number;
     }
 
-  
+
 
     /**
      * Возвращает дочерний элемент  по  ID

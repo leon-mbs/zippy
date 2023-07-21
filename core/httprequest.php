@@ -7,13 +7,12 @@ namespace Zippy;
  */
 class HttpRequest
 {
+    public const QUERY_HOME    = 0;
+    public const QUERY_EVENT   = 1;
+    public const QUERY_PAGE    = 2;
+    public const QUERY_SEF     = 3;
+    public const QUERY_INVALID = 4;
 
-    const QUERY_HOME    = 0;
-    const QUERY_EVENT   = 1;
-    const QUERY_PAGE    = 2;
-    const QUERY_SEF     = 3;
-    const QUERY_INVALID = 4;
-     
 
 
     private $request;
@@ -22,7 +21,7 @@ class HttpRequest
     public $request_page;
     public $request_page_arg = array();
     public $uri;
- 
+
     public $querytype = self::QUERY_INVALID;
     private $pageindex = 0;
 
@@ -32,7 +31,7 @@ class HttpRequest
      */
     public function __construct() {
         $uri = $_SERVER["REQUEST_URI"];
-          
+
 
         // основной  тип URI генерируемый  компонентами  фреймворка
         if (isset($_REQUEST["q"])) {
@@ -59,8 +58,8 @@ class HttpRequest
 
             return;
         }
-        
-      // URI формируемый  RedirectLink с  параметром  bookmarkable и кодированием
+
+        // URI формируемый  RedirectLink с  параметром  bookmarkable и кодированием
         if (isset($_REQUEST["r"])) {
             $this->querytype = self::QUERY_PAGE;
             $p = unserialize(trim(base64_decode($_REQUEST["r"])));
@@ -69,7 +68,7 @@ class HttpRequest
             $this->request_page_arg = $p[1];
             return;
         }
-        // URI с  именем  класса  страницы и параметрами 
+        // URI с  именем  класса  страницы и параметрами
         //пример  - переход на  страницу с  классом  news : /index.php?p=mycms/news&arg=2/4
 
         if (isset($_REQUEST["p"])) {
@@ -78,7 +77,7 @@ class HttpRequest
             $this->request_page_arg = isset($_REQUEST["arg"]) ? explode('/', trim($_REQUEST["arg"], '/')) : array();
             return;
         }
-        // URI формируемый  BookmarkableLink (в частности, ЧПУ) 
+        // URI формируемый  BookmarkableLink (в частности, ЧПУ)
 
         if (strlen($uri) > 1 && strpos($uri, '/?') === false && strpos($uri, '/index.php') === false) {
             $p = strpos($uri, '?');
@@ -105,7 +104,7 @@ class HttpRequest
      * @return int
      */
     public function getRequestIndex() {
-        return  str_replace("/","\\",$this->pageindex);
+        return  str_replace("/", "\\", $this->pageindex);
     }
 
     /**
@@ -124,6 +123,6 @@ class HttpRequest
         return isset($_REQUEST["binary"]);
     }
 
-   
+
 
 }

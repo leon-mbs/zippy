@@ -2,12 +2,12 @@
 
 namespace Zippy\Html\Link;
 
-use \Zippy\WebApplication;
-use \Zippy\Interfaces\ClickListener;
-use \Zippy\Interfaces\EventReceiver;
+use Zippy\WebApplication;
+use Zippy\Interfaces\ClickListener;
+use Zippy\Interfaces\EventReceiver;
 
-use \Zippy\Interfaces\Requestable;
-use \Zippy\Event;
+use Zippy\Interfaces\Requestable;
+use Zippy\Event;
 
 /**
  * Ссылка  для ортировки заголовков  таблиц
@@ -76,7 +76,7 @@ class SortLink extends AbstractLink implements ClickListener, Requestable
                 $HtmlTag->text($content);
             }
         }
-     
+
 
     }
 

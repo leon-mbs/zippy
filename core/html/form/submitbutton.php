@@ -2,19 +2,18 @@
 
 namespace Zippy\Html\Form;
 
-use \Zippy\WebApplication;
-use \Zippy\Event;
-use \Zippy\Html\HtmlComponent;
-use \Zippy\Interfaces\ClickListener;
-use \Zippy\Interfaces\Requestable;
-use \Zippy\Interfaces\EventReceiver;
+use Zippy\WebApplication;
+use Zippy\Event;
+use Zippy\Html\HtmlComponent;
+use Zippy\Interfaces\ClickListener;
+use Zippy\Interfaces\Requestable;
+use Zippy\Interfaces\EventReceiver;
 
 /**
  * Компонент  тэга  &lt;input type=&quot;submit&quot;&gt; для отправки  формы
  */
 class SubmitButton extends HtmlComponent implements ClickListener, Requestable
 {
-
     private $event;
 
     public function __construct($id) {
@@ -75,4 +74,3 @@ class SubmitButton extends HtmlComponent implements ClickListener, Requestable
 /**
  * @todo возмоджность  вставки  в  оnclick  обработчика  отмены
  */
-

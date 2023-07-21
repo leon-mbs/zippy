@@ -2,17 +2,16 @@
 
 namespace Zippy\Html\Form;
 
-use \Zippy\WebApplication;
-use \Zippy\Interfaces\Requestable;
-use \Zippy\Event;
-use \Zippy\Interfaces\EventReceiver;
+use Zippy\WebApplication;
+use Zippy\Interfaces\Requestable;
+use Zippy\Event;
+use Zippy\Interfaces\EventReceiver;
 
 /**
  * Компонент  тэга  &lt;input type=&quot;text&quot;&gt; с  автозавершением
  */
 class AutocompleteTextInput extends TextInput implements Requestable
 {
-
     public $minChars = 2;
     public $timeout = 100;
     private $key = 0;
@@ -156,8 +155,10 @@ class AutocompleteTextInput extends TextInput implements Requestable
      * @see SubmitDataRequest
      */
     public function getRequestData() {
-        if(!isset($_REQUEST[$this->id])) return;
-        
+        if(!isset($_REQUEST[$this->id])) {
+            return;
+        }
+
         $this->setValue($_REQUEST[$this->id]);
         $this->key = $_REQUEST[$this->id . "_id"];
 

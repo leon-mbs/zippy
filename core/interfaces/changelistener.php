@@ -8,7 +8,6 @@ namespace Zippy\Interfaces;
  */
 interface ChangeListener
 {
-
     /**
      * Устанавливает обработчик  события
      * @param mixed  Объект

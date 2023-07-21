@@ -2,15 +2,14 @@
 
 namespace Zippy\Html\DataList;
 
-use \Zippy\Interfaces\DataSource;
-use \Zippy\Interfaces\Binding;
+use Zippy\Interfaces\DataSource;
+use Zippy\Interfaces\Binding;
 
 /**
  * Класс  провайдера данных из  массива
  */
 class ArrayDataSource implements DataSource
 {
-
     private $data;
 
     /**
@@ -55,21 +54,23 @@ class ArrayDataSource implements DataSource
         $list = $this->getArray();
         if ($sortfield != null) {
 
-            uasort($list, function ($a, $b) use ($sortfield, $asc) {
-                if ($asc == 'desc') {
-                    if (is_numeric($a->{$sortfield}) && is_numeric($a->{$sortfield})) {
-                        return $b->{$sortfield} > $a->{$sortfield};
+            uasort(
+                $list,
+                function ($a, $b) use ($sortfield, $asc) {
+                    if ($asc == 'desc') {
+                        if (is_numeric($a->{$sortfield}) && is_numeric($a->{$sortfield})) {
+                            return $b->{$sortfield} > $a->{$sortfield};
+                        } else {
+                            return strcmp($b->{$sortfield}, $a->{$sortfield});
+                        }
                     } else {
-                        return strcmp($b->{$sortfield}, $a->{$sortfield});
-                    }
-                } else {
-                    if (is_numeric($a->{$sortfield}) && is_numeric($b->{$sortfield})) {
-                        return $a->{$sortfield} > $b->{$sortfield};
-                    } else {
-                        return strcmp($a->{$sortfield}, $b->{$sortfield});
+                        if (is_numeric($a->{$sortfield}) && is_numeric($b->{$sortfield})) {
+                            return $a->{$sortfield} > $b->{$sortfield};
+                        } else {
+                            return strcmp($a->{$sortfield}, $b->{$sortfield});
+                        }
                     }
                 }
-            }
             );
         }
         if ($start >= 0 or $count >= 0) {

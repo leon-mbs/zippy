@@ -8,7 +8,6 @@ namespace Zippy\Interfaces;
  */
 interface ClickListener
 {
-
     /**
      * Устанавливает обработчик  события
      * @param mixed  Объект

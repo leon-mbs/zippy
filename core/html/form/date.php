@@ -2,20 +2,20 @@
 
 namespace Zippy\Html\Form;
 
-use \Zippy\WebApplication;
-use \Zippy\Event;
-use \Zippy\Interfaces\ChangeListener;
-use \Zippy\Interfaces\EventReceiver;
-use \Zippy\Interfaces\Requestable;
+use Zippy\WebApplication;
+use Zippy\Event;
+use Zippy\Interfaces\ChangeListener;
+use Zippy\Interfaces\EventReceiver;
+use Zippy\Interfaces\Requestable;
 
 /**
- * Компонент  тэга  &lt;input type=&quot;date&quot;&gt;  
+ * Компонент  тэга  &lt;input type=&quot;date&quot;&gt;
   */
 class Date extends TextInput implements Requestable, ChangeListener
 {
-
     private $event;
-    private $min=0, $max=0;
+    private $min=0;
+    private $max=0;
 
     public function __construct($id, $value = null, $bgupdate = false) {
         parent::__construct($id);
@@ -36,15 +36,17 @@ class Date extends TextInput implements Requestable, ChangeListener
      * @param mixed $min
      * @param mixed $max
      */
-    public function setMinMax($min, $max  ) {
-        if($min > $max) return;
+    public function setMinMax($min, $max) {
+        if($min > $max) {
+            return;
+        }
         $this->min = $min;
         $this->max = $max;
     }
 
     public function RenderImpl() {
         TextInput::RenderImpl();
-        
+
         /*
         $min='';
         $max='';
@@ -72,21 +74,21 @@ class Date extends TextInput implements Requestable, ChangeListener
                 $url = substr($url, 2 + strpos($url, 'q='));
                 $_BASEURL = WebApplication::$app->getResponse()->getHostUrl();
 
-                $js = "$('#{$this->id}').pickadate( {format: 'yyyy-mm-dd' ,onSet: function() {  
+                $js = "$('#{$this->id}').pickadate( {format: 'yyyy-mm-dd' ,onSet: function() {
                    $('#" . $formid . "_q').attr('value','" . $url . "'); submitForm('{$formid}','{$_BASEURL}/?ajax=true')
                 } }   );";
             }
         }
         WebApplication::$app->getResponse()->addJavaScript($js, true);
         */
-        $this->setAttribute('type','date') ;
+        $this->setAttribute('type', 'date') ;
         if($this->min >0) {
-           $this->setAttribute('min',date('Y-m-d',$this->min)) ;    
+            $this->setAttribute('min', date('Y-m-d', $this->min)) ;
         }
         if($this->max >0) {
-           $this->setAttribute('max',date('Y-m-d',$this->max)) ;    
+            $this->setAttribute('max', date('Y-m-d', $this->max)) ;
         }
-        
+
     }
 
     /**

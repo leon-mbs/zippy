@@ -8,7 +8,6 @@ namespace Zippy\Interfaces;
  */
 interface SubmitDataRequest
 {
-
     /**
      * Получить данные  с  HTTP запроса
      */
@@ -19,4 +18,3 @@ interface SubmitDataRequest
      */
     public function clean();
 }
-

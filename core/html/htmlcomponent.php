@@ -2,10 +2,10 @@
 
 namespace Zippy\Html;
 
-use \Zippy\Interfaces\Binding;
-use \Zippy\Interfaces\EventReceiver;
-use \Zippy\Exception as ZE;
-use \Zippy\WebApplication;
+use Zippy\Interfaces\Binding;
+use Zippy\Interfaces\EventReceiver;
+use Zippy\Exception as ZE;
+use Zippy\WebApplication;
 
 /**
  * Базовый   класс  для   всех HTML  компонентов
@@ -16,7 +16,6 @@ use \Zippy\WebApplication;
  */
 abstract class HtmlComponent
 {
-
     public $id;
     protected $disabled = false;
     protected $visible = true;
@@ -192,7 +191,7 @@ abstract class HtmlComponent
             if (strlen($this->attributes["style"]) > 0) {
                 $attributes['style'] = ($attributes['style'] ??'') . ';  ' . ($this->attributes["style"] ??'');
             } else {
-                $attributes['style'] = str_replace( ($this->attributes["style"] ??''), "", ($attributes['style'] ??''));
+                $attributes['style'] = str_replace(($this->attributes["style"] ??''), "", ($attributes['style'] ??''));
             }
         }
 
@@ -224,12 +223,12 @@ abstract class HtmlComponent
     protected function getTag($tagname = "") {
         $p = $this->getPageOwner() ;
         if($p instanceof \Zippy\Html\WebPage) {
-           // $tag = $p->getLoadedTag($this->id) ;
-           //  if($tag != null) return  $tag;
-            
+            // $tag = $p->getLoadedTag($this->id) ;
+            //  if($tag != null) return  $tag;
+
         }
-     
-     
+
+
         $HtmlTag = pq(strtolower($tagname) . '[zippy="' . $this->id . '"]');
         if (strlen($tagname) > 0 && $HtmlTag->size() == 0) {
             $HtmlTag = pq(strtoupper($tagname) . '[zippy="' . $this->id . '"]');

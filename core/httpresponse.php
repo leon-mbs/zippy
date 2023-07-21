@@ -7,7 +7,6 @@ namespace Zippy;
  */
 class HttpResponse
 {
-
     private $content;
     //  private $ajaxanswer = "";
     public $JSrender = "";
@@ -149,10 +148,10 @@ class HttpResponse
      *  Возвращает для  дочерних елементов базовую  часть  URL с  номером и  версией страницы
      * @return string
      */
-    public final function getBaseUrl() {
+    final public function getBaseUrl() {
         $pagename = get_class(WebApplication::$app->getCurrentPage());
         $pagename = str_replace("\\", "/", $pagename);
-      //  return $this->getHostUrl() . "/index.php?q=p:" . $pagename  ;
+        //  return $this->getHostUrl() . "/index.php?q=p:" . $pagename  ;
         return  "/index.php?q=p:" . $pagename  ;
 
     }
@@ -165,7 +164,7 @@ class HttpResponse
      * @param array массив параметров страницы
      *
      */
-    public final function Redirect($name, $arg1 = null, $arg2 = null, $arg3 = null, $arg4 = null, $arg5 = null) {
+    final public function Redirect($name, $arg1 = null, $arg2 = null, $arg3 = null, $arg4 = null, $arg5 = null) {
         if ($name instanceof \Zippy\Html\WebPage) {
             $name = get_class($name);
         }
@@ -177,7 +176,7 @@ class HttpResponse
         $this->output();
     }
 
-    public final function setContent($content) {
+    final public function setContent($content) {
         $this->content = $content;
     }
 
@@ -185,30 +184,29 @@ class HttpResponse
      *
      * @return string
      */
-    public final function getHostUrl() {
+    final public function getHostUrl() {
         $http = 'http';
         if (isset($_SERVER['HTTPS']) &&  strtolower($_SERVER['HTTPS']) !== 'off') {
-           $http = 'https';
+            $http = 'https';
+        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' || !empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on') {
+            $http = 'https';
+        } elseif(443 == intval($_SERVER['SERVER_PORT'])) {
+            $http = 'https';
         }
-        elseif (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' || !empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on') {
-           $http = 'https';
-        } elseif(443 == intval($_SERVER['SERVER_PORT'] )) {
-           $http = 'https';    
-        }
-        
+
         $url = $http . "://" . $_SERVER["HTTP_HOST"];
         return $url;
     }
 
-    public final function setPageIndex($index) {
+    final public function setPageIndex($index) {
         $this->pageindex = $index;
     }
 
-    public final function setGzip($gzip) {
+    final public function setGzip($gzip) {
         $this->gzip = $gzip;
     }
 
-    public final function isRedirect() {
+    final public function isRedirect() {
         return strlen($this->redirect) > 0;
     }
 

@@ -8,7 +8,6 @@ namespace Zippy\Interfaces;
  */
 interface Binding
 {
-
     /**
      * Получить  данные из  поля  привязанного объекта
      */

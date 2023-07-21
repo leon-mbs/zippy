@@ -2,15 +2,14 @@
 
 namespace Zippy\Html\Form;
 
-use \Zippy\Binding\ArrayPropertyBinding;
-use \Zippy\Interfaces\Binding;
+use Zippy\Binding\ArrayPropertyBinding;
+use Zippy\Interfaces\Binding;
 
 /**
  * Компонент  тэга  &lt;select  multiple=&quot;on&quot; &gt; для загрузки  файла
  */
 class MultipleChoice extends HtmlFormDataElement
 {
-
     private $optionlist;
 
     /**
@@ -18,7 +17,7 @@ class MultipleChoice extends HtmlFormDataElement
      * @param mixed  ID
      * @param mixed  Модель данных
      */
-    public function __construct($id,   $data=array(), $optionlist=array()) {
+    public function __construct($id, $data=array(), $optionlist=array()) {
         parent::__construct($id);
         $this->setValue($data);
         $this->optionlist = $optionlist;

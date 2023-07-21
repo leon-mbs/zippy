@@ -2,20 +2,19 @@
 
 namespace Zippy\Html\Form;
 
-use \Zippy\WebApplication;
-use \Zippy\Exceptions\Exception;
-use \Zippy\Event;
-use \Zippy\Html\HtmlComponent;
-use \Zippy\Interfaces\ClickListener;
-use \Zippy\Interfaces\Requestable;
-use \Zippy\Interfaces\EventReceiver;
+use Zippy\WebApplication;
+use Zippy\Exceptions\Exception;
+use Zippy\Event;
+use Zippy\Html\HtmlComponent;
+use Zippy\Interfaces\ClickListener;
+use Zippy\Interfaces\Requestable;
+use Zippy\Interfaces\EventReceiver;
 
 /**
  * Компонент  тэга  &lt;input type=&quot;button&quot;&gt; для отправки  формы
  */
 class Button extends HtmlComponent implements ClickListener, Requestable
 {
-
     private $event;
 
     /**

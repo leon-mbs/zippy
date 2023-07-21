@@ -2,23 +2,22 @@
 
 namespace Zippy\Html\Form;
 
-use \Zippy\WebApplication;
-use \Zippy\Interfaces\ChangeListener;
-use \Zippy\Interfaces\Requestable;
- 
-use \Zippy\Interfaces\EventReceiver;
-use \Zippy\Event;
+use Zippy\WebApplication;
+use Zippy\Interfaces\ChangeListener;
+use Zippy\Interfaces\Requestable;
+
+use Zippy\Interfaces\EventReceiver;
+use Zippy\Event;
 
 /**
  * Компонент  тэга  &lt;input type=&quot;text&quot;&gt;
  */
-class TextInput extends HtmlFormDataElement implements ChangeListener, Requestable 
+class TextInput extends HtmlFormDataElement implements ChangeListener, Requestable
 {
-
     private $defvalue;
     private $dlist;
     private $event;
-        
+
     /**
      * Конструктор
      * @param mixed  ID
@@ -38,12 +37,12 @@ class TextInput extends HtmlFormDataElement implements ChangeListener, Requestab
     public function getText() {
         return $this->getValue();
     }
-  
-    public  final function getInt() {
+
+    final public function getInt() {
         return  intval(trim($this->getValue()));
     }
 
-    public final function getDouble() {
+    final public function getDouble() {
         return  doubleval(trim($this->getValue()));
     }
 
@@ -53,15 +52,15 @@ class TextInput extends HtmlFormDataElement implements ChangeListener, Requestab
      */
     public function setText($text='') {
         $this->setValue($text);
-        
-        
-      if( \Zippy\WebApplication::$app->getRequest()->isAjaxRequest() ){
-        $js= "$('#{$this->id}').val('{$text}')" ;
- 
-          
-          \Zippy\WebApplication::$app->getResponse()->addAjaxResponse($js) ;            
-      }        
-        
+
+
+        if(\Zippy\WebApplication::$app->getRequest()->isAjaxRequest()) {
+            $js= "$('#{$this->id}').val('{$text}')" ;
+
+
+            \Zippy\WebApplication::$app->getResponse()->addAjaxResponse($js) ;
+        }
+
     }
 
     /**
@@ -73,20 +72,20 @@ class TextInput extends HtmlFormDataElement implements ChangeListener, Requestab
         $this->setResponseData();
         $this->setAttribute("list", null) ;
         $list="";
-        if(is_array(  $this->dlist) && count(  $this->dlist)>0) {
-             $this->setAttribute("list", $this->id.'_list') ;
-             
-             $list =  "  <datalist id=\"".$this->id.'_list'."\">" ;
-             foreach($this->dlist as $option) {
+        if(is_array($this->dlist) && count($this->dlist)>0) {
+            $this->setAttribute("list", $this->id.'_list') ;
+
+            $list =  "  <datalist id=\"".$this->id.'_list'."\">" ;
+            foreach($this->dlist as $option) {
                 $list .=  " <option label='{$option}' value='{$option}'>  ";
-             }
-             $list .=  "  </datalist>"  ;
-             $HtmlTag = $this->getTag();
-             $HtmlTag->after($list);
-            
-             
+            }
+            $list .=  "  </datalist>"  ;
+            $HtmlTag = $this->getTag();
+            $HtmlTag->after($list);
+
+
         }
-        
+
         if ($this->event != null) {
             $formid = $this->getFormOwner()->id;
 
@@ -100,8 +99,8 @@ class TextInput extends HtmlFormDataElement implements ChangeListener, Requestab
                 $_BASEURL = WebApplication::$app->getResponse()->getHostUrl();
                 $this->setAttribute("onblur", "if(beforeZippy('{$this->id}') ==false) return false; $('#" . $formid . "_q').attr('value','" . $url . "'); submitForm('{$formid}','{$_BASEURL}/?ajax=true');");
             }
-        }        
-        
+        }
+
     }
 
     protected function setResponseData() {
@@ -112,14 +111,16 @@ class TextInput extends HtmlFormDataElement implements ChangeListener, Requestab
      * @see SubmitDataRequest
      */
     public function getRequestData() {
-        if(!isset($_REQUEST[$this->id])) return;
+        if(!isset($_REQUEST[$this->id])) {
+            return;
+        }
 
         $this->setValue($_REQUEST[$this->id]);
 
     }
 
 
- 
+
 
     public function clean() {
         $this->setText($this->defvalue);
@@ -127,20 +128,22 @@ class TextInput extends HtmlFormDataElement implements ChangeListener, Requestab
 
     /**
     * выпадающий список
-    * 
+    *
     * @param mixed $list
     */
-    public final function setDataList($list) {
-        if(!is_array($list)) $list = array();
+    final public function setDataList($list) {
+        if(!is_array($list)) {
+            $list = array();
+        }
         $this->dlist  = $list;
-        
+
     }
     public function RequestHandle() {
         $this->OnEvent();
-    }   
-     /**
-     * @see  ChangeListener
-     */
+    }
+    /**
+    * @see  ChangeListener
+    */
     public function onChange(EventReceiver $receiver, $handler, $ajax = false) {
 
         $this->event = new Event($receiver, $handler);
@@ -154,6 +157,6 @@ class TextInput extends HtmlFormDataElement implements ChangeListener, Requestab
         if ($this->event != null) {
             $this->event->onEvent($this);
         }
-    }   
-    
+    }
+
 }

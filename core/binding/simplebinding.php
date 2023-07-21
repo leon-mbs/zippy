@@ -2,7 +2,7 @@
 
 namespace Zippy\Binding;
 
-use \Zippy\Interfaces\Binding;
+use Zippy\Interfaces\Binding;
 
 /**
  * Реализует  простое  связывание данных, содержит  непосредственное  значение без  реальной  привязки
@@ -10,7 +10,6 @@ use \Zippy\Interfaces\Binding;
  */
 class SimpleBinding implements Binding
 {
-
     private $value = "";
 
     /**

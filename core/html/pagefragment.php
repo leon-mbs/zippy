@@ -2,8 +2,8 @@
 
 namespace Zippy\Html;
 
-use \Zippy\Interfaces\EventReceiver;
-use \Zippy\WebApplication;
+use Zippy\Interfaces\EventReceiver;
+use Zippy\WebApplication;
 
 /**
  * Компонент  реализующий  блок  страницы  с  собственным  HTML шаблоном
@@ -15,13 +15,11 @@ use \Zippy\WebApplication;
  */
 abstract class PageFragment extends HtmlContainer implements EventReceiver
 {
-
-
     /**
      * @see  HtmlComponent
      */
     public function Render() {
-        // $template = 
+        // $template =
         $htmltag = $this->getTag();
 
         $template = WebApplication::getApplication()->getTemplate(get_class($this));
@@ -103,21 +101,21 @@ abstract class PageFragment extends HtmlContainer implements EventReceiver
             $page->addAfterRequestEvent($this, 'afterRequestPage');
         }
     }
-    public final function RequestMethod($method){
+    final public function RequestMethod($method) {
         $p =  WebApplication::$app->getRequest()->request_params[$method];
         $post=null;
         if($_SERVER["REQUEST_METHOD"]=='POST') {
-               
-               if(count($_POST)>0) {
-                  $post = $_POST;    
-               }  else {
-                  $post =  file_get_contents('php://input');   
-               }
-        }       
-        $answer = $this->{$method}($p,$post); 
+
+            if(count($_POST)>0) {
+                $post = $_POST;
+            } else {
+                $post =  file_get_contents('php://input');
+            }
+        }
+        $answer = $this->{$method}($p, $post);
         if(strlen($answer)) {
-           WebApplication::$app->getResponse()->addAjaxResponse($answer) ;        
-        } 
-        
+            WebApplication::$app->getResponse()->addAjaxResponse($answer) ;
+        }
+
     }
 }
