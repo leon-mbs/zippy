@@ -13,7 +13,12 @@ fetch(q)
     return response.text();
   })
   .then((data) => {
-   eval(data);
+        try{
+               eval(data);
+        } catch(err) {
+                console.log(err)    
+                console.log(data)    
+        }
   })
    .catch(function (error) {
             console.log('error', error)
@@ -39,7 +44,12 @@ function submitForm(formid, q)
         return response.text();
       })
       .then((data) => {
-       eval(data);
+            try{
+                   eval(data);
+            } catch(err) {
+                    console.log(err)    
+                    console.log(data)    
+            }
       }) 
       .catch(function (error) {
             console.log('error', error)

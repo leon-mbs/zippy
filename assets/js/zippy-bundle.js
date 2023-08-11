@@ -16781,7 +16781,7 @@ fetch(q)
   .then((response) => {
     return response.text();
   })
-  .then((data) => {
+  .then((data) => { 
    eval(data);
   })
    .catch(function (error) {
@@ -16807,7 +16807,7 @@ function submitForm(formid, q)
       .then((response) => {
         return response.text();
       })
-      .then((data) => {
+      .then((data) => {                
        eval(data);
       }) 
       .catch(function (error) {
