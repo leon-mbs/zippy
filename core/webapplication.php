@@ -189,14 +189,11 @@ abstract class WebApplication
             return;
         }
 
-        $renderpage = $this->currentpage;
+         $renderpage = $this->currentpage;
 
-        if ($this->request->isAjaxRequest()) {
-
-            // if (false == $renderpage->renderAjax()) {
+        if ($this->request->isAjaxRequest()  && !$this->currentpage->hasAB()) {
+           // если нет  ajax blocks
             return;
-            //  }
-
         }
 
 
@@ -258,7 +255,7 @@ abstract class WebApplication
         }
 
         $renderpage->Render();
-
+    
 
         if (strlen($renderpage->_title) > 0) {
             pq('title')->text($renderpage->_title);
@@ -282,14 +279,17 @@ abstract class WebApplication
             $m = new \Mustache_Engine();
             $response = $m->render($response, $renderpage->_tvars);
         }
-
+    
         if ($this->request->isAjaxRequest()) {
-            //  \phpQuery::newDocumentHTML($response);
-
-            //  $renderpage->renderAjax(true);
-            return;
+            // если  ajax blocks
+              
+             \phpQuery::newDocumentHTML($response);
+             $renderpage->updateAjaxHTML()  ;
+              
+             return;
+           
         }
-
+     
         $this->response->setContent($response);
     }
 

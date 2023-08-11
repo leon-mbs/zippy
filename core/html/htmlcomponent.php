@@ -63,9 +63,22 @@ abstract class HtmlComponent
      * @param string  Имя  атрибута
      * @param string Значение аттрибута
      */
-    public function setAttribute($name, $value) {
+    public function setAttribute($name, $value=null) {
 
         $this->attributes[$name] = $value;
+        /*
+
+        if(\Zippy\WebApplication::$app->getRequest()->isAjaxRequest()) {
+
+            if(strlen($value) >0) {
+                $js= "$('#{$this->id}').attr('{$name}','{$value}')" ;    
+            } else {
+                $js= "$('#{$this->id}').attr('{$name}',null)" ;    
+            }
+
+            \Zippy\WebApplication::$app->getResponse()->addAjaxResponse($js) ;
+        }        
+         */
     }
 
     /**
@@ -150,6 +163,8 @@ abstract class HtmlComponent
      */
     public function setVisible($visible) {
         $this->visible = $visible;
+
+        
     }
 
     /**
@@ -281,4 +296,13 @@ abstract class HtmlComponent
         return pq('[for="' . $this->id . '"]');
     }
 
+    public function getHTML(){
+        try{
+          $HtmlTag = $this->getTag();
+          return $HtmlTag->htmlOuter() ;          
+        } catch(\Exception $e) {
+            return  null;
+        }
+    }
+    
 }

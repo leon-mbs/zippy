@@ -13,6 +13,7 @@ abstract class AbstractLink extends \Zippy\Html\HtmlContainer
 {
     protected $value = null;
     protected $disabled = false;
+    protected $htmlvalue = false;
 
     public function __construct($id) {
         parent::__construct($id);
@@ -25,8 +26,9 @@ abstract class AbstractLink extends \Zippy\Html\HtmlContainer
      *
      * @param string
      */
-    public function setValue($text) {
+    public function setValue($text,$htmlvalue=false) {
         $this->value = $text;
+        $this->htmlvalue = $htmlvalue;
         return $this;
     }
 
@@ -47,7 +49,12 @@ abstract class AbstractLink extends \Zippy\Html\HtmlContainer
 
         if ($this->value != null && count($children) == 0) {
             $HtmlTag = $this->getTag();
-            $HtmlTag->text($this->getValue());
+            if($this->htmlvalue) {
+              $HtmlTag->html($this->getValue());              
+            }else {
+              $HtmlTag->text($this->getValue());    
+            }
+            
         }
         if ($children->size() == 1 && $this->value != null) {
             $children[0]->attr('src', $this->getValue());

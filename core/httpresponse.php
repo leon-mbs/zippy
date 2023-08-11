@@ -9,6 +9,7 @@ class HttpResponse
 {
     private $content;
     //  private $ajaxanswer = "";
+    public $SSRrender = "";
     public $JSrender = "";
     public $JSrenderDocReady = "";
     private $pageindex;
@@ -37,16 +38,22 @@ class HttpResponse
             return;
         }
 
-        Header("Content-Type: text/html;charset=UTF-8");
         Header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
         Header("Cache-Control: no-store,no-cache, must-revalidate");
         Header("Pragma: no-cache");
         Header("Last-Modified: Mon, 26 Jul 2100 05:00:00 GMT");
 
         if (WebApplication::$app->getRequest()->isAjaxRequest() == true) {
+            $this->content = trim($this->content) ;
+            if(strpos($this->content,"{")===0)  {
+               Header("Content-Type: application/json;charset=UTF-8");
+            }   else {
+               Header("Content-Type: text/javascript;charset=UTF-8");
+            }
             echo $this->content;
             return;
         }
+        Header("Content-Type: text/html;charset=UTF-8");
 
         if (strpos($this->content, "</head>") > 0) {
             $this->content = str_replace("</head>", $this->getJS() . "</head>", $this->content);
@@ -98,20 +105,20 @@ class HttpResponse
      */
     public function addAjaxResponse($js) {
 
-        $this->content .= ($js . "\n");
+        $this->content .= ($js . " \n");
     }
 
     /**
-     * Вставляет  JavaScript  в  конец   выходного  потока
+     * Вставляет  JavaScript  в  конец   выходного  потока страницы
      * @param string  Код  скрипта
      * @param boolean Если  true  - вставка  после  загрузки (onload) документа в  браузер
      */
     public function addJavaScript($js, $docready = false) {
 
         if ($docready === true) {
-            $this->JSrenderDocReady .= ($js . "\n");
+            $this->JSrenderDocReady .= ($js . " \n");
         } else {
-            $this->JSrender .= ($js . "\n");
+            $this->JSrender .= ($js . " \n");
         }
     }
 
@@ -202,6 +209,11 @@ class HttpResponse
         $this->pageindex = $index;
     }
 
+    /**
+    * сжимать данные  для  браузера
+    * 
+    * @param mixed $gzip true false
+    */
     final public function setGzip($gzip) {
         $this->gzip = $gzip;
     }

@@ -33,11 +33,7 @@ class Label extends HtmlComponent
      */
     public function RenderImpl() {
 
-
-        if (strlen($this->ajaxvalue ?? "") > 0) {
-            \Zippy\WebApplication::$app->getResponse()->addJavaScript($this->ajaxvalue, true);
-            return;
-        }
+  
         if ($this->getText() === null) {
             return;
         }
