@@ -305,4 +305,11 @@ abstract class HtmlComponent
         }
     }
     
+    
+    public  function show(){
+        $this->visible = true;
+    }
+    public  function hide(){
+        $this->visible = false;
+    }    
 }
