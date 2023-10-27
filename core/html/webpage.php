@@ -22,16 +22,8 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
     private $_ajax;
     private $_ankor = '';
     public $_tvars = array();  //переменные  для  шаблонизатора Mustache
-    protected $_ajaxblocks = [];  //список для  серверного ренеринга  при фофч  pfghjct
-    //  public $zarr  = array();
-
-    /**
-     * Конструктор
-     *
-     */
 
     public function __construct() {
-
 
     }
 
@@ -42,7 +34,7 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
      * @see WebApplication
      */
     public function RequestHandle() {
-        $this->_ajaxblock = [];
+
         $this->beforeRequest();
 
         parent::RequestHandle();
@@ -155,23 +147,8 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
         WebApplication::$app->addJavaScript(" window._baseurl= '{$_baseurl}'")  ;
 
     }
-    /*
-    public function getLoadedTag($id){
-        if(isset($this->zarr[$id]))  return  pq($this->zarr[$id] );
-        else return null;
-    }
-
-    public function updateTag(){
-        $this->zarr = array();
-
-        $z = pq('[zippy]') ;
-
-        foreach($z->elements as $o){
-            $a = "".$o->getAttribute('zippy');
-            $this->zarr[$a] =  $o ;
-        }
-    }
-    */
+ 
+ 
     /**
      * Добавляет  обработчик  на  событие  перед  обработкой  страницей  HTTP запроса
      * @param  $obj  Объект  регистрирующий  свою  функцию как   callback
@@ -277,54 +254,8 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
         }
     }
     
-    /**
-    * список  для ajax рендеринга контейнеров
-    * производится  рендеринг щаблона
-    * 
-    * @param mixed $a
-    */
-    final public function updateAjaXBlocks($a) {
-        $this->_ajaxblock = $a;
-    
-    }
-    /**
-    * рендеринг блоков
-    * 
-    */
-    final public function updateAjaxHTML() {
-         if($this->hasAB()) {
-            
-            foreach($this->_ajaxblock as $id) {
-                $c = $this->getComponent($id,true) ;
-                if($c ==null){
-                    continue;
-                }
-                $html = $c->getHTML()  ;
-                if($html == null){
-                    continue;
-                }
-                $html = str_replace("'","`",$html)  ;
-             //   $b = base64_encode($html) ;
-                $b = json_encode($html, JSON_UNESCAPED_UNICODE);
-                
-           //     $js  = "var hh = JSON.parse('{$b}')  ";
-                $js .= "$('#{$id}').replaceWith({$b})";
-            //    $js .= "$('#{$id}').replaceWith('{$html}')";
-
-             //  $js= "console.log('{$b}' )";
-                
-                $this->addAjaxResponse($js)   ;
-                
-            }
-            
-        }       
-    }
-    /**
-    * есть список  блоков для  AJAX рендеринга
-    * 
-    */
-    final public function hasAB() {
-       return count($this->_ajaxblock);
-    }
+ 
+ 
+   
     
 }

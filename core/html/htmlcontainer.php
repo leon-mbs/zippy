@@ -154,8 +154,8 @@ abstract class HtmlContainer extends HtmlComponent implements Requestable
         if ($child != false && ($this->components[$child] ??null) instanceof Requestable) {
             $this->components[$child]->RequestHandle();
         } else {
-            if($this instanceof \Zippy\Html\WebPage || $this instanceof \Zippy\Html\PageFragment) { //ищем метод
-                if(method_exists($this, $child)) {
+            if(   $this instanceof \Zippy\Html\WebPage || $this instanceof \Zippy\Html\PageFragment) { //ищем метод
+                if(method_exists($this, is_string($child) ? $child :'')) {
                     $this->RequestMethod($child); //webpage methos
 
                 }

@@ -70,6 +70,10 @@ class Label extends HtmlComponent
 
     }
 
+    public function setHtml($text) {
+        $this->setText($text,true) ;       
+    }    
+    
     /**
      * Прочитать  текст
      * @return  string

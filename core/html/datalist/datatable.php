@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 namespace Zippy\Html\DataList;
 
@@ -172,8 +172,8 @@ class DataTable extends AbstractList implements Requestable
                     continue;
                 }
 
-                $data = strlen($item->{$fieldname}) > 0 ? $item->{$fieldname} : $column->defaultdata;
-                $css = strlen($column->rowclass) > 0 ? "class=\"{$column->rowclass}\"" : "";
+                $data = strlen(''.$item->{$fieldname}) > 0 ? $item->{$fieldname} : $column->defaultdata;
+                $css = strlen($column->rowclass ?? '') > 0 ? "class=\"{$column->rowclass}\"" : "";
                 $onclick = "";
                 $style = "";
 

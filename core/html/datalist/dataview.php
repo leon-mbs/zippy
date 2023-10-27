@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 namespace Zippy\Html\DataList;
 
@@ -48,7 +48,7 @@ class DataView extends AbstractList implements \Zippy\Interfaces\Requestable
         $list = $this->getItems();
         $this->lastnumber++;
 
-        foreach ($list as $item) {           //$datarow = new DataRow($this->id,$list[0]);
+        foreach ($list as $item) {        
             $datarow = new DataRow($this->id, $item, $this->lastnumber++);
             $this->add($datarow);
             if ($this->rowevent instanceof Event) {

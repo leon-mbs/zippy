@@ -1,10 +1,10 @@
 <?php
 
 namespace Zippy\Html;
-
-/**
+   /**
  * Компонент  медиаплеера  HTML5
  */
+
 class Player extends HtmlComponent
 {
     public $sources;

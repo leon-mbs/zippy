@@ -223,9 +223,9 @@ abstract class HtmlComponent
         $this->RenderImpl();
         //рендерим   аттрибуты
         foreach ($this->attributes as $name => $value) {
-            $attr = $this->getAttribute($name);
+            $attr = ''.$this->getAttribute($name);
             $HtmlTag->attr($name, $attr);
-            if (strlen($attr) == 0) {
+            if (strlen($attr ?? '') == 0) {
                 $HtmlTag->removeAttr($name);
             }
         }
@@ -248,10 +248,10 @@ abstract class HtmlComponent
         if (strlen($tagname) > 0 && $HtmlTag->size() == 0) {
             $HtmlTag = pq(strtoupper($tagname) . '[zippy="' . $this->id . '"]');
         }
-        if ($HtmlTag->size() > 1 && strlen($this->owner->id) > 0) {
+        if ($HtmlTag->size() > 1 && strlen($this->owner->id ?? '') > 0) {
             $HtmlTag = pq('[zippy="' . $this->owner->id . '"] [zippy="' . $this->id . '"]');
         }
-        if ($HtmlTag->size() > 1 && strlen($this->owner->id) == 0) {
+        if ($HtmlTag->size() > 1 && strlen($this->owner->id ?? '') == 0) {
             $HtmlTag = pq('[zippy="' . $this->id . '"]:first');
         }
         if ($HtmlTag->size() > 1) {

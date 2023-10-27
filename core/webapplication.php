@@ -149,10 +149,7 @@ abstract class WebApplication
 
 
             if ($this->request->isAjaxRequest() || $this->request->isBinaryRequest()) {
-                // если  Ajax запрос, отдаем  в  выходной  поток  только  ответ
-                // адресуемого  елемента
-                // $this->output = $this->currentpage->getAjaxAnswer();
-
+          
                 $this->getPageManager()->updatePage($this->currentpage);
             } else {
 
@@ -162,10 +159,7 @@ abstract class WebApplication
                         $this->response->toBaseUrl();
                     }
                 }
-                if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-                    //  $this->response->toBaseUrl();
-                }
+ 
             }
         }
 
@@ -185,16 +179,11 @@ abstract class WebApplication
      * на  основе  текущено  шаблона  и  данных  елементов  страницы
      */
     private function Render() {
-        if ($this->request->isBinaryRequest()) {
+        if ($this->request->isBinaryRequest() || $this->request->isAjaxRequest() ) {
             return;
         }
 
          $renderpage = $this->currentpage;
-
-        if ($this->request->isAjaxRequest()  && !$this->currentpage->hasAB()) {
-           // если нет  ajax blocks
-            return;
-        }
 
 
         //загружаем  соответсвующий  шаблон
@@ -280,15 +269,7 @@ abstract class WebApplication
             $response = $m->render($response, $renderpage->_tvars);
         }
     
-        if ($this->request->isAjaxRequest()) {
-            // если  ajax blocks
-              
-             \phpQuery::newDocumentHTML($response);
-             $renderpage->updateAjaxHTML()  ;
-              
-             return;
-           
-        }
+     
      
         $this->response->setContent($response);
     }

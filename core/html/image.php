@@ -99,7 +99,7 @@ class Image extends HtmlComponent implements \Zippy\Interfaces\Requestable, \Zip
      */
     protected function RenderImpl() {
 
-        if (strlen($this->title) > 0) {
+        if (strlen($this->title ?? '') > 0) {
             $this->setAttribute("title", $this->title);
         }
 
