@@ -233,5 +233,22 @@ class HttpResponse
         die;
     }
 
-   
+    /**
+     *  редирект на  предыдущую  страницу
+     */
+    /*
+      public final function toBack()
+      {
+      $pagename = WebApplication::$app->getPrevPage();
+
+      // $pagename = str_replace("\\", "/", $pagename);
+      $pagename = '\\' . rtrim($pagename, '\\');
+      //$this->redirect = $this->getHostUrl() . "/index.php?q=" . $pagename . ":" . $this->pageindex--;
+      if($pagename== "\\") {
+      $this->toIndexPage();
+      return;
+      }
+      $this->Redirect($pagename, array());
+      }
+     */
 }

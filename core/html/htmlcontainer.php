@@ -115,25 +115,19 @@ abstract class HtmlContainer extends HtmlComponent implements Requestable
             if ($component->isVisible()) {
                 $component->Render();
             } else {
-                $component->getTag()->remove();
+                $component->getTag()->destroy();
                 $label = $component->getLabelTag();
-                if ($label->size() == 1) {  //прячем  связаный  тег label
-                    $label->remove();
+            
+                foreach ($label as $l) {
+                    $l->destroy();
                 }
-                if ($label->size() > 1) {  //прячем  связаный  тег label
-                    foreach ($label as $l) {
-                        pq($l)->remove();
-                    }
-                }
+      
                 $label = $component->getLabelTagFor();
-                if ($label->size() == 1) {  //прячем  связаный  тег label
-                    $label->remove();
+
+                foreach ($label as $l) {
+                    $l->destroy();
                 }
-                if ($label->size() > 1) {  //прячем  связаный  тег label
-                    foreach ($label as $l) {
-                        pq($l)->remove();
-                    }
-                }
+
             }
         }
         //   $this->afterRender();
@@ -154,8 +148,8 @@ abstract class HtmlContainer extends HtmlComponent implements Requestable
         if ($child != false && ($this->components[$child] ??null) instanceof Requestable) {
             $this->components[$child]->RequestHandle();
         } else {
-            if(   $this instanceof \Zippy\Html\WebPage || $this instanceof \Zippy\Html\PageFragment) { //ищем метод
-                if(method_exists($this, is_string($child) ? $child :'')) {
+            if($this instanceof \Zippy\Html\WebPage || $this instanceof \Zippy\Html\PageFragment) { //ищем метод
+                if(method_exists($this, $child)) {
                     $this->RequestMethod($child); //webpage methos
 
                 }

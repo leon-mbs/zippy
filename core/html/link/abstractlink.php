@@ -47,8 +47,7 @@ abstract class AbstractLink extends \Zippy\Html\HtmlContainer
         $HtmlTag = $this->getTag('a');
         $children = $HtmlTag->children('img');
 
-        if ($this->value != null && count($children) == 0) {
-            $HtmlTag = $this->getTag();
+        if ($this->value != null && $children->count() == 0) {
             if($this->htmlvalue) {
               $HtmlTag->html($this->getValue());              
             }else {
@@ -56,7 +55,7 @@ abstract class AbstractLink extends \Zippy\Html\HtmlContainer
             }
             
         }
-        if ($children->size() == 1 && $this->value != null) {
+        if ($children->count() == 1 && $this->value != null) {
             $children[0]->attr('src', $this->getValue());
         }
     }

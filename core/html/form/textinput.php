@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Zippy\Html\Form;
 
@@ -81,7 +81,7 @@ class TextInput extends HtmlFormDataElement implements ChangeListener, Requestab
             }
             $list .=  "  </datalist>"  ;
             $HtmlTag = $this->getTag();
-            $HtmlTag->after($list);
+            $HtmlTag->follow($list);
 
 
         }

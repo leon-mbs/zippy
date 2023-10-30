@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Zippy\Html\Form;
 
@@ -91,7 +91,7 @@ class DropDownChoice extends HtmlFormDataElement implements ChangeListener, Requ
             $options .= $option;
             //$tag->appendChild($option) ;
         }
-        $tag->append($options);
+        $tag->appendWith($options);
         //$html = $tag->html();
 
         if (count($list) == 0) {
@@ -166,9 +166,7 @@ class DropDownChoice extends HtmlFormDataElement implements ChangeListener, Requ
         }
     }
 
-    protected function getTag($tagname = "") {
-        return parent::getTag('select');
-    }
+ 
 
     public function setOptionList($optionlist) {
         if (is_array($optionlist)) {

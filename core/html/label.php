@@ -70,19 +70,15 @@ class Label extends HtmlComponent
 
     }
 
-    public function setHtml($text) {
-        $this->setText($text,true) ;       
-    }    
-    
     /**
      * Прочитать  текст
      * @return  string
      */
     public function getText() {
         if ($this->value instanceof Binding) {
-            return $this->value->getValue();
+            return ''.$this->value->getValue();
         } else {
-            return $this->value;
+            return ''.$this->value;
         }
     }
 

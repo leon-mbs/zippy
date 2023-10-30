@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Zippy\Html\DataList;
 
@@ -48,7 +48,7 @@ class DataView extends AbstractList implements \Zippy\Interfaces\Requestable
         $list = $this->getItems();
         $this->lastnumber++;
 
-        foreach ($list as $item) {        
+        foreach ($list as $item) {           //$datarow = new DataRow($this->id,$list[0]);
             $datarow = new DataRow($this->id, $item, $this->lastnumber++);
             $this->add($datarow);
             if ($this->rowevent instanceof Event) {
@@ -77,21 +77,28 @@ class DataView extends AbstractList implements \Zippy\Interfaces\Requestable
     final public function RenderImpl() {
         // $this->UpdateData() ;
 
+              
+        $rowtag = WebApplication::$dom->find('[zippy=' . $this->id . ']');
 
-        $rowtag = pq('[zippy=' . $this->id . ']');
-
-        if ($rowtag->size() == 0) {
+        if ($rowtag->count() == 0) {
             throw new \Zippy\Exception(sprintf(ERROR_MARKUP_NOTFOUND, $this->id));
         }
 
         $ids = array();
-        $children = pq('[zippy=' . $this->id . ']  [zippy]');
+        $children = WebApplication::$dom->find('[zippy=' . $this->id . ']  [zippy]');
         foreach ($children as $child) {
-            $ids[] = pq($child)->attr("zippy");
+            $ids[] = $child->attr("zippy");
         }
 
         $rows = $this->getDataRows();
-        $html_ = $rowtag->htmlOuter();
+        $rowtag= $rowtag->first() ;
+        $tn= $rowtag->tagName;
+        $attr="";
+        foreach($rowtag->attributes as $a){
+          $attr = $attr. " {$a->nodeName}=\"{$a->nodeValue}\" ";
+        };        
+        
+        $html_ = "<{$tn} {$attr}  >".    $rowtag->html() . "</{$tn}>";
         $html = "";
         foreach ($rows as $row) {
             $i = $row->getNumber() ;
@@ -118,10 +125,14 @@ class DataView extends AbstractList implements \Zippy\Interfaces\Requestable
             $html .= $h;
 
         }
-        $rowtag->replaceWith($html);
+//        $rowtag->substituteWith($html);
 
+        $parent=$rowtag->parent();
+        $rowtag->follow($html);
 
-
+        $rowtag->destroy();
+//        $parent->appendWith($html);
+   
         $p = $this->getPageOwner() ;
         if($p instanceof \Zippy\Html\WebPage) {
             // $p->updateTag() ;

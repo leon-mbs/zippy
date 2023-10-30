@@ -1,10 +1,10 @@
 <?php
 
 namespace Zippy\Html;
-   /**
+
+/**
  * Компонент  медиаплеера  HTML5
  */
-
 class Player extends HtmlComponent
 {
     public $sources;
@@ -21,10 +21,10 @@ class Player extends HtmlComponent
      */
     protected function RenderImpl() {
         $i = 0;
-        $children = pq('[zippy=' . $this->id . ']  source');
+        $children =  \Zippy\WebApplication::$dom->find('[zippy=' . $this->id . ']  source');
         foreach ($children as $child) {
             if (strlen($this->sources[$i]) > 0) {
-                pq($child)->attr("src", $this->sources[$i]);
+                $child->attr("src", $this->sources[$i]);
                 $i++;
             }
         }

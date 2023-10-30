@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Zippy\Html\Form;
 
@@ -41,10 +41,10 @@ class Form extends HtmlContainer
         $url = substr($url, strpos($url, 'index.php?q='));
         $url = str_replace('index.php?q=', '', $url) ;
 
-        $HtmlTag = $this->getTag('form');
-        $HtmlTag->append("<input type=\"hidden\" name=\"q\" id=\"{$this->id}_q\" value=\"" . $url . "::" . $this->id . "\" >");
-        $HtmlTag->append("<input type=\"hidden\" name=\"{$this->id}_q\" value=\"\" >");
-        $HtmlTag->append("<input type=\"submit\" name=\"{$this->id}_s\" id=\"{$this->id}_s\" style=\"display:none\" >");
+        $HtmlTag = $this->getTag();
+        $HtmlTag->appendWith("<input type=\"hidden\" name=\"q\" id=\"{$this->id}_q\" value=\"" . $url . "::" . $this->id . "\" >");
+        $HtmlTag->appendWith("<input type=\"hidden\" name=\"{$this->id}_q\" value=\"\" >");
+        $HtmlTag->appendWith("<input type=\"submit\" name=\"{$this->id}_s\" id=\"{$this->id}_s\" style=\"display:none\" >");
     }
 
     /**

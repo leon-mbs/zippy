@@ -15,6 +15,7 @@ abstract class WebApplication
 {
     private $currentpage = null;
     public static $app = null;
+    public static $dom = null;
 
     private $reloadPage = false;
     private $request;
@@ -149,7 +150,10 @@ abstract class WebApplication
 
 
             if ($this->request->isAjaxRequest() || $this->request->isBinaryRequest()) {
-          
+                // если  Ajax запрос, отдаем  в  выходной  поток  только  ответ
+                // адресуемого  елемента
+                // $this->output = $this->currentpage->getAjaxAnswer();
+
                 $this->getPageManager()->updatePage($this->currentpage);
             } else {
 
@@ -159,7 +163,10 @@ abstract class WebApplication
                         $this->response->toBaseUrl();
                     }
                 }
- 
+                if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+                    //  $this->response->toBaseUrl();
+                }
             }
         }
 
@@ -179,85 +186,77 @@ abstract class WebApplication
      * на  основе  текущено  шаблона  и  данных  елементов  страницы
      */
     private function Render() {
-        if ($this->request->isBinaryRequest() || $this->request->isAjaxRequest() ) {
+        if ($this->request->isBinaryRequest()) {
             return;
         }
 
          $renderpage = $this->currentpage;
 
-
+        if ($this->request->isAjaxRequest()  && !$this->currentpage->hasAB()) {
+           // если нет  ajax blocks
+            return;
+        }
+ 
         //загружаем  соответсвующий  шаблон
         $template = $this->getTemplate(get_class($renderpage));
+ 
+  
+        self::$dom =  (new \DOMWrap\Document())->html($template);
 
-
-        $doc = \phpQuery::newDocumentHTML($template);
-
+        
         $basepage = get_parent_class($renderpage);
         // если  страница  не  базовая   а  дочерняя
         if ($basepage !== "Zippy\\Html\\WebPage") {
 
             $basetemplate = WebApplication::getApplication()->getTemplate($basepage);
-            // if(count($renderpage->_tvars) >0){
-            //    $m = new \Mustache_Engine();
-            //   $basetemplate= $m->render($basetemplate, $renderpage->_tvars);
-            //  }
+            
 
+            $body = self::$dom->find('body')->html();   
 
-            $body = $doc['body']->html() ;
-
+           
             $basetemplate= str_replace('<childpage/>', $body, $basetemplate) ;
 
-            $bdoc = \phpQuery::newDocumentHTML($basetemplate);
+ 
+            $bdom = (new \DOMWrap\Document())->html($basetemplate);
+    
+            $bhead=$bdom->find('head');
 
-
-            //  $bdoc["childpage"]->replaceWith();
-
-            $links = $doc['head  > link'];
+            $links = self::$dom->find('head  > link') ;
             foreach ($links as $l) {
-                pq('head')->append($l);
-            }
-
-            $script = $doc['head  > script'];
-            foreach ($script as $sc) {
-                pq('head')->append($sc);
-            }
-            $script = $doc['head  > title'];
-            foreach ($script as $sc) {
-                $bdoc['title']->remove();
-                pq('head')->append($sc);
-            }
-            $script = $doc['head  > meta'];
-            foreach ($script as $sc) {
-                pq('head')->append($sc);
-            }
-
-
-            /*
-              if (strlen($title) > 0) {
-              $bdoc['description']->remove();
-              pq('head')->append("<description>{$description}</title>");
-              }
-              if (strlen($title) > 0) {
-              $bdoc['title']->remove();
-              pq('head')->append("<title>{$title}</title>");
-              } */
+                $bhead->appendWith($l);
+            }           
+            $scripts = self::$dom->find('head  > script') ;
+            foreach ($scripts as $s) {
+                $bhead->appendWith($s);
+            }           
+            $metas = self::$dom->find('head  > meta') ;
+            foreach ($metas as $m) {
+                $bhead->appendWith($m);
+            }           
+            $title = self::$dom->find('head  > title') ;
+            foreach ($title as $t) {
+                $bhead->find('title')->destroy();
+                $bhead->prependWith($t);
+            }           
+            self::$dom =  $bdom;
         }
 
         $renderpage->Render();
     
-
+        $head=self::$dom->find('head');
+        //тэги должны  уже  быть
         if (strlen($renderpage->_title) > 0) {
-            pq('title')->text($renderpage->_title);
+            $head->find('title')->text($renderpage->_title);
         }
         if (strlen($renderpage->_keywords) > 0) {
-            pq('meta[name="keywords"]')->attr('content', $renderpage->_keywords);
-        }
+            $head->find('meta[name="keywords"]')->attr('content', $renderpage->_keywords);;
+        }   
         if (strlen($renderpage->_description) > 0) {
-            pq('meta[name="description"]')->attr('content', $renderpage->_description);
+            $head->find('meta[name="description"]')->attr('content', $renderpage->_description);;
         }
 
-
-        $response =  pq('html')->htmlOuter(); //HTML  в  выходной  поток
+        $response= self::$dom->html();
+    //    file_put_contents('z:/r2.html',$response) ;
 
         if (count($renderpage->_tvars) > 0) {
 
@@ -269,7 +268,15 @@ abstract class WebApplication
             $response = $m->render($response, $renderpage->_tvars);
         }
     
-     
+        if ($this->request->isAjaxRequest()) {
+            // если  ajax blocks
+              
+           //  \phpQuery::newDocumentHTML($response);
+             $renderpage->updateAjaxHTML()  ;
+              
+             return;
+           
+        }
      
         $this->response->setContent($response);
     }

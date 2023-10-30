@@ -23,15 +23,13 @@ abstract class PageFragment extends HtmlContainer implements EventReceiver
         $htmltag = $this->getTag();
 
         $template = WebApplication::getApplication()->getTemplate(get_class($this));
-        $qid = \phpQuery::getDocumentID($htmltag);
-
-        $doc = \phpQuery::newDocumentHTML($template);
-
-        $htmltag->replaceWith($doc['body']->html());
-        //$htmltag->html($doc['body']->html());
-
-        \phpQuery::selectDocument($qid);
-
+        $dom = (new \DOMWrap\Document())->html($template);
+    
+        $body=$dom->find('body')->first()->html();
+        $htmltag->html($body);
+    //    $htmltag->follow($body);
+  //      $htmltag->destroy();
+     
 
         $this->beforeRender();
 

@@ -190,25 +190,33 @@ abstract class HtmlComponent
 
         $HtmlTag = $this->getTag();
 
-        $attributes = $HtmlTag->attr('*'); //атрибуты с шаблона
-        unset($attributes["zippy"]);
-
-        $attributes['id'] = $this->id;
-
+        
         if (isset($this->attributes["class"])) {
             if (strlen($this->attributes["class"]) > 0) {
-                $attributes['class'] = ($attributes['class'] ??"") . ' ' . ($this->attributes["class"] ??"");
+                $HtmlTag->addClass($this->attributes["class"]) ;
             } else {
-                $attributes['class'] = str_replace($this->attributes["class"], "", $attributes['class']);
+                $HtmlTag->removeClass($this->attributes["class"]) ;
             }
         }
+      
+        
+        foreach($HtmlTag->attributes as $a){
+           $attributes[$a->nodeName] =$a->nodeValue;
+        };
+        
+        
         if (isset($this->attributes["style"])) {
             if (strlen($this->attributes["style"]) > 0) {
                 $attributes['style'] = ($attributes['style'] ??'') . ';  ' . ($this->attributes["style"] ??'');
             } else {
                 $attributes['style'] = str_replace(($this->attributes["style"] ??''), "", ($attributes['style'] ??''));
             }
-        }
+        }          
+        
+        unset($attributes["zippy"]);
+
+        $attributes['id'] = $this->id;
+
 
         foreach ($attributes as $key => $value) {
 
@@ -223,10 +231,12 @@ abstract class HtmlComponent
         $this->RenderImpl();
         //рендерим   аттрибуты
         foreach ($this->attributes as $name => $value) {
-            $attr = ''.$this->getAttribute($name);
-            $HtmlTag->attr($name, $attr);
-            if (strlen($attr ?? '') == 0) {
+            $attr = $this->getAttribute($name);
+            
+            if (strlen($attr) == 0) {
                 $HtmlTag->removeAttr($name);
+            }  else{
+                $HtmlTag->attr($name, $attr);    
             }
         }
         $this->afterRender();
@@ -235,38 +245,20 @@ abstract class HtmlComponent
     /**
      * Возвращает  ссылку  на  HTML таг. Используется  библиотека  PHPQuery
      */
-    protected function getTag($tagname = "") {
+    protected function getTag()  : \DOMWrap\Element {
         $p = $this->getPageOwner() ;
-        if($p instanceof \Zippy\Html\WebPage) {
-            // $tag = $p->getLoadedTag($this->id) ;
-            //  if($tag != null) return  $tag;
 
-        }
+        $HtmlTag = WebApplication::$dom->find('[zippy="' . $this->id . '"]');
 
-
-        $HtmlTag = pq(strtolower($tagname) . '[zippy="' . $this->id . '"]');
-        if (strlen($tagname) > 0 && $HtmlTag->size() == 0) {
-            $HtmlTag = pq(strtoupper($tagname) . '[zippy="' . $this->id . '"]');
-        }
-        if ($HtmlTag->size() > 1 && strlen($this->owner->id ?? '') > 0) {
-            $HtmlTag = pq('[zippy="' . $this->owner->id . '"] [zippy="' . $this->id . '"]');
-        }
-        if ($HtmlTag->size() > 1 && strlen($this->owner->id ?? '') == 0) {
-            $HtmlTag = pq('[zippy="' . $this->id . '"]:first');
-        }
-        if ($HtmlTag->size() > 1) {
+        if ($HtmlTag->count() > 1) {
             throw new ZE(sprintf(ERROR_MARKUP_NOTUNIQUEID, $this->id));
         }
+        if ($HtmlTag->count() == 0) {
+            $tag = 'zippy="' . $this->id . '"';
 
-        if ($HtmlTag->size() == 0) {
-            if (strlen($tagname) > 0) {
-                $tag = '&lt;' . $tagname . ' zippy="' . $this->id . '" &gt;';
-            } else {
-                $tag = 'zippy="' . $this->id . '"';
-            }
             throw new ZE(sprintf(ERROR_MARKUP_NOTFOUND, $tag));
         }
-        return $HtmlTag;
+        return $HtmlTag->first();
     }
 
     /**
@@ -290,21 +282,33 @@ abstract class HtmlComponent
      *
      */
     protected function getLabelTag() {
-        return pq('[data-label="' . $this->id . '"]');
+        return WebApplication::$dom->find('[data-label="' . $this->id . '"]');
     }
     protected function getLabelTagFor() {
-        return pq('[for="' . $this->id . '"]');
+        return WebApplication::$dom->find('[for="' . $this->id . '"]');
     }
 
+    
+ 
     public function getHTML(){
         try{
           $HtmlTag = $this->getTag();
-          return $HtmlTag->htmlOuter() ;          
+         $tn= $HtmlTag->tagName;
+        $attr="";
+        foreach($HtmlTag->attributes as $a){
+          $attr = $attr. " {$a->nodeName}=\"{$a->nodeValue}\" ";
+        };        
+        
+        $html = "<{$tn} {$attr}  >".    $HtmlTag->html() . "</{$tn}>";
+               
+        return $html;  
+          
+          
         } catch(\Exception $e) {
             return  null;
         }
     }
-    
+ 
     
        
 }

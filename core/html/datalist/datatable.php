@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Zippy\Html\DataList;
 
@@ -36,11 +36,11 @@ class DataTable extends AbstractList implements Requestable
      * @see HtmlComponent
      */
     final public function RenderImpl() {
-        $tag = $this->getTag('table');
+        $tag = $this->getTag();
 
-        pq($tag)->append($this->renderHeader());
-        pq($tag)->append($this->renderData());
-        pq($tag)->append($this->renderFooter());
+        $tag->appendWith($this->renderHeader());
+        $tag->appendWith($this->renderData());
+        $tag->appendWith($this->renderFooter());
     }
 
     /**
@@ -172,8 +172,8 @@ class DataTable extends AbstractList implements Requestable
                     continue;
                 }
 
-                $data = strlen(''.$item->{$fieldname}) > 0 ? $item->{$fieldname} : $column->defaultdata;
-                $css = strlen($column->rowclass ?? '') > 0 ? "class=\"{$column->rowclass}\"" : "";
+                $data = strlen($item->{$fieldname}) > 0 ? $item->{$fieldname} : $column->defaultdata;
+                $css = strlen($column->rowclass) > 0 ? "class=\"{$column->rowclass}\"" : "";
                 $onclick = "";
                 $style = "";
 

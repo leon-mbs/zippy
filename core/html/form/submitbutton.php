@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Zippy\Html\Form;
 
@@ -64,7 +64,7 @@ class SubmitButton extends HtmlComponent implements ClickListener, Requestable
      * @see ClickListener
      */
     public function OnEvent() {
-        if ($this->event != null && strlen($this->getAttribute('disabled') ?? '' ) == 0) {
+        if ($this->event != null && strlen($this->getAttribute('disabled')) == 0) {
             $this->event->onEvent($this);
         }
     }
