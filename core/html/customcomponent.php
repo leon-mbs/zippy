@@ -12,9 +12,15 @@ abstract class CustomComponent extends HtmlComponent
      */
     final public function RenderImpl() {
         $HtmlTag = $this->getTag();
-        $attributes = $HtmlTag->attr('*'); //атрибуты с шаблона
-        $HtmlTag->replaceWith($this->getContent($attributes));
-    }
+        $attributes = []; //атрибуты с шаблона
+        foreach($HtmlTag->attributes as $a){
+           $attributes[$a->nodeName] =$a->nodeValue;
+        };        
+        $html= $this->getContent($attributes);
+        $HtmlTag->html($html);
+     //   $HtmlTag->follow($html);
+     //   $HtmlTag->destroy();
+    }      
 
     /**
      * Метод перегружаемый в пользовательской реализации
