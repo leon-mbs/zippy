@@ -63,7 +63,7 @@ class DropDownChoice extends HtmlFormDataElement implements ChangeListener, Requ
                 $this->setAttribute("onchange", "javascript:{if(beforeZippy('{$this->id}') ==false) return false; $('#" . $formid . "_q').attr('value','" . $url . "');$('#" . $formid . "').submit();}");
             } else {
                 $_BASEURL = WebApplication::$app->getResponse()->getHostUrl();
-                $this->setAttribute("onchange", "if(beforeZippy('{$this->id}') ==false) return false; $('#" . $formid . "_q').attr('value','" . $url . "'); submitForm('{$formid}','{$_BASEURL}/?ajax=true');");
+                $this->setAttribute("onchange", "if(beforeZippy('{$this->id}') ==false) return false; var old=$('#" . $formid . "_q').attr('value') ; $('#" . $formid . "_q').attr('value','" . $url . "'); submitForm('{$formid}','{$_BASEURL}/?ajax=true');$('#" . $formid . "_q').attr('value',old);");
             }
         }
 

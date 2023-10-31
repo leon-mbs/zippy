@@ -58,7 +58,8 @@ class AutocompleteTextInput extends TextInput implements Requestable
                 $url = $this->owner->getURLNode() . "::" . $this->id;
                 $url = substr($url, 2 + strpos($url, 'q='));
                 $_BASEURL = WebApplication::$app->getResponse()->getHostUrl();
-                $onchange = "  { $('#" . $formid . "_q').attr('value','" . $url . "'); submitForm('{$formid}','{$_BASEURL}/?ajax=true'); }";
+                $onchange = "  {  var old=$('#" . $formid . "_q').attr('value') ; $('#" . $formid . "_q').attr('value','" . $url . "'); submitForm('{$formid}','{$_BASEURL}/?ajax=true');$('#" . $formid . "_q').attr('value',old); }";
+                 
             }
         }
         $url = $this->owner->getURLNode() . "::" . $this->id . "&ajax=true";
