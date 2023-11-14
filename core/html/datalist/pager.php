@@ -59,10 +59,10 @@ class Pager extends HtmlComponent implements Requestable
 
 
         if ($currentpage > 1) {
-            $content .= "<td align='left'><a      href=\"javascript:void(0);\" onclick=\"" . $this->getUrl($currentpage - 1) . "\"> &#171; {$this->prev}</a></td>";
+            $content .= "<td align='left'><a  class=\"btn btn-outline-info\"    href=\"javascript:void(0);\" onclick=\"" . $this->getUrl($currentpage - 1) . "\"> &#171; {$this->prev}</a></td>";
         }
         if ($currentpage < $pages) {
-            $content .= " <td align='right'> <a    href=\"javascript:void(0);\" onclick=\"" . $this->getUrl($currentpage + 1) . "\"> {$this->next}  &#187; </a></td>";
+            $content .= " <td align='right'> <a   class=\"btn btn-outline-info\"  href=\"javascript:void(0);\" onclick=\"" . $this->getUrl($currentpage + 1) . "\"> {$this->next}  &#187; </a></td>";
         }
 
 

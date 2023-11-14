@@ -128,7 +128,7 @@ class DataView extends AbstractList implements \Zippy\Interfaces\Requestable
 //        $rowtag->substituteWith($html);
 
         $parent=$rowtag->parent();
-        $rowtag->follow($html);
+        $rowtag->precede($html);
 
         $rowtag->destroy();
 //        $parent->appendWith($html);
