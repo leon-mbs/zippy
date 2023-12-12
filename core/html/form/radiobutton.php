@@ -68,7 +68,7 @@ class RadioButton extends HtmlFormDataElement implements ChangeListener, Request
      */
     public function getRequestData() {
    
-        $this->setValue($_REQUEST[$this->groupname]);
+        $this->setValue($_REQUEST[$this->groupname]??'');
     }
 
     /**

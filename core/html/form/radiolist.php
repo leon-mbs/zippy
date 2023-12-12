@@ -66,6 +66,9 @@ class RadioList extends HtmlFormDataElement
             $out .= $this->delimiter;
         }
         $out = substr($out, 0, strlen($out) - strlen($this->delimiter));
+        if(!is_string($out)) {
+           $out='';    
+        }
 
         $this->getTag()->html($out);
     }
