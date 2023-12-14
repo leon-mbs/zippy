@@ -34,9 +34,10 @@ class Label extends HtmlComponent
     public function RenderImpl() {
 
   
-        if ($this->getText() === null) {
+        if ($this->value === null) {
             return;
         }
+ 
 
         $HtmlTag = $this->getTag();
         if ($this->html) {
