@@ -14,7 +14,7 @@
          "php": ">=7.4.0",
          "mustache/mustache": "v2.14.2",
          "leon-mbs/zdb": "1.5.13",
-         "scotteh/php-dom-wrapper": "2.0.5"   
+         "scotteh/php-dom-wrapper": "3.0.0"   
 
     },
 
