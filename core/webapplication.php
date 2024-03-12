@@ -78,6 +78,8 @@ abstract class WebApplication
             $arg1 = func_get_args();
             $arg1 = array_slice($arg1, 1);
         }
+        $name=  $res = str_ireplace( array( '\'', '"',    '<', '>' ), '', $name);
+
 
         $classpage = new \ReflectionClass($name);
         $this->currentpage = $classpage->newInstanceArgs($arg1);
