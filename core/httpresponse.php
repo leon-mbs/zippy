@@ -14,7 +14,7 @@ class HttpResponse
     public $JSrenderDocReady = "";
     private $pageindex;
     public $binaryanswer;
-    private $gzip = false;
+ 
     private $redirect = "";
     public $page404 = null;
 
@@ -61,7 +61,7 @@ class HttpResponse
             $this->content = $this->content . $this->getJS();
         }
 
-        if (WebApplication::$app->getRequest()->isAjaxRequest() == false && $this->gzip === true && strpos($_SERVER["HTTP_ACCEPT_ENCODING"], "gzip") !== false) {
+        if (WebApplication::$app->getRequest()->isAjaxRequest() == false   && strpos($_SERVER["HTTP_ACCEPT_ENCODING"], "gzip") !== false) {
             Header("Content-Encoding: gzip");
             echo gzencode($this->content . $this->getJS());
             return;

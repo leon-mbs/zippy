@@ -47,8 +47,8 @@ abstract class AbstractLink extends \Zippy\Html\HtmlContainer
      * @see HtmlComponent
      */
     public function beforeRender() {
-        $HtmlTag = $this->getTag('a');
-        $children = $HtmlTag->children('img');
+        $HtmlTag = $this->getTag();
+        $children = $HtmlTag->children();
 
         if ($this->value != null && $children->count() == 0) {
             if($this->htmlvalue) {
