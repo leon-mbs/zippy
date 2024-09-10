@@ -14,7 +14,7 @@ class HttpResponse
     public $JSrenderDocReady = "";
     private $pageindex;
     public $binaryanswer;
- 
+
     private $redirect = "";
     public $page404 = null;
 
@@ -60,12 +60,12 @@ class HttpResponse
         } else {
             $this->content = $this->content . $this->getJS();
         }
-
-        if (WebApplication::$app->getRequest()->isAjaxRequest() == false   && strpos($_SERVER["HTTP_ACCEPT_ENCODING"], "gzip") !== false) {
+        /*
+        if (WebApplication::$app->getRequest()->isAjaxRequest() == false  && strpos($_SERVER["HTTP_ACCEPT_ENCODING"], "gzip") !== false) {
             Header("Content-Encoding: gzip");
             echo gzencode($this->content . $this->getJS());
             return;
-        }
+        } */
         echo $this->content;
     }
 
@@ -209,14 +209,7 @@ class HttpResponse
         $this->pageindex = $index;
     }
 
-    /**
-    * сжимать данные  для  браузера
-    * 
-    * @param mixed $gzip true false
-    */
-    final public function setGzip($gzip) {
-        $this->gzip = $gzip;
-    }
+  
 
     final public function isRedirect() {
         return strlen($this->redirect) > 0;
