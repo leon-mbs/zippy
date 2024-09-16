@@ -66,20 +66,20 @@ abstract class TreeEntity extends Entity
         }
       
         if ($obj instanceof TreeEntity) {
-            $alowdelete = $obj->beforeDelete();
+            $allowdelete = $obj->beforeDelete();
         
             if (strlen($allowdelete)>0) {
                
                  return $allowdelete;
             }
      
-        $alowdelete = $obj->deleteChildren();
-        if (strlen($allowdelete)>0) {
-               
-                 return $allowdelete;
-        }
-        $conn = DB::getConnect();
-        $conn->Execute("delete from {$meta['table']}  where {$meta['keyfield']} = " . $id);
+            $allowdelete = $obj->deleteChildren();
+            if (strlen($allowdelete)>0) {
+                   
+                     return $allowdelete;
+            }
+            $conn = DB::getConnect();
+            $conn->Execute("delete from {$meta['table']}  where {$meta['keyfield']} = " . $id);
         }
          
     }

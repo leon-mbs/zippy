@@ -11,9 +11,9 @@
     
    
     "require": {
-         "php": ">=8.0.0",
+         "php": "^8.0.0",
          "mustache/mustache": "v2.14.2",
-         "leon-mbs/zdb": "1.5.13",
+         "leon-mbs/zdb": "~1.5.13",
          "scotteh/php-dom-wrapper": "3.0.0"   
 
     },
