@@ -19,8 +19,8 @@ abstract class AbstractList extends HtmlContainer
 
     /**
      * Конструктор
-     * @param ID компонента
-     * @param Zippy\Interfaces\DataSource Источник данных
+     * @param string $id ID компонента
+     * @param mixed $DataSource Источник данных
      */
     public function __construct($id, $DataSource) {
         HtmlContainer::__construct($id);
@@ -55,7 +55,7 @@ abstract class AbstractList extends HtmlContainer
 
     /**
      * Устанавливает размер  страницы  данных
-     * @param int Количество строк в странице данных
+     * @param int $pagesize Количество строк в странице данных
      */
     public function setPageSize($pagesize) {
         if ($pagesize > 0) {
@@ -78,7 +78,7 @@ abstract class AbstractList extends HtmlContainer
 
     /**
      * Устанавливает  текущую  страницу
-     * @param int Номер  страницы
+     * @param mixed $page Номер  страницы
      * @see Paginator
      */
     public function setCurrentPage($page) {

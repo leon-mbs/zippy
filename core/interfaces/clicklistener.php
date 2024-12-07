@@ -10,9 +10,9 @@ interface ClickListener
 {
     /**
      * Устанавливает обработчик  события
-     * @param mixed  Объект
-     * @param string Имя  метода - обработчика
-     * @ajax   bool   обработчик  будет  вызван асинхронно
+     * @param EventReceiver  $receiver
+     * @param string $handler Имя  метода - обработчика
+     * @param   mixed $ajax  обработчик  будет  вызван асинхронно
      */
     public function onClick(EventReceiver $receiver, $handler, $ajax = false);
 }

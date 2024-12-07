@@ -289,7 +289,7 @@ class DataTable extends AbstractList implements Requestable
      * Строка выделяется  добавлением CSS класса  заданного
      * методом setSelectedClass
      *
-     * @param mixed $id ID  выделяемой строки
+     * @param mixed $number ID  выделяемой строки
      */
     public function setSelectedrow($number) {
         $this->selectedrow = $number;

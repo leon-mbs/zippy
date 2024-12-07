@@ -19,11 +19,11 @@ class RedirectLink extends AbstractLink implements Requestable
 
     /**
      * Конструктор
-     * @param string ID компонента
-     * @param string Имя страницы для   редиректа
-     * @param array  Список  параметров  для  страницы
-     * @param boolean Если  true  - рендерит  bookmarkable  ссылку
-     * @param boolean Если  true  - кодирует ссылку
+     * @param string $id ID компонента
+     * @param string $pagename Имя страницы для   редиректа
+     * @param array $params Список  параметров  для  страницы
+     * @param mixed $bookmarkable Если  true  - рендерит  bookmarkable  ссылку
+     * @param mixed $encode Если  true  - кодирует ссылку
      */
     public function __construct($id, $pagename = "", $params = array(), $bookmarkable = true, $encode = false) {
         AbstractLink::__construct($id);

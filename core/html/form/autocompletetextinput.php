@@ -22,9 +22,10 @@ class AutocompleteTextInput extends TextInput implements Requestable
 
     /**
      * Конструктор
-     * @param Zippy ID
-     * @param Минимальное  количество  символов
-     * @param Таймаут в  мс.
+     * @param string $id
+     * @param mixed $minChars Минимальное  количество  символов
+     * @param mixed $timeout Таймаут в  мс.
+     * @param mixed $bgupdate  
      */
     public function __construct($id, $minChars = 2, $timeout = 100, $bgupdate = false) {
         parent::__construct($id);
@@ -45,7 +46,7 @@ class AutocompleteTextInput extends TextInput implements Requestable
         TextInput::RenderImpl();
 
         $onchange = "null";
-
+        $matcher='';
         if ($this->event2 != null) {
             $formid = $this->getFormOwner()->id;
 
@@ -145,7 +146,8 @@ class AutocompleteTextInput extends TextInput implements Requestable
 
     /**
      * Устанавливает  событие
-     * @param Event
+     * @param EventReceiver  $receiver
+     * @param string  $handler
      */
     public function onText(EventReceiver $receiver, $handler) {
 

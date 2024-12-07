@@ -26,7 +26,6 @@ abstract class WebApplication
 
     /**
      * Конструктор
-     * @param string Имя  класса  начальной  страницы
      */
     public function __construct() {
 
@@ -38,38 +37,39 @@ abstract class WebApplication
         $this->response = new HttpResponse();
     }
 
-    public function __sleep() {
+    public function __sleep()  {
         //avoid serialization
+         
     }
 
     /**
      * Возвращает экземпляр приложения
      * @return WebApplication
      */
-    final public static function getApplication() {
+    final public static function getApplication() :WebApplication {
         return self::$app;
     }
 
     /**
      * Возвращает HTML шаблон по  имени класса  страницы
      * перегружается   в  классе  пользовательского  приложения
-     * @param string Имя  класса  страницы
+     * @param string $name Имя  класса  страницы
      */
     abstract public function getTemplate($name);
 
 
     /**
      * Возвращает  объект  текущей  страницы
-     * @return WebPage
+     * @return \Zippy\Html\WebPage
      */
-    final public function getCurrentPage() {
+    final public function getCurrentPage() :\Zippy\Html\WebPage {
         return $this->currentpage;
     }
 
     /**
      * Создает  новый  экземпляр  страницы  по  имени  класса  страницы
      * и делает  ее  текущей.  По  сути  серверный  редирект без  изменения  адресной   строки  браузера.
-     * @param string Имя класса  страницы
+     * @param string $name Имя класса  страницы
      */
     final public function LoadPage($name, $arg1 = null, $arg2 = null, $arg3 = null, $arg4 = null, $arg5 = null) {
 
@@ -288,7 +288,7 @@ abstract class WebApplication
      *  Метод  выполняющий   роутинг URL запросов.  Например  для ЧПУ ссылок
      *  Переопределяется   в  пользовательском  приложении.
      *  Загружает страницу (с  параметрами) методом $this->LoadPage
-     * @param string  Входящий  запрос
+     * @param string $uri Входящий  запрос
      */
     protected function Route($uri) {
 
@@ -297,7 +297,7 @@ abstract class WebApplication
     /**
      *  Указывает  что  текущая  страница  должна  перегрузиться   с  помощью
      * клиентского редиректа для сброса  адресной  строки
-     * @param boolean
+     * @param mixed  $value
      */
     final public function setReloadPage($value = true) {
         $this->reloadPage = $value;
@@ -307,7 +307,7 @@ abstract class WebApplication
      * Возвращает  объект  HttpRequest
      * @return HttpRequest
      */
-    final public function getRequest() {
+    final public function getRequest() :HttpRequest{
         return $this->request;
     }
 
@@ -315,7 +315,7 @@ abstract class WebApplication
      * возвращает  объект Httpresponse
      * @return HttpResponse
      */
-    final public function getResponse() {
+    final public function getResponse() :HttpResponse{
         return $this->response;
     }
 
@@ -323,7 +323,7 @@ abstract class WebApplication
      * Возвращает  менеджер  страниц
      * @return PageManager
      */
-    protected function getPageManager() {
+    protected function getPageManager() :PageManager{
         if (!isset($_SESSION['zippy_pagemanager'])) {
             $_SESSION['zippy_pagemanager'] = new PageManager();
         }
@@ -402,8 +402,8 @@ abstract class WebApplication
 
     /**
      * Вставляет  JavaScript  в  конец   выходного  потока
-     * @param string  Код  скрипта
-     * @param boolean Если  true  - вставка  после  загрузки  документа в  браузер
+     * @param string $js Код  скрипта
+     * @param mixed $docready Если  true  - вставка  после  загрузки  документа в  браузер
      */
     public static function addJavaScript($js, $docready = false) {
         return self::$app->getResponse()->addJavaScript($js, $docready);
@@ -412,7 +412,6 @@ abstract class WebApplication
     /**
      * редирект по URL
      *
-     * @param mixed $message
      * @param mixed $uri
      */
     public static function RedirectURI($uri) {

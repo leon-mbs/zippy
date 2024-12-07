@@ -17,8 +17,10 @@ interface DataSource
 
     /**
      * Возвращает  массив  оьъектов DataItem
-     * @param int Начальный   елемент
-     * @param int Количество елементов
+     * @param mixed $start  Начальный   елемент
+     * @param mixed $count Количество елементов
+     * @param mixed $sortfield Количество елементов
+     * @param mixed $desc Количество елементов
      * @return array         *
      */
     public function getItems($start, $count, $sortfield = null, $desc = true);

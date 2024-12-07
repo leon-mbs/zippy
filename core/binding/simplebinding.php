@@ -14,7 +14,7 @@ class SimpleBinding implements Binding
 
     /**
      * Конструктор
-     * @param mixed  Значение
+     * @param mixed  $value
      */
     public function __construct($value) {
         $this->value = $value;

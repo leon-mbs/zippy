@@ -22,10 +22,10 @@ class SortLink extends AbstractLink implements ClickListener, Requestable
 
     /**
      * Конструктор
-     * @param string ID компонента
-     * @param fileld поле сортировки
-     * @param EventReceiver Объект с методом  обработки  события
-     * @param string Имя  метода-обработчика
+     * @param string $id ID компонента
+     * @param mixed $fileld поле сортировки
+     * @param EventReceiver $receiver Объект с методом  обработки  события
+     * @param string $handler Имя  метода-обработчика
      */
     public function __construct($id, $fileld, $receiver = null, $handler = null, $ajax = false) {
         parent::__construct($id);

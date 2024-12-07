@@ -19,7 +19,7 @@ class Calendar extends \Zippy\Html\HtmlComponent implements \Zippy\Interfaces\Re
     }
 
     public final function RenderImpl() {
-       
+        $ev='';
         $id = $this->getAttribute('id');
         $url = $this->owner->getURLNode() . "::" . $this->id;
 

@@ -24,7 +24,7 @@ abstract class AbstractLink extends \Zippy\Html\HtmlContainer
      * Устанавливает  текст  ссылки. В случае  тэга  <IMG> вместо  текста  задает
      * путь к  изображению (атрибут src)
      *
-     * @param string
+     * @param string   $text
      */
     public function setValue($text,$htmlvalue=false) {
         $this->value = $text;

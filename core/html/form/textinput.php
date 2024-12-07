@@ -20,8 +20,8 @@ class TextInput extends HtmlFormDataElement implements ChangeListener, Requestab
 
     /**
      * Конструктор
-     * @param mixed  ID
-     * @param Значение элемента  или  поле  привязанного объекта
+     * @param mixed $id ID
+     * @param mixed $value Значение элемента  или  поле  привязанного объекта
      */
     public function __construct($id, $value = '') {
         parent::__construct($id);
@@ -32,10 +32,10 @@ class TextInput extends HtmlFormDataElement implements ChangeListener, Requestab
 
     /**
      * Возвращает  текстовое  значение
-     * @return  string
+ 
      */
-    public function getText() {
-        return $this->getValue();
+    public function getText()  {
+        return ''.$this->getValue();
     }
 
     final public function getInt() {
@@ -48,7 +48,7 @@ class TextInput extends HtmlFormDataElement implements ChangeListener, Requestab
 
     /**
      * Устанавливает  текстовое  значение
-     * @param string
+     * @param string   $text
      */
     public function setText($text='') {
         $this->setValue($text);

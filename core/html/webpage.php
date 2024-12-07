@@ -38,7 +38,6 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
     /**
      * Вызывается   из  WebApplication при обработке  HTTP запроса
      *
-     * @param array  Запрос  ввиде массива  элементов
      * @see WebApplication
      */
     public function RequestHandle() {
@@ -75,8 +74,8 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
      *   Вызывается в  реализации  страницы  после  AJAX запроса
      * для   елементов которые  должны  перерендерится на   клиенте
      *
-     * @param mixed  id  или массив id (значений   атттрибута  zippy) компонентов
-     * @param string Произвольный JavaScript код для  выполнения  на  клиенте после Ajax вызова
+     * @param mixed  $components  или массив id (значений   атттрибута  zippy) компонентов
+     * @param string $js Произвольный JavaScript код для  выполнения  на  клиенте после Ajax вызова
      *
      * @see AjaxRender
      */

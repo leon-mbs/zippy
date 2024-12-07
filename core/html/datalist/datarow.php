@@ -18,8 +18,9 @@ class DataRow extends HtmlContainer
 
     /**
      *  Конструктор
-     * @param DataItem Елемент данных  отображаемый  строкой  таблицы
-     * @param mixed Номер строки
+     * @param mixed $id 
+     * @param DataItem $dataitem Елемент данных  отображаемый  строкой  таблицы
+     * @param mixed $number Номер строки
      */
     public function __construct($id, DataItem $dataitem, $number) {
 
@@ -33,7 +34,7 @@ class DataRow extends HtmlContainer
 
     /**
      * Установить данные  в  строку
-     * @param DataItem Елемент данных  отображаемый  строкой  таблицы
+     * @param DataItem $dataitem Елемент данных  отображаемый  строкой  таблицы
      */
     public function setDataItem($dataitem) {
         $this->dataitem = $dataitem;
@@ -43,26 +44,26 @@ class DataRow extends HtmlContainer
      * Возвращает уникальный  ключ  елемента  данных
      * @return  string
      */
-    public function getItemId() {
+    public function getItemId() :string {
         if ($this->dataitem instanceof DataItem) {
             return $this->dataitem->getID();
-        } else {
-            return null;
-        }
+        } 
+        return '';
+
     }
 
     /**
      * Возвращает  елемент данных
      * @return DataItem
      */
-    public function getDataItem() {
+    public function getDataItem() : DataItem{
         return $this->dataitem;
     }
 
     /**
      * Добавляет  компонент  в строку-контейнер
      * переопределяет  родительский  метод
-     * @param HtmlComponent добавляемый  компонент
+     * @param HtmlComponent $component добавляемый  компонент
      */
     public function add(HtmlComponent $component) {
 
@@ -116,7 +117,7 @@ class DataRow extends HtmlContainer
 
     /**
      * Возвращает дочерний элемент  по  ID
-     * @return
+ 
      */
     public function getChildElement($id) {
         return $this->{$id . '_' . $this->getNumber()};
@@ -125,10 +126,10 @@ class DataRow extends HtmlContainer
     /**
      * Получить  дочерний   компонент
      *
-     * @param string  ID компонента
-     * @param boolean Если  false  - искать  только непосредственнно  вложенных
+     * @param string $id ID компонента
+     * @param mixed $desc Если  false  - искать  только непосредственнно  вложенных
      */
-    public function getComponent($id, $desc = true) {
+    public function getComponent($id, $desc = true): HtmlComponent  {
         $c = parent::getComponent($id, $desc);
         if ($c instanceof HtmlComponent) {
             return $c;

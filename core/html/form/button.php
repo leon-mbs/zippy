@@ -3,7 +3,6 @@
 namespace Zippy\Html\Form;
 
 use Zippy\WebApplication;
-use Zippy\Exceptions\Exception;
 use Zippy\Event;
 use Zippy\Html\HtmlComponent;
 use Zippy\Interfaces\ClickListener;
@@ -19,9 +18,9 @@ class Button extends HtmlComponent implements ClickListener, Requestable
 
     /**
      * Конструктор
-     * @param string ID компонента
-     * @param EventReceiver Объект с методом  обработки  события
-     * @param string Имя  метода-обработчика
+     * @param string $id компонента
+     * @param EventReceiver $receiver Объект с методом  обработки  события
+     * @param string $handler Имя  метода-обработчика
      */
     public function __construct($id, EventReceiver $receiver = null, $handler = null, $ajax = true) {
         parent::__construct($id);

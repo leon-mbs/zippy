@@ -34,7 +34,7 @@ class Captcha extends \Zippy\Html\HtmlComponent implements \Zippy\Interfaces\Aja
     /**
      * Реализует  алгоритм  прорисовки изображения.
      * Может  быть  перегружен для  пользовательской  реализации.
-     * @return  ссылка  на  ресурс изображения
+     * @return string  ссылка  на  ресурс изображения
      */
     protected function OnImage() {
         $im = imagecreate($this->x, $this->y);
@@ -57,7 +57,7 @@ ob_end_clean();
 
     /**
      * Реализует  алгоритм  вычисление  кода. Может  быть  перегружен для  пользовательской  реализации
-     * @return   строка  с кодом
+     * @return string  строка  с кодом
      */
     protected function OnCode() {
         $chars = 'abdefhknrstyz23456789';

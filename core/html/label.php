@@ -17,8 +17,8 @@ class Label extends HtmlComponent
 
     /**
      * Конструктор
-     * @param string ID елемента
-     * @param string  Текстовое  содержание
+     * @param string $id ID елемента
+     * @param string $text Текстовое  содержание
      */
     public function __construct($id, $text = null, $html = false) {
         parent::__construct($id);

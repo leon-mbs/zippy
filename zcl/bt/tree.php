@@ -75,7 +75,7 @@ class Tree extends HtmlComponent implements \Zippy\Interfaces\Requestable
             $js = "   $('#{$this->id}').on('nodeSelected', function(event, node) {  
                    
                    
-                   
+                   beforeZippy('{$this->id}')    
                    
                    var url ='{$url}:sel:' + node.nodeId+':'+ node.zippyid +':'+getExpanded() ";
             if ($this->event->isajax) {
@@ -92,15 +92,17 @@ class Tree extends HtmlComponent implements \Zippy\Interfaces\Requestable
             } else {
                 $js .= "  
                          window.location=url 
+                           
                       ";
 
             }
+            
             $js .= "  });   ";
 
             $js .= "   $('#{$this->id}').on('nodeUnselected ', function(event, node) {  
                    
                    
-                   
+                     
                    
                      url ='{$url}:sel:-1:-1:'+getExpanded() ";
             if ($this->event->isajax) {
@@ -120,7 +122,8 @@ class Tree extends HtmlComponent implements \Zippy\Interfaces\Requestable
                       ";
 
             }
-            $js .= "  });   ";
+            $js .= "  }); 
+              ";
 
 
             WebApplication::$app->getResponse()->addJavaScript($js, true);

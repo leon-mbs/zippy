@@ -19,9 +19,9 @@ class ClickLink extends AbstractLink implements ClickListener, Requestable
 
     /**
      * Конструктор
-     * @param string ID компонента
-     * @param EventReceiver Объект с методом  обработки  события
-     * @param string Имя  метода-обработчика
+     * @param string $id ID компонента
+     * @param EventReceiver $receiver Объект с методом  обработки  события
+     * @param string $handler Имя  метода-обработчика
      */
     public function __construct($id, $receiver = null, $handler = null, $ajax = false) {
         parent::__construct($id);

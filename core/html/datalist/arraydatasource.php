@@ -14,7 +14,7 @@ class ArrayDataSource implements DataSource
 
     /**
      * Консируктор
-     * @param array  Массив  данных или  PropertyBinding
+     * @return array  Массив  данных или  PropertyBinding
      */
     public function getArray() {
         if ($this->data instanceof Binding) {

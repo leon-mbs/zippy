@@ -21,9 +21,9 @@ class DropDownChoice extends HtmlFormDataElement implements ChangeListener, Requ
 
     /**
      * Конструктор
-     * @param mixed  ID
-     * @param array  Массив  значений
-     * @param Текущее значение  елемента
+     * @param mixed $id ID
+     * @param array $optionlist Массив  значений
+     * @param mixed $value Текущее значение  елемента
      */
     public function __construct($id, $optionlist = array(), $value = -1, $bgupdate = false) {
         parent::__construct($id);

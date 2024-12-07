@@ -3,7 +3,6 @@
 namespace Zippy\Html\DataList;
 
 use Zippy\Html\HtmlComponent;
-use Zippy\Interfaces\Paginable;
 use Zippy\Interfaces\EventReceiver;
 use Zippy\Event;
 use Zippy\WebApplication;
@@ -28,8 +27,10 @@ class DataView extends AbstractList implements \Zippy\Interfaces\Requestable
 
     /**
      * Конструктор
-     * @param mixed  ID  компонента
-     * @param mixed   Провадер  данных для  таблицы
+     * @param mixed $id ID  компонента
+     * @param mixed  $DataSource Провадер  данных для  таблицы
+     * @param EventReceiver  $receiver Объект
+     * @param mixed  $handler Обработчик
      */
     public function __construct($id, $DataSource, EventReceiver $receiver, $handler) {
         AbstractList::__construct($id, $DataSource);
@@ -153,7 +154,7 @@ class DataView extends AbstractList implements \Zippy\Interfaces\Requestable
      * Строка выделяется  добавлением CSS класса  заданного
      * методом setSelectedClass
      *
-     * @param mixed  Выделяемая строка
+     * @param DataRow $row Выделяемая строка
      */
     public function setSelectedRow(DataRow $row = null) {
 

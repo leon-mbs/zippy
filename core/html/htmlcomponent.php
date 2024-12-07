@@ -33,7 +33,7 @@ abstract class HtmlComponent
     /**
      * Конструктор
      *
-     * @param string
+     * @param string  $id
      */
 
     public function __construct($id) {
@@ -50,7 +50,7 @@ abstract class HtmlComponent
         //   $this->uid = ++self::$uidcounter; // номер  екземпляра
     }
 
-    public function __toString() {
+    public function __toString() :string{
         $str = get_class($this) . ' ' . $this->id;
         if ($this->owner != null) {
             $str = ' ' . $this->owner . '->' . get_class($this) . ' ' . $this->id;
@@ -60,10 +60,10 @@ abstract class HtmlComponent
 
     /**
      * Установить   аттрибут для  отобюражения   в  HTML тэге
-     * @param string  Имя  атрибута
-     * @param string Значение аттрибута
+     * @param string $name Имя  атрибута
+     * @param string $value Значение аттрибута
      */
-    public function setAttribute($name, $value=null) {
+    public function setAttribute($name, $value=null)  {
 
         $this->attributes[$name] = $value;
         /*
@@ -83,28 +83,29 @@ abstract class HtmlComponent
 
     /**
      * Получить  атрибут
-     * @param string Имя  атрибута
+     * @param string $name Имя  атрибута
      * @return  string
      */
-    public function getAttribute($name) {
+    public function getAttribute(string $name) :string {
         if (isset($this->attributes[$name])) {
             return $this->attributes[$name] instanceof Binding ? $this->attributes[$name]->getValue() : $this->attributes[$name];
         } else {
-            return null;
+            return '';
         }
+        return '';
     }
 
     /**
      * Возвращает список наименований аттрибутов
      * @return array
      */
-    public function getAttributeNames() {
+    public function getAttributeNames() :array{
         return array_keys($this->attributes);
     }
 
     /**
      * Установка  коонтейнера -владельца
-     * @param HtmlContainer Владелец
+     * @param HtmlContainer $owner Владелец
      */
     public function setOwner(HtmlContainer $owner) {
         $this->owner = $owner;
@@ -122,7 +123,7 @@ abstract class HtmlComponent
      *
      * @return  HtmlContainer
      */
-    public function getOwner() {
+    public function getOwner() :null|HtmlContainer {
         return $this->owner;
     }
 
@@ -143,7 +144,7 @@ abstract class HtmlComponent
 
     /**
      *  Возвращает ссылку на объект формы в которую добавлен  компонент
-     * @return  Form
+     * @return  \Zippy\Html\Form\Form
      */
     public function getFormOwner() {
         if ($this->owner == null) {
@@ -159,7 +160,7 @@ abstract class HtmlComponent
     /**
      * Управляет  видимостью  компонента
      * Невидимый  компонент  не  рендерится
-     * @param boolean
+     * @param mixed $visible
      */
     public function setVisible($visible) {
         $this->visible = $visible;
@@ -169,7 +170,7 @@ abstract class HtmlComponent
 
     /**
      * Прверяет  видимость  компонента
-     * @return  boolean
+     * @return  mixed
      */
     public function isVisible() {
         return $this->visible;
@@ -184,7 +185,7 @@ abstract class HtmlComponent
 
     /**
      * Метод  отвечающий  за  рендеринг  компонента
-     * @param MarkupXmlNode
+ 
      */
     public function Render() {
 
@@ -243,7 +244,7 @@ abstract class HtmlComponent
     }
 
     /**
-     * Возвращает  ссылку  на  HTML таг. Используется  библиотека  PHPQuery
+     * Возвращает  ссылку  на  HTML таг. Используется  библиотека   
      */
     protected function getTag()  : \DOMWrap\Element {
         $p = $this->getPageOwner() ;
@@ -309,6 +310,6 @@ abstract class HtmlComponent
         }
     }
  
-    
+  
        
 }

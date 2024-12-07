@@ -9,7 +9,7 @@ class File extends HtmlFormDataElement
 {
     /**
      * Конструктор
-     * @param mixed  ID
+     * @param mixed $id ID
      */
     public function __construct($id, $multy = false) {
         parent::__construct($id);

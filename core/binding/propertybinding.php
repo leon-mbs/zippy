@@ -16,8 +16,8 @@ class PropertyBinding implements Binding
 
     /**
      * Конструктор
-     * @param mixed Объект
-     * @param string  Название  свойства  объекта (должно быть public)
+     * @param mixed $obj
+     * @param string $propertyname  Название  свойства  объекта (должно быть public)
      *
      * class Myobj
      * {

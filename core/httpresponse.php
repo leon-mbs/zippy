@@ -27,7 +27,7 @@ class HttpResponse
      * Формирует  выходной  поток  данных
      * @return string
      */
-    public function output() {
+    public function output():string {
         if (strlen($this->redirect) > 0) {
             header("Location: " . $this->redirect);
             // echo "<script>window.location='{$this->redirect}'</script>";
@@ -35,7 +35,7 @@ class HttpResponse
         }
         if (WebApplication::$app->getRequest()->isBinaryRequest() == true) {
             // вывод  осуществляет  адресуемый   компонент
-            return;
+            return '';
         }
 
         Header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
@@ -51,7 +51,7 @@ class HttpResponse
                Header("Content-Type: text/javascript;charset=UTF-8");
             }
             echo $this->content;
-            return;
+            return '';
         }
         Header("Content-Type: text/html;charset=UTF-8");
 
@@ -67,6 +67,7 @@ class HttpResponse
             return;
         } */
         echo $this->content;
+        return '';
     }
 
     /**
@@ -110,8 +111,8 @@ class HttpResponse
 
     /**
      * Вставляет  JavaScript  в  конец   выходного  потока страницы
-     * @param string  Код  скрипта
-     * @param boolean Если  true  - вставка  после  загрузки (onload) документа в  браузер
+     * @param string $js Код  скрипта
+     * @param mixed $docready Если  true  - вставка  после  загрузки (onload) документа в  браузер
      */
     public function addJavaScript($js, $docready = false) {
 
@@ -126,7 +127,7 @@ class HttpResponse
      * Возвращает  результирующий  JavaScript  код  при  формировании  выходного  HTML  потока
      * @return  string JavaScript  код
      */
-    private function getJS() {
+    private function getJS() :string{
 
         if (strlen($this->JSrenderDocReady . $this->JSrender) == 0) {
             return "";
@@ -155,7 +156,7 @@ class HttpResponse
      *  Возвращает для  дочерних елементов базовую  часть  URL с  номером и  версией страницы
      * @return string
      */
-    final public function getBaseUrl() {
+    final public function getBaseUrl() :string{
         $pagename = get_class(WebApplication::$app->getCurrentPage());
         $pagename = str_replace("\\", "/", $pagename);
         //  return $this->getHostUrl() . "/index.php?q=p:" . $pagename  ;
@@ -167,8 +168,8 @@ class HttpResponse
      * Создает  новый  экземпляр  страницы  по  имени  класса  страницы
      * делает  ее  текущей и  перенаправляет  на  нее  HTTP запрос с  клиента
      * (клиентский   редирект, сбрасывающий   адресную  строку  браузера).
-     * @param string Имя класса  страницы
-     * @param array массив параметров страницы
+     * @param string $name Имя класса  страницы
+     * @param array $arg1 массив параметров страницы
      *
      */
     final public function Redirect($name, $arg1 = null, $arg2 = null, $arg3 = null, $arg4 = null, $arg5 = null) {
@@ -191,7 +192,7 @@ class HttpResponse
      *
      * @return string
      */
-    final public function getHostUrl() {
+    final public function getHostUrl() :string{
         $http = 'http';
         if (isset($_SERVER['HTTPS']) &&  strtolower($_SERVER['HTTPS']) !== 'off') {
             $http = 'https';

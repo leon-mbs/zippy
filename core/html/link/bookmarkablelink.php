@@ -15,8 +15,8 @@ class BookmarkableLink extends AbstractLink
 
     /**
      * Конструктор
-     * @param string ID компонента
-     * @param string Адрес  ссылки
+     * @param string $id ID компонента
+     * @param string $link Адрес  ссылки
      */
     public function __construct($id, $link = "") {
         AbstractLink::__construct($id);

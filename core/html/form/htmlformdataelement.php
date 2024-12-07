@@ -15,7 +15,7 @@ abstract class HtmlFormDataElement extends HtmlComponent implements SubmitDataRe
 
     /**
      * Устанавливает  значение данных  объекта
-     * @param mixed  Объект данных или  PropertyBinding
+     * @param mixed $value Объект данных или  PropertyBinding
      */
     public function setValue($value) {
         if ($this->value instanceof Binding && !($value instanceof Binding)) {

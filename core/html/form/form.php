@@ -18,8 +18,8 @@ class Form extends HtmlContainer
 
     /**
      * Конструктор
-     * @param string ШВ
-     * @param string  Тип запроса get  или  post
+     * @param string $id 
+     * @param string $method Тип запроса get  или  post
      */
     public function __construct($id, $method = "post") {
         parent::__construct($id);
@@ -75,8 +75,8 @@ class Form extends HtmlContainer
 
     /**
      * Устанавливает  обработчик  события  при  отправке  формы
-     * @param EventReceiver Объект  метод  которого  является  обработчиком  события
-     * @param string Имя  метода - обработчика
+     * @param EventReceiver $receiver Объект  метод  которого  является  обработчиком  события
+     * @param string $handler Имя  метода - обработчика
      */
     public function onSubmit(EventReceiver $receiver, $handler) {
         $this->event = new Event($receiver, $handler);
