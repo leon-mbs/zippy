@@ -44,11 +44,11 @@ abstract class HtmlContainer extends HtmlComponent implements Requestable
     /**
      * Получить  дочерний   компонент
      *
-     * @param string $id ID компонента
-     * @param mixed $desc Если  false  - искать  только непосредственнно  вложенных
+     * @param string  ID компонента
+     * @param boolean Если  false  - искать  только непосредственнно  вложенных
      * @return HtmlComponent
      */
-    public function getComponent($id, $desc = true) :null|HtmlComponent {
+    public function getComponent($id, $desc = true) {
         if ($desc == false) {
             return $this->components[$id];
         } else {
@@ -80,10 +80,10 @@ abstract class HtmlContainer extends HtmlComponent implements Requestable
      * $this->msg->setValue();
      *
      *
-     * @param string $id ID компонента
-        
+     * @param string  ID компонента
+     * @return HtmlComponent         *
      */
-    final public function __get($id)   {
+    final public function __get($id) {
 
         if (!isset($this->components[$id])) {
             $m = sprintf(ERROR_NOT_FOUND_CHILD, get_class($this), $this->id, $id);
@@ -162,7 +162,7 @@ abstract class HtmlContainer extends HtmlComponent implements Requestable
 
     /**
      * Возвращает  массив   вложенных  компонентов
-     * @param mixed  $all Если  true, возвращает  со всех  уровней   вложения
+     * @param boolean Если  true, возвращает  со всех  уровней   вложения
      */
     public function getChildComponents($all = false) {
         if ($all == false) {
@@ -184,15 +184,4 @@ abstract class HtmlContainer extends HtmlComponent implements Requestable
         return $list;
     }
 
-     /**
-     * алиас на getComponent
-     * 
-     * @param mixed $id
-     * @param mixed $desc
- 
-     */
-    public function _c($id, $desc = true)   {
-         return $this->getComponent($id,$desc) ;
-    }
-       
 }

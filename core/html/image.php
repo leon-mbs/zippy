@@ -18,8 +18,8 @@ class Image extends HtmlComponent implements \Zippy\Interfaces\Requestable, \Zip
 
     /**
      * Конструктор
-     * @param string $id ID  компонента
-     * @param string $src адрес  изображения
+     * @param string ID  компонента
+     * @param string  адрес  изображения
      */
     public function __construct($id, $src = "") {
         parent::__construct($id);

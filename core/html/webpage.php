@@ -22,7 +22,7 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
     private $_ajax;
     private $_ankor = '';
     public $_tvars = array();  //переменные  для  шаблонизатора Mustache
-    protected $_ajaxblocks = [];  //список для  серверного ренеринга  при  AJAX
+    protected $_ajaxblocks = [];  //список для  серверного ренеринга  при фофч  pfghjct
     //  public $zarr  = array();
 
     /**
@@ -38,6 +38,7 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
     /**
      * Вызывается   из  WebApplication при обработке  HTTP запроса
      *
+     * @param array  Запрос  ввиде массива  элементов
      * @see WebApplication
      */
     public function RequestHandle() {
@@ -74,8 +75,8 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
      *   Вызывается в  реализации  страницы  после  AJAX запроса
      * для   елементов которые  должны  перерендерится на   клиенте
      *
-     * @param mixed  $components  или массив id (значений   атттрибута  zippy) компонентов
-     * @param string $js Произвольный JavaScript код для  выполнения  на  клиенте после Ajax вызова
+     * @param mixed  id  или массив id (значений   атттрибута  zippy) компонентов
+     * @param string Произвольный JavaScript код для  выполнения  на  клиенте после Ajax вызова
      *
      * @see AjaxRender
      */
@@ -225,15 +226,15 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
         $this->_ankor = $name;
     }
 
-    protected function setTitle($title) {
+    public function setTitle($title) {
         $this->_title = $title;
     }
 
-    protected function setDescription($description) {
+    public function setDescription($description) {
         $this->_description = $description;
     }
 
-    protected function setKeywords($keywords) {
+    public function setKeywords($keywords) {
         $this->_keywords = $keywords;
     }
 

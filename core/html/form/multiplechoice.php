@@ -14,9 +14,8 @@ class MultipleChoice extends HtmlFormDataElement
 
     /**
      * Конструкт
-     * @param mixed  $id
-     * @param mixed $data  Модель данных
-     * @param mixed $optionlist  
+     * @param mixed  ID
+     * @param mixed  Модель данных
      */
     public function __construct($id, $data=array(), $optionlist=array()) {
         parent::__construct($id);

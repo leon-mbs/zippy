@@ -18,9 +18,9 @@ class SubmitLink extends AbstractLink implements ClickListener, Requestable
 
     /**
      * Конструктор
-     * @param string $id ID компонента
-     * @param EventReceiver $receiver Объект с методом  обработки  события
-     * @param string $handler Имя  мтода-обработчика
+     * @param string ID компонента
+     * @param EventReceiver Объект с методом  обработки  события
+     * @param string Имя  мтода-обработчика
      */
     public function __construct($id, EventReceiver $receiver = null, $handler = null, $ajax = false) {
         parent::__construct($id);

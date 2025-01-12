@@ -3,11 +3,11 @@
 namespace Zippy\Html\Link;
 
 use Zippy\WebApplication;
+use Zippy\HtpRequest;
 use Zippy\Html\HtmlComponent;
 use Zippy\Interfaces\ClickListener;
 use Zippy\Interfaces\Requestable;
 use Zippy\Interfaces\EventReceiver;
-use Zippy\HttpRequest;
 use Zippy\Event;
 
 /**
@@ -23,8 +23,8 @@ class LinkList extends HtmlComponent implements ClickListener, Requestable
 
     /**
      * Конструктор
-     * @param string $id ID компонента
-     * @param string $delimiter Разделитель  между ссылками
+     * @param string ID компонента
+     * @param string Разделитель  между ссылками
      */
     public function __construct($id, $delimiter = ' ') {
         parent::__construct($id);
@@ -37,7 +37,6 @@ class LinkList extends HtmlComponent implements ClickListener, Requestable
     public function RenderImpl() {
         $url = $this->owner->getURLNode() . "::" . $this->id;
 
-        $_BASEURL = "";
         $out = "";
         for ($i = 1; $i <= count($this->list); $i++) {
             $item = $this->list[$i];
@@ -94,9 +93,9 @@ class LinkList extends HtmlComponent implements ClickListener, Requestable
 
     /**
      * Добавляет к  списку аналог ClickLink
-     * @param mixed $value Значение  привязанное  к  ссылке
-     * @param string $caption Текст  ссылки
-     * @param array $attributes список   аттрибутов
+     * @param mixed Значение  привязанное  к  ссылке
+     * @param string Текст  ссылки
+     * @param array список   аттрибутов
      */
     public function AddClickLink($value, $caption, $attributes = array()) {
         $this->list[count($this->list) + 1] = array('type' => 'click', 'value' => $value, 'caption' => $caption, 'attributes' => $attributes, 'selected' => false, 'disabled' => false);
@@ -104,9 +103,9 @@ class LinkList extends HtmlComponent implements ClickListener, Requestable
 
     /**
      * Добавляет к  списку аналог BookmarkableLink
-     * @param mixed $href Адрес  ссылки
-     * @param string $caption Текст  ссылки
-     * @param array $attributes список   аттрибутов
+     * @param mixed Адрес  ссылки
+     * @param string Текст  ссылки
+     * @param array список   аттрибутов
      */
     public function AddBookmarkableLink($href, $caption, $attributes = array()) {
         $this->list[count($this->list) + 1] = array('type' => 'bookmarkable', 'href' => $href, 'caption' => $caption, 'attributes' => $attributes, 'selected' => false, 'disabled' => false);
@@ -114,10 +113,10 @@ class LinkList extends HtmlComponent implements ClickListener, Requestable
 
     /**
      * Добавляет к  списку аналог RedirectLink
-     * @param mixed $page Страница
-     * @param array $params список  параметров  страницы
-     * @param string $caption Текст ссылки
-     * @param array $attributes список аттрибутов
+     * @param mixed Страница
+     * @param array список  параметров  страницы
+     * @param string Текст ссылки
+     * @param array список аттрибутов
      */
     public function AddRedirectLink($page, $params, $caption, $attributes = array(), $bookmarkable = true, $encode = false) {
         $this->list[count($this->list) + 1] = array('type' => 'redirect', 'page' => $page, 'params' => $params, 'caption' => $caption, 'attributes' => $attributes, 'bookmarkable' => $bookmarkable, 'encode' => $encode, 'selected' => false, 'disabled' => false);
@@ -172,7 +171,7 @@ class LinkList extends HtmlComponent implements ClickListener, Requestable
 
     /**
      * Устанавливает  пункт  выделенным.
-     * @param mixed $number Номер пункта
+     * @param mixed Номер пункта
      */
     public function setSelected($number) {
 
@@ -186,7 +185,7 @@ class LinkList extends HtmlComponent implements ClickListener, Requestable
 
     /**
      * Устанавливает  пункт  как  текст
-     * @param mixed $number Номер пункта
+     * @param mixed Номер пункта
      */
     public function setDisabled($number) {
         for ($i = 1; $i <= count($this->list); $i++) {

@@ -5,7 +5,7 @@ namespace Zippy\Html\DataList;
 use Zippy\Html\HtmlComponent;
 use Zippy\Interfaces\Requestable;
 use Zippy\WebApplication;
-use Zippy\HttpRequest;
+use Zippy\HtpRequest;
 use Zippy\Interfaces\EventReceiver;
 use Zippy\Event;
 
@@ -24,11 +24,11 @@ class Pager extends HtmlComponent implements Requestable
 
     /**
      * Конструктор
-     * @param string $id
-     * @param mixed $datalist Объект  использующий  paginator
-     * @param mixed $ajax исппользовать  ajax
+     * @param string ID
+     * @param DataList Объект  использующий  paginator
+     * @param ajax исппользовать  ajax
      */
-    public function __construct($id,  $datalist, $ajax = false) {
+    public function __construct($id, \Zippy\Html\DataList\AbstractList $datalist, $ajax = false) {
         parent::__construct($id);
         $this->datalist = $datalist;
         $this->ajax = $ajax;

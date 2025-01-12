@@ -21,7 +21,8 @@ class PageManager
 
     /**
      * Добавляет новую  страницу  (объект  WebPage) в  список.
-     * @param WebPage $page страница
+     * @param WebPage страница
+     * @return  int номер  страницы
      * @deprecated
      */
     final public function putPage(WebPage $page) {
@@ -47,7 +48,9 @@ class PageManager
     }
     /**
      * Обновляет  персистентные  данные  страницы.
-     * @param WebPage $page Экземпляр класса страницы
+     * @param WebPage  Экземпляр класса страницы
+     * @param int  Номер  страницы
+     * @param mixed  Версия  страницы
      */
     final public function updatePage(WebPage $page) {
 

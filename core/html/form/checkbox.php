@@ -18,8 +18,8 @@ class CheckBox extends HtmlFormDataElement implements ChangeListener, Requestabl
 
     /**
      * Конструктор
-     * @param mixed  $id
-     * @param mixed $value Значение елеента  или  поле  привязанного объекта
+     * @param mixed  ID
+     * @param Значение елеента  или  поле  привязанного объекта
      */
     public function __construct($id, $value = false) {
         parent::__construct($id);
@@ -90,7 +90,7 @@ class CheckBox extends HtmlFormDataElement implements ChangeListener, Requestabl
 
     /**
      * Устанавливает  checkbox
-     * @param mixed $checked
+     * @param boolean
      */
     public function setChecked($checked) {
         $checked = $checked == 1 ? true : $checked;

@@ -101,6 +101,7 @@ class HttpRequest
 
     /**
      * Возвращает  индекс  страницы
+     * @return int
      */
     public function getRequestIndex() {
         return  str_replace("/", "\\", $this->pageindex);

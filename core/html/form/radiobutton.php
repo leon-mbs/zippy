@@ -21,10 +21,10 @@ class RadioButton extends HtmlFormDataElement implements ChangeListener, Request
 
     /**
      * Конструктор
-     * @param mixed $id ID
-     * @param PropertyBinding $binding привязка выбранного  значения для  группы
-     * @param mixed $itemvalue значение для  радиокнопки
-     * @param mixed $groupname устанавливает имя  группы  для  радиокнопки. Если  не  задаоно имя  группы  берется
+     * @param mixed  ID
+     * @param mixed  привязка выбранного  значения для  группы
+     * @param mixed  значение для  радиокнопки
+     * @param mixed  устанавливает имя  группы  для  радиокнопки. Если  не  задаоно имя  группы  берется
      * с  $binding.
      */
     public function __construct($id, PropertyBinding $binding, $itemvalue, $groupname = null) {

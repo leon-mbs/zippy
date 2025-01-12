@@ -16,11 +16,11 @@ class Event
 
     /**
      * Конструктор
-     * @param EventReceiver $receiver Объект  метод  которого  является  обработчиком  события
-     * @param string $handler Имя  метода - обработчика
+     * @param EventReceiver Объект  метод  которого  является  обработчиком  события
+     * @param string Имя  метода - обработчика
      */
 
-    public function __construct(EventReceiver $receiver, string $handler) {
+    public function __construct(EventReceiver $receiver, $handler) {
         $this->receiver = $receiver;
 
 
@@ -30,8 +30,8 @@ class Event
 
     /**
      * Метод, вызывающий  обработчик  события
-     * @param mixed $sender Объект,  инициирующий  обработку   события
-     * @param array $params список  параметров для обработчика
+     * @param Объект,  инициирующий  обработку   события
+     * @param array список  параметров для обработчика
      */
     public function onEvent($sender, $params = null) {
         $h = $this->handler;

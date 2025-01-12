@@ -14,8 +14,8 @@ class RadioList extends HtmlFormDataElement
 
     /**
      * Конструктор
-     * @param string $id ID компонента
-     * @param string $delimiter Разделитель  между кнопками
+     * @param string ID компонента
+     * @param string Разделитель  между кнопками
      */
     public function __construct($id, $delimiter = '') {
         parent::__construct($id);
@@ -24,9 +24,9 @@ class RadioList extends HtmlFormDataElement
 
     /**
      * Добавить  кнопку в  список
-     * @param int $value Значение
-     * @param string $caption Текст возле  кнопки
-     * @param array $attributes Список   аттрибутов
+     * @param int  Значение
+     * @param string Текст возле  кнопки
+     * @param array Список   аттрибутов
      */
     public function AddRadio($value, $caption, $attributes = array()) {
         $this->list[] = array('value' => $value, 'caption' => $caption, 'attributes' => $attributes);
@@ -34,7 +34,7 @@ class RadioList extends HtmlFormDataElement
 
     /**
      * Устанавливает значение
-     * @param mixed $value значение
+     * @param mixed значение
      */
     public function setChecked($value) {
         $this->selectedvalue = $value;
@@ -42,6 +42,7 @@ class RadioList extends HtmlFormDataElement
 
     /**
      * Возвращает  значение
+     * @param mixed  Номер  в  списке
      */
     public function getChecked() {
         return $this->selectedvalue;
