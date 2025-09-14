@@ -66,8 +66,8 @@ abstract class HtmlComponent
      */
     public function setAttribute($name, $value=null) {
 
-        if($value==null) {
-            $this->delattributes[] = $name;    
+        if($value===null) {
+           $this->delattributes[] = $name;    
         } else {
             $this->attributes[$name] = $value;
         }
