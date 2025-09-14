@@ -20,6 +20,7 @@ abstract class HtmlComponent
     protected $disabled = false;
     protected $visible = true;
     private $attributes = array();
+    private $delattributes = array(); //те что надо  удалить
     //  private $cssstyle = "";
     //   private $cssclass = "";
     protected $owner = null;
@@ -65,20 +66,13 @@ abstract class HtmlComponent
      */
     public function setAttribute($name, $value=null) {
 
-        $this->attributes[$name] = $value;
-        /*
-
-        if(\Zippy\WebApplication::$app->getRequest()->isAjaxRequest()) {
-
-            if(strlen($value) >0) {
-                $js= "$('#{$this->id}').attr('{$name}','{$value}')" ;    
-            } else {
-                $js= "$('#{$this->id}').attr('{$name}',null)" ;    
-            }
-
-            \Zippy\WebApplication::$app->getResponse()->addAjaxResponse($js) ;
-        }        
-         */
+        if($value==null) {
+            $this->delattributes[] = $name;    
+        } else {
+            $this->attributes[$name] = $value;
+        }
+        
+ 
     }
 
     /**
@@ -233,7 +227,7 @@ abstract class HtmlComponent
         foreach ($this->attributes as $name => $value) {
             $attr = $this->getAttribute($name);
             
-            if (strlen($attr) == 0) {
+            if (in_array($name,$this->delattributes)) {
                 $HtmlTag->removeAttr($name);
             }  else{
                 $HtmlTag->attr($name, $attr);    
