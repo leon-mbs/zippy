@@ -4,7 +4,7 @@
   Компонентный событийно-ориентированный  PHP  фреймворк для  быстрой  разработки 
 веб  приложений.
 
-Домашняя страница:  [https://zippy.com.ua/frm](https://zippy.com.ua/frm)
+Домашняя страница:  [https://frm.zippy.com.ua/](https://frm.zippy.com.ua/)
 
 [Скачать](https://zippy.com.ua/download/frm-full.zip) в  виде  минимального  приложения.
 
