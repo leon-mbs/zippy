@@ -11,10 +11,10 @@
     
    
     "require": {
-         "php": "^8.0.0",
-         "mustache/mustache": "v2.14.2",
+         "php": "^8.1.0",
+         "mustache/mustache": "~v3.0.0",
          "leon-mbs/zdb": "~1.5.13",
-         "scotteh/php-dom-wrapper": "3.0.0"   
+         "scotteh/php-dom-wrapper": "~3.0.0"   
 
     },
 
