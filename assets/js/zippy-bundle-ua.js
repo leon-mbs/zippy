@@ -16782,7 +16782,6 @@ fetch(q)
     return response.text();
   })
   .then((data) => {
-          
         try{
                eval(data);
         } catch(err) {
@@ -16799,8 +16798,22 @@ fetch(q)
 
 function submitForm(formid, q)
 {
- 
+    var check=true;
+    $('#'+formid+' input ').each(
+        function(index){  
+                   
+            var input = $(this);
+            
+            var v =   input.get(0).reportValidity() 
+            if(!v) { 
+              check =  false;
+            }
+            
+        }
+    );  
     
+     if(check==false) return
+ 
     var f = document.getElementById(formid)  ;
     let formdata = new FormData(f);
     
