@@ -16783,7 +16783,13 @@ fetch(q)
   })
   .then((data) => {
         try{
-               eval(data);
+                    
+               if( isJsonString(data)) {
+                   updateFromAjax(data) 
+               }   else
+               {
+                   eval(data); 
+               }
         } catch(err) {
                 console.log(err)    
                 console.log(data)    
@@ -16814,7 +16820,13 @@ function submitForm(formid, q)
       })
       .then((data) => {
             try{
-                   eval(data);
+                        
+               if( isJsonString(data)) {
+                   updateFromAjax(data) 
+               }   else
+               {
+                   eval(data); 
+               }
             } catch(err) {
                     console.log(err)    
                     console.log(data)    
@@ -16898,4 +16910,54 @@ function  callPageMethod(method,params,postdata,callback =null   , callerror=nul
             }             
           });  
 
+}
+
+
+
+function isJsonString(str) {
+    try {
+        JSON.parse(str);
+    } catch (e) {
+        return false;
+    }
+    return true;
+}
+
+// ajax  ответ для обновления  елементов
+function updateFromAjax(str) {
+    try {
+      var arr = JSON.parse(str);
+      for (const c of arr) {
+      
+         
+         if(c.type == "Label"){
+             if(c.ishtml) {
+                $("#"+c.type).html(c.data)   
+             }  else{
+                $("#"+c.id).text(c.data)   
+             }
+         }
+         if(c.type == "TextInput"){
+             $("#"+c.id).val(c.data)   
+         }
+         if(c.type == "TextArea"){
+             $("#"+c.id).text(c.data)   
+         }
+         if(c.type == "DropDownChoice"){
+             $("#"+c.id).val(c.data)   
+         }
+         if(c.type == "DropDownChoiceOptions"){
+             $("#"+c.id).empty()   
+             for (const o of c.data) {
+                 $("#"+c.id).append("<option value=\""+o.key+"\">"+o.value+"</option>")    
+             }
+         }
+          
+         
+      }      
+        
+    } catch (e) {
+      console.log(e)
+    }
+   
 }

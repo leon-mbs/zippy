@@ -143,6 +143,9 @@ class DropDownChoice extends HtmlFormDataElement implements ChangeListener, Requ
 
         if(\Zippy\WebApplication::$app->getRequest()->isAjaxRequest()) {
             $js= "$('#{$this->id}').val('{$value}')" ;
+            
+            $js=["id"=>$this->id,"type"=>"DropDownChoice","data"=>$value ];
+    
             \Zippy\WebApplication::$app->getResponse()->addAjaxResponse($js) ;
         }
 
@@ -177,11 +180,18 @@ class DropDownChoice extends HtmlFormDataElement implements ChangeListener, Requ
         if(\Zippy\WebApplication::$app->getRequest()->isAjaxRequest()) {
             $list = $this->optionlist instanceof Binding ? $this->optionlist->getValue() : $this->optionlist;
 
-            $js = "$('#{$this->id}').empty();";
+          //  $js = "$('#{$this->id}').empty();";
+            $data=[];
+          
             foreach ($list as $key => $value) {
-                $js .= "$('#{$this->id}').append('<option value=\"{$key}\">{$value}</option>');";
+               // $js .= "$('#{$this->id}').append('<option value=\"{$key}\">{$value}</option>');";
+               $data[]=['key'=>$key,'value'=> str_replace("'","`",  $value)   ];
             }
 
+            $js=["id"=>$this->id,"type"=>"DropDownChoiceOptions","data"=>$data ];
+    
+            
+            
             \Zippy\WebApplication::$app->getResponse()->addAjaxResponse($js) ;
         }
 

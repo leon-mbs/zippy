@@ -17,6 +17,7 @@ class HttpResponse
 
     private $redirect = "";
     public $page404 = null;
+    private $ajaxanswer = [];
 
     public function __construct() {
         //$this->setRequestIndex(WebApplication::$app->getRequest()->getRequestIndex())
@@ -44,8 +45,13 @@ class HttpResponse
         Header("Last-Modified: Mon, 26 Jul 2100 05:00:00 GMT");
 
         if (WebApplication::$app->getRequest()->isAjaxRequest() == true) {
+            
+            if( count($this->ajaxanswer) > 0) {  //обновление компонентов  по  ajax
+                $this->content = json_encode($this->ajaxanswer, JSON_UNESCAPED_UNICODE); 
+            }
+            
             $this->content = trim($this->content) ;
-            if(strpos($this->content,"{")===0)  {
+            if(strpos($this->content,"{")===0  || strpos($this->content,"[")===0 )  {
                Header("Content-Type: application/json;charset=UTF-8");
             }   else {
                Header("Content-Type: text/javascript;charset=UTF-8");
@@ -104,7 +110,10 @@ class HttpResponse
      * @param mixed $js
      */
     public function addAjaxResponse($js) {
-
+        if(is_array($js) ){
+           $this->ajaxanswer[]=$js;
+           return; 
+        }
         $this->content .= ($js . " \n");
     }
 

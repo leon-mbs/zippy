@@ -16782,7 +16782,15 @@ fetch(q)
     return response.text();
   })
   .then((data) => { 
-   eval(data);
+
+       if( isJsonString(data)) {
+           updateFromAjax(data) 
+       }   else
+       {
+           eval(data); 
+       }
+            
+      
   })
    .catch(function (error) {
             console.log('error', error)
@@ -16808,7 +16816,13 @@ function submitForm(formid, q)
         return response.text();
       })
       .then((data) => {                
-       eval(data);
+           if( isJsonString(data)) {
+               updateFromAjax(data) 
+           }   else
+           {
+               eval(data); 
+           }
+            
       }) 
       .catch(function (error) {
             console.log('error', error)
@@ -16888,4 +16902,43 @@ function  callPageMethod(method,params,postdata,callback =null   , callerror=nul
             }             
           });  
 
+}
+
+// ajax  ответ для обновления  елементов
+function updateFromAjax(str) {
+    try {
+      var arr = JSON.parse(str);
+      for (const c of arr) {
+      
+         
+         if(c.type == "Label"){
+             if(c.ishtml) {
+                $("#"+c.type).html(c.data)   
+             }  else{
+                $("#"+c.id).text(c.data)   
+             }
+         }
+         if(c.type == "TextInput"){
+             $("#"+c.id).val(c.data)   
+         }
+         if(c.type == "TextArea"){
+             $("#"+c.id).text(c.data)   
+         }
+         if(c.type == "DropDownChoice"){
+             $("#"+c.id).val(c.data)   
+         }
+         if(c.type == "DropDownChoiceOptions"){
+             $("#"+c.id).empty()   
+             for (const o of c.data) {
+                 $("#"+c.id).append("<option value=\""+o.key+"\">"+o.value+"</option>")    
+             }
+         }
+          
+         
+      }      
+        
+    } catch (e) {
+      console.log(e)
+    }
+   
 }
