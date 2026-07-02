@@ -16929,7 +16929,7 @@ function updateFromAjax(str) {
       var arr = JSON.parse(str);
       for (const c of arr) {
       
-         
+        
          if(c.type == "Label"){
              if(c.ishtml) {
                 $("#"+c.type).html(c.data)   
@@ -16951,6 +16951,47 @@ function updateFromAjax(str) {
              for (const o of c.data) {
                  $("#"+c.id).append("<option value=\""+o.key+"\">"+o.value+"</option>")    
              }
+         }
+         if(c.type == "Visible"){
+          
+             if(c.visible == true || c.visible == 1 ) {
+                 $("#"+c.id).show()   
+                   console.log('show'); 
+          
+             }   else {
+                 $("#"+c.id).hide()     
+                   console.log('hide'); 
+          
+             }
+             
+             console.log('[for="'+c.id+'"]'); 
+              
+              
+           
+            
+             $('[for="'+c.id+'"]').each(function(index, element) {
+                 
+                 if(c.visible == true || c.visible == 1 ) {
+                     $(element).show()   
+                 }   else {
+                     $(element).hide()     
+                 }     
+             } )
+             $('[data-label="'+c.id+'"]').each(function(index, element) {
+                  
+              if(c.visible == true || c.visible == 1 ) {
+                     $(element).show()   
+                 }   else {
+                     $(element).hide()     
+                 }     
+             }  )
+                     
+            
+         }
+         if(c.type == "Attribute"){
+            
+             $("#"+c.id).attr(c.attr,c.value)   
+    
          }
           
          

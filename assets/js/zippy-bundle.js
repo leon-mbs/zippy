@@ -16934,7 +16934,47 @@ function updateFromAjax(str) {
              }
          }
           
-         
+         if(c.type == "Visible"){
+          
+             if(c.visible == true || c.visible == 1 ) {
+                 $("#"+c.id).show()   
+                   console.log('show'); 
+          
+             }   else {
+                 $("#"+c.id).hide()     
+                   console.log('hide'); 
+          
+             }
+             
+             console.log('[for="'+c.id+'"]'); 
+              
+              
+           
+            
+             $('[for="'+c.id+'"]').each(function(index, element) {
+                 
+                 if(c.visible == true || c.visible == 1 ) {
+                     $(element).show()   
+                 }   else {
+                     $(element).hide()     
+                 }     
+             } )
+             $('[data-label="'+c.id+'"]').each(function(index, element) {
+                  
+              if(c.visible == true || c.visible == 1 ) {
+                     $(element).show()   
+                 }   else {
+                     $(element).hide()     
+                 }     
+             }  )
+                     
+            
+         }
+         if(c.type == "Attribute"){
+            
+             $("#"+c.id).attr(c.attr,c.value)   
+    
+         }         
       }      
         
     } catch (e) {

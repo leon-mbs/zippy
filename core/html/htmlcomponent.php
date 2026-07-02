@@ -72,7 +72,14 @@ abstract class HtmlComponent
             $this->attributes[$name] = $value;
             unset( $this->delattributes[$name] );
         }
-        
+        if(\Zippy\WebApplication::$app->getRequest()->isAjaxRequest()) {
+            
+             
+            $js=["id"=>$this->id,"type"=>"Attribute","attr"=> $name,"value"=> str_replace("'","`",  $value) ];
+
+
+            \Zippy\WebApplication::$app->getResponse()->addAjaxResponse($js) ;
+        }        
  
     }
 
@@ -159,7 +166,12 @@ abstract class HtmlComponent
     public function setVisible($visible) {
         $this->visible = $visible;
 
-        
+        if(\Zippy\WebApplication::$app->getRequest()->isAjaxRequest()) {
+            
+            $js=["id"=>$this->id,"type"=>"Visible","visible"=> $visible];
+            \Zippy\WebApplication::$app->getResponse()->addAjaxResponse($js) ;
+ 
+        }      
     }
 
     /**

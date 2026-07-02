@@ -31,7 +31,7 @@ class AutocompleteTextInput extends TextInput implements Requestable
         $this->minChars = $minChars;
         $this->timeout = $timeout;
         $this->bgupdate = $bgupdate;
-
+        $this->key=0;
     }
 
     protected function onAdded() {
