@@ -105,7 +105,7 @@ class HttpResponse
     }
 
     /**
-     * Добавляет  JavaScript код для  AJAX ответа
+     * Добавляет  JavaScript код или AJAX для  AJAX ответа
      *
      * @param mixed $js
      */

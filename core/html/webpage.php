@@ -79,6 +79,7 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
      * @param string Произвольный JavaScript код для  выполнения  на  клиенте после Ajax вызова
      *
      * @see AjaxRender
+     * @deprecated
      */
     protected function updateAjax($components, $js = null) {
         $this->addAjaxResponse($js) ;
@@ -282,7 +283,10 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
         $this->_ajaxblock = $a;
     
     }
-   
+    /**
+    * @deprecated    * 
+    */
+    
     final public function updateAjaxHTML() {
          if($this->hasAB()) {
             

@@ -86,7 +86,7 @@ class DataTable extends AbstractList implements Requestable
         }
 
         if ($this->useajax) {
-            WebApplication::$app->getResponse()->addAjaxResponse($this->AjaxAnswer());
+          //  WebApplication::$app->getResponse()->addAjaxResponse($this->AjaxAnswer());
         }
     }
 

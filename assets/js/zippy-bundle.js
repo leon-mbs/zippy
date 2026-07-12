@@ -16974,7 +16974,22 @@ function updateFromAjax(str) {
             
              $("#"+c.id).attr(c.attr,c.value)   
     
+         }   
+         
+      if(c.type == "Function"){
+              if (typeof window[c.name] == 'function') {
+                  if(c.data)  {   
+                    window[c.name](c.data);  
+                  }   else {
+                     window[c.name](); 
+                  }
+                  
+              }   else {
+                  console.log(c.name+' not found') 
+              }
+  
          }         
+               
       }      
         
     } catch (e) {

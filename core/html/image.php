@@ -50,10 +50,8 @@ class Image extends HtmlComponent implements \Zippy\Interfaces\Requestable, \Zip
 
         if(\Zippy\WebApplication::$app->getRequest()->isAjaxRequest()) {
             $_src = $this->getAttribute('src');
-            $js =  "$('#{$this->id}').attr('src','{$_src}')";
-
-
-            \Zippy\WebApplication::$app->getResponse()->addAjaxResponse($js) ;
+            //  $js =  "$('#{$this->id}').attr('src','{$_src}')";
+           // \Zippy\WebApplication::$app->getResponse()->addAjaxResponse($js) ;
         }
 
     }

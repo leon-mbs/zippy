@@ -16,7 +16,8 @@ abstract class WebApplication
     private $currentpage = null;
     public static $app = null;
     public static $dom = null;
-
+    public static $ver = '2.8.0';
+  
     private $reloadPage = false;
     private $request;
     private $response;
