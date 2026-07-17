@@ -9,7 +9,8 @@ use Zippy\WebApplication;
 /**
  * Класс  вывода  табличных данных. Использует  собственное  формирование строк  и  столбцов
  * по  массиву  строк данных.
- * Предназначен  для  тэга TABLE. Может  автоматически  формировать  **пагинатор  и  сортировку.
+ * Предназначен  для  тэга TABLE. Может  автоматически  формировать пагинатор  и  сортировку.
+ * Используется  с  тэгом table
  */
 class DataTable extends AbstractList implements Requestable
 {
@@ -25,11 +26,12 @@ class DataTable extends AbstractList implements Requestable
     private $paginator = false;
     private $useajax = false;
 
-    public function __construct($id, $DataSource, $header = true, $paginator = false, $useajax = false) {
+    public function __construct($id, $DataSource, $header = true, $paginator = false, $useajax = true) {
         AbstractList::__construct($id, $DataSource);
         $this->header = $header;
         $this->paginator = $paginator;
         $this->useajax = $useajax;
+       
     }
 
     /**
@@ -37,7 +39,7 @@ class DataTable extends AbstractList implements Requestable
      */
     final public function RenderImpl() {
         $tag = $this->getTag();
-
+        $tag->attr('id',$this->id);
         $tag->appendWith($this->renderHeader());
         $tag->appendWith($this->renderData());
         $tag->appendWith($this->renderFooter());
@@ -85,12 +87,34 @@ class DataTable extends AbstractList implements Requestable
             $this->setSelectedrow($p[2]);
         }
 
-        if ($this->useajax) {
-          //  WebApplication::$app->getResponse()->addAjaxResponse($this->AjaxAnswer());
+        if(\Zippy\WebApplication::$app->getRequest()->isAjaxRequest()) {
+            $html = $this->renderHeader();
+            $html .= $this->renderData();
+            $html .= $this->renderData();
+          
+            $js=["id"=>$this->id,"type"=>"DataTable","data"=>  str_replace("'","`",  $html)  ];
+            \Zippy\WebApplication::$app->getResponse()->addAjaxResponse($js) ;
         }
     }
 
     /**
+     *  Обновлояет таблицу
+     */
+    final public function Refresh() {
+        $this->Reload();
+        
+        if(\Zippy\WebApplication::$app->getRequest()->isAjaxRequest()) {
+            $html = $this->renderHeader();
+            $html .= $this->renderData();
+            $html .= $this->renderData();
+         
+          
+            $js=["id"=>$this->id,"type"=>"DataTable","data"=> str_replace("'","`",  $html)  ];
+            \Zippy\WebApplication::$app->getResponse()->addAjaxResponse($js) ;
+        } 
+    }
+  
+  /**
      * Устанавливает  обработчик на  событие  прорисовки  ячейки.
      */
     final public function setCellDrawEvent(\Zippy\Interfaces\EventReceiver $receiver, $handler) {
@@ -112,7 +136,7 @@ class DataTable extends AbstractList implements Requestable
             return "";
         }
 
-        $row = "<tr  >";
+        $row = "<thead><tr  >";
 
         foreach ($this->columns as $column) {
 
@@ -143,7 +167,7 @@ class DataTable extends AbstractList implements Requestable
                 $row .= ("<th   {$css} ><span>{$column->title}</span></th>");
             }
         }
-        $row .= "</tr>";
+        $row .= "</tr></thead>";
         return $row;
     }
 
@@ -156,7 +180,7 @@ class DataTable extends AbstractList implements Requestable
             return ""; //"<tr  ><td  align=\"center\" colspan=\"" . count($this->columns) . "\" >" . MSG_DATATABLE_NODATA . "</td></tr>";
         }
         //$rownumber = 0;
-        $rows = "";
+        $rows = "<tbody>";
         foreach ($this->datalist as $item) {     //цикл  по  строкам
             $rownumber = $item->getID();
 
@@ -204,7 +228,9 @@ class DataTable extends AbstractList implements Requestable
             }
             $row .= "</tr>";
             $rows .= $row;
+           
         }
+         $rows .= "</tbody>";
         return $rows;
     }
 
@@ -268,7 +294,7 @@ class DataTable extends AbstractList implements Requestable
         }
 
         $content = "<table  ><tr><td valign='middle'>{$show} строк с  {$countall} &nbsp;&nbsp;&nbsp;&nbsp;</td><td align='right'> {$content}</td></tr></table>";
-        return "<tr ><td class=\"footercell\"  colspan=\"" . count($this->columns) . "\" >{$content}</ul></td></tr>";
+        return "<tfoot><tr ><td class=\"footercell\"  colspan=\"" . count($this->columns) . "\" >{$content}</ul></td></tr></tfoot>";
     }
 
     /**

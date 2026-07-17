@@ -16964,11 +16964,7 @@ function updateFromAjax(str) {
           
              }
              
-             console.log('[for="'+c.id+'"]'); 
               
-              
-           
-            
              $('[for="'+c.id+'"]').each(function(index, element) {
                  
                  if(c.visible == true || c.visible == 1 ) {
@@ -16991,6 +16987,11 @@ function updateFromAjax(str) {
          if(c.type == "Attribute"){
             
              $("#"+c.id).attr(c.attr,c.value)   
+    
+         }
+         if(c.type == "DataTable"){
+            // console.log(c.data)
+             $("#"+c.id ).html(c.data)   
     
          }
          //пользовательская  функция

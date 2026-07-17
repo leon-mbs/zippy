@@ -16946,9 +16946,7 @@ function updateFromAjax(str) {
           
              }
              
-             console.log('[for="'+c.id+'"]'); 
-              
-              
+                 
            
             
              $('[for="'+c.id+'"]').each(function(index, element) {
@@ -16975,8 +16973,14 @@ function updateFromAjax(str) {
              $("#"+c.id).attr(c.attr,c.value)   
     
          }   
-         
-      if(c.type == "Function"){
+      
+         if(c.type == "DataTable"){
+        
+             $("#"+c.id ).html(c.data)   
+    
+         }
+           
+         if(c.type == "Function"){
               if (typeof window[c.name] == 'function') {
                   if(c.data)  {   
                     window[c.name](c.data);  
