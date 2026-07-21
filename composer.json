@@ -3,6 +3,7 @@
     "description": "Компонентный событийно-ориентированный PHP фреймворк",
     "keywords": [  "framework", "php" ],
     "homepage": "https://zippy.com.ua/frm",
+    "ver": "2.8.2",
 
     "license": "MIT",
    "minimum-stability" : "dev",

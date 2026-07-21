@@ -26,7 +26,7 @@ class DataTable extends AbstractList implements Requestable
     private $paginator = false;
     private $useajax = false;
 
-    public function __construct($id, $DataSource, $header = true, $paginator = false, $useajax = true) {
+    public function __construct($id, $DataSource, $header = true, $paginator = false, $useajax = false) {
         AbstractList::__construct($id, $DataSource);
         $this->header = $header;
         $this->paginator = $paginator;
