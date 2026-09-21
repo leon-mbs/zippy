@@ -75,7 +75,7 @@ abstract class HtmlComponent
         if(\Zippy\WebApplication::$app->getRequest()->isAjaxRequest()) {
             
              
-            $js=["id"=>$this->id,"type"=>"Attribute","attr"=> $name,"value"=> str_replace("'","`",  $value) ];
+            $js=["id"=>$this->id,"type"=>"Attribute","attr"=> $name,"value"=> $value ];
 
 
             \Zippy\WebApplication::$app->getResponse()->addAjaxResponse($js) ;

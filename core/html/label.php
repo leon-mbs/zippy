@@ -62,7 +62,7 @@ class Label extends HtmlComponent
                 $js= "$('#{$this->id}').html('{$text}')";
             }
             
-            $js=["id"=>$this->id,"type"=>"Label","data"=> str_replace("'","`",  $text)  ,"ishtml"=>$this->html];
+            $js=["id"=>$this->id,"type"=>"Label","data"=> $text  ,"ishtml"=>$this->html];
 
 
             \Zippy\WebApplication::$app->getResponse()->addAjaxResponse($js) ;

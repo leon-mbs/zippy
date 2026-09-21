@@ -92,7 +92,7 @@ class DataTable extends AbstractList implements Requestable
             $html .= $this->renderData();
             $html .= $this->renderData();
           
-            $js=["id"=>$this->id,"type"=>"DataTable","data"=>  str_replace("'","`",  $html)  ];
+            $js=["id"=>$this->id,"type"=>"DataTable","data"=>  $html  ];
             \Zippy\WebApplication::$app->getResponse()->addAjaxResponse($js) ;
         }
     }
@@ -109,7 +109,7 @@ class DataTable extends AbstractList implements Requestable
             $html .= $this->renderData();
          
           
-            $js=["id"=>$this->id,"type"=>"DataTable","data"=> str_replace("'","`",  $html)  ];
+            $js=["id"=>$this->id,"type"=>"DataTable","data"=> $html  ];
             \Zippy\WebApplication::$app->getResponse()->addAjaxResponse($js) ;
         } 
     }

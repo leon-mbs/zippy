@@ -24,7 +24,7 @@ class TextArea extends TextInput
         if(\Zippy\WebApplication::$app->getRequest()->isAjaxRequest()) {
             $js= "$('#{$this->id}').text('{$text}')" ;
 
-            $js=["id"=>$this->id,"type"=>"TextArea","data"=>str_replace("'","`",  $text) ];
+            $js=["id"=>$this->id,"type"=>"TextArea","data"=>$text ];
 
             \Zippy\WebApplication::$app->getResponse()->addAjaxResponse($js) ;
         }

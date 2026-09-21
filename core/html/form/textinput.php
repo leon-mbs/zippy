@@ -57,7 +57,7 @@ class TextInput extends HtmlFormDataElement implements ChangeListener, Requestab
         if(\Zippy\WebApplication::$app->getRequest()->isAjaxRequest()) {
            // $js= "$('#{$this->id}').val('{$text}')" ;
 
-            $js=["id"=>$this->id,"type"=>"TextInput","data"=>str_replace("'","`",  $text) ];
+            $js=["id"=>$this->id,"type"=>"TextInput","data"=>$text ];
 
             \Zippy\WebApplication::$app->getResponse()->addAjaxResponse($js) ;
         }

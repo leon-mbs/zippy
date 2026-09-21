@@ -185,7 +185,7 @@ class DropDownChoice extends HtmlFormDataElement implements ChangeListener, Requ
           
             foreach ($list as $key => $value) {
                // $js .= "$('#{$this->id}').append('<option value=\"{$key}\">{$value}</option>');";
-               $data[]=['key'=>$key,'value'=> str_replace("'","`",  $value)   ];
+               $data[]=['key'=>$key,'value'=> $value   ];
             }
 
             $js=["id"=>$this->id,"type"=>"DropDownChoiceOptions","data"=>$data ];

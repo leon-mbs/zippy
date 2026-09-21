@@ -299,8 +299,7 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
                 if($html == null){
                     continue;
                 }
-                $html = str_replace("'","`",$html)  ;
-             //   $b = base64_encode($html) ;
+                // json_encode  сам  экранирует  содержимое  для  вставки  в  JS
                 $b = json_encode($html, JSON_UNESCAPED_UNICODE);
                 
            //     $js  = "var hh = JSON.parse('{$b}')  ";
