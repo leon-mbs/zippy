@@ -80,6 +80,14 @@ abstract class WebApplication
         }
         $name=  $res = str_ireplace( array( '\'', '"',    '<', '>' ), '', $name);
 
+        // Имя  класса  приходит  из  запроса,  поэтому  разрешаем  инстанцировать
+        // только  классы-страницы (наследники WebPage).  Иначе  запрос  мог  бы
+        // создать  произвольный  объект  приложения/vendor  с  подконтрольными
+        // аргументами  конструктора.
+        if (!is_subclass_of($name, \Zippy\Html\WebPage::class)) {
+            $this->response->to404Page();
+            return;
+        }
 
         $classpage = new \ReflectionClass($name);
         $this->currentpage = $classpage->newInstanceArgs($arg1);

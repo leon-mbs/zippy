@@ -62,10 +62,26 @@ class HttpRequest
         // URI формируемый  RedirectLink с  параметром  bookmarkable и кодированием
         if (isset($_REQUEST["r"])) {
             $this->querytype = self::QUERY_PAGE;
-            $p = unserialize(trim(base64_decode($_REQUEST["r"])));
+            // Параметр  'r'  содержит  только  [имя_страницы(string), параметры(array скаляров)].
+            // allowed_classes=false  запрещает  разбор  любых  объектов и  тем  самым  исключает
+            // PHP Object Injection  из  недоверенного  запроса.
+            $p = unserialize(trim(base64_decode($_REQUEST["r"])), ['allowed_classes' => false]);
+
+            if (!is_array($p) || !isset($p[0]) || !is_string($p[0])) {
+                $this->querytype = self::QUERY_INVALID;
+                return;
+            }
+
+            $args = is_array($p[1] ?? null) ? $p[1] : array();
+            foreach ($args as $a) { //параметры страницы  -  только  скаляры
+                if ($a !== null && !is_scalar($a)) {
+                    $this->querytype = self::QUERY_INVALID;
+                    return;
+                }
+            }
 
             $this->request_page = $p[0];
-            $this->request_page_arg = $p[1];
+            $this->request_page_arg = $args;
             return;
         }
         // URI с  именем  класса  страницы и параметрами
