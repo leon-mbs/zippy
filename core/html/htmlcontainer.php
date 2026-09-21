@@ -149,7 +149,12 @@ abstract class HtmlContainer extends HtmlComponent implements Requestable
             $this->components[$child]->RequestHandle();
         } else {
             if($this instanceof \Zippy\Html\WebPage || $this instanceof \Zippy\Html\PageFragment) { //ищем метод
-                if(method_exists($this, $child)) {
+                // Имя  метода  приходит  из  запроса.  Разрешаем  вызывать  только
+                // методы, объявленные  в  самом  приложении (не  в  неймспейсе Zippy\),
+                // иначе  запросом  можно  было  бы  дёрнуть  внутренние  методы
+                // фреймворка (Render, updateAjaxHTML, beforeSaveToSession и  т.п.).
+                if(is_string($child) && $child != '' && method_exists($this, $child)
+                    && strpos((new \ReflectionMethod($this, $child))->getDeclaringClass()->getName(), 'Zippy\\') !== 0) {
                     $this->RequestMethod($child); //webpage methos
 
                 }
