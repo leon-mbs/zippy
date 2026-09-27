@@ -49,7 +49,11 @@ class DataView extends AbstractList implements \Zippy\Interfaces\Requestable
         $this->lastnumber++;
 
         foreach ($list as $item) {           //$datarow = new DataRow($this->id,$list[0]);
-            $datarow = new DataRow($this->id, $item, $this->lastnumber++);
+            $itemid= intval( $item->getID() );
+            if($itemid==0) {
+                $itemid = $this->lastnumber++; 
+            }
+            $datarow = new DataRow($this->id, $item,$itemid  );
             $this->add($datarow);
             if ($this->rowevent instanceof Event) {
                 $this->rowevent->onEvent($datarow); //вызов  обработчика добавляющего  данные  или   елементы  в  строку
