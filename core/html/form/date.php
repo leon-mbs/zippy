@@ -17,17 +17,14 @@ class Date extends TextInput implements Requestable, ChangeListener
     private $min=0;
     private $max=0;
 
-    public function __construct($id, $value = null, $bgupdate = false) {
+    public function __construct($id, $value = null ) {
         parent::__construct($id);
         $this->setDate($value);
-        $this->bgupdate = $bgupdate;
+        
     }
 
     protected function onAdded() {
-        if ($this->bgupdate) {
-            $page = $this->getPageOwner();
-            $this->onChange($page, 'OnBackgroundUpdate', true);
-        }
+        
     }
 
     /**

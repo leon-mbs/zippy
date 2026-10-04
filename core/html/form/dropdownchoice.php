@@ -25,20 +25,17 @@ class DropDownChoice extends HtmlFormDataElement implements ChangeListener, Requ
      * @param array  Массив  значений
      * @param Текущее значение  елемента
      */
-    public function __construct($id, $optionlist = array(), $value = -1, $bgupdate = false) {
+    public function __construct($id, $optionlist = array(), $value = -1 ) {
         parent::__construct($id);
         $this->setValue($value);
 
         $this->defvalue = $value;
         $this->optionlist = $optionlist;
-        $this->bgupdate = $bgupdate;
+        
     }
 
     protected function onAdded() {
-        if ($this->bgupdate) {
-            $page = $this->getPageOwner();
-            $this->onChange($page, 'OnBackgroundUpdate', true);
-        }
+       
     }
 
     /**

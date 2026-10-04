@@ -26,19 +26,16 @@ class AutocompleteTextInput extends TextInput implements Requestable
      * @param Минимальное  количество  символов
      * @param Таймаут в  мс.
      */
-    public function __construct($id, $minChars = 2, $timeout = 100, $bgupdate = false) {
+    public function __construct($id, $minChars = 2, $timeout = 100 ) {
         parent::__construct($id);
         $this->minChars = $minChars;
         $this->timeout = $timeout;
-        $this->bgupdate = $bgupdate;
+     
         $this->key=0;
     }
 
     protected function onAdded() {
-        if ($this->bgupdate) {
-            $page = $this->getPageOwner();
-            $this->onChange($page, 'OnBackgroundUpdate', true);
-        }
+        
     }
 
     public function RenderImpl() {

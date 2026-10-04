@@ -13,9 +13,9 @@ class PageManager
 {
     public const HISTORY_SIZE = 50;
 
-    private $pages = array();
+    private $pages = [];
     private $index = 0;
-    private $pchain = array();
+    private $pchain = [];
     private $curpage = '';
     private $prevpage = '';
 
@@ -31,7 +31,7 @@ class PageManager
 
         $this->pages[++$this->index] = ($page);
         if ($this->index > self::HISTORY_SIZE) {
-            $this->pages[$this->index - self::HISTORY_SIZE] = null;
+           unset( $this->pages[$this->index - self::HISTORY_SIZE] )  ;
         }
 
         $prevpage = $this->unpack($this->pages[$this->index - 1]);
@@ -39,7 +39,7 @@ class PageManager
 
             if (get_class($prevpage) != get_class($page)) {
                 //  если страница  изменилась запоминаем
-
+              
                 $this->pchain[] = get_class($page);
             }
         }
@@ -100,6 +100,14 @@ class PageManager
     }
 
 
+    /**
+     * возвращает класс предыдущей страницы
+     *
+     */
+    public function getPrevPage() {
+        array_pop($this->pchain);
+        return array_pop($this->pchain);
+    }
 
     public function __sleep() {
         //упаковываем страницы
@@ -122,14 +130,6 @@ class PageManager
         // $this->pages = @unserialize(@gzuncompress($this->pages));
     }
 
-    /**
-     * возвращает класс предыдущей страницы
-     *
-     */
-    public function getPrevPage() {
-        array_pop($this->pchain);
-        return array_pop($this->pchain);
-    }
 
 
     private function pack($page) {

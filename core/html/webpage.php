@@ -22,7 +22,7 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
     private $_ajax;
     private $_ankor = '';
     public $_tvars = array();  //переменные  для  шаблонизатора Mustache
-    protected $_ajaxblocks = [];  //список для  серверного ренеринга  при фофч  pfghjct
+ //   protected $_ajaxblocks = [];  //список для  серверного ренеринга  при фофч  pfghjct
     //  public $zarr  = array();
 
     /**
@@ -42,12 +42,17 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
      * @see WebApplication
      */
     public function RequestHandle() {
-        $this->_ajaxblock = [];
-        $this->beforeRequest();
+      //  $this->_ajaxblock = [];
+         
+        $isajax=  WebApplication::$app->getRequest()->isAjaxRequest() ;
+        if(!$isajax) {
+           $this->beforeRequest();
+        }
 
         parent::RequestHandle();
-
-        $this->afterRequest();
+        if(!$isajax) {
+           $this->afterRequest();
+        }
     }
 
     /**
@@ -280,7 +285,7 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
    
  
     final public function updateAjaXBlocks($a) {
-        $this->_ajaxblock = $a;
+    //    $this->_ajaxblock = $a;
     
     }
     /**
@@ -317,7 +322,7 @@ abstract class WebPage extends HtmlContainer implements EventReceiver
     }
    
     final public function hasAB() {
-       return count($this->_ajaxblock);
+     //  return count($this->_ajaxblock);
     }
      
 }

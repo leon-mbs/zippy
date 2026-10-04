@@ -159,7 +159,7 @@ class DataView extends AbstractList implements \Zippy\Interfaces\Requestable
      *
      * @param mixed  Выделяемая строка
      */
-    public function setSelectedRow(DataRow $row = null) {
+    public function setSelectedRow(  $row = null) {
 
         $this->selectedRow = $row;
 

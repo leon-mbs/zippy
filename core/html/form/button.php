@@ -23,7 +23,7 @@ class Button extends HtmlComponent implements ClickListener, Requestable
      * @param EventReceiver Объект с методом  обработки  события
      * @param string Имя  метода-обработчика
      */
-    public function __construct($id, EventReceiver $receiver = null, $handler = null, $ajax = true) {
+    public function __construct($id,   $receiver = null, $handler = null, $ajax = true) {
         parent::__construct($id);
 
         if (is_object($receiver) && strlen($handler) > 0) {
