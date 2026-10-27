@@ -37,20 +37,20 @@ class ClickLink extends AbstractLink implements ClickListener, Requestable
     public function RenderImpl() {
         parent::RenderImpl();
 
-
+        $this->setAttribute("href", "javascript:void(0);");
+     
         if ($this->disabled == true) {
-            $this->setAttribute("href", "");
+           // $this->setAttribute("href", "");
             //$this->setAttribute("onclick", "");
             return;
         }
         if ($this->event == null) {
-            $this->setAttribute("href", "");
+          //  $this->setAttribute("href", "");
             //  $this->setAttribute("onclick", "");
             return;
         }
 
-        $this->setAttribute("href", "javascript:void(0);");
-        if ($this->event->isajax == false) {
+       if ($this->event->isajax == false) {
             $url = $this->owner->getURLNode() . "::" . $this->id;
             $this->setAttribute("onclick", "if(beforeZippy('{$this->id}') ==false) return false;window.location='{$url}';event.returnValue=false; return false;");
         } else {
