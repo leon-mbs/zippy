@@ -11,84 +11,59 @@ use Zippy\Html\WebPage;
  */
 class PageManager
 {
-    public const HISTORY_SIZE = 50;
+ 
 
     private $pages = [];
-    private $index = 0;
-    private $pchain = [];
-    private $curpage = '';
-    private $prevpage = '';
-
+    private $currpage ='' ;
+    private $prevpage ='' ;
+  
+ 
     /**
-     * Добавляет новую  страницу  (объект  WebPage) в  список.
-     * @param WebPage страница
-     * @return  int номер  страницы
-     * @deprecated
-     */
-    final public function putPage(WebPage $page) {
-        $page->beforeSaveToSession();
-
-
-        $this->pages[++$this->index] = ($page);
-        if ($this->index > self::HISTORY_SIZE) {
-           unset( $this->pages[$this->index - self::HISTORY_SIZE] )  ;
-        }
-
-        $prevpage = $this->unpack($this->pages[$this->index - 1]);
-        if ($prevpage instanceof \Zippy\Html\WebPage) {
-
-            if (get_class($prevpage) != get_class($page)) {
-                //  если страница  изменилась запоминаем
-              
-                $this->pchain[] = get_class($page);
-            }
-        }
-
-        return $this->index;
+    * 
+    * 
+    * @param WebPage $page
+    */
+    final public function addPage(WebPage $page) {
+         $this->prevpage = $this->currpage ;  
+         $pname = get_class($page)  ;
+         $this->currpage = $pname;
+         $this->pages[$pname] = $page;   
     }
     /**
      * Обновляет  персистентные  данные  страницы.
      * @param WebPage  Экземпляр класса страницы
-     * @param int  Номер  страницы
-     * @param mixed  Версия  страницы
+  
      */
     final public function updatePage(WebPage $page) {
 
         $page->beforeSaveToSession();
-        $pname = get_class($page)    ;
-        if($this->curpage != $pname) {
-            $this->prevpage = $this->curpage;
-            $this->pchain[] = $pname;
-        }
-        $this->curpage = $pname    ;
+       
+        $pname = get_class($page)  ;
+   
         $this->pages[$pname] = $page;
-        return $pname;
+    
     }
     /**
-     * Возвращает  из сессии  страницу  по  номеру   и  версии
-     * @param Integer  Номер  страницы
-     * @param int  Версия  страницы
+     * Возвращает  из сессии   страницу   
+     * @param  Индекс (строковое имя) страницы
      * @return  WebPage   страница
      */
-    final public function getPage($number) {
-        if (isset($this->pages[$number])) {
-
-            if ($this->pages[$number] instanceof WebPage) {
-                $page = ($this->pages[$number]);
-            } else {
-                $page = $this->unpack($this->pages[$number]);
-            }
-
+    final public function getPage($pname) {
+           
+           ;
+   
+           if( !isset( $this->pages[$pname] )) {
+               return null;
+           }
+      
+            $page = $this->unpack($this->pages[$pname]);
+  
 
             if ($page instanceof WebPage) {
                 $page->afterRestoreFromSession();
-            } else {
-                $page = null;
-            }
+            }  
             return $page;
-        }
-
-        return null;
+       
     }
 
     /**
@@ -96,21 +71,22 @@ class PageManager
      * @return  WebPage  страница
      */
     final public function getLastPage() {
-        return array_pop($this->pchain);
+        
+         return $this->unpack( $this->pages[$this->currpage] );
     }
 
-
-    /**
-     * возвращает класс предыдущей страницы
-     *
-     */
-    public function getPrevPage() {
-        array_pop($this->pchain);
-        return array_pop($this->pchain);
+  
+    final public function getPrevPage()  {
+      
+        return $this->unpack( $this->pages[$this->prevpage] );
+ 
     }
+
+  
 
     public function __sleep() {
-        //упаковываем страницы
+       
+                //упаковываем страницы
         $pl = array();
         foreach ($this->pages as $n => $p) {
             if ($p instanceof WebPage) {
@@ -119,24 +95,32 @@ class PageManager
         }
         foreach ($pl as $n) {
             $this->pages[$n] = $this->pack($this->pages[$n]);
-        }
-        return array('pages', 'index', 'pchain','curpage','prevpage');
+        }   
+        
+         
+        return array('pages','currpage','prevpage' );
     }
-
+   /*
     public function __wakeup() {
         if (is_array($this->pages)) {
             return;
         }
-        // $this->pages = @unserialize(@gzuncompress($this->pages));
+      
     }
 
+    */
 
 
     private function pack($page) {
-        return gzcompress(serialize($page));
+      return gzcompress(serialize($page));
     }
 
     private function unpack($page) {
+        if ($page instanceof WebPage) {
+               return $page;
+        }
+       
+       
         $p = @gzuncompress($page);
         if (strlen($p) == 0) {
             return null;

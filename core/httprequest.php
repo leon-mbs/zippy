@@ -33,7 +33,7 @@ class HttpRequest
         $uri = $_SERVER["REQUEST_URI"];
 
 
-        // основной  тип URI генерируемый  компонентами  фреймворка
+        // обработчик - основной  тип URI генерируемый  компонентами  фреймворка
         if (isset($_REQUEST["q"])) {
 
             $this->querytype = self::QUERY_EVENT;
@@ -100,8 +100,8 @@ class HttpRequest
     }
 
     /**
-     * Возвращает  индекс  страницы
-     * @return int
+     * Возвращает  индекс (строковок имя) страницы
+     * @return string
      */
     public function getRequestIndex() {
         return  str_replace("/", "\\", $this->pageindex);

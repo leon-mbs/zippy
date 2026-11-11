@@ -87,7 +87,8 @@ abstract class WebApplication
 
         $this->currentpage->args = $arg1; //запоминаем аргументы страницы
 
-        $this->response->setPageIndex($this->getPageManager()->updatePage($this->currentpage));
+        $this->getPageManager()->addPage($this->currentpage);
+        $this->response->setPageIndex($name  );
     }
 
     /**
@@ -156,10 +157,13 @@ abstract class WebApplication
                 // адресуемого  елемента
                 // $this->output = $this->currentpage->getAjaxAnswer();
 
-                $this->getPageManager()->updatePage($this->currentpage);
+                 $this->getPageManager()->updatePage($this->currentpage);
+                 $this->response->setPageIndex( get_class($this->currentpage));
+              
             } else {
 
-                $this->response->setPageIndex($this->getPageManager()->updatePage($this->currentpage));
+                $this->getPageManager()->updatePage($this->currentpage);
+                $this->response->setPageIndex( get_class($this->currentpage));
                 if ($_SERVER["REQUEST_METHOD"] == "GET") {
                     if ($this->reloadPage == true) { //если  надо  сбросить адресную строку
                         $this->response->toBaseUrl();
@@ -330,15 +334,7 @@ abstract class WebApplication
         return $_SESSION['zippy_pagemanager'];
     }
 
-
-    /**
-     * возвращает имя класса предыдущей страницы
-     *
-     */
-    public function getPrevPage() {
-        return $this->getPageManager()->getPrevPage();
-    }
-
+  
     /**
      * Редирект на  страницу 404
      *
@@ -352,14 +348,9 @@ abstract class WebApplication
      *
      */
     public static function RedirectBack() {
-        $pagename = self::$app->getPageManager()->getPrevPage();
-        $pagename = '\\' . rtrim($pagename, '\\');
-
-        if ($pagename == "\\") {
-            self::$app->response->toIndexPage();
-            return;
-        }
-        self::$app->response->Redirect($pagename, array());
+        $page = self::$app->getPageManager()->getPrevPage();
+    
+        self::$app->response->Redirect($page, array());
     }
 
     /**
