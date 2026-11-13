@@ -15,9 +15,6 @@ gulp.task('js', function () {
         'assets/js/bootstrap3-typeahead.js',
         'assets/js/bootstrap-tags.js',
         'assets/js/bootstrap-treeview.js',
-   
-        'assets/fullcalendar/main.js'  ,
-        'assets/fullcalendar/locales/ru.js' ,
         'assets/js/zippy.js'
 
     ])
@@ -27,31 +24,14 @@ gulp.task('js', function () {
 });
 
 
-gulp.task('jsua', function () {
-    return gulp.src([ // Берем все необходимые библиотеки
  
-        'assets/js/bootstrap3-typeahead.js',
-        'assets/js/bootstrap-tags.js',
-        'assets/js/bootstrap-treeview.js',
-        'assets/fullcalendar/main.js'  ,
-        'assets/fullcalendar/locales/ua.js' ,
-
-        'assets/js/zippy.js'
-
-    ])
-        .pipe(concat('zippy-bundle-ua.js')) // Собираем их в кучу в новом файле libs.min.js
-        //.pipe(uglify()) // Сжимаем JS файл
-        .pipe(gulp.dest('assets/js')); // Выгружаем в папку app/js
-});
-
 gulp.task('css', function () {
     return gulp.src([ // Берем все необходимые библиотеки
 
        
         'assets/css/bootstrap-tags.css',
         'assets/css/bootstrap-treeview.css',
-        'assets/fullcalendar/main.css'
-
+   
 
     ])
         .pipe(concat('zippy-bundle.css')) // Собираем их в кучу в новом файле libs.min.js
@@ -70,7 +50,6 @@ npm install gulp-cssnano
 npm install gulp-rename
  
  gulp js
- gulp jsua
  gulp css
  
 */
